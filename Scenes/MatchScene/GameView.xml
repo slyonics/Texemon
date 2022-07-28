@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Name="GamePanel" Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-376,-256,250,502,$Scale" InnerMargin="5,6,5,6">
+		<Image RenderBinding="MatchRender" Alignment="Bottom" Bounds="0,0,240,720,$Scale"/>
+	</Panel>
+
+	<Panel Name="FloorPanel" Anchor="$CenterX,$CenterY" Bounds="-376,240,250,40,$Scale" InnerMargin="6,6,6,6"/>
+
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-98,57,472,40,$Scale">
+		<Textplate Style="GamePanelOpaque" FontBinding="ConversationFont" Binding="AttackName" Bounds="0,0,-1,-1,$Scale" Alignment="Center" Color="#FFFFFFFF"/>
+	</Panel>
+	
+	<Panel Name="CommandPanel" Anchor="$CenterX,$CenterY" Bounds="-98,154,472,140,$Scale">
+		<Button Name="AttackBtn" Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="8,14,152,40,$Scale" InnerMargin="10,6,10,0" Alignment="Cascading" Action="Attack" EnableBinding="CanAttack" VisibleBinding="PlayerCommand" Radio="True">
+			<Label Text="Swap" FontBinding="ConversationFont" Alignment="Center" Color="#FFFFFFFF"/>
+		</Button>
+		<Button Name="PushBtn" Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="0,14,152,40,$Scale" InnerMargin="10,6,10,0" Alignment="Cascading" Action="Item" EnableBinding="CanPush" VisibleBinding="PlayerCommand" Radio="True">
+			<Label Text="Item" FontBinding="ConversationFont" Alignment="Center" Color="#FFFFFFFF"/>
+		</Button>
+		<Button Name="FleeBtn" Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="0,14,152,40,$Scale" InnerMargin="10,6,10,0" Alignment="Cascading" Action="Flee" EnableBinding="CanFlee" VisibleBinding="PlayerCommand" Radio="True">
+			<Label Text="Flee" FontBinding="ConversationFont" Alignment="Center" Color="#FFFFFFFF"/>
+		</Button>
+	</Panel>
+
+	<Panel Name="DialoguePanel" Anchor="$CenterX,$CenterY" Bounds="-98,104,472,140,$Scale" InnerMargin="16,18,16,18">
+		<Textplate Name="SpeakerPlate" Style="GamePanelOpaque" Alignment="BottomLeft" Bounds="16,-166,-1,-1,$Scale" FontBinding="ConversationFont" Binding="Speaker" Color="#FFFFFFFF"/>
+		<CrawlText Name="DialogueText" Binding="Dialogue" FontBinding="ConversationFont" Alignment="Stretch" Color="#FFFFFFFF"/>
+	</Panel>
+	
+</View>

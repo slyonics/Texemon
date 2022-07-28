@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="4" height="4" tilewidth="128" tileheight="128" infinite="0" nextlayerid="8" nextobjectid="37">
+ <properties>
+  <property name="AmbientLight" type="float" value="0.25"/>
+  <property name="Name" value="Abby's Class"/>
+  <property name="Wall" value="ClassroomWall"/>
+ </properties>
+ <tileset firstgid="1" source="Walls.tsx"/>
+ <layer id="1" name="Floor" width="4" height="4">
+  <data encoding="csv">
+0,0,0,0,
+0,4,4,0,
+0,4,4,0,
+0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Ceiling" width="4" height="4">
+  <data encoding="csv">
+0,0,0,0,
+0,11,9,0,
+0,9,11,0,
+0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Walls" width="4" height="4">
+  <data encoding="csv">
+0,13,13,0,
+0,0,0,0,
+3,0,0,0,
+0,6,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="Spawns">
+  <object id="33" name="Default" x="128" y="256" width="128" height="128">
+   <properties>
+    <property name="Direction" value="North"/>
+   </properties>
+  </object>
+  <object id="36" name="Default" type="Spawn" x="128" y="256" width="128" height="128">
+   <properties>
+    <property name="Direction" value="North"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Events">
+  <object id="32" name="Door to Foyer" type="ActivateSouth" x="128" y="384" width="128" height="128">
+   <properties>
+    <property name="Script" value="ChangeMap SchoolOrigin FromClass2"/>
+   </properties>
+  </object>
+  <object id="34" name="SaveAbby" type="Enter" x="128" y="256" width="128" height="128">
+   <properties>
+    <property name="DisableIf" value="SaveAbby"/>
+    <property name="Script">Conversation SavingAbby
+If $Flag.SeeAbby
+Conversation SavingAbby1
+Else
+Conversation SavingAbby2
+End
+Encounter Alien2 NoFlee
+SetFlag SaveAbby True
+DisableEvent
+Conversation SavedAbby</property>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="Lighting">
+  <object id="30" x="256" y="128" width="128" height="128"/>
+  <object id="35" x="128" y="256" width="128" height="128"/>
+ </objectgroup>
+ <objectgroup id="7" name="Walls"/>
+</map>

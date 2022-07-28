@@ -1,0 +1,417 @@
+[
+	{
+		"Name": "Alien1",
+		"FullName": "Androsynth",
+		"SpriteName": "Actors_Alien1",
+		"MaxHealth": 180,
+		"Weakness": [ "Red", "Cyan" ],
+		"Resist": [ ],
+		"Immune": [],
+		"Drops": [
+			{
+				"Name": "SoulSnuff",
+				"Probability": 20
+			},
+			{
+				"Name": "",
+				"Probability": 80
+			}
+		],
+		"Attacks": [
+			{
+				"Name": "PsiBarrier",
+				"Probability": 40,
+				"FullName": "Interference",
+				"Script": [
+					"SpawnJunk 18 36",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Pyrokinesis",
+				"Probability": 60,
+				"FullName": "Pyrokinesis",
+				"Script": [
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Spike Red 1",
+					"Wait 300",
+					"Spike Red 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "PsiShot",
+				"Probability": 30,
+				"FullName": "Psionic Shot",
+				"Script": [
+					"Spike Cyan 6",
+					"Wait 2000"
+				]
+			}
+		]
+	},
+	{
+		"Name": "Alien2",
+		"FullName": "Optimorph",
+		"SpriteName": "Actors_Alien2",
+		"MaxHealth": 260,
+		"Weakness": [ "Blue", "Yellow" ],
+		"Resist": [ "Red" ],
+		"Immune": [],
+		"Drops": [
+			{
+				"Name": "Medicine",
+				"Probability": 20
+			},
+			{
+				"Name": "",
+				"Probability": 80
+			}
+		],
+		"Attacks": [
+			{
+				"Name": "PsiSeal",
+				"Probability": 20,
+				"FullName": "Interference",
+				"Script": [
+					"SpawnJunk 18 36",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Pyrokinesis",
+				"Probability": 40,
+				"FullName": "Pyrokinesis",
+				"Script": [
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Spike Red 1",
+					"Wait 300",
+					"Spike Red 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Neutralize",
+				"Probability": 30,
+				"FullName": "Neutralize",
+				"Script": [
+					"Dialogue Blank Neutralized blue and yellow blocks!",
+					"Neutralize Blue",
+					"Wait 250",
+					"Neutralize Yellow",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "OpticBeam",
+				"Probability": 30,
+				"FullName": "Optic Beam",
+				"Script": [
+					"Spike Green 6",
+					"Wait 2000"
+				]
+			}
+		]
+	},
+	{
+		"Name": "Alien3",
+		"FullName": "Crystinel",
+		"SpriteName": "Actors_Alien3",
+		"MaxHealth": 160,
+		"Weakness": [ "Green" ],
+		"Resist": [ "Red", "Yellow", "Blue" ],
+		"Immune": [],
+		"Drops": [
+			{
+				"Name": "Medicine",
+				"Probability": 50
+			},
+			{
+				"Name": "SoulSnuff",
+				"Probability": 50
+			}
+		],
+		"Attacks": [
+			{
+				"Name": "PsiSeal",
+				"Probability": 30,
+				"FullName": "Interference",
+				"Script": [
+					"SpawnJunk 18 32",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Armor",
+				"Probability": 3000,
+				"FullName": "Crystal Defense",
+				"Script": [
+					"Armor 3",
+					"Dialogue Blank Basic 3-block combos will no longer be effective!",
+					"SpawnJunk 6 6",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "PsiDoubleShot",
+				"Probability": 40,
+				"FullName": "2x Psionic Shot",
+				"Script": [
+					"Spike Cyan 5",
+					"Wait 200",
+					"Spike Cyan 5",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Neutralize",
+				"Probability": 30,
+				"FullName": "Neutralize",
+				"Script": [
+					"Dialogue Blank Neutralized green blocks!",
+					"Neutralize Green",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 2000"
+				]
+			}
+		]
+	},
+	{
+		"Name": "Principal",
+		"FullName": "Alien Pawn",
+		"SpriteName": "Actors_Principal",
+		"MaxHealth": 400,
+		"Weakness": [],
+		"Resist": [],
+		"Immune": [ "Cyan", "Red" ],
+		"Attacks": [
+			{
+				"Name": "Calibrate",
+				"Probability": 40,
+				"FullName": "Calibrate Shield",
+				"Script": [
+					"Calibrate",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Pyrokinesis",
+				"Probability": 10,
+				"FullName": "Pyrokinesis",
+				"Script": [
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Spike Red 1",
+					"Wait 300",
+					"Spike Red 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Hydrokinesis",
+				"Probability": 10,
+				"FullName": "Hydrokinesis",
+				"Script": [
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Spike Blue 1",
+					"Wait 300",
+					"Spike Blue 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Biokinesis",
+				"Probability": 10,
+				"FullName": "Biokinesis",
+				"Script": [
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Spike Green 1",
+					"Wait 300",
+					"Spike Green 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "Astrokinesis",
+				"Probability": 10,
+				"FullName": "Astrokinesis",
+				"Script": [
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"DropBlocks Junk 1",
+					"Wait 50",
+					"Spike Yellow 1",
+					"Wait 300",
+					"Spike Yellow 1",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "PsiShot",
+				"Probability": 15,
+				"FullName": "Psionic Shot",
+				"Script": [
+					"Spike Cyan 6",
+					"Wait 2000"
+				]
+			},
+			{
+				"Name": "PsiDoubleShot",
+				"Probability": 15,
+				"FullName": "2x Psionic Shot",
+				"Script": [
+					"Spike Cyan 5",
+					"Wait 200",
+					"Spike Cyan 5",
+					"Wait 2000"
+				]
+			}
+		]
+	}
+]

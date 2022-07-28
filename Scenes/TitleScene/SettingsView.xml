@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+
+
+  <Panel Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-340,-250,680,500" InnerMargin="30,30,30,30" TransitionIn="Expand" TransitionOut="Shrink">
+
+    <Label Text="Display Mode" Font="PersonifiedUXRegular" Alignment="Vertical" Color="#D6C18BFF"/>
+    <Button Style="GamePanelOpaque" Bounds="0, 0, 340, 69" Alignment="Vertical" Action="ToggleFullscreen" InnerMargin="0,8,0,0" PushedStyle="GamePanelSelected">
+      <Label Binding="DisplayMode" Alignment="Center" Color="#C9BDBDFF" Font="PersonifiedUXRegular"/>
+    </Button>
+
+	  <LineBreak Height="25"/>
+
+    <Label Text="Sound Volume" Font="PersonifiedUXRegular" Alignment="Vertical" Color="#D6C18BFF"/>
+    <Panel Bounds="0,0,620,45" Alignment="Vertical">
+      <Gauge Minimum="0" Maximum="1" Frame="ui_healthBar" Background="ui_healthBarBackground" Bounds="0,0,620,45" InnerMargin="5,0,3,0">
+        <GaugeBar Bar="ui_healthBarInside" Binding="SoundVolume">
+          <GaugeSlider Slider="ui_thumbSlider"/>
+        </GaugeBar>
+      </Gauge>
+    </Panel>
+
+	  <LineBreak Height="10"/>
+
+    <Label Text="Music Volume" Font="PersonifiedUXRegular" Alignment="Vertical" Color="#D6C18BFF"/>
+    <Panel Bounds="0,0,620,45" Alignment="Vertical">
+      <Gauge Minimum="0" Maximum="1" Frame="ui_healthBar" Background="ui_healthBarBackground" Bounds="0,0,620,45" InnerMargin="5,0,3,0">
+        <GaugeBar Bar="ui_healthBarInside" Binding="MusicVolume">
+          <GaugeSlider Slider="ui_thumbSlider"/>
+        </GaugeBar>
+      </Gauge>
+    </Panel>
+
+    <Panel Bounds="0,0,600,80" Alignment="ReverseVertical">
+      <Button Style="GamePanelOpaque" Bounds="0, 0, 280, 69" Alignment="Cascading" Action="Back" Tooltip="Return to title menu" InnerMargin="0,8,0,0" PushedStyle="GamePanelSelected">
+        <Label Text="Back" Alignment="Center" Color="#C9BDBDFF" Font="PersonifiedUXRegular"/>
+      </Button>
+      <Button Style="GamePanelOpaque" Bounds="40, 0, 280, 69" Alignment="Cascading" Action="Apply" Tooltip="Apply new settings" InnerMargin="0,8,0,0" PushedStyle="GamePanelSelected">
+        <Label Text="Apply" Alignment="Center" Color="#C9BDBDFF" Font="PersonifiedUXRegular"/>
+      </Button>
+    </Panel>
+
+  </Panel>
+
+</View>

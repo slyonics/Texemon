@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="256" tileheight="256" infinite="0" nextlayerid="3" nextobjectid="21">
+ <properties>
+  <property name="Floor" value="FoyerFloor"/>
+  <property name="Name" value="School Foyer"/>
+ </properties>
+ <tileset firstgid="1" source="Rooms.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="10" height="10">
+  <data encoding="csv">
+14,14,14,14,14,14,14,14,14,14,
+14,14,6,12,6,14,14,1,14,14,
+14,10,11,9,11,12,6,9,6,14,
+14,10,11,10,6,14,12,11,12,14,
+14,1,11,10,14,14,6,11,6,14,
+14,10,9,12,10,10,12,9,12,14,
+14,10,11,11,9,11,11,11,1,14,
+14,14,1,12,11,12,1,12,14,14,
+14,14,14,14,7,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14
+</data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="1" name="Default" type="Spawn" x="1024" y="1792" width="256" height="256">
+   <properties>
+    <property name="Direction" value="North"/>
+   </properties>
+  </object>
+  <object id="2" name="StudentBlocking" type="BeforeEnter" x="1024" y="512" width="256" height="256">
+   <properties>
+    <property name="DisableIf" value="AliensAttack"/>
+    <property name="Script">Conversation MeetAbby
+SetFlag SeeAbby True</property>
+   </properties>
+  </object>
+  <object id="7" name="Door to Class1" type="ActivateNorth" x="512" y="256" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom1 4 5 North"/>
+   </properties>
+  </object>
+  <object id="8" name="Door to Abby's Class" type="ActivateNorth" x="1024" y="256" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom2 5 5 North"/>
+   </properties>
+  </object>
+  <object id="9" name="Door to Class3" type="ActivateSouth" x="1024" y="768" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom3 5 4 South"/>
+   </properties>
+  </object>
+  <object id="11" name="See Flyers" type="Enter" x="512" y="1280" width="256" height="256">
+   <properties>
+    <property name="DisableIf" value="SawFlyers"/>
+    <property name="Script">Conversation SawFlyers
+SetFlag SawFlyers True
+DisableEvent</property>
+   </properties>
+  </object>
+  <object id="13" name="Door to Class7" type="ActivateEast" x="2048" y="1024" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom7 4 5 East"/>
+   </properties>
+  </object>
+  <object id="14" name="Door to Class6" type="ActivateWest" x="1536" y="1024" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom6 5 5 West"/>
+   </properties>
+  </object>
+  <object id="15" name="Door to Class4" type="ActivateWest" x="1536" y="512" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom4 5 4 West"/>
+   </properties>
+  </object>
+  <object id="16" name="Door to Class5" type="ActivateEast" x="2048" y="512" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene Classroom5 4 4 East"/>
+   </properties>
+  </object>
+  <object id="18" name="Exit Door" type="ActivateSouth" x="1024" y="2048" width="256" height="256">
+   <properties>
+    <property name="Script">If $Flag.AliensAttack
+Conversation PreBoss
+Encounter Principal NoFlee
+Conversation PostBoss
+ChangeScene Ponsona.Scenes.TitleScene.TitleScene
+Else
+Conversation PreventExit
+End</property>
+   </properties>
+  </object>
+  <object id="19" name="StudentBlocking" type="BeforeEnter" x="1792" y="1536" width="256" height="256">
+   <properties>
+    <property name="DisableIf" value="AliensAttack"/>
+    <property name="Script" value="Conversation StudentWarning"/>
+   </properties>
+  </object>
+  <object id="20" name="Intro" type="Enter" x="1024" y="1792" width="256" height="256">
+   <properties>
+    <property name="DisableIf" value="PADirections"/>
+    <property name="Script">SetWaypoint 2 1
+Conversation PADirections
+SetFlag PADirections True
+DisableEvent</property>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

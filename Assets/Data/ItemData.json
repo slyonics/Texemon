@@ -1,0 +1,51 @@
+[
+	{
+		"Name": "SoulSnuff",
+		"Icon": "SoulSnuff",
+		"Description": "Fill available space with colored blocks.",
+		"Cost": 180,
+		"Script": [ "Push Max" ]
+	},
+	{
+		"Name": "Medicine",
+		"Icon": "Medicine",
+		"Description": "Break all junk blocks.",
+		"Cost": 180,
+		"Script": [ "Break Junk" ]
+	},
+	{
+		"Name": "Fire Stone",
+		"Icon": "Medicine",
+		"Description": "Spawn a few red blocks.",
+		"Cost": 180,
+		"Script": [ "DropBlocks Red 1", "Wait 300", "DropBlocks Red 1", "Wait 300", "DropBlocks Red 1", "Wait 300" ]
+	},
+	{
+		"Name": "Water Stone",
+		"Icon": "Medicine",
+		"Description": "Spawn a few blue blocks.",
+		"Cost": 180,
+		"Script": [ "DropBlocks Blue 1", "Wait 300", "DropBlocks Blue 1", "Wait 300", "DropBlocks Blue 1", "Wait 300" ]
+	},
+	{
+		"Name": "Life Stone",
+		"Icon": "Medicine",
+		"Description": "Spawn a few green blocks.",
+		"Cost": 180,
+		"Script": [ "DropBlocks Green 1", "Wait 300", "DropBlocks Green 1", "Wait 300", "DropBlocks Green 1", "Wait 300" ]
+	},
+	{
+		"Name": "Star Stone",
+		"Icon": "Medicine",
+		"Description": "Spawn a few yellow blocks.",
+		"Cost": 180,
+		"Script": [ "DropBlocks Yellow 1", "Wait 300", "DropBlocks Yellow 1", "Wait 300", "DropBlocks Yellow 1", "Wait 300" ]
+	},
+	{
+		"Name": "Mind Stone",
+		"Icon": "Medicine",
+		"Description": "Spawn a few cyan blocks.",
+		"Cost": 180,
+		"Script": [ "DropBlocks Cyan 1", "Wait 300", "DropBlocks Cyan 1", "Wait 300", "DropBlocks Cyan 1", "Wait 300" ]
+	}
+]

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="256" tileheight="256" infinite="0" nextlayerid="3" nextobjectid="14">
+ <properties>
+  <property name="Floor" value="ClassroomFloor"/>
+  <property name="Name" value="Art Class"/>
+ </properties>
+ <tileset firstgid="1" source="Rooms.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="10" height="10">
+  <data encoding="csv">
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,4,4,14,14,14,14,
+14,14,14,13,9,11,5,14,14,14,
+14,14,14,13,11,9,2,14,14,14,
+14,14,14,14,4,4,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14
+</data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="9" name="Door to Foyer" type="ActivateEast" x="1536" y="1024" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene SchoolFoyer 7 2 East"/>
+   </properties>
+  </object>
+  <object id="13" name="SaveClassmates" type="Enter" x="1280" y="1024" width="256" height="256">
+   <properties>
+    <property name="DisableIf" value="SaveFriends"/>
+    <property name="Script">Conversation CrystalStart
+Encounter Alien3 NoFlee
+SetFlag SaveFriends True
+DisableEvent
+Conversation CrystalEnd</property>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="4" height="4" tilewidth="128" tileheight="128" infinite="0" nextlayerid="8" nextobjectid="36">
+ <properties>
+  <property name="AmbientLight" type="float" value="0.25"/>
+  <property name="Name" value="Music Class"/>
+  <property name="Wall" value="ClassroomWall"/>
+ </properties>
+ <tileset firstgid="1" source="Walls.tsx"/>
+ <layer id="1" name="Floor" width="4" height="4">
+  <data encoding="csv">
+0,0,0,0,
+0,4,4,0,
+0,4,4,0,
+0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Ceiling" width="4" height="4">
+  <data encoding="csv">
+0,0,0,0,
+0,11,9,0,
+0,9,11,0,
+0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Walls" width="4" height="4">
+  <data encoding="csv">
+0,0,3,0,
+13,0,0,6,
+13,0,0,0,
+0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="Spawns">
+  <object id="34" name="Default" type="Spawn" x="256" y="128" width="128" height="128">
+   <properties>
+    <property name="Direction" value="West"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Events">
+  <object id="32" name="Door to Foyer" type="ActivateEast" x="384" y="128" width="128" height="128">
+   <properties>
+    <property name="Script" value="ChangeMap SchoolOrigin FromClass6"/>
+   </properties>
+  </object>
+  <object id="35" name="Empty Room" type="Enter" x="256" y="128" width="128" height="128">
+   <properties>
+    <property name="Script">Conversation EmptyRoom
+DisableEvent</property>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="Lighting">
+  <object id="29" x="256" y="128" width="128" height="128"/>
+  <object id="30" x="256" y="256" width="128" height="128"/>
+ </objectgroup>
+ <objectgroup id="7" name="Walls"/>
+</map>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="256" tileheight="256" infinite="0" nextlayerid="3" nextobjectid="13">
+ <properties>
+  <property name="Floor" value="ClassroomFloor"/>
+  <property name="Name" value="Math Class"/>
+ </properties>
+ <tileset firstgid="1" source="Rooms.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="10" height="10">
+  <data encoding="csv">
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,13,13,14,14,14,14,
+14,14,14,4,9,11,4,14,14,14,
+14,14,14,2,11,9,4,14,14,14,
+14,14,14,14,5,4,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14
+</data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="6" name="Alien1 Encounter" type="Enter" x="1024" y="1280" width="256" height="256">
+   <properties>
+    <property name="DisableIf" value="AliensAttack"/>
+    <property name="Script">Actor Actors_Alien1
+Conversation AlienAttack
+Encounter Alien1 NoFlee
+SetFlag AliensAttack True
+DisableEvent
+Actor Actors_Student
+Conversation AlienAttackAftermath
+Actor Actors_Blank</property>
+   </properties>
+  </object>
+  <object id="9" name="Door to Foyer" type="ActivateSouth" x="1024" y="1536" width="256" height="256">
+   <properties>
+    <property name="Script" value="ChangeMap Ponsona.Scenes.MapScene.MapScene SchoolFoyer 2 2 South"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
