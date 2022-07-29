@@ -70,11 +70,6 @@ namespace Texemon.Scenes.ConversationScene
             }
         }
 
-        public void Terminate()
-        {
-            terminated = true;
-        }
-
         public void Remove(Vector2 newPosition, float newTransitionLength = 1.0f)
         {
             PortraitPositionController controller = parentScene.AddController(new PortraitPositionController(this, newPosition, newTransitionLength));
