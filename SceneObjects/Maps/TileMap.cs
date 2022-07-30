@@ -16,7 +16,8 @@ namespace Texemon.SceneObjects.Maps
     {
         private GameMap gameMap;
         private TiledMap mapData;
-        private Dictionary<string, TiledTileset> tilesets = new Dictionary<string, TiledTileset>();
+        private Dictionary<int, TiledTileset> tilesets = new Dictionary<int, TiledTileset>();
+        private Dictionary<int, Texture2D> tilesetSpritesheets = new Dictionary<int, Texture2D>();
 
         private Tile[,] tiles;
 
@@ -31,8 +32,10 @@ namespace Texemon.SceneObjects.Maps
             foreach (TiledMapTileset tiledMapTileset in mapData.Tilesets)
             {
                 TiledTileset tiledTileset = new TiledTileset();
-                tiledTileset.ParseXml(AssetCache.MAPS[(GameMap)Enum.Parse(typeof(GameMap), Path.GetFileNameWithoutExtension(tiledMapTileset.source))]);
-                tilesets.Add(tiledMapTileset.source, tiledTileset);
+                tiledTileset.ParseXml(AssetCache.MAPS[(GameMap)Enum.Parse(typeof(GameMap), "Tilesets_" + Path.GetFileNameWithoutExtension(tiledMapTileset.source))]);
+                tiledTileset.sou
+
+                tilesets.Add(tiledMapTileset.firstgid, tiledTileset);
             }
 
             tiles = new Tile[Columns, Rows];
@@ -44,13 +47,49 @@ namespace Texemon.SceneObjects.Maps
                 }
             }
 
-            foreach (TiledLayer tiledLayer in mapData.Layers)
+            foreach (TiledGroup tiledGroup in mapData.Groups)
             {
-                if (tiledLayer.type == "tilelayer")
+                foreach (TiledLayer tiledLayer in tiledGroup.layers)
                 {
-
+                    switch (tiledLayer.type)
+                    {
+                        case TiledLayerType.TileLayer: LoadTileLayer(tiledLayer, tiledGroup); break;
+                        case TiledLayerType.ObjectLayer: LoadObjectLayer(tiledLayer, tiledGroup); break;
+                        case TiledLayerType.ImageLayer: LoadImageLayer(tiledLayer, tiledGroup); break;
+                    }
                 }
             }
+        }
+
+        protected virtual void LoadTileLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
+        {
+            if (tiledGroup.name == "Background")
+            {
+                int i = 0;
+                for (int y = 0; y < Rows; y++)
+                {
+                    for (int x = 0; x < Columns; x++, i++)
+                    {
+                        int tileId = tiledLayer.data[i];
+                        if (tileId == 0) continue;
+
+                        TiledMapTileset tiledMapTileset = mapData.GetTiledMapTileset(tileId);
+                        TiledTile tilesetTile = mapData.GetTiledTile(tiledMapTileset, tilesets[tiledMapTileset.firstgid], tileId);
+
+                        tiles[x, y].ApplyBackgroundTile(tilesetTile, tiledMapTileset.s);
+                    }
+                }
+            }
+        }
+
+        protected virtual void LoadObjectLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
+        {
+
+        }
+
+        protected virtual void LoadImageLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
+        {
+
         }
 
         public override void Update(GameTime gameTime)

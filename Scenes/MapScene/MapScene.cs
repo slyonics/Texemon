@@ -153,7 +153,7 @@ namespace Texemon.Scenes.MapScene
 
             foreach (TiledLayer tiledLayer in tiledMap.Layers)
             {
-                if (tiledLayer.type == "tilelayer")
+                if (tiledLayer.type == TiledLayerType.TileLayer)
                 {
                     int x = 0, y = 0;
 
@@ -198,7 +198,7 @@ namespace Texemon.Scenes.MapScene
                     }
                 }
 
-                if (tiledLayer.type == "objectgroup")
+                if (tiledLayer.type == TiledLayerType.ObjectLayer)
                 {
                     if (tiledLayer.name == "Spawns" && roomX < 0 && roomY < 0)
                     {
@@ -268,7 +268,7 @@ namespace Texemon.Scenes.MapScene
             }
 
 
-            TiledLayer lightLayer = tiledMap.Layers.FirstOrDefault(x => x.type == "objectgroup" && x.name == "Lighting");
+            TiledLayer lightLayer = tiledMap.Layers.FirstOrDefault(x => x.type == TiledLayerType.ObjectLayer && x.name == "Lighting");
             if (lightLayer != null)
             {
                 foreach (TiledObject tiledObject in lightLayer.objects) Lighting(tiledObject);

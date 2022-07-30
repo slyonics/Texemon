@@ -35,7 +35,7 @@ namespace Texemon.SceneObjects.Maps
 
         }
 
-        public void ApplyLayer()
+        public void ApplyBackgroundTile()
         {
 
         }
