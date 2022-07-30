@@ -10,6 +10,9 @@
 	<Button Name="LoadButton" PushedStyle="GamePanelSelected" Style="GamePanelOpaque" Bounds="0, 0, 320, 52" Alignment="Cascading" Tooltip ="Resume previous game" Action="Continue" EnableBinding="SaveAvailable" InnerMargin="0,8,0,0">
 		<Label Text="Continue" Alignment="Center" Color="#E0BFA2FF" Font="PersonifiedUXRegular"/>
 	</Button>
+	  <Button Name="LoadButton" PushedStyle="GamePanelSelected" Style="GamePanelOpaque" Bounds="0, 0, 320, 52" Alignment="Cascading" Tooltip ="Resume previous game" Action="RpgTest" InnerMargin="0,8,0,0">
+		  <Label Text="RPG TEST" Alignment="Center" Color="#E0BFA2FF" Font="PersonifiedUXRegular"/>
+	  </Button>
     <Button Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="0, 0, 320, 52" Alignment="Cascading" Tooltip ="Audio and video settings" Action="SettingsMenu" InnerMargin="0,8,0,0">
       <Label Text="Settings" Alignment="Center" Color="#E0BFA2FF" Font="PersonifiedUXRegular"/>
     </Button>

@@ -24,7 +24,6 @@ namespace Texemon.SceneObjects
         protected List<Entity> entityList = new List<Entity>();
         protected List<Particle> particleList = new List<Particle>();
 
-        protected Camera camera;
         protected Shader spriteShader;
         protected Shader sceneShader;
 
@@ -125,13 +124,13 @@ namespace Texemon.SceneObjects
 
             if (spriteShader != null)
             {
-                spriteShader.Update(gameTime, camera);
+                spriteShader.Update(gameTime, Camera);
                 if (spriteShader.Terminated) spriteShader = null;
             }
 
             if (sceneShader != null)
             {
-                sceneShader.Update(gameTime, camera);
+                sceneShader.Update(gameTime, Camera);
                 if (sceneShader.Terminated) sceneShader = null;
             }
         }
@@ -145,9 +144,9 @@ namespace Texemon.SceneObjects
             DrawBackground(spriteBatch);
             spriteBatch.End();
 
-            Matrix matrix = (camera == null) ? Matrix.Identity : camera.Matrix;
+            Matrix matrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
             Effect shader = (spriteShader == null) ? null : spriteShader.Effect;
-            foreach (Entity entity in entityList) entity.DrawShader(spriteBatch, camera, matrix);
+            foreach (Entity entity in entityList) entity.DrawShader(spriteBatch, Camera, matrix);
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
             DrawGame(spriteBatch, shader, matrix);
             spriteBatch.End();
@@ -177,8 +176,8 @@ namespace Texemon.SceneObjects
 
         public virtual void DrawGame(SpriteBatch spriteBatch, Effect shader, Matrix matrix)
         {
-            foreach (Entity entity in entityList) entity.Draw(spriteBatch, camera);
-            foreach (Particle particle in particleList) particle.Draw(spriteBatch, camera);
+            foreach (Entity entity in entityList) entity.Draw(spriteBatch, Camera);
+            foreach (Particle particle in particleList) particle.Draw(spriteBatch, Camera);
         }
 
         public virtual void DrawOverlay(SpriteBatch spriteBatch)
@@ -224,7 +223,7 @@ namespace Texemon.SceneObjects
         public PriorityLevel PriorityLevel { get => priorityLevel; }
         public List<Controller>[] ControllerStack { get => controllerList; }
         public List<Overlay> OverlayList { get => overlayList; }
-        public Camera Camera { get => camera; }
+        public Camera Camera { get; protected set; }
         public List<Entity> EntityList { get => entityList; }
         public Vector2 GetMousePoint { get => new Vector2(Input.MousePosition.X + Camera.View.X, Input.MousePosition.Y + Camera.View.Y); }
         public bool SceneEnded { get => sceneEnded; }

@@ -245,6 +245,7 @@ namespace Texemon.Main
 
     public enum GameMap
     {
+        City,
         Class1,
         Class2,
         Class3,
@@ -265,6 +266,18 @@ namespace Texemon.Main
         SchoolFoyer,
         SchoolOrigin,
         Walls,
+        Tilesets_FDE_Blacksmith,
+        Tilesets_FDE_Marshland,
+        Tilesets_FDE_Winter_Village,
+        Tilesets_FD_Caves,
+        Tilesets_FD_City,
+        Tilesets_FD_Desert,
+        Tilesets_FD_Dungeon,
+        Tilesets_FD_Forest,
+        Tilesets_FD_Grasslands,
+        Tilesets_FD_Interior,
+        Tilesets_FD_Mountains,
+        Tilesets_FD_Village,
 
         None = -1
     }
