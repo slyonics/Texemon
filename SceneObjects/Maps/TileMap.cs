@@ -12,17 +12,27 @@ using TiledCS;
 
 namespace Texemon.SceneObjects.Maps
 {
-    public class TileMap : Entity
+    public class Tilemap : Entity
     {
+        private class Tileset
+        {
+            public Tileset(TiledTileset iTiledTileset)
+            {
+                TiledTileset = iTiledTileset;
+                SpriteAtlas = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Tiles_" + Path.GetFileNameWithoutExtension(TiledTileset.Image.source))];
+            }
+
+            public TiledTileset TiledTileset { get; private set; }
+            public Texture2D SpriteAtlas { get; private set; }
+        }
+
         private GameMap gameMap;
         private TiledMap mapData;
-        private Dictionary<int, TiledTileset> tilesets = new Dictionary<int, TiledTileset>();
-        private Dictionary<int, Texture2D> tilesetSpritesheets = new Dictionary<int, Texture2D>();
+        private Dictionary<int, Tileset> tilesets = new Dictionary<int, Tileset>();
 
         private Tile[,] tiles;
 
-
-        public TileMap(Scene iScene, GameMap iGameMap)
+        public Tilemap(Scene iScene, GameMap iGameMap)
             : base(iScene, Vector2.Zero)
         {
             gameMap = iGameMap;
@@ -33,9 +43,7 @@ namespace Texemon.SceneObjects.Maps
             {
                 TiledTileset tiledTileset = new TiledTileset();
                 tiledTileset.ParseXml(AssetCache.MAPS[(GameMap)Enum.Parse(typeof(GameMap), "Tilesets_" + Path.GetFileNameWithoutExtension(tiledMapTileset.source))]);
-                tiledTileset.sou
-
-                tilesets.Add(tiledMapTileset.firstgid, tiledTileset);
+                tilesets.Add(tiledMapTileset.firstgid, new Tileset(tiledTileset));
             }
 
             tiles = new Tile[Columns, Rows];
@@ -74,9 +82,12 @@ namespace Texemon.SceneObjects.Maps
                         if (tileId == 0) continue;
 
                         TiledMapTileset tiledMapTileset = mapData.GetTiledMapTileset(tileId);
-                        TiledTile tilesetTile = mapData.GetTiledTile(tiledMapTileset, tilesets[tiledMapTileset.firstgid], tileId);
+                        Tileset tileset = tilesets[tiledMapTileset.firstgid];
+                        TiledTileset tiledTileset = tileset.TiledTileset;
+                        TiledTile tilesetTile = mapData.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
+                        TiledSourceRect spriteSource = mapData.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
 
-                        tiles[x, y].ApplyBackgroundTile(tilesetTile, tiledMapTileset.s);
+                        tiles[x, y].ApplyBackgroundTile(tilesetTile, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas);
                     }
                 }
             }
@@ -137,9 +148,11 @@ namespace Texemon.SceneObjects.Maps
             return tiles[x, y];
         }
 
-        public int Width { get => mapData.Width * mapData.TileWidth; }
-        public int Height { get => mapData.Height * mapData.TileHeight; }
+        public int TileWidth { get => mapData.TileWidth; }
+        public int TileHeight { get => mapData.TileHeight; }
+        public int Width { get => mapData.Width * TileWidth; }
+        public int Height { get => mapData.Height * TileHeight; }
         public int Columns { get => mapData.Width; }
-        public int Rows { get => mapData.Height; }
+        public int Rows { get => mapData.Height; }        
     }
 }

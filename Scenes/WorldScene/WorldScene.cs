@@ -11,12 +11,12 @@ namespace Texemon.Scenes.WorldScene
 {
     public class WorldScene : Scene
     {
-        public TileMap TileMap { get; set; }
+        public Tilemap Tilemap { get; set; }
 
         public WorldScene(string mapName)
         {
-            TileMap = AddEntity(new TileMap(this, (GameMap)Enum.Parse(typeof(GameMap), mapName)));
-            Camera = new Camera(new Rectangle(0, 0, TileMap.Width, TileMap.Height));
+            Tilemap = AddEntity(new Tilemap(this, (GameMap)Enum.Parse(typeof(GameMap), mapName)));
+            Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
         }
 
         public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
@@ -26,7 +26,7 @@ namespace Texemon.Scenes.WorldScene
 
         public override void DrawBackground(SpriteBatch spriteBatch)
         {
-            TileMap.DrawBackground(spriteBatch, Camera);
+            Tilemap.DrawBackground(spriteBatch, Camera);
         }
 
         public override void DrawGame(SpriteBatch spriteBatch, Effect shader, Matrix matrix)
