@@ -35,9 +35,9 @@ namespace Texemon.Main
             oldMouseState = newMouseState;
             newMouseState = Mouse.GetState();
 
-            MousePosition = new Vector2(newMouseState.Position.X, newMouseState.Position.Y);
+            MousePosition = new Vector2(newMouseState.Position.X, newMouseState.Position.Y) / CrossPlatformGame.Scale;
 
-            DeltaMouseGame = new Vector2((newMouseState.Position.X - oldMouseState.Position.X) / 2.0f, (newMouseState.Position.Y - oldMouseState.Position.Y) / 2.0f);
+            DeltaMouseGame = new Vector2((newMouseState.Position.X - oldMouseState.Position.X) / 2.0f, (newMouseState.Position.Y - oldMouseState.Position.Y) / 2.0f) / CrossPlatformGame.Scale;
         }
 
         public static bool LeftMouseClicked { get => newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed; }

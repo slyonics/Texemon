@@ -114,8 +114,8 @@ namespace Texemon.Main
             graphicsDeviceManager.PreferredBackBufferHeight = scaledScreenHeight;
             graphicsDeviceManager.ApplyChanges();
 
-            gameRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, scaledScreenWidth, scaledScreenHeight);
-            compositeRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, scaledScreenWidth, scaledScreenHeight, false, SurfaceFormat.Color, DepthFormat.Depth16, 0, RenderTargetUsage.PreserveContents);
+            gameRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, TARGET_SCREEN_WIDTH, TARGET_SCREEN_HEIGHT);
+            compositeRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, TARGET_SCREEN_WIDTH, TARGET_SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth16, 0, RenderTargetUsage.PreserveContents);
         }
 
         private void CrossPlatformGame_Exiting(object sender, EventArgs e)
@@ -177,7 +177,7 @@ namespace Texemon.Main
 
             Effect shader = (transitionShader == null) ? null : transitionShader.Effect;
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.CreateScale(scale, scale, 1.0f));
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.CreateScale((int)Scale, (int)Scale, 1));
             spriteBatch.Draw(compositeRender, Vector2.Zero, Color.White);
             spriteBatch.End();
 
@@ -241,8 +241,8 @@ namespace Texemon.Main
 
         public Shader TransitionShader { set => transitionShader = value; }
 
-        public static int ScreenWidth { get => scaledScreenWidth; }
-        public static int ScreenHeight { get => scaledScreenHeight; }
+        public static int ScreenWidth { get => TARGET_SCREEN_WIDTH; }
+        public static int ScreenHeight { get => TARGET_SCREEN_HEIGHT; }
         public static int Scale { get => screenScale; }
         public static CrossPlatformGame GameInstance { get => crossPlatformGame; }
         public static bool ClearedCompositeRender { get; set; }

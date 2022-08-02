@@ -27,6 +27,8 @@ namespace Texemon.Scenes.TitleScene
             /*
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "SchoolOrigin");
             */
+
+            CrossPlatformGame.Transition(typeof(WorldScene.WorldScene), "City");
         }
 
         public void Continue()
@@ -43,13 +45,6 @@ namespace Texemon.Scenes.TitleScene
 
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), mapName, roomX, roomY, direction);
             */
-        }
-
-        public void RpgTest()
-        {
-            GameProfile.NewState();
-
-            CrossPlatformGame.Transition(typeof(WorldScene.WorldScene), "City");
         }
 
         public void SettingsMenu()
