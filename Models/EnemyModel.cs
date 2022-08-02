@@ -14,9 +14,6 @@ namespace Texemon.Models
         public string SpriteName { get; set; }
         public int MaxHealth { get; set; }
         public int CurrentHealth { get; set; }
-        public Scenes.MatchScene.TileColor[] Weakness { get; set; }
-        public Scenes.MatchScene.TileColor[] Resist { get; set; }
-        public Scenes.MatchScene.TileColor[] Immune { get; set; }
 
         public AttackModel[] Attacks { get; set; }
         public DropModel[] Drops { get; set; }

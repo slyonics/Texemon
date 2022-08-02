@@ -173,12 +173,12 @@ namespace Texemon.Scenes.ConversationScene
 
         private void Actor(string[] tokens)
         {
-            CrossPlatformGame.GetScene<MapScene.MapScene>().MapViewModel.SetActor(tokens[1]);
+            //CrossPlatformGame.GetScene<MapScene.MapScene>().MapViewModel.SetActor(tokens[1]);
         }
 
         private void Animate(string[] tokens)
         {
-            CrossPlatformGame.GetScene<MapScene.MapScene>().MapViewModel.AnimateActor(tokens[1]);
+            //CrossPlatformGame.GetScene<MapScene.MapScene>().MapViewModel.AnimateActor(tokens[1]);
         }
     }
 }

@@ -24,13 +24,16 @@ namespace Texemon.Scenes.TitleScene
         {
             GameProfile.NewState();
 
+            /*
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "SchoolOrigin");
+            */
         }
 
         public void Continue()
         {
             GameProfile.LoadState("Save0.sav");
 
+            /*
             string mapName = GameProfile.GetSaveData<string>("LastMap");
             int roomX = GameProfile.GetSaveData<int>("LastRoomX");
             int roomY = GameProfile.GetSaveData<int>("LastRoomY");
@@ -39,6 +42,7 @@ namespace Texemon.Scenes.TitleScene
             if (GameProfile.GetSaveData<int>("RandomBattle") < 2) GameProfile.SetSaveData<int>("RandomBattle", 2);
 
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), mapName, roomX, roomY, direction);
+            */
         }
 
         public void RpgTest()

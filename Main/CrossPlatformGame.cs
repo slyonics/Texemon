@@ -21,8 +21,8 @@ namespace Texemon.Main
         public static readonly string SETTINGS_DIRECTORY = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "AppData\\Local") + "\\" + CrossPlatformGame.GAME_NAME;
 
         private const int WINDOWED_MARGIN = 34;
-        public const int TARGET_SCREEN_WIDTH = 800;
-        public const int TARGET_SCREEN_HEIGHT = 520;
+        public const int TARGET_SCREEN_WIDTH = 320;
+        public const int TARGET_SCREEN_HEIGHT = 240;
         private const int MAXIMUM_SCREEN_WIDTH = 1920;
         private const int MAXIMUM_SCREEN_HEIGHT = 1080;
 
@@ -33,10 +33,6 @@ namespace Texemon.Main
 
         public RenderTarget2D gameRender;
         private RenderTarget2D compositeRender;
-
-        public RenderTarget2D mapRender;
-        public RenderTarget2D minimapRender;
-        public RenderTarget2D matchRender;
 
         private static int scaledScreenWidth = TARGET_SCREEN_WIDTH;
         private static int scaledScreenHeight = TARGET_SCREEN_HEIGHT;
@@ -120,10 +116,6 @@ namespace Texemon.Main
 
             gameRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, scaledScreenWidth, scaledScreenHeight);
             compositeRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, scaledScreenWidth, scaledScreenHeight, false, SurfaceFormat.Color, DepthFormat.Depth16, 0, RenderTargetUsage.PreserveContents);
-
-            mapRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, 460 * screenScale, 280 * screenScale, false, SurfaceFormat.Color, DepthFormat.Depth16, 8, RenderTargetUsage.DiscardContents);
-            minimapRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, 208, 288);
-            matchRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, 240, 720);
         }
 
         private void CrossPlatformGame_Exiting(object sender, EventArgs e)
@@ -185,7 +177,7 @@ namespace Texemon.Main
 
             Effect shader = (transitionShader == null) ? null : transitionShader.Effect;
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.Identity);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.CreateScale(scale, scale, 1.0f));
             spriteBatch.Draw(compositeRender, Vector2.Zero, Color.White);
             spriteBatch.End();
 
