@@ -15,7 +15,8 @@ namespace Texemon.SceneObjects.Particles
         Slash,
         Star,
         Heart,
-        GunSpark
+        GunSpark,
+        Smoke
     }
 
     public class AnimationParticle : Particle

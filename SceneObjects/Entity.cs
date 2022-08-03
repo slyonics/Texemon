@@ -80,6 +80,11 @@ namespace Texemon.SceneObjects
             else animatedSprite.PlayAnimation(animationName, animationFollowup);
         }
 
+        public virtual void Move(GameTime gameTime)
+        {
+            position += velocity * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+        }
+
         public virtual void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             float depth = (camera == null) ? 0 : camera.GetDepth(DepthPosition);

@@ -56,15 +56,6 @@ namespace Texemon.Scenes.MapScene
             else animatedSprite.PlayAnimation(bulletData.type);
         }
 
-        public static new void LoadContent(ContentManager contentManager)
-        {
-            foreach (int spriteId in Enum.GetValues(typeof(BulletType)))
-            {
-                BULLET_SPRITES[spriteId] = contentManager.Load<Texture2D>("Graphics/Bullets/" + Enum.GetName(typeof(BulletType), spriteId));
-                BULLET_SHADOWS.Add(spriteId, BuildShadow(BULLET_BOUNDING_BOXES[spriteId]));
-            }
-        }
-
         public void Impact(Actor target)
         {
             if (bulletData.expireOnImpact) Kill();

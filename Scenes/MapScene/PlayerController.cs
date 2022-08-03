@@ -27,8 +27,6 @@ namespace Texemon.Scenes.MapScene
 
         private IInteractive interactable;
 
-        private WidgetMenuModel mainMenu;
-
         public PlayerController(MapScene iMapScene, Player iPlayer)
             : base(PriorityLevel.GameLevel)
         {
@@ -174,7 +172,7 @@ namespace Texemon.Scenes.MapScene
         }
 
         public Player Player { get => player; }
-        public PlayerNumber PlayerNumber { get => player.PlayerProfile.PlayerNumber; }
+        public int PlayerNumber { get => Texemon.Models.PlayerProfile.PlayerNumber; }
         public IInteractive Interactable { get => interactable; }
     }
 }

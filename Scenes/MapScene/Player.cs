@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework.Graphics;
+
 namespace Texemon.Scenes.MapScene
 {
     public class Player : Actor
@@ -107,7 +109,7 @@ namespace Texemon.Scenes.MapScene
         protected int dustTime;
 
         public Player(MapScene iMapScene, Vector2 iPosition, PlayerProfile iPlayerProfile, Orientation iOrientation)
-            : base(iMapScene, iPosition, spriteArray[(int)iPlayerProfile.PlayerType], PLAYER_ANIMATIONS, PLAYER_BOUNDING_BOX, iOrientation)
+            : base(iMapScene, iPosition, AssetCache.SPRITES[Enum.GetName(typeof(PlayerType), spriteId)], PLAYER_ANIMATIONS, PLAYER_BOUNDING_BOX, iOrientation)
         {
             playerProfile = iPlayerProfile;
 
@@ -118,15 +120,7 @@ namespace Texemon.Scenes.MapScene
             light = new Light(new Vector2(currentBounds.Center.X, currentBounds.Center.Y), position.Y);
             light.Color = Color.WhiteSmoke;
             light.Intensity = 72.0f;
-            mapScene.GameMap.Weather.LightList.Add(light);
-        }
-
-        public static new void LoadContent(ContentManager contentManager)
-        {
-            foreach (int spriteId in Enum.GetValues(typeof(PlayerType)))
-            {
-                spriteArray[spriteId] = contentManager.Load<Texture2D>("Graphics/" + Enum.GetName(typeof(PlayerType), spriteId));
-            }
+            mapScene.Tilemap.Weather.LightList.Add(light);
 
             PLAYER_SHADOW = BuildShadow(PLAYER_BOUNDING_BOX);
         }

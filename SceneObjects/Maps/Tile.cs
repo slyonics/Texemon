@@ -77,5 +77,6 @@ namespace Texemon.SceneObjects.Maps
 
         public int TileX { get; private set; }
         public int TileY { get; private set; }
+        public List<Rectangle> ColliderList { get; private set; } = new List<Rectangle>();
     }
 }

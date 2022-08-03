@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using Texemon.SceneObjects.Maps;
+
 namespace Texemon.Scenes.MapScene
 {
     public enum Orientation
@@ -124,7 +126,7 @@ namespace Texemon.Scenes.MapScene
         {
             hitTerrain = false;
             blockedDisplacement = Vector2.Zero;
-            Displace(gameTime, mapScene.GameMap);
+            Displace(gameTime, mapScene.Tilemap);
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
@@ -142,11 +144,11 @@ namespace Texemon.Scenes.MapScene
         {
             if (shadow == null) return;
 
-            Color shadowColor = Color.Lerp(SHADOW_COLOR, Color.TransparentBlack, Math.Min(1.0f, positionZ / (boundingBox.Width + boundingBox.Height) / 2));
+            Color shadowColor = Color.Lerp(SHADOW_COLOR, Color.Transparent, Math.Min(1.0f, positionZ / (boundingBox.Width + boundingBox.Height) / 2));
             spriteBatch.Draw(shadow, new Vector2((int)(Bounds.Center.X - shadow.Width / 2), (int)(Bounds.Center.Y - shadow.Height / 2) + 1), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
-        private void Displace(GameTime gameTime, Map tileMap)
+        private void Displace(GameTime gameTime, Tilemap tileMap)
         {
             if (ignoreObstacles)
             {
@@ -188,16 +190,16 @@ namespace Texemon.Scenes.MapScene
             }
         }
 
-        private Vector2 ConstrainedPosition(Map tileMap, Vector2 displacement)
+        private Vector2 ConstrainedPosition(Tilemap tilemap, Vector2 displacement)
         {
             Vector2 endPosition = position + displacement;
             Rectangle endBounds = UpdateBounds(endPosition);
             Rectangle displacementBounds = Rectangle.Union(currentBounds, endBounds);
 
-            int startTileX = displacementBounds.Left / Tile.TILE_SIZE;
-            int startTileY = displacementBounds.Top / Tile.TILE_SIZE;
-            int endTileX = displacementBounds.Right / Tile.TILE_SIZE;
-            int endTileY = displacementBounds.Bottom / Tile.TILE_SIZE;
+            int startTileX = displacementBounds.Left / mapScene.Tilemap.TileWidth;
+            int startTileY = displacementBounds.Top / mapScene.Tilemap.TileHeight;
+            int endTileX = displacementBounds.Right / mapScene.Tilemap.TileWidth;
+            int endTileY = displacementBounds.Bottom / mapScene.Tilemap.TileHeight;
             List<Rectangle> colliderList = new List<Rectangle>();
             List<Rectangle> entityColliders = ActorColliders;
 
@@ -206,7 +208,7 @@ namespace Texemon.Scenes.MapScene
             {
                 for (int x = startTileX; x <= endTileX; x++)
                 {
-                    Tile tile = tileMap.GetTile(x, y);
+                    Tile tile = tilemap.GetTile(x, y);
                     if (tile != null) colliderList.AddRange(tile.ColliderList);
                 }
             }
@@ -448,24 +450,24 @@ namespace Texemon.Scenes.MapScene
         public Rectangle Bounds { get => currentBounds; }
         public Vector2 Center { get => new Vector2((currentBounds.Left + currentBounds.Right) / 2, currentBounds.Center.Y); }
         public Vector2 Bottom { get => new Vector2((currentBounds.Left + currentBounds.Right) / 2, currentBounds.Bottom); }
-        public override float SpriteBottom { get => currentBounds.Bottom; }
+        public override float DepthPosition { get => currentBounds.Bottom; }
 
         public virtual List<Rectangle> ActorColliders { get => null; }
         public List<Rectangle> NearbyColliders
         {
             get
             {
-                int tileStartX = currentBounds.Left / Tile.TILE_SIZE - 1;
-                int tileEndX = currentBounds.Right / Tile.TILE_SIZE + 1;
-                int tileStartY = currentBounds.Top / Tile.TILE_SIZE - 1;
-                int tileEndY = currentBounds.Bottom / Tile.TILE_SIZE + 1;
+                int tileStartX = currentBounds.Left / mapScene.Tilemap.TileWidth - 1;
+                int tileEndX = currentBounds.Right / mapScene.Tilemap.TileWidth + 1;
+                int tileStartY = currentBounds.Top / mapScene.Tilemap.TileHeight - 1;
+                int tileEndY = currentBounds.Bottom / mapScene.Tilemap.TileHeight + 1;
 
                 List<Rectangle> colliderList = new List<Rectangle>();
                 for (int x = tileStartX; x <= tileEndX; x++)
                 {
                     for (int y = tileStartY; y <= tileEndY; y++)
                     {
-                        colliderList.AddRange(mapScene.GameMap.GetTile(x, y).ColliderList);
+                        colliderList.AddRange(mapScene.Tilemap.GetTile(x, y).ColliderList);
                     }
                 }
 
