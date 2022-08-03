@@ -4,16 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-using Panderling.Scenes;
-using Panderling.Main;
-
-using GameData;
-
-namespace Panderling.GameObjects.Actors
+namespace Texemon.Scenes.MapScene
 {
     public class Bullet : Actor
     {
@@ -86,7 +79,7 @@ namespace Panderling.GameObjects.Actors
 
         public void ProjectFrom(Actor parent)
         {
-            position = parent.ShootPosition;            
+            position = parent.ShootPosition;
 
             switch (bulletData.orientations)
             {
@@ -113,18 +106,18 @@ namespace Panderling.GameObjects.Actors
 
         public Vector2 Knockback(Actor target)
         {
-                Vector2 knockbackDirection;
-                if (velocity.Length() < 0.001f)
-                {
-                    if (bulletData.orientations == 360) knockbackDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
-                    else if (bulletData.orientations == 1) knockbackDirection = target.Center - this.Center;
-                    else knockbackDirection = ORIENTATION_UNIT_VECTORS[(int)orientation];
-                }
-                else knockbackDirection = velocity;
+            Vector2 knockbackDirection;
+            if (velocity.Length() < 0.001f)
+            {
+                if (bulletData.orientations == 360) knockbackDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
+                else if (bulletData.orientations == 1) knockbackDirection = target.Center - this.Center;
+                else knockbackDirection = ORIENTATION_UNIT_VECTORS[(int)orientation];
+            }
+            else knockbackDirection = velocity;
 
-                knockbackDirection.Normalize();
+            knockbackDirection.Normalize();
 
-                return knockbackDirection * bulletData.knockback;
+            return knockbackDirection * bulletData.knockback;
         }
 
         public bool HurtPlayers { get => hurtPlayers; }

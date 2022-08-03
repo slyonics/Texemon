@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 using Texemon.SceneObjects.Maps;
 
-namespace Texemon.Scenes.WorldScene
+namespace Texemon.Scenes.MapScene
 {
-    public class WorldScene : Scene
+    public class MapScene : Scene
     {
         public Tilemap Tilemap { get; set; }
 
-        public WorldScene(string mapName)
+        public MapScene(string mapName)
         {
             Tilemap = AddEntity(new Tilemap(this, (GameMap)Enum.Parse(typeof(GameMap), mapName)));
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));

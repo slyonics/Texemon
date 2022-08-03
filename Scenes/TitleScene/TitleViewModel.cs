@@ -28,7 +28,7 @@ namespace Texemon.Scenes.TitleScene
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "SchoolOrigin");
             */
 
-            CrossPlatformGame.Transition(typeof(WorldScene.WorldScene), "City");
+            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
         }
 
         public void Continue()

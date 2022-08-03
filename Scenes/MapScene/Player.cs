@@ -4,19 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-
-using Panderling.GameObjects.Maps;
-using Panderling.GameObjects.Particles;
-using Panderling.Gameplay;
-using Panderling.Main;
-using Panderling.Scenes;
-
-using GameData;
-
-namespace Panderling.GameObjects.Actors
+namespace Texemon.Scenes.MapScene
 {
     public class Player : Actor
     {
@@ -179,7 +167,7 @@ namespace Panderling.GameObjects.Actors
         {
             if (base.Hurt(bullet))
             {
-                Audio.PlaySound(GameSound.PlayerHit);
+                // Audio.PlaySound(GameSound.PlayerHit);
                 playerProfile.CurrentHealth = health;
                 invincibleTimeLeft = HIT_INVINCIBLE_TIME;
 
