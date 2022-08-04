@@ -63,8 +63,6 @@ namespace Texemon.Main
     public enum GameData
     {
         ConversationData,
-        EnemyData,
-        ItemData,
 
         None = -1
     }

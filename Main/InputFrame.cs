@@ -16,10 +16,18 @@ namespace Texemon.Main
         Left,
         Confirm,
         Cancel,
-        Delete,
         Menu,
         Interact,
-        Speedup
+        Technique1,
+        Technique2,
+        Technique3,
+        Technique4
+    }
+
+    public enum PlayerNumber
+    {
+        PlayerOne,
+        PlayerTwo
     }
 
     public class InputFrame

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Texemon.SceneObjects;
+using Texemon.Scenes.ConversationScene;
 
 namespace Texemon.Main
 {
@@ -63,13 +64,7 @@ namespace Texemon.Main
             Newtonsoft.Json.JsonTextReader reader;
 
             reader = new Newtonsoft.Json.JsonTextReader(new StringReader(dataDictionary["ConversationData"]));
-            Models.ConversationModel.Models = deserializer.Deserialize<List<Models.ConversationModel>>(reader);
-
-            reader = new Newtonsoft.Json.JsonTextReader(new StringReader(dataDictionary["EnemyData"]));
-            Models.EnemyModel.Models = deserializer.Deserialize<List<Models.EnemyModel>>(reader);
-
-            reader = new Newtonsoft.Json.JsonTextReader(new StringReader(dataDictionary["ItemData"]));
-            Models.ItemModel.Models = deserializer.Deserialize<List<Models.ItemModel>>(reader);
+            ConversationModel.Models = deserializer.Deserialize<List<ConversationModel>>(reader);
         }
 
         private static void LoadShaders(GraphicsDevice graphicsDevice)

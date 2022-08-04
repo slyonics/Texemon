@@ -12,7 +12,7 @@ namespace Texemon.Scenes.ConversationScene
     {
         private ConversationScene conversationScene;
         private ConversationModel conversationData;
-        private DialogueData currentDialogue;
+        private DialogueModel currentDialogue;
         private int dialogueIndex;
 
         private CrawlText crawlText;
@@ -23,7 +23,7 @@ namespace Texemon.Scenes.ConversationScene
 
             conversationScene = (parentScene as ConversationScene);
             conversationData = iConversationData;
-            currentDialogue = conversationData.DialogueData[dialogueIndex];
+            currentDialogue = conversationData.DialogueModel[dialogueIndex];
 
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
             Dialogue.Value = currentDialogue.Text;
@@ -84,7 +84,7 @@ namespace Texemon.Scenes.ConversationScene
         {
             dialogueIndex++;
 
-            if (dialogueIndex >= conversationData.DialogueData.Length)
+            if (dialogueIndex >= conversationData.DialogueModel.Length)
             {
                 if (conversationData.EndScript != null)
                 {
@@ -96,7 +96,7 @@ namespace Texemon.Scenes.ConversationScene
                 return;
             }
 
-            currentDialogue = conversationData.DialogueData[dialogueIndex];
+            currentDialogue = conversationData.DialogueModel[dialogueIndex];
 
             Dialogue.Value = currentDialogue.Text;
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;

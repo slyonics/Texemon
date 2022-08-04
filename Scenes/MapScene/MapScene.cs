@@ -17,6 +17,9 @@ namespace Texemon.Scenes.MapScene
         {
             Tilemap = AddEntity(new Tilemap(this, (GameMap)Enum.Parse(typeof(GameMap), mapName)));
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
+
+            Actor actor = new Actor(this, new Vector2(32, 32), );
+            AddEntity(actor);
         }
 
         public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)

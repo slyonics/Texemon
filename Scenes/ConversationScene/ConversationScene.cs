@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Texemon.Main;
-using Texemon.Models;
 using Texemon.SceneObjects;
 
 namespace Texemon.Scenes.ConversationScene
@@ -23,8 +22,8 @@ namespace Texemon.Scenes.ConversationScene
         {
             conversationData = ConversationModel.Models.FirstOrDefault(x => x.Name == conversationName);
 
-            string[] conversationScript = conversationData.DialogueData[0].Script;
-            if (conversationScript != null) RunScript(conversationData.DialogueData[0].Script);
+            string[] conversationScript = conversationData.DialogueModel[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueModel[0].Script);
 
             conversationViewModel = new ConversationViewModel(this, GameView.ConversationScene_ConversationView, conversationData);
             AddOverlay(conversationViewModel);
@@ -38,8 +37,8 @@ namespace Texemon.Scenes.ConversationScene
         {
             conversationData = iConversationData;
 
-            string[] conversationScript = conversationData.DialogueData[0].Script;
-            if (conversationScript != null) RunScript(conversationData.DialogueData[0].Script);
+            string[] conversationScript = conversationData.DialogueModel[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueModel[0].Script);
 
             conversationViewModel = new ConversationViewModel(this, GameView.ConversationScene_ConversationView, conversationData);
             AddOverlay(conversationViewModel);

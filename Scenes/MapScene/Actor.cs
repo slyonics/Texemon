@@ -22,19 +22,12 @@ namespace Texemon.Scenes.MapScene
         None = -1,
     }
 
-    public abstract class Actor : Entity
+    public class Actor : Entity
     {
         public const int ORIENTATION_COUNT = 4;
 
         public static Vector2[] ORIENTATION_UNIT_VECTORS = new Vector2[4] { new Vector2(0, -1), new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0) };
         protected static float[] ORIENTATION_ROTATIONS = new float[5] { 0.0f, (float)Math.PI / 2.0f, (float)Math.PI, (float)Math.PI * 3.0f / 2.0f, (float)Math.PI };
-
-        protected const float SHADOW_DEPTH = Camera.MAXIMUM_ENTITY_DEPTH + 0.001f;
-        protected const float START_SHADOW = 0.6f;
-        protected const float END_SHADOW = 0.8f;
-        protected static readonly Color SHADOW_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-
-        private const int DAMAGE_FLASH_LENGTH = 500;
 
         protected MapScene mapScene;
 
@@ -49,19 +42,6 @@ namespace Texemon.Scenes.MapScene
         private Vector2 displacement;
         protected Vector2 blockedDisplacement;
         protected Vector2 desiredVelocity;
-        protected Vector2 knockbackVelocity;
-
-        protected int flinchTimeLeft;
-        protected int flinchLength;
-        protected int invincibleTimeLeft;
-        private List<Bullet> ignoredBullets = new List<Bullet>();
-        protected int poise;
-        protected int flinch;
-
-        protected int health;
-
-        protected Texture2D shadow = null;
-        protected int damageFlashTimeLeft;
 
         protected List<Controller> controllerList = new List<Controller>();
 
@@ -76,45 +56,12 @@ namespace Texemon.Scenes.MapScene
             orientation = iOrientation;
         }
 
-        protected static Texture2D BuildShadow(Rectangle bounds)
-        {
-            int shadowWidth = (int)Math.Max(1, bounds.Width * 1.25f);
-            int shadowHeight = (int)Math.Max(1, bounds.Height * 1.25f);
-            float ovalFactorX = ((float)shadowHeight / (shadowWidth + shadowHeight));
-            float ovalFactorY = ((float)shadowWidth / (shadowWidth + shadowHeight));
-            float maxDistance = (float)Math.Sqrt(Math.Pow(shadowWidth / 2 * ovalFactorX, 2) + Math.Pow(shadowHeight / 2 * ovalFactorY, 2));
-
-            Texture2D result = new Texture2D(CrossPlatformGame.GameInstance.GraphicsDevice, shadowWidth, shadowHeight);
-            Color[] colorData = new Color[shadowWidth * shadowHeight];
-            for (int y = 0; y < shadowHeight; y++)
-            {
-                for (int x = 0; x < shadowWidth; x++)
-                {
-                    float distance = (float)Math.Sqrt(Math.Pow(Math.Abs(x - shadowWidth / 2) * ovalFactorX, 2) + Math.Pow(Math.Abs(y - shadowHeight / 2) * ovalFactorY, 2));
-                    float shadowInterval = distance / maxDistance;
-
-                    if (shadowInterval < START_SHADOW) colorData[y * shadowWidth + x] = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-                    else if (shadowInterval > END_SHADOW) colorData[y * shadowWidth + x] = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                    else colorData[y * shadowWidth + x] = new Color(0.0f, 0.0f, 0.0f, 1.0f - (shadowInterval - START_SHADOW) / (END_SHADOW - START_SHADOW));
-                }
-            }
-            result.SetData<Color>(colorData);
-
-            return result;
-        }
-
         public override void Update(GameTime gameTime)
         {
             controllerList.RemoveAll(x => x.Terminated);
 
-            if (flinchTimeLeft > 0) flinchTimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
-            if (invincibleTimeLeft > 0) invincibleTimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
-            if (damageFlashTimeLeft > 0) damageFlashTimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
-            else flinch = 0;
-
             Vector2 startingPosition = position;
-            if (flinchTimeLeft > 0) velocity = Vector2.SmoothStep(desiredVelocity, knockbackVelocity, (float)flinchTimeLeft / flinchLength);
-            else velocity = desiredVelocity;
+            velocity = desiredVelocity;
 
             base.Update(gameTime);
 
@@ -131,21 +78,9 @@ namespace Texemon.Scenes.MapScene
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            DrawShadow(spriteBatch, camera);
-            if (damageFlashTimeLeft > 0) animatedSprite.SpriteColor = ((damageFlashTimeLeft / 150) % 2 == 0) ? Color.White : Color.OrangeRed;
-            else animatedSprite.SpriteColor = Color.White;
-
             base.Draw(spriteBatch, camera);
 
             if (Settings.GetProgramSetting<bool>("DebugMode")) Debug.DrawBox(spriteBatch, currentBounds);
-        }
-
-        protected virtual void DrawShadow(SpriteBatch spriteBatch, Camera camera)
-        {
-            if (shadow == null) return;
-
-            Color shadowColor = Color.Lerp(SHADOW_COLOR, Color.Transparent, Math.Min(1.0f, positionZ / (boundingBox.Width + boundingBox.Height) / 2));
-            spriteBatch.Draw(shadow, new Vector2((int)(Bounds.Center.X - shadow.Width / 2), (int)(Bounds.Center.Y - shadow.Height / 2) + 1), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
         private void Displace(GameTime gameTime, Tilemap tileMap)
@@ -388,58 +323,6 @@ namespace Texemon.Scenes.MapScene
             position = new Vector2(destination.X + boundingBox.Left + boundingBox.Width / 2, destination.Y + boundingBox.Bottom);
         }
 
-        public virtual bool Hurt(Bullet bullet)
-        {
-            if (Invincible || Terminated || ignoredBullets.Contains(bullet)) return false;
-
-            health -= bullet.BulletData.damage;
-            if (health <= 0) Kill();
-            else if (ApplyFlinch(bullet))
-            {
-                Idle();
-                ApplyKnockback(bullet);
-            }
-
-            damageFlashTimeLeft = DAMAGE_FLASH_LENGTH;
-
-            ignoredBullets.Add(bullet);
-
-            return true;
-        }
-
-        public virtual bool Heal(int healing)
-        {
-            return false;
-        }
-
-        public virtual bool ApplyFlinch(Bullet bullet)
-        {
-            flinch += bullet.BulletData.flinchStrength;
-            if (flinch <= poise) return false;
-
-            flinchLength = flinchTimeLeft = bullet.BulletData.flinchLength;
-
-            return true;
-        }
-
-        public virtual void ApplyKnockback(Bullet bullet)
-        {
-            if (bullet.BulletData.knockback == 0) return;
-
-            knockbackVelocity = bullet.Knockback(this);
-        }
-
-        public virtual void Kill()
-        {
-            terminated = true;
-        }
-
-        public virtual void PlayAnimation(string animationName, AnimationFollowup animationFollowup = null)
-        {
-            if (animationFollowup == null) animatedSprite.PlayAnimation(animationName);
-            else animatedSprite.PlayAnimation(animationName, animationFollowup);
-        }
-
         public virtual void OrientedAnimation(string animationName, AnimationFollowup animationFollowup = null)
         {
             PlayAnimation(animationName + orientation.ToString(), animationFollowup);
@@ -475,17 +358,9 @@ namespace Texemon.Scenes.MapScene
             }
         }
         
-        public int Poise { get => poise; set => poise = value; }
-
         public bool Visible { get => parentScene.Camera.View.Intersects(currentBounds); }
         public bool IgnoreObstacles { get => ignoreObstacles; }
-        public bool Hurting { get => damageFlashTimeLeft > 0; }
-        public bool Flinching { get => flinchTimeLeft > 0; }
-        public bool Invincible { get => invincibleTimeLeft > 0; }
-        public bool Dead { get => health <= 0; }
-
         public Orientation Orientation { get => orientation; }
-
         public Vector2 Displacement { get => displacement; }
         public Vector2 BlockedDisplacement { get => blockedDisplacement; }
         public Vector2 DesiredVelocity { get => desiredVelocity; set => desiredVelocity = value; }
