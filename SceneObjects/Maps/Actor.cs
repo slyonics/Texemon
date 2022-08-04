@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Texemon.Scenes.MapScene;
 
-using Texemon.SceneObjects.Maps;
-
-namespace Texemon.Scenes.MapScene
+namespace Texemon.SceneObjects.Maps
 {
     public enum Orientation
     {
@@ -22,14 +21,14 @@ namespace Texemon.Scenes.MapScene
         None = -1,
     }
 
-    public class Actor : Entity
+    public abstract class Actor : Entity
     {
         public const int ORIENTATION_COUNT = 4;
 
         public static Vector2[] ORIENTATION_UNIT_VECTORS = new Vector2[4] { new Vector2(0, -1), new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0) };
         protected static float[] ORIENTATION_ROTATIONS = new float[5] { 0.0f, (float)Math.PI / 2.0f, (float)Math.PI, (float)Math.PI * 3.0f / 2.0f, (float)Math.PI };
 
-        protected MapScene mapScene;
+        protected Tilemap tilemap;
 
         protected Rectangle boundingBox;
         protected Rectangle currentBounds;
@@ -45,10 +44,10 @@ namespace Texemon.Scenes.MapScene
 
         protected List<Controller> controllerList = new List<Controller>();
 
-        public Actor(MapScene iMapScene, Vector2 iPosition, Texture2D iSprite, Dictionary<string, Animation> iAnimationList, Rectangle iBounds, Orientation iOrientation = Orientation.None)
-            : base(iMapScene, iPosition, iSprite, iAnimationList)
+        public Actor(Scene iScene, Tilemap iTilemap, Vector2 iPosition, Texture2D iSprite, Dictionary<string, Animation> iAnimationList, Rectangle iBounds, Orientation iOrientation = Orientation.None)
+            : base(iScene, iPosition, iSprite, iAnimationList)
         {
-            mapScene = iMapScene;
+            tilemap = iTilemap;
 
             boundingBox = iBounds;
             currentBounds = UpdateBounds(position);
@@ -73,7 +72,7 @@ namespace Texemon.Scenes.MapScene
         {
             hitTerrain = false;
             blockedDisplacement = Vector2.Zero;
-            Displace(gameTime, mapScene.Tilemap);
+            Displace(gameTime, tilemap);
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
@@ -131,10 +130,10 @@ namespace Texemon.Scenes.MapScene
             Rectangle endBounds = UpdateBounds(endPosition);
             Rectangle displacementBounds = Rectangle.Union(currentBounds, endBounds);
 
-            int startTileX = displacementBounds.Left / mapScene.Tilemap.TileWidth;
-            int startTileY = displacementBounds.Top / mapScene.Tilemap.TileHeight;
-            int endTileX = displacementBounds.Right / mapScene.Tilemap.TileWidth;
-            int endTileY = displacementBounds.Bottom / mapScene.Tilemap.TileHeight;
+            int startTileX = displacementBounds.Left / tilemap.TileWidth;
+            int startTileY = displacementBounds.Top / tilemap.TileHeight;
+            int endTileX = displacementBounds.Right / tilemap.TileWidth;
+            int endTileY = displacementBounds.Bottom / tilemap.TileHeight;
             List<Rectangle> colliderList = new List<Rectangle>();
             List<Rectangle> entityColliders = ActorColliders;
 
@@ -152,10 +151,10 @@ namespace Texemon.Scenes.MapScene
             if (colliderList.Count == 0) return result;
             else
             {
-                bool movingRight = (displacement.X > 0.0f);
-                bool movingLeft = (displacement.X < 0.0f);
-                bool movingDown = (displacement.Y > 0.0f);
-                bool movingUp = (displacement.Y < 0.0f);
+                bool movingRight = displacement.X > 0.0f;
+                bool movingLeft = displacement.X < 0.0f;
+                bool movingDown = displacement.Y > 0.0f;
+                bool movingUp = displacement.Y < 0.0f;
 
                 float right = position.X + boundingBox.Right;
                 float left = position.X + boundingBox.Left;
@@ -340,24 +339,24 @@ namespace Texemon.Scenes.MapScene
         {
             get
             {
-                int tileStartX = currentBounds.Left / mapScene.Tilemap.TileWidth - 1;
-                int tileEndX = currentBounds.Right / mapScene.Tilemap.TileWidth + 1;
-                int tileStartY = currentBounds.Top / mapScene.Tilemap.TileHeight - 1;
-                int tileEndY = currentBounds.Bottom / mapScene.Tilemap.TileHeight + 1;
+                int tileStartX = currentBounds.Left / tilemap.TileWidth - 1;
+                int tileEndX = currentBounds.Right / tilemap.TileWidth + 1;
+                int tileStartY = currentBounds.Top / tilemap.TileHeight - 1;
+                int tileEndY = currentBounds.Bottom /tilemap.TileHeight + 1;
 
                 List<Rectangle> colliderList = new List<Rectangle>();
                 for (int x = tileStartX; x <= tileEndX; x++)
                 {
                     for (int y = tileStartY; y <= tileEndY; y++)
                     {
-                        colliderList.AddRange(mapScene.Tilemap.GetTile(x, y).ColliderList);
+                        colliderList.AddRange(tilemap.GetTile(x, y).ColliderList);
                     }
                 }
 
                 return colliderList;
             }
         }
-        
+
         public bool Visible { get => parentScene.Camera.View.Intersects(currentBounds); }
         public bool IgnoreObstacles { get => ignoreObstacles; }
         public Orientation Orientation { get => orientation; }

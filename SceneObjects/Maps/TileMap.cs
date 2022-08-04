@@ -120,8 +120,8 @@ namespace Texemon.SceneObjects.Maps
         {
             int startTileX = Math.Max((int)(camera.View.Left / mapData.TileWidth) - 1, 0);
             int startTileY = Math.Max((int)(camera.View.Top / mapData.TileHeight) - 1, 0);
-            int endTileX = Math.Min((int)(camera.View.Right / mapData.TileWidth) - 1, Columns - 1);
-            int endTileY = Math.Min((int)(camera.View.Bottom / mapData.TileHeight) - 1, Rows - 1);
+            int endTileX = Math.Min((int)(camera.View.Right / mapData.TileWidth), Columns - 1);
+            int endTileY = Math.Min((int)(camera.View.Bottom / mapData.TileHeight), Rows - 1);
 
             for (int y = startTileY; y <= endTileY; y++)
             {

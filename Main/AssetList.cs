@@ -81,12 +81,8 @@ namespace Texemon.Main
 
     public enum GameSprite
     {
-        Actors_Alien1,
-        Actors_Alien2,
-        Actors_Alien3,
         Actors_animal1,
         Actors_animal2,
-        Actors_Blank,
         Actors_cars,
         Actors_character1,
         Actors_character10,
@@ -106,6 +102,7 @@ namespace Texemon.Main
         Actors_crystal,
         Actors_doors1,
         Actors_doors2,
+        Actors_dude,
         Actors_fire1,
         Actors_fire2,
         Actors_flag,
@@ -116,11 +113,8 @@ namespace Texemon.Main
         Actors_monster5,
         Actors_objects1,
         Actors_objects2,
-        Actors_Principal,
-        Actors_Student,
         Actors_switch1,
         Actors_switch2,
-        Actors_Teacher,
         Actors_vehicles,
         Actors_zombie1,
         Actors_zombie2,
