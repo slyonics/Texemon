@@ -62,10 +62,13 @@ namespace Texemon.SceneObjects.Maps
             Vector2 startingPosition = position;
             velocity = desiredVelocity;
 
-            base.Update(gameTime);
+            Move(gameTime);
+            UpdateElevation(gameTime);
 
             currentBounds = UpdateBounds(position);
             displacement = position - startingPosition;
+
+            animatedSprite?.Update(gameTime);
         }
 
         public override void Move(GameTime gameTime)

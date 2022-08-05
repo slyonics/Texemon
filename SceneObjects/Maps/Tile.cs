@@ -63,6 +63,7 @@ namespace Texemon.SceneObjects.Maps
 
             if (tiledTile != null)
             {
+                foreach (TiledObject tiledObject in tiledTile.objects) ColliderList.Add(new Rectangle((int)(tiledObject.x + position.X), (int)(tiledObject.y + position.Y), (int)tiledObject.width, (int)tiledObject.height));
                 foreach (TiledProperty tiledProperty in tiledTile.properties)
                 {
                     switch (tiledProperty.name)

@@ -27,14 +27,14 @@ namespace Texemon.Scenes.MapScene
         public const int HERO_WIDTH = 16;
         public const int HERO_HEIGHT = 32;
 
-        public static readonly Rectangle HERO_BOUNDS = new Rectangle(0, 0, 16, 16);
+        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-6, -8, 12, 6);
 
         private static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
-            { HeroAnimation.IdleDown.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.IdleLeft.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.IdleRight.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.IdleUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleDown.ToString(), new Animation(1, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleLeft.ToString(), new Animation(1, 1, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleRight.ToString(), new Animation(1, 2, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleUp.ToString(), new Animation(1, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
             { HeroAnimation.WalkDown.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
             { HeroAnimation.WalkLeft.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
             { HeroAnimation.WalkRight.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
