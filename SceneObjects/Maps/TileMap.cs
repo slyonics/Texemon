@@ -91,6 +91,28 @@ namespace Texemon.SceneObjects.Maps
                     }
                 }
             }
+            else if (tiledGroup.name.Contains("Height"))
+            {
+                int height = int.Parse(tiledGroup.name.Remove(0, 6));
+
+                int i = 0;
+                for (int y = 0; y < Rows; y++)
+                {
+                    for (int x = 0; x < Columns; x++, i++)
+                    {
+                        int tileId = tiledLayer.data[i];
+                        if (tileId == 0) continue;
+
+                        TiledMapTileset tiledMapTileset = mapData.GetTiledMapTileset(tileId);
+                        Tileset tileset = tilesets[tiledMapTileset.firstgid];
+                        TiledTileset tiledTileset = tileset.TiledTileset;
+                        TiledTile tilesetTile = mapData.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
+                        TiledSourceRect spriteSource = mapData.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
+
+                        tiles[x, y].ApplyEntityTile(tilesetTile, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas, height);
+                    }
+                }
+            }
         }
 
         protected virtual void LoadObjectLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
@@ -134,7 +156,18 @@ namespace Texemon.SceneObjects.Maps
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            
+            int startTileX = Math.Max((int)(camera.View.Left / mapData.TileWidth) - 1, 0);
+            int startTileY = Math.Max((int)(camera.View.Top / mapData.TileHeight) - 1, 0);
+            int endTileX = Math.Min((int)(camera.View.Right / mapData.TileWidth), Columns - 1);
+            int endTileY = Math.Min((int)(camera.View.Bottom / mapData.TileHeight), Rows - 1);
+
+            for (int y = startTileY; y <= endTileY; y++)
+            {
+                for (int x = startTileX; x <= endTileX; x++)
+                {
+                    tiles[x, y].Draw(spriteBatch, camera);
+                }
+            }
         }
 
         public override void DrawShader(SpriteBatch spriteBatch, Camera camera, Matrix matrix)

@@ -18,11 +18,13 @@ namespace Texemon.SceneObjects.Maps
             public Rectangle source;
             public Texture2D atlas;
             public Color color = Color.White;
+            public int height;
         }
 
         private Tilemap parentMap;
         private Vector2 position;
-        private List<TileSprite> backgroundSprites = new List<TileSprite>();        
+        private List<TileSprite> backgroundSprites = new List<TileSprite>();
+        private Dictionary<int, List<TileSprite>> entitySprites = new Dictionary<int, List<TileSprite>>();
 
         public Tile(Tilemap iTileMap, int iTileX, int iTileY)
         {
@@ -50,7 +52,15 @@ namespace Texemon.SceneObjects.Maps
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-
+            foreach (KeyValuePair<int, List<TileSprite>> tileSprites in entitySprites)
+            {
+                float depth = camera.GetDepth(position.Y + tileSprites.Key * parentMap.TileHeight);
+                foreach (TileSprite tileSprite in tileSprites.Value)
+                {
+                    spriteBatch.Draw(tileSprite.atlas, position, tileSprite.source, tileSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
+                    depth -= 0.0001f;
+                }
+            }
         }
 
         public void ApplyBackgroundTile(TiledTile tiledTile, Rectangle source, Texture2D atlas)
@@ -74,6 +84,37 @@ namespace Texemon.SceneObjects.Maps
             }
 
             backgroundSprites.Add(tileSprite);
+        }
+
+        public void ApplyEntityTile(TiledTile tiledTile, Rectangle source, Texture2D atlas, int height)
+        {
+            List<TileSprite> tileSprites;
+            if (!entitySprites.TryGetValue(height, out tileSprites))
+            {
+                tileSprites = new List<TileSprite>();
+                entitySprites.Add(height, tileSprites);
+            }
+
+            TileSprite tileSprite = new TileSprite()
+            {
+                source = source,
+                atlas = atlas,
+                height = height
+            };
+
+            if (tiledTile != null)
+            {
+                foreach (TiledObject tiledObject in tiledTile.objects) ColliderList.Add(new Rectangle((int)(tiledObject.x + position.X), (int)(tiledObject.y + position.Y), (int)tiledObject.width, (int)tiledObject.height));
+                foreach (TiledProperty tiledProperty in tiledTile.properties)
+                {
+                    switch (tiledProperty.name)
+                    {
+                        case "Color": var color = System.Drawing.ColorTranslator.FromHtml(tiledProperty.value); tileSprite.color = new Color(color.R, color.G, color.B, color.A); break;
+                    }
+                }
+            }
+
+            tileSprites.Add(tileSprite);
         }
 
         public int TileX { get; private set; }
