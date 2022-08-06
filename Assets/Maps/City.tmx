@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="300" height="260" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="1">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="300" height="260" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="2">
+ <properties>
+  <property name="Music" value="SMP_BTL"/>
+  <property name="Script" value="Conversation TestConvo"/>
+ </properties>
  <tileset firstgid="1" source="Tilesets/FD_City.tsx"/>
  <tileset firstgid="1025" source="Tilesets/FD_Grasslands.tsx"/>
+ <objectgroup id="15" name="Triggers">
+  <object id="1" name="Tree Convo" x="392" y="232" width="64" height="48">
+   <properties>
+    <property name="Script" value="Conversation TreeConvo"/>
+   </properties>
+  </object>
+ </objectgroup>
  <group id="9" name="Background">
   <layer id="1" name="Roads" width="300" height="260">
    <data encoding="csv">
