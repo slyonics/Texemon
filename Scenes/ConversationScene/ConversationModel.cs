@@ -10,7 +10,7 @@ namespace Texemon.Scenes.ConversationScene
     {
         public string Name { get; set; }
         public string Background { get; set; }
-        public DialogueModel[] DialogueModel { get; set; }
+        public DialogueModel[] DialogueData { get; set; }
         public string[] EndScript { get; set; }
 
         public static List<ConversationModel> Models { get; set; }

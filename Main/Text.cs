@@ -22,7 +22,8 @@ namespace Texemon.Main
         Combo,
         BigCombo,
         Timer,
-        BigTimer
+        BigTimer,
+        Dialogue
     }
 
     public static class Text
@@ -40,18 +41,8 @@ namespace Texemon.Main
         {
             { GameFont.Title, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 96, fontHeight = 96 } },
             { GameFont.PersonifiedUXRegular, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 32, fontHeight = 40 } },
-            { GameFont.Combo, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 26, fontHeight = 32 } },
-            { GameFont.BigCombo, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 52, fontHeight = 64 } },
-            { GameFont.TurpentineRegular, new GameFontData() { fontFile = "TurpentineRegular", fontSize = 64, fontHeight = 64 } },
-            { GameFont.TurpentineRegularSmall, new GameFontData() { fontFile = "TurpentineRegular", fontSize = 32, fontHeight = 32 } },
+            { GameFont.Dialogue, new GameFontData() { fontFile = "BitPotionExt", fontSize = 24, fontHeight = 16 } },
             { GameFont.Tooltip, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 18, fontHeight = 22 } },
-            { GameFont.BigTooltip, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 36, fontHeight = 44 } },
-            { GameFont.Timer, new GameFontData() { fontFile = "SilkscreenExtended", fontSize = 16, fontHeight = 16 } },
-            { GameFont.BigTimer, new GameFontData() { fontFile = "SilkscreenExtended", fontSize = 32, fontHeight = 32 } },
-            { GameFont.BonesOfMuertos, new GameFontData() { fontFile = "BonesOfMuertos", fontSize = 128, fontHeight = 128 } },
-            { GameFont.BonyBones, new GameFontData() { fontFile = "BonyBones", fontSize = 64, fontHeight = 64 } },
-            { GameFont.BonyBonesSmall, new GameFontData() { fontFile = "BonyBones", fontSize = 48, fontHeight = 48 } },
-            { GameFont.TheGingerbreadHouse, new GameFontData() { fontFile = "TheGingerbreadHouse", fontSize = 64, fontHeight = 64 } }
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();

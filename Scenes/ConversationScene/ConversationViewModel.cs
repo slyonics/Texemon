@@ -23,7 +23,7 @@ namespace Texemon.Scenes.ConversationScene
 
             conversationScene = (parentScene as ConversationScene);
             conversationData = iConversationData;
-            currentDialogue = conversationData.DialogueModel[dialogueIndex];
+            currentDialogue = conversationData.DialogueData[dialogueIndex];
 
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
             Dialogue.Value = currentDialogue.Text;
@@ -84,7 +84,7 @@ namespace Texemon.Scenes.ConversationScene
         {
             dialogueIndex++;
 
-            if (dialogueIndex >= conversationData.DialogueModel.Length)
+            if (dialogueIndex >= conversationData.DialogueData.Length)
             {
                 if (conversationData.EndScript != null)
                 {
@@ -96,7 +96,7 @@ namespace Texemon.Scenes.ConversationScene
                 return;
             }
 
-            currentDialogue = conversationData.DialogueModel[dialogueIndex];
+            currentDialogue = conversationData.DialogueData[dialogueIndex];
 
             Dialogue.Value = currentDialogue.Text;
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
@@ -119,7 +119,7 @@ namespace Texemon.Scenes.ConversationScene
         public event Action OnDialogueScrolled;
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
-        public ModelProperty<string> ConversationFont { get; set; } = new ModelProperty<string>(CrossPlatformGame.Scale == 1 ? "Tooltip" : "BigTooltip");
+        public ModelProperty<string> ConversationFont { get; set; } = new ModelProperty<string>("Dialogue");
         public ModelProperty<string> Dialogue { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Speaker { get; set; } = new ModelProperty<string>("");
     }

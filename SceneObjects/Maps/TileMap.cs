@@ -27,7 +27,7 @@ namespace Texemon.SceneObjects.Maps
         }
 
         private GameMap gameMap;
-        private TiledMap mapData;
+        private TiledMap tiledMap;
         private Dictionary<int, Tileset> tilesets = new Dictionary<int, Tileset>();
 
         private Tile[,] tiles;
@@ -37,9 +37,9 @@ namespace Texemon.SceneObjects.Maps
         {
             gameMap = iGameMap;
 
-            mapData = new TiledMap();
-            mapData.ParseXml(AssetCache.MAPS[gameMap]);
-            foreach (TiledMapTileset tiledMapTileset in mapData.Tilesets)
+            tiledMap = new TiledMap();
+            tiledMap.ParseXml(AssetCache.MAPS[gameMap]);
+            foreach (TiledMapTileset tiledMapTileset in tiledMap.Tilesets)
             {
                 TiledTileset tiledTileset = new TiledTileset();
                 tiledTileset.ParseXml(AssetCache.MAPS[(GameMap)Enum.Parse(typeof(GameMap), "Tilesets_" + Path.GetFileNameWithoutExtension(tiledMapTileset.source))]);
@@ -55,23 +55,26 @@ namespace Texemon.SceneObjects.Maps
                 }
             }
 
-            foreach (TiledGroup tiledGroup in mapData.Groups)
+            foreach (TiledGroup tiledGroup in tiledMap.Groups) LoadLayers(tiledGroup.layers, tiledGroup);
+            LoadLayers(tiledMap.Layers, null);
+        }
+
+        protected virtual void LoadLayers(TiledLayer[] tiledLayers, TiledGroup tiledGroup)
+        {
+            foreach (TiledLayer tiledLayer in tiledLayers)
             {
-                foreach (TiledLayer tiledLayer in tiledGroup.layers)
+                switch (tiledLayer.type)
                 {
-                    switch (tiledLayer.type)
-                    {
-                        case TiledLayerType.TileLayer: LoadTileLayer(tiledLayer, tiledGroup); break;
-                        case TiledLayerType.ObjectLayer: LoadObjectLayer(tiledLayer, tiledGroup); break;
-                        case TiledLayerType.ImageLayer: LoadImageLayer(tiledLayer, tiledGroup); break;
-                    }
+                    case TiledLayerType.TileLayer: LoadTileLayer(tiledLayer, tiledGroup); break;
+                    case TiledLayerType.ObjectLayer: LoadObjectLayer(tiledLayer, tiledGroup); break;
+                    case TiledLayerType.ImageLayer: LoadImageLayer(tiledLayer, tiledGroup); break;
                 }
             }
         }
 
         protected virtual void LoadTileLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
         {
-            if (tiledGroup.name == "Background")
+            if (tiledGroup == null || tiledGroup.name == "Background")
             {
                 int i = 0;
                 for (int y = 0; y < Rows; y++)
@@ -81,11 +84,11 @@ namespace Texemon.SceneObjects.Maps
                         int tileId = tiledLayer.data[i];
                         if (tileId == 0) continue;
 
-                        TiledMapTileset tiledMapTileset = mapData.GetTiledMapTileset(tileId);
+                        TiledMapTileset tiledMapTileset = tiledMap.GetTiledMapTileset(tileId);
                         Tileset tileset = tilesets[tiledMapTileset.firstgid];
                         TiledTileset tiledTileset = tileset.TiledTileset;
-                        TiledTile tilesetTile = mapData.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
-                        TiledSourceRect spriteSource = mapData.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
+                        TiledTile tilesetTile = tiledMap.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
+                        TiledSourceRect spriteSource = tiledMap.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
 
                         tiles[x, y].ApplyBackgroundTile(tilesetTile, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas);
                     }
@@ -103,11 +106,11 @@ namespace Texemon.SceneObjects.Maps
                         int tileId = tiledLayer.data[i];
                         if (tileId == 0) continue;
 
-                        TiledMapTileset tiledMapTileset = mapData.GetTiledMapTileset(tileId);
+                        TiledMapTileset tiledMapTileset = tiledMap.GetTiledMapTileset(tileId);
                         Tileset tileset = tilesets[tiledMapTileset.firstgid];
                         TiledTileset tiledTileset = tileset.TiledTileset;
-                        TiledTile tilesetTile = mapData.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
-                        TiledSourceRect spriteSource = mapData.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
+                        TiledTile tilesetTile = tiledMap.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
+                        TiledSourceRect spriteSource = tiledMap.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
 
                         tiles[x, y].ApplyEntityTile(tilesetTile, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas, height);
                     }
@@ -117,7 +120,7 @@ namespace Texemon.SceneObjects.Maps
 
         protected virtual void LoadObjectLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
         {
-
+            ObjectData.Add(new Tuple<TiledLayer, TiledGroup>(tiledLayer, tiledGroup));
         }
 
         protected virtual void LoadImageLayer(TiledLayer tiledLayer, TiledGroup tiledGroup)
@@ -140,10 +143,10 @@ namespace Texemon.SceneObjects.Maps
 
         public void DrawBackground(SpriteBatch spriteBatch, Camera camera)
         {
-            int startTileX = Math.Max((int)(camera.View.Left / mapData.TileWidth) - 1, 0);
-            int startTileY = Math.Max((int)(camera.View.Top / mapData.TileHeight) - 1, 0);
-            int endTileX = Math.Min((int)(camera.View.Right / mapData.TileWidth), Columns - 1);
-            int endTileY = Math.Min((int)(camera.View.Bottom / mapData.TileHeight), Rows - 1);
+            int startTileX = Math.Max((int)(camera.View.Left / tiledMap.TileWidth) - 1, 0);
+            int startTileY = Math.Max((int)(camera.View.Top / tiledMap.TileHeight) - 1, 0);
+            int endTileX = Math.Min((int)(camera.View.Right / tiledMap.TileWidth), Columns - 1);
+            int endTileY = Math.Min((int)(camera.View.Bottom / tiledMap.TileHeight), Rows - 1);
 
             for (int y = startTileY; y <= endTileY; y++)
             {
@@ -156,10 +159,10 @@ namespace Texemon.SceneObjects.Maps
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            int startTileX = Math.Max((int)(camera.View.Left / mapData.TileWidth) - 1, 0);
-            int startTileY = Math.Max((int)(camera.View.Top / mapData.TileHeight) - 1, 0);
-            int endTileX = Math.Min((int)(camera.View.Right / mapData.TileWidth), Columns - 1);
-            int endTileY = Math.Min((int)(camera.View.Bottom / mapData.TileHeight), Rows - 1);
+            int startTileX = Math.Max((int)(camera.View.Left / tiledMap.TileWidth) - 1, 0);
+            int startTileY = Math.Max((int)(camera.View.Top / tiledMap.TileHeight) - 1, 0);
+            int endTileX = Math.Min((int)(camera.View.Right / tiledMap.TileWidth), Columns - 1);
+            int endTileY = Math.Min((int)(camera.View.Bottom / tiledMap.TileHeight), Rows - 1);
 
             for (int y = startTileY; y <= endTileY; y++)
             {
@@ -181,11 +184,14 @@ namespace Texemon.SceneObjects.Maps
             return tiles[x, y];
         }
 
-        public int TileWidth { get => mapData.TileWidth; }
-        public int TileHeight { get => mapData.TileHeight; }
-        public int Width { get => mapData.Width * TileWidth; }
-        public int Height { get => mapData.Height * TileHeight; }
-        public int Columns { get => mapData.Width; }
-        public int Rows { get => mapData.Height; }        
+        public TiledMap MapData { get => tiledMap; }
+        public List<Tuple<TiledLayer, TiledGroup>> ObjectData { get; } = new List<Tuple<TiledLayer, TiledGroup>>();
+
+        public int TileWidth { get => tiledMap.TileWidth; }
+        public int TileHeight { get => tiledMap.TileHeight; }
+        public int Width { get => tiledMap.Width * TileWidth; }
+        public int Height { get => tiledMap.Height * TileHeight; }
+        public int Columns { get => tiledMap.Width; }
+        public int Rows { get => tiledMap.Height; }        
     }
 }
