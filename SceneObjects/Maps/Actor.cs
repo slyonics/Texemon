@@ -99,10 +99,9 @@ namespace Texemon.SceneObjects.Maps
                 Vector2 initialExpectedPosition = expectedPosition;
                 position = ConstrainedPosition(tileMap, desiredDisplacement);
 
-                float slideDistance = (expectedPosition - position).Length() / 2.0f;
+                float slideDistance = (expectedPosition - position).Length();
                 if (slideDistance > 0.001f && Math.Abs(velocity.X) > 0.001f && Math.Abs(velocity.Y) > 0.001f)
                 {
-                    currentBounds = UpdateBounds(position);
                     currentBounds = UpdateBounds(position);
                     if (Math.Abs(velocity.Y) > 0.001f)
                     {
@@ -200,20 +199,42 @@ namespace Texemon.SceneObjects.Maps
                     if (movingDown && leadingStartY < blockingY && leadingEndY > blockingY && blockingY < constraintY) { constraintY = blockingY; constrainedY = true; }
                 }
 
-                if (constrainedX)
+                if (constrainedX && constrainedY)
                 {
                     hitTerrain = true;
 
+                    if (movingRight)
+                    {
+                        result = new Vector2(constraintX - boundingBox.Right - 0.001f, result.Y);
+                        if (movingUp) result.Y = constraintY - boundingBox.Top + 0.001f;
+                        if (movingDown) result.Y = constraintY - boundingBox.Bottom - 0.001f;
+                    }
+                    if (movingLeft)
+                    {
+                        result = new Vector2(constraintX - boundingBox.Left + 0.001f, result.Y);
+                        if (movingUp) result.Y = constraintY - boundingBox.Top + 0.001f;
+                        if (movingDown) result.Y = constraintY - boundingBox.Bottom - 0.001f;
+                    }
+                }
+                else if (constrainedX)
+                {
+                    hitTerrain = true;
+                    
                     if (movingRight) result = new Vector2(constraintX - boundingBox.Right - 0.001f, result.Y);
                     if (movingLeft) result = new Vector2(constraintX - boundingBox.Left + 0.001f, result.Y);
-                }
 
-                if (constrainedY)
+                    float movementInterval = (Math.Abs(displacement.X) - Math.Abs(result.X - endPosition.X)) / Math.Abs(displacement.X);
+                    result.Y = position.Y + displacement.Y * movementInterval;
+                }
+                else if (constrainedY)
                 {
                     hitTerrain = true;
 
                     if (movingUp) result = new Vector2(result.X, constraintY - boundingBox.Top + 0.001f);
                     if (movingDown) result = new Vector2(result.X, constraintY - boundingBox.Bottom - 0.001f);
+
+                    float movementInterval = (Math.Abs(displacement.Y) - Math.Abs(result.Y - endPosition.Y)) / Math.Abs(displacement.Y);
+                    result.X = position.X + displacement.X * movementInterval;
                 }
 
                 return result;

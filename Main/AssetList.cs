@@ -106,6 +106,7 @@ namespace Texemon.Main
         Actors_fire1,
         Actors_fire2,
         Actors_flag,
+        Actors_gal,
         Actors_monster1,
         Actors_monster2,
         Actors_monster3,

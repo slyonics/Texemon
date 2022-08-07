@@ -25,6 +25,7 @@ namespace Texemon.Scenes.MapScene
         public Tilemap Tilemap { get; set; }
 
         private Hero player;
+        private List<Npc> npcs = new List<Npc>();
         private List<EventTrigger> eventTriggers = new List<EventTrigger>();
 
         public MapScene(string mapName)
@@ -59,6 +60,15 @@ namespace Texemon.Scenes.MapScene
                                 Bounds = new Rectangle((int)tiledObject.x, (int)tiledObject.y, (int)tiledObject.width, (int)tiledObject.height),
                                 Script = tiledObject.properties.FirstOrDefault(x => x.name == "Script").value.Split('\n')
                             });
+                        }
+                        break;
+
+                    case "NPCs":
+                        foreach (TiledObject tiledObject in layer.Item1.objects)
+                        {
+                            Npc npc = new Npc(this, Tilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height), "gal");
+                            npcs.Add(npc);
+                            AddEntity(npc);
                         }
                         break;
                 }
