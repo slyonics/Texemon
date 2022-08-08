@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Texemon.Models;
+using Texemon.SceneObjects.Controllers;
+
 namespace Texemon.Scenes.MapScene
 {
-    public class NpcController : Controller
+    public class NpcController : ScriptController
     {
-        public EventController(MapScene iScene, string[] script)
+        private MapScene mapScene;
+
+        public NpcController(MapScene iScene, string[] script)
             : base(iScene, script, PriorityLevel.CutsceneLevel)
         {
             mapScene = iScene;
@@ -18,11 +23,10 @@ namespace Texemon.Scenes.MapScene
         {
             switch (tokens[0])
             {
-                case "EndGame": EndGame = true; break;
-                case "ChangeMap": ChangeMap(tokens); Audio.PlaySound(GameSound.wall_enter); break;
-                case "SetWaypoint": SetWaypoint(tokens); break;
-                case "Conversation": Conversation(tokens); break;
-                case "Encounter": Encounter(tokens); break;
+                case "ChangeMap": EventController.ChangeMap(tokens); Audio.PlaySound(GameSound.wall_enter); break;
+                case "SetWaypoint": EventController.SetWaypoint(tokens); break;
+                case "Conversation": EventController.Conversation(tokens, scriptParser); break;
+                case "Encounter": EventController.Encounter(tokens); break;
                 default: return false;
             }
 
@@ -36,15 +40,6 @@ namespace Texemon.Scenes.MapScene
                 return GameProfile.GetSaveData<bool>(parameter.Split('.')[1]).ToString();
             }
             else return base.ParseParameter(parameter);
-        }
-
-        private void ChangeMap(string[] tokens)
-        {
-            Type sceneType = Type.GetType(tokens[1]);
-            if (tokens.Length == 6) CrossPlatformGame.Transition(sceneType, tokens[2], int.Parse(tokens[3]), int.Parse(tokens[4]), (Orientation)Enum.Parse(typeof(Orientation), tokens[5]));
-            else if (tokens.Length == 3) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], tokens[2]);
-            else if (tokens.Length == 2) CrossPlatformGame.Transition(sceneType);
-            else CrossPlatformGame.Transition(sceneType, tokens[2]);
         }
 
         private void SetWaypoint(string[] tokens)

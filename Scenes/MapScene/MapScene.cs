@@ -13,20 +13,11 @@ namespace Texemon.Scenes.MapScene
 {
     public class MapScene : Scene
     {
-        private class EventTrigger
-        {
-            public TiledObject ObjectData;
-            public Rectangle Bounds;
-            public string[] Script;
-
-            public bool Terminated { get; set; }
-        }
-
         public Tilemap Tilemap { get; set; }
 
         private Hero player;
-        private List<Npc> npcs = new List<Npc>();
-        private List<EventTrigger> eventTriggers = new List<EventTrigger>();
+        public List<Npc> NPCs { get; private set; } = new List<Npc>();
+        public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
 
         public MapScene(string mapName)
         {
@@ -44,7 +35,7 @@ namespace Texemon.Scenes.MapScene
 
             player = new Hero(this, Tilemap, new Vector2(32, 32), "dude");
             AddEntity(player);
-            PlayerController playerController = new PlayerController(player);
+            PlayerController playerController = new PlayerController(this, player);
             AddController(playerController);
 
             foreach (Tuple<TiledLayer, TiledGroup> layer in Tilemap.ObjectData)
@@ -54,12 +45,7 @@ namespace Texemon.Scenes.MapScene
                     case "Triggers":
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {
-                            eventTriggers.Add(new EventTrigger()
-                            {
-                                ObjectData = tiledObject,
-                                Bounds = new Rectangle((int)tiledObject.x, (int)tiledObject.y, (int)tiledObject.width, (int)tiledObject.height),
-                                Script = tiledObject.properties.FirstOrDefault(x => x.name == "Script").value.Split('\n')
-                            });
+                            EventTriggers.Add(new EventTrigger(this, tiledObject));
                         }
                         break;
 
@@ -67,7 +53,7 @@ namespace Texemon.Scenes.MapScene
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {
                             Npc npc = new Npc(this, Tilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height), "gal");
-                            npcs.Add(npc);
+                            NPCs.Add(npc);
                             AddEntity(npc);
                         }
                         break;
@@ -81,7 +67,7 @@ namespace Texemon.Scenes.MapScene
 
             Camera.Center(player.Center);
 
-            foreach (EventTrigger eventTrigger in eventTriggers)
+            foreach (EventTrigger eventTrigger in EventTriggers)
             {
                 if (eventTrigger.Bounds.Intersects(player.Bounds))
                 {
@@ -89,7 +75,7 @@ namespace Texemon.Scenes.MapScene
                     AddController(new EventController(this, eventTrigger.Script));
                 }
             }
-            eventTriggers.RemoveAll(x => x.Terminated);
+            EventTriggers.RemoveAll(x => x.Terminated);
         }
 
         public override void DrawBackground(SpriteBatch spriteBatch)

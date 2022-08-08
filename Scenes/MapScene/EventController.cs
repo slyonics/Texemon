@@ -29,7 +29,7 @@ namespace Texemon.Scenes.MapScene
                 case "EndGame": EndGame = true; break;
                 case "ChangeMap": ChangeMap(tokens); Audio.PlaySound(GameSound.wall_enter); break;
                 case "SetWaypoint": SetWaypoint(tokens); break;
-                case "Conversation": Conversation(tokens); break;
+                case "Conversation": Conversation(tokens, scriptParser); break;
                 case "Encounter": Encounter(tokens); break;
                 default: return false;
             }
@@ -46,7 +46,7 @@ namespace Texemon.Scenes.MapScene
             else return base.ParseParameter(parameter);
         }
 
-        private void ChangeMap(string[] tokens)
+        public static void ChangeMap(string[] tokens)
         {
             Type sceneType = Type.GetType(tokens[1]);
             if (tokens.Length == 6) CrossPlatformGame.Transition(sceneType, tokens[2], int.Parse(tokens[3]), int.Parse(tokens[4]), (Orientation)Enum.Parse(typeof(Orientation), tokens[5]));
@@ -55,14 +55,14 @@ namespace Texemon.Scenes.MapScene
             else CrossPlatformGame.Transition(sceneType, tokens[2]);
         }
 
-        private void SetWaypoint(string[] tokens)
+        public static void SetWaypoint(string[] tokens)
         {
             /*
             mapScene.SetWaypoint(int.Parse(tokens[1]), int.Parse(tokens[2]));
             */
         }
 
-        private void Conversation(string[] tokens)
+        public static void Conversation(string[] tokens, ScriptParser scriptParser)
         {
             ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene(tokens[1]);
             var unblock = scriptParser.BlockScript();
@@ -70,7 +70,7 @@ namespace Texemon.Scenes.MapScene
             CrossPlatformGame.StackScene(conversationScene);
         }
 
-        private void Encounter(string[] tokens)
+        public static void Encounter(string[] tokens)
         {
             /*
             mapScene.MapViewModel.SetActor("Actors_" + tokens[1]);

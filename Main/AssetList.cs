@@ -81,6 +81,8 @@ namespace Texemon.Main
 
     public enum GameSprite
     {
+        Gamepad,
+        Keyboard,
         Actors_animal1,
         Actors_animal2,
         Actors_cars,

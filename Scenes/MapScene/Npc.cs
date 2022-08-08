@@ -10,7 +10,7 @@ using Texemon.SceneObjects.Maps;
 
 namespace Texemon.Scenes.MapScene
 {
-    public class Npc : Actor, IIn
+    public class Npc : Actor, IInteractive
     {
         protected enum NpcAnimation
         {
@@ -46,5 +46,13 @@ namespace Texemon.Scenes.MapScene
         {
 
         }
+
+        public bool Activate(Hero activator)
+        {
+            return false;
+        }
+
+        public string Label { get => "NPC"; }
+        public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height); }
     }
 }
