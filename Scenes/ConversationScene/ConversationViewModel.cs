@@ -119,7 +119,7 @@ namespace Texemon.Scenes.ConversationScene
         public event Action OnDialogueScrolled;
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
-        public ModelProperty<string> ConversationFont { get; set; } = new ModelProperty<string>("Dialogue");
+        public ModelProperty<string> ConversationFont { get; set; } = new ModelProperty<string>("Tooltip");
         public ModelProperty<string> Dialogue { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Speaker { get; set; } = new ModelProperty<string>("");
     }

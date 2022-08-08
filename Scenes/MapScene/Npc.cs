@@ -10,7 +10,7 @@ using Texemon.SceneObjects.Maps;
 
 namespace Texemon.Scenes.MapScene
 {
-    public class Npc : Actor
+    public class Npc : Actor, IIn
     {
         protected enum NpcAnimation
         {

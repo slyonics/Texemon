@@ -10,19 +10,9 @@ namespace Texemon.Main
     public enum GameFont
     {
         PersonifiedUXRegular,
-        TurpentineRegular,
-        TurpentineRegularSmall,
         Tooltip,
         BigTooltip,
-        BonesOfMuertos,
-        BonyBones,
-        BonyBonesSmall,
-        TheGingerbreadHouse,
         Title,
-        Combo,
-        BigCombo,
-        Timer,
-        BigTimer,
         Dialogue
     }
 

@@ -42,7 +42,7 @@ namespace Texemon.SceneObjects
         protected static Assembly assembly = Assembly.GetAssembly(typeof(Widget));
 
         protected string name;
-        protected GameFont font = GameFont.TurpentineRegular;
+        protected GameFont font = GameFont.Tooltip;
         protected Color color = Color.White;
 
         protected Vector2? anchor;
