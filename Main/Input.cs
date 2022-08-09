@@ -43,7 +43,7 @@ namespace Texemon.Main
 
             DeltaMouseGame = new Vector2((newMouseState.Position.X - oldMouseState.Position.X) / 2.0f, (newMouseState.Position.Y - oldMouseState.Position.Y) / 2.0f) / CrossPlatformGame.Scale;
         }
-
+        /*
         public static int DrawCommand(SpriteBatch spriteBatch, Vector2 position, Color color, PlayerNumber playerNumber, Command command)
         {
             switch (GetPlayerInput(playerNumber).InputSprite)
@@ -99,7 +99,7 @@ namespace Texemon.Main
 
             return buttonLength;
         }
-
+        */
         public static bool LeftMouseClicked { get => newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed; }
         public static bool RightMouseClicked { get => newMouseState.RightButton == ButtonState.Released && oldMouseState.RightButton == ButtonState.Pressed; }
         public static ButtonState LeftMouseState { get => newMouseState.LeftButton; }

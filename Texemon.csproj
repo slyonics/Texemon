@@ -26,6 +26,11 @@
     <DefineConstants>$(DefineConstants)TRACE;WIN64</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Assets\Graphics\Walls\**" />
+    <EmbeddedResource Remove="Assets\Graphics\Walls\**" />
+    <None Remove="Assets\Graphics\Walls\**" />
+  </ItemGroup>
+  <ItemGroup>
 	<None Remove="Icon.ico" />
 	<None Remove="Icon.bmp" />
   </ItemGroup>
@@ -93,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Graphics\Actors\" />
-    <Folder Include="Assets\Graphics\Walls\" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="$(SolutionDir)Assets\JamPacker.exe Pack $(SolutionDir)Assets $(TargetDir)" />
