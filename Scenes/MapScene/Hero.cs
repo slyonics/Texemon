@@ -27,7 +27,7 @@ namespace Texemon.Scenes.MapScene
         public const int HERO_WIDTH = 16;
         public const int HERO_HEIGHT = 32;
 
-        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-6, -8, 12, 6);
+        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-7, -8, 13, 6);
 
         private static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
@@ -41,10 +41,12 @@ namespace Texemon.Scenes.MapScene
             { HeroAnimation.WalkUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 4, 240) }
         };
 
-        public Hero(Scene iScene, Tilemap iTilemap, Vector2 iPosition, string spriteName, Orientation iOrientation = Orientation.Down)
-            : base(iScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + spriteName)], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
-        {
+        private MapScene mapScene;
 
+        public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, string spriteName, Orientation iOrientation = Orientation.Down)
+            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + spriteName)], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
+        {
+            
         }
     }
 }

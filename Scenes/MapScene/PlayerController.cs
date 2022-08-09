@@ -25,6 +25,7 @@ namespace Texemon.Scenes.MapScene
         private MapScene mapScene;
 
         private IInteractive interactable;
+        private InteractionPrompt interactionView;
 
         public Hero Player { get; set; }
 
@@ -33,6 +34,8 @@ namespace Texemon.Scenes.MapScene
         {
             mapScene = iMapScene;
             Player = iPlayer;
+
+            interactionView = mapScene.AddOverlay(new InteractionPrompt(mapScene));
         }
 
         public override void PreUpdate(GameTime gameTime)
@@ -73,7 +76,28 @@ namespace Texemon.Scenes.MapScene
                 case Orientation.Left: interactionZone.X -= (int)(Player.BoundingBox.Width * 1.5f); break;
             }
 
+            FindInteractables();
+        }
+
+        private void FindInteractables()
+        {
+            List<IInteractive> interactableList = new List<IInteractive>();
+            interactableList.AddRange(mapScene.NPCs.FindAll(x => x.Interactive));
+            interactableList.AddRange(mapScene.EventTriggers.FindAll(x => x.Interactive));
+
+            Hero player = mapScene.Player;
+            IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => player.Distance(x.Bounds));
+            Rectangle interactionZone = player.Bounds;
+            switch (player.Orientation)
+            {
+                case Orientation.Up: interactionZone.Y -= mapScene.Tilemap.TileHeight; break;
+                case Orientation.Right: interactionZone.X += mapScene.Tilemap.TileWidth; break;
+                case Orientation.Down: interactionZone.Y += mapScene.Tilemap.TileHeight; break;
+                case Orientation.Left: interactionZone.X -= mapScene.Tilemap.TileWidth; break;
+            }
+
             interactable = sortedInteractableList.FirstOrDefault(x => x.Bounds.Intersects(interactionZone));
+            interactionView.Target(interactable);
         }
     }
 }

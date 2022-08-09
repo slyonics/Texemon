@@ -13,35 +13,38 @@ namespace Texemon.Scenes.MapScene
     {
         private const GameFont GAME_FONT = GameFont.Dialogue;
 
+        private MapScene mapScene;
         private IInteractive target;
-        private string labelText;
 
         private NinePatch textbox;
 
-        public InteractionPrompt(IInteractive iTarget, string iLabelText)
+        public InteractionPrompt(MapScene iMapScene)
         {
-            target = iTarget;
-            labelText = iLabelText;
-            textbox = new NinePatch("Windows_GamePanel", 0.05f);
-            SetBounds();
-        }
-
-        private void SetBounds()
-        {
-            int width = Text.GetStringLength(GAME_FONT, labelText);
-            int height = Text.GetStringHeight(GAME_FONT);
-            textbox.Bounds = new Rectangle(0, 0, width, height);
+            mapScene = iMapScene;
+            textbox = new NinePatch("Label", 0.05f);
         }
 
         public override void Update(GameTime gameTime)
         {
-            SetBounds();
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            textbox.Draw(spriteBatch, target.LabelPosition);
-            Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(textbox.Bounds.Width / 2), GAME_FONT, labelText);
+            if (target != null && mapScene.PriorityLevel == PriorityLevel.GameLevel)
+            {
+                int width = Text.GetStringLength(GAME_FONT, target.Label);
+                int height = Text.GetStringHeight(GAME_FONT);
+                textbox.Bounds = new Rectangle(0, 0, width + 8, height + 2);
+
+                textbox.Draw(spriteBatch, target.LabelPosition - mapScene.Camera.Position - new Vector2(textbox.Bounds.Width / 2, 0));
+                Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(0, 5) - mapScene.Camera.Position, GAME_FONT, target.Label, 0.03f);
+            }
+        }
+
+        public void Target(IInteractive newTarget)
+        {
+            target = newTarget;
         }
     }
 }

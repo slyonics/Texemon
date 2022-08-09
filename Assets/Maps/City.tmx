@@ -14,7 +14,11 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="NPCs">
-  <object id="3" name="gal" x="208" y="320" width="20" height="20"/>
+  <object id="3" name="gal" x="208" y="320" width="20" height="20">
+   <properties>
+    <property name="Interact" value="Conversation TreeConvo"/>
+   </properties>
+  </object>
  </objectgroup>
  <group id="9" name="Background">
   <layer id="1" name="Roads" width="300" height="260">

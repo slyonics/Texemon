@@ -143,6 +143,7 @@ namespace Texemon.Main
         Tiles_FD_Interior,
         Tiles_FD_Mountains,
         Tiles_FD_Village,
+        Widgets_Label,
         Widgets_Buttons_GamePanel,
         Widgets_Buttons_GamePanelOpaque,
         Widgets_Buttons_GamePanelSelected,

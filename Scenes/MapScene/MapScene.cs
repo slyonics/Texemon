@@ -15,7 +15,7 @@ namespace Texemon.Scenes.MapScene
     {
         public Tilemap Tilemap { get; set; }
 
-        private Hero player;
+        public Hero Player { get; private set; }
         public List<Npc> NPCs { get; private set; } = new List<Npc>();
         public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
 
@@ -33,9 +33,9 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            player = new Hero(this, Tilemap, new Vector2(32, 32), "dude");
-            AddEntity(player);
-            PlayerController playerController = new PlayerController(this, player);
+            Player = new Hero(this, Tilemap, new Vector2(32, 32), "dude");
+            AddEntity(Player);
+            PlayerController playerController = new PlayerController(this, Player);
             AddController(playerController);
 
             foreach (Tuple<TiledLayer, TiledGroup> layer in Tilemap.ObjectData)
@@ -52,7 +52,7 @@ namespace Texemon.Scenes.MapScene
                     case "NPCs":
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {
-                            Npc npc = new Npc(this, Tilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height), "gal");
+                            Npc npc = new Npc(this, Tilemap, tiledObject, "gal");
                             NPCs.Add(npc);
                             AddEntity(npc);
                         }
@@ -65,11 +65,11 @@ namespace Texemon.Scenes.MapScene
         {
             base.Update(gameTime, priorityLevel);
 
-            Camera.Center(player.Center);
+            Camera.Center(Player.Center);
 
             foreach (EventTrigger eventTrigger in EventTriggers)
             {
-                if (eventTrigger.Bounds.Intersects(player.Bounds))
+                if (eventTrigger.Bounds.Intersects(Player.Bounds))
                 {
                     eventTrigger.Terminated = true;
                     AddController(new EventController(this, eventTrigger.Script));
