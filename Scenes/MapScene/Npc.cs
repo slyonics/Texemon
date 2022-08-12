@@ -58,6 +58,7 @@ namespace Texemon.Scenes.MapScene
                 switch (tiledProperty.name)
                 {
                     case "Interact": interactionScript = tiledProperty.value.Split('\n'); break;
+                    case "Label": Label = tiledProperty.value; break;
                 }
             }
         }
@@ -78,7 +79,7 @@ namespace Texemon.Scenes.MapScene
             return true;
         }
 
-        public string Label { get => "NPC"; }
+        public string Label { get; private set; } = "NPC";
         public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height); }
         public bool Interactive { get => interactionScript != null; }
     }
