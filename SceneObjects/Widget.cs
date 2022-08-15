@@ -13,6 +13,7 @@ namespace Texemon.SceneObjects
 {
     public enum Alignment
     {
+        Anchored,
         Relative,
         Absolute,
         Cascading,
@@ -24,7 +25,7 @@ namespace Texemon.SceneObjects
         Center,
         BottomRight,
         Bottom,
-        BottomLeft,
+        BottomLeft
     }
 
     public abstract class Widget : Overlay
@@ -41,11 +42,8 @@ namespace Texemon.SceneObjects
 
         protected static Assembly assembly = Assembly.GetAssembly(typeof(Widget));
 
-        protected GameFont Font { get; set; } = GameFont.Tooltip;
-
-        protected Vector2? Anchor { get; set; }
-        protected Rectangle bounds;   
-        
+        protected Rectangle bounds;
+        private Vector2 anchor;
         protected virtual Rectangle Bounds { get => bounds; set => bounds = value; }
 
         protected Vector2[] layoutOffset = new Vector2[Enum.GetValues(typeof(Alignment)).Length];
@@ -101,20 +99,20 @@ namespace Texemon.SceneObjects
             switch (propertyValue)
             {
                 case bool: property.SetValue(this, bool.Parse(attributeValue)); break;
-                case int: property.SetValue(this, int.Parse(attributeValue)); break;
+                case int: property.SetValue(this, ParseInt(attributeValue)); break;
                 case float: property.SetValue(this, float.Parse(attributeValue)); break;
-                case string: property.SetValue(this, attributeValue); break;
+                case string: property.SetValue(this, ParseString(attributeValue)); break;
                 case Microsoft.Xna.Framework.Color: property.SetValue(this, Graphics.ParseHexcode(attributeValue)); break;
                 case Vector2:
                 {
                     string[] tokens = attributeValue.Split(',');
-                    property.SetValue(this, new Vector2(int.Parse(tokens[0]), int.Parse(tokens[1])));
+                    property.SetValue(this, new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])));
                     break;
                 }
                 case Rectangle:
                 {
                     string[] tokens = attributeValue.Split(',');
-                    property.SetValue(this, new Rectangle(int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3])));
+                    property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
                     break;
                 }
 
@@ -132,7 +130,6 @@ namespace Texemon.SceneObjects
         {
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
                 switch (xmlAttribute.Name)
                 {
                     default:
@@ -174,14 +171,19 @@ namespace Texemon.SceneObjects
         {
             switch (Alignment)
             {
+                case Alignment.Anchored:
+                    currentWindow = bounds;
+
+                    break;
+
                 case Alignment.Cascading:
-                    if ((int)parent.LayoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
+                    if ((int)parent.layoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
                     {
-                        parent.AdjustLayoutOffset(Alignment, new Vector2(-parent.LayoutOffset[(int)Alignment].X, bounds.Height));
+                        parent.AdjustLayoutOffset(Alignment, new Vector2(-parent.layoutOffset[(int)Alignment].X, bounds.Height));
                     }
 
-                    currentWindow.X = parent.InnerBounds.Left + (int)parent.LayoutOffset[(int)Alignment].X + bounds.X;
-                    currentWindow.Y = parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)Alignment].Y + bounds.Y;
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + (int)parent.layoutOffset[(int)Alignment].Y + bounds.Y;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
@@ -191,7 +193,7 @@ namespace Texemon.SceneObjects
 
                 case Alignment.Vertical:
                     currentWindow.X += (parent.OuterBounds.X - (bounds.Width - parent.OuterBounds.Width) / 2) + bounds.X;
-                    currentWindow.Y = (parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)Alignment].Y) + bounds.Y;
+                    currentWindow.Y = (parent.InnerBounds.Top + (int)parent.layoutOffset[(int)Alignment].Y) + bounds.Y;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
@@ -200,7 +202,7 @@ namespace Texemon.SceneObjects
 
                 case Alignment.ReverseVertical:
                     currentWindow.X += parent.OuterBounds.X - (bounds.Width - parent.OuterBounds.Width) / 2;
-                    currentWindow.Y = parent.InnerBounds.Bottom - (int)parent.LayoutOffset[(int)Alignment].Y - bounds.Height;
+                    currentWindow.Y = parent.InnerBounds.Bottom - (int)parent.layoutOffset[(int)Alignment].Y - bounds.Height;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
@@ -265,9 +267,6 @@ namespace Texemon.SceneObjects
                     case "$CenterY": return CrossPlatformGame.ScreenHeight / 2;
                     case "$Top": return 0;
                     case "$Bottom": return CrossPlatformGame.ScreenHeight;
-                    case "$MapX": return (int)(CrossPlatformGame.ScreenWidth * 3 / 4);
-                    case "$MapY": return (int)(CrossPlatformGame.ScreenHeight / 2);
-                    case "$Scale": return CrossPlatformGame.Scale;
                     default: throw new Exception();
                 }
             }
@@ -583,22 +582,27 @@ namespace Texemon.SceneObjects
         {
             get
             {
-                if (Anchor.HasValue) return Anchor.Value;
+                if (Alignment == Alignment.Anchored) return Anchor;
                 else if (parent != null) return parent.Position;
                 else return Vector2.Zero;
             }
         }
-        public Vector2[] LayoutOffset { get => layoutOffset; }
+        protected Vector2 Anchor { get => anchor; set { anchor = value; Alignment = Alignment.Anchored; } }
         public Rectangle OuterBounds { get => currentWindow; set => currentWindow = value; }
         public Rectangle InnerMargin { get; protected set; } = new Rectangle();
         public Rectangle InnerBounds { get => new Rectangle(currentWindow.Left + InnerMargin.Left, currentWindow.Top + InnerMargin.Top, currentWindow.Width - InnerMargin.Left - InnerMargin.Width, currentWindow.Height - InnerMargin.Top - InnerMargin.Height); }
         public Vector2 AbsolutePosition { get => Position + new Vector2(currentWindow.X, currentWindow.Y); }
 
         public string Name { get; protected set; } = "Widget";
+        protected GameFont Font { get; set; } = GameFont.Tooltip;
         public Color Color { get; protected set; } = Color.White;
         protected float Depth { get; set; } = 1.0f;
         public virtual bool Visible { get; set; } = true;
         public virtual bool Enabled { get; set; } = true;
+        
+
+        
+
 
         public int TooltipDelay { get; protected set; } = DEFAULT_TOOLTIP_DELAY;
         public string Tooltip { get; protected set; } = "";

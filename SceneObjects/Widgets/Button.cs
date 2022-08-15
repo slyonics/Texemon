@@ -49,7 +49,6 @@ namespace Texemon.SceneObjects.Widgets
                     case "DisabledStyle": disabledStyle = "Buttons_" + xmlAttribute.Value; break;
                     case "Action": buttonEvent = GetParent<ViewModel>().GetType().GetMethod(xmlAttribute.Value); break;
                     case "ActionParameter": eventParameter = xmlAttribute.Value; break;
-                    case "Radio": Radio = bool.Parse(xmlAttribute.Value); break;
                     case "Selected": selected = bool.Parse(xmlAttribute.Value); break;
                     case "Sound": clickSound = string.IsNullOrEmpty(xmlAttribute.Value) ? GameSound.None : (GameSound)Enum.Parse(typeof(GameSound), xmlAttribute.Value); break;
 

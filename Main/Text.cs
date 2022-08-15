@@ -33,7 +33,7 @@ namespace Texemon.Main
             { GameFont.PersonifiedUXRegular, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 32, fontHeight = 40 } },
             { GameFont.Dialogue, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
             // { GameFont.Dialogue, new GameFontData() { fontFile = "BitPotionExt", fontSize = 24, fontHeight = 16 } },
-            { GameFont.Tooltip, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 18, fontHeight = 22 } },
+            { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();

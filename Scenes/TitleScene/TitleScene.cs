@@ -7,7 +7,7 @@ namespace Texemon.Scenes.TitleScene
     public class TitleScene : Scene
     {
         private Texture2D backgroundColorSprite = AssetCache.SPRITES[GameSprite.Background_Splash];
-        private Texture2D ponsonaSprite = AssetCache.SPRITES[GameSprite.Background_Ponsona];
+        private Texture2D ponsonaSprite = AssetCache.SPRITES[GameSprite.Background_Title];
 
         private TitleViewModel titleMenuViewModel;
 
