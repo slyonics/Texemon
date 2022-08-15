@@ -47,13 +47,13 @@ namespace Texemon.SceneObjects.Widgets
         {
             if (!Transitioning && !terminated)
             {
-                foreach (Widget widget in childList)
+                foreach (Widget widget in ChildList)
                 {
                     if (widget.Visible && IsChildVisible(widget))
                         widget.Draw(spriteBatch);
                 }
 
-                tooltip?.Draw(spriteBatch);
+                tooltipWidget?.Draw(spriteBatch);
             }
 
         }
@@ -67,12 +67,12 @@ namespace Texemon.SceneObjects.Widgets
         private void Binding_ModelChanged()
         {
             for (int i = 0; i < layoutOffset.Length; i++) layoutOffset[i] = new Vector2();
-            foreach (Widget widget in childList) widget.Terminate();
-            childList.Clear();
+            foreach (Widget widget in ChildList) widget.Terminate();
+            ChildList.Clear();
 
             foreach (var modelProperty in Binding)
             {
-                Widget childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, depth + WIDGET_DEPTH_OFFSET }, null, null);
+                Widget childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + WIDGET_DEPTH_OFFSET }, null, null);
                 AddChild(childWidget, dataTemplate);
             }
         }
@@ -94,12 +94,12 @@ namespace Texemon.SceneObjects.Widgets
 
         public void ScrollUp()
         {
-            scrollOffset.Y -= childList.Last().OuterBounds.Height;
+            scrollOffset.Y -= ChildList.Last().OuterBounds.Height;
         }
 
         public void ScrollDown()
         {
-            scrollOffset.Y += childList.Last().OuterBounds.Height;
+            scrollOffset.Y += ChildList.Last().OuterBounds.Height;
         }
 
         private Vector2 scrollOffset;

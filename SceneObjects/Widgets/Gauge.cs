@@ -64,10 +64,10 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.ApplyAlignment();
 
-            gaugeBackground = new NinePatch(background, depth);
+            gaugeBackground = new NinePatch(background, Depth);
             gaugeBackground.Bounds = currentWindow;
 
-            gaugeFrame = new NinePatch(frame, depth - 0.01f);
+            gaugeFrame = new NinePatch(frame, Depth - 0.01f);
             gaugeFrame.Bounds = currentWindow;
         }
 
@@ -125,7 +125,7 @@ namespace Texemon.SceneObjects.Widgets
                 }
             }
 
-            gaugeBackground = new NinePatch(background, depth);
+            gaugeBackground = new NinePatch(background, Depth);
 
             if (binding != null)
             {
@@ -205,7 +205,7 @@ namespace Texemon.SceneObjects.Widgets
                 }
             }
 
-            if (slider != null) sliderBackground = new NinePatch(slider, depth - 0.001f, true);
+            if (slider != null) sliderBackground = new NinePatch(slider, Depth - 0.001f, true);
         }
 
         public override void ApplyAlignment()

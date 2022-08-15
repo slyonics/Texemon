@@ -6,12 +6,19 @@ using Texemon.SceneObjects;
 
 namespace Texemon.Models
 {
+    public interface IModelProperty
+    {
+        string Name { get; set; }
+    }
+
     [Serializable]
-    public class ModelProperty<T>
+    public class ModelProperty<T> : IModelProperty
     {
         public delegate void ChangeCallback();
 
         private T model;
+
+        public string Name { get; set; }
 
         public T Value
         {

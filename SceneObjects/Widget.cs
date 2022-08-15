@@ -11,24 +11,24 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.SceneObjects
 {
+    public enum Alignment
+    {
+        Relative,
+        Absolute,
+        Cascading,
+        Vertical,
+        ReverseVertical,
+        Stretch,
+        Left,
+        Right,
+        Center,
+        BottomRight,
+        Bottom,
+        BottomLeft,
+    }
+
     public abstract class Widget : Overlay
     {
-        public enum Alignment
-        {
-            Relative,
-            Absolute,
-            Cascading,
-            Vertical,
-            ReverseVertical,
-            Stretch,
-            Left,
-            Right,
-            Center,
-            BottomRight,
-            Bottom,
-            BottomLeft,
-        }
-
         protected const float WIDGET_START_DEPTH = 0.15f;
         protected const float WIDGET_DEPTH_OFFSET = -0.001f;
         protected const float WIDGET_PEER_DEPTH_OFFSET = -0.0005f;
@@ -41,37 +41,27 @@ namespace Texemon.SceneObjects
 
         protected static Assembly assembly = Assembly.GetAssembly(typeof(Widget));
 
-        protected string name;
-        protected GameFont font = GameFont.Tooltip;
-        protected Color color = Color.White;
+        protected GameFont Font { get; set; } = GameFont.Tooltip;
 
-        protected Vector2? anchor;
-        protected Rectangle bounds;
-        protected int scaleX = 1;
-        protected int scaleY = 1;
-        protected float depth;
+        protected Vector2? Anchor { get; set; }
+        protected Rectangle bounds;   
+        
+        protected virtual Rectangle Bounds { get => bounds; set => bounds = value; }
 
         protected Vector2[] layoutOffset = new Vector2[Enum.GetValues(typeof(Alignment)).Length];
-        protected Alignment alignment = Alignment.Absolute;
+        protected Alignment Alignment { get; set; } = Alignment.Absolute;
         protected int horizontalCenterAdjust;
-
         protected Rectangle currentWindow;
-        protected Rectangle innerMargin;
 
         protected Widget parent;
-        protected List<Widget> childList = new List<Widget>();
 
         protected TransitionController transition = null;
-        protected bool closed;
+
 
         protected int tooltipTime;
-        public int TooltipDelay { get; set; } = DEFAULT_TOOLTIP_DELAY;
-        protected string tooltipText = "";
-        protected Tooltip tooltip;
+        protected Tooltip tooltipWidget;
         protected Vector2 tooltipOrigin;
 
-        protected bool visible = true;
-        protected bool enabled = true;
         protected bool mousedOver;
 
         protected ModelProperty<bool> enableBinding;
@@ -89,7 +79,7 @@ namespace Texemon.SceneObjects
         public Widget(Widget iParent, float widgetDepth)
         {
             parent = iParent;
-            depth = widgetDepth;
+            Depth = widgetDepth;
         }
 
         public void LoadXml(XmlNode xmlNode)
@@ -98,7 +88,44 @@ namespace Texemon.SceneObjects
 
             ApplyAlignment();
 
-            LoadChildren(xmlNode.ChildNodes, depth + WIDGET_DEPTH_OFFSET);
+            LoadChildren(xmlNode.ChildNodes, Depth + WIDGET_DEPTH_OFFSET);
+        }
+
+        protected virtual void ParseAttribute(string attributeName, string attributeValue)
+        {
+            PropertyInfo property = GetType().GetProperty(attributeName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            if (property == null) return;
+
+            object propertyValue = property.GetValue(this);
+            switch (propertyValue)
+            {
+                case bool: property.SetValue(this, bool.Parse(attributeValue)); break;
+                case int: property.SetValue(this, int.Parse(attributeValue)); break;
+                case float: property.SetValue(this, float.Parse(attributeValue)); break;
+                case string: property.SetValue(this, attributeValue); break;
+                case Microsoft.Xna.Framework.Color: property.SetValue(this, Graphics.ParseHexcode(attributeValue)); break;
+                case Vector2:
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    property.SetValue(this, new Vector2(int.Parse(tokens[0]), int.Parse(tokens[1])));
+                    break;
+                }
+                case Rectangle:
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    property.SetValue(this, new Rectangle(int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3])));
+                    break;
+                }
+
+                default:
+                if (propertyValue is Enum)
+                {
+                    Type type = propertyValue.GetType();
+                    property.SetValue(this, Enum.Parse(type, attributeValue));
+                }
+                break;
+            }
         }
 
         public virtual void LoadAttributes(XmlNode xmlNode)
@@ -108,28 +135,8 @@ namespace Texemon.SceneObjects
                 string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Name": name = xmlAttribute.Value; break;
-                    case "Color": color = Graphics.ParseHexcode(xmlAttribute.Value); break;
-                    case "Anchor": tokens = xmlAttribute.Value.Split(','); anchor = new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])); break;
-                    case "InnerMargin": tokens = xmlAttribute.Value.Split(','); innerMargin = new Rectangle(int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3])); break;
-                    case "Tooltip": tooltipText = xmlAttribute.Value; break;
-                    case "TooltipDelay": TooltipDelay = int.Parse(xmlAttribute.Value); break;
-                    case "Alignment": alignment = (Alignment)Enum.Parse(typeof(Alignment), xmlAttribute.Value); break;
-                    case "Depth": depth = float.Parse(xmlAttribute.Value); break;
-                    case "Visible": visible = bool.Parse(xmlAttribute.Value); break;
-                    case "Enabled": enabled = bool.Parse(xmlAttribute.Value); break;
-                    case "Font": font = (GameFont)Enum.Parse(typeof(GameFont), xmlAttribute.Value); break;
-
-                    case "Bounds":
-                        tokens = xmlAttribute.Value.Split(',');
-                        bounds = new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3]));
-                        if (tokens.Length == 5) scaleX = scaleY = ParseInt(tokens[4]);
-                        else if (tokens.Length == 6)
-                        {
-                            scaleX = ParseInt(tokens[4]);
-                            scaleY = ParseInt(tokens[5]);
-                        }
-                        break;
+                    default:
+                        ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
 
                     case "EnableBinding":
                         enableBinding = LookupBinding<bool>(xmlAttribute.Value);
@@ -148,7 +155,7 @@ namespace Texemon.SceneObjects
                         ColorBinding_ModelChanged();
                         break;
 
-                    case "TooltipSoftBinding": tooltipText = LookupSoftBinding<string>(xmlAttribute.Value); break;
+                    case "TooltipSoftBinding": Tooltip = LookupSoftBinding<string>(xmlAttribute.Value); break;
                     case "TooltipBinding":
                         tooltipBinding = LookupBinding<string>(xmlAttribute.Value); tooltipBinding.ModelChanged += TooltipBinding_ModelChanged;
                         if (tooltipBinding.Value != null) TooltipBinding_ModelChanged();
@@ -161,54 +168,43 @@ namespace Texemon.SceneObjects
                         break;
                 }
             }
-
-            if (scaleX != 1 || scaleY != 1)
-            {
-                int innerWidth = bounds.Width;
-                int innerHeight = bounds.Height;
-
-                bounds.X += bounds.X * (scaleX - 1);
-                bounds.Y += bounds.Y * (scaleY - 1);
-                bounds.Width += innerWidth * (scaleX - 1);
-                bounds.Height += innerHeight * (scaleY - 1);
-            }
         }
 
         public virtual void ApplyAlignment()
         {
-            switch (alignment)
+            switch (Alignment)
             {
                 case Alignment.Cascading:
-                    if ((int)parent.LayoutOffset[(int)alignment].X + bounds.Width > parent.InnerBounds.Width)
+                    if ((int)parent.LayoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
                     {
-                        parent.AdjustLayoutOffset(alignment, new Vector2(-parent.LayoutOffset[(int)alignment].X, bounds.Height));
+                        parent.AdjustLayoutOffset(Alignment, new Vector2(-parent.LayoutOffset[(int)Alignment].X, bounds.Height));
                     }
 
-                    currentWindow.X = parent.InnerBounds.Left + (int)parent.LayoutOffset[(int)alignment].X + bounds.X;
-                    currentWindow.Y = parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)alignment].Y + bounds.Y;
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.LayoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)Alignment].Y + bounds.Y;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
-                    parent.AdjustLayoutOffset(alignment, new Vector2(bounds.X + bounds.Width, 0));
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
 
                     break;
 
                 case Alignment.Vertical:
                     currentWindow.X += (parent.OuterBounds.X - (bounds.Width - parent.OuterBounds.Width) / 2) + bounds.X;
-                    currentWindow.Y = (parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)alignment].Y) + bounds.Y;
+                    currentWindow.Y = (parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)Alignment].Y) + bounds.Y;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
-                    parent.AdjustLayoutOffset(alignment, new Vector2(0, bounds.Y + bounds.Height));
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(0, bounds.Y + bounds.Height));
                     break;
 
                 case Alignment.ReverseVertical:
                     currentWindow.X += parent.OuterBounds.X - (bounds.Width - parent.OuterBounds.Width) / 2;
-                    currentWindow.Y = parent.InnerBounds.Bottom - (int)parent.LayoutOffset[(int)alignment].Y - bounds.Height;
+                    currentWindow.Y = parent.InnerBounds.Bottom - (int)parent.LayoutOffset[(int)Alignment].Y - bounds.Height;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
-                    parent.AdjustLayoutOffset(alignment, new Vector2(0, -bounds.Height - bounds.Y));
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(0, -bounds.Height - bounds.Y));
                     break;
 
                 case Alignment.Center:
@@ -317,8 +313,8 @@ namespace Texemon.SceneObjects
                         }
                         else
                         {
-                            layoutOffset[(int)Alignment.Cascading] = new Vector2(0, layoutOffset[(int)Alignment.Cascading].Y + childList.Last().bounds.Height);
-                            layoutOffset[(int)Alignment.Vertical] = new Vector2(0, layoutOffset[(int)Alignment.Vertical].Y + childList.Last().bounds.Height);
+                            layoutOffset[(int)Alignment.Cascading] = new Vector2(0, layoutOffset[(int)Alignment.Cascading].Y + ChildList.Last().bounds.Height);
+                            layoutOffset[(int)Alignment.Vertical] = new Vector2(0, layoutOffset[(int)Alignment.Vertical].Y + ChildList.Last().bounds.Height);
                         }
                         continue;
 
@@ -334,29 +330,29 @@ namespace Texemon.SceneObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (closed && !childList.Any(x => x.Transitioning))
+            if (Closed && !ChildList.Any(x => x.Transitioning))
                 Terminate();
 
-            if (!visible) return;
+            if (!Visible) return;
 
-            foreach (Widget widget in childList) widget.Update(gameTime);
+            foreach (Widget widget in ChildList) widget.Update(gameTime);
 
-            if (mousedOver && !Transitioning && tooltip == null && Input.DeltaMouseGame.Length() < 1 && tooltipText != "")
+            if (mousedOver && !Transitioning && tooltipWidget == null && Input.DeltaMouseGame.Length() < 1 && Tooltip != "")
             {
                 tooltipTime += gameTime.ElapsedGameTime.Milliseconds;
                 if (tooltipTime >= TooltipDelay)
                 {
-                    tooltip = new Tooltip(Input.MousePosition, tooltipText);
+                    tooltipWidget = new Tooltip(Input.MousePosition, Tooltip);
                     tooltipTime = 0;
-                    tooltipOrigin = new Vector2(tooltip.InnerBounds.X, tooltip.InnerBounds.Y);
+                    tooltipOrigin = new Vector2(tooltipWidget.InnerBounds.X, tooltipWidget.InnerBounds.Y);
                 }
             }
 
-            if (tooltip != null)
+            if (tooltipWidget != null)
             {
-                tooltip.Update(gameTime);
+                tooltipWidget.Update(gameTime);
 
-                if (Vector2.Distance(tooltipOrigin, new Vector2(tooltip.InnerBounds.X, tooltip.InnerBounds.Y)) > TOOLTIP_DESPAWN_RANGE || Input.DeltaMouseGame.Length() > TOOLTIP_DESPAWN_DELTA)
+                if (Vector2.Distance(tooltipOrigin, new Vector2(tooltipWidget.InnerBounds.X, tooltipWidget.InnerBounds.Y)) > TOOLTIP_DESPAWN_RANGE || Input.DeltaMouseGame.Length() > TOOLTIP_DESPAWN_DELTA)
                     DeleteTooltip();
             }
         }
@@ -365,26 +361,26 @@ namespace Texemon.SceneObjects
         {
             if (!Transitioning && !terminated)
             {
-                foreach (Widget widget in childList)
+                foreach (Widget widget in ChildList)
                 {
-                    if (widget.visible)
+                    if (widget.Visible)
                         widget.Draw(spriteBatch);
                 }
 
-                tooltip?.Draw(spriteBatch);
+                tooltipWidget?.Draw(spriteBatch);
             }
         }
 
         public virtual void AddChild(Widget widget, XmlNode node)
         {
-            childList.Add(widget);
+            ChildList.Add(widget);
             widget.LoadXml(node);
         }
 
         public virtual Widget GetWidgetAt(Vector2 mousePosition)
         {
             if (!currentWindow.Contains(mousePosition - Position)) return null;
-            foreach (Widget child in childList)
+            foreach (Widget child in ChildList)
             {
                 Widget widget = child.GetWidgetAt(mousePosition);
                 if (widget != null) return widget;
@@ -409,9 +405,9 @@ namespace Texemon.SceneObjects
 
         public virtual T GetWidget<T>(string widgetName) where T : Widget
         {
-            foreach (Widget child in childList)
+            foreach (Widget child in ChildList)
             {
-                if (child.name == widgetName) return child as T;
+                if (child.Name == widgetName) return child as T;
                 else
                 {
                     Widget result = child.GetWidget<T>(widgetName);
@@ -467,7 +463,7 @@ namespace Texemon.SceneObjects
 
                 case "DataGrid":
                     DataGrid parent = GetParent<DataGrid>();
-                    dataContext = parent.Binding[parent.childList.IndexOf(GetDescendent(parent))];
+                    dataContext = parent.Binding[parent.ChildList.IndexOf(GetDescendent(parent))];
                     tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
                     break;
 
@@ -537,74 +533,79 @@ namespace Texemon.SceneObjects
 
         private void DeleteTooltip()
         {
-            tooltip = null;
+            tooltipWidget = null;
             tooltipTime = 0;
         }
 
         protected virtual void EnableBinding_ModelChanged()
         {
-            enabled = enableBinding.Value;
+            Enabled = enableBinding.Value;
         }
 
         private void VisibleBinding_ModelChanged()
         {
-            visible = visibleBinding.Value;
+            Visible = visibleBinding.Value;
         }
 
         public void ColorBinding_ModelChanged()
         {
-            color = colorBinding.Value;
+            Color = colorBinding.Value;
         }
 
         public void TooltipBinding_ModelChanged()
         {
-            tooltipText = tooltipBinding.Value;
+            Tooltip = tooltipBinding.Value;
         }
 
         private void FontBinding_ModelChanged()
         {
-            font = (GameFont)Enum.Parse(typeof(GameFont), (string)fontBinding.Value);
+            Font = (GameFont)Enum.Parse(typeof(GameFont), (string)fontBinding.Value);
         }
 
         public override void Terminate()
         {
             base.Terminate();
 
-            foreach (Widget widget in childList) widget.Terminate();
+            foreach (Widget widget in ChildList) widget.Terminate();
         }
 
         public virtual void Close()
         {
-            closed = true;
-            foreach (Widget widget in childList) widget.Close();
+            Closed = true;
+            foreach (Widget widget in ChildList) widget.Close();
 
-            if (!childList.Any(x => x.Transitioning)) Terminate();
+            if (!ChildList.Any(x => x.Transitioning)) Terminate();
         }
 
-        public string Name { get => name; }
+        public List<Widget> ChildList { get; protected set; } = new List<Widget>();
+
         public virtual Vector2 Position
         {
             get
             {
-                if (anchor.HasValue) return anchor.Value;
+                if (Anchor.HasValue) return Anchor.Value;
                 else if (parent != null) return parent.Position;
                 else return Vector2.Zero;
             }
         }
-
-        public int Height { get => Text.GetStringHeight(font); }
         public Vector2[] LayoutOffset { get => layoutOffset; }
         public Rectangle OuterBounds { get => currentWindow; set => currentWindow = value; }
-        public Rectangle InnerBounds { get => new Rectangle(currentWindow.Left + innerMargin.Left, currentWindow.Top + innerMargin.Top, currentWindow.Width - innerMargin.Left - innerMargin.Width, currentWindow.Height - innerMargin.Top - innerMargin.Height); }
-        public Rectangle InnerMargin { get => innerMargin; }
+        public Rectangle InnerMargin { get; protected set; } = new Rectangle();
+        public Rectangle InnerBounds { get => new Rectangle(currentWindow.Left + InnerMargin.Left, currentWindow.Top + InnerMargin.Top, currentWindow.Width - InnerMargin.Left - InnerMargin.Width, currentWindow.Height - InnerMargin.Top - InnerMargin.Height); }
         public Vector2 AbsolutePosition { get => Position + new Vector2(currentWindow.X, currentWindow.Y); }
-        public List<Widget> ChildList { get => childList; }
 
-        public bool Visible { get => visible; set => visible = value; }
-        public virtual bool Enabled { get => enabled; set => enabled = value; }
+        public string Name { get; protected set; } = "Widget";
+        public Color Color { get; protected set; } = Color.White;
+        protected float Depth { get; set; } = 1.0f;
+        public virtual bool Visible { get; set; } = true;
+        public virtual bool Enabled { get; set; } = true;
+
+        public int TooltipDelay { get; protected set; } = DEFAULT_TOOLTIP_DELAY;
+        public string Tooltip { get; protected set; } = "";
+
         public bool Transitioning { get => transition != null; }
+
+        public bool Closed { get; protected set; } = false;
         public override bool Terminated { get => terminated && !Transitioning; }
-        public bool Closed { get => closed; }
-        public string TooltipText { get => tooltipText; set => tooltipText = value; }
     }
 }

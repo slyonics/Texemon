@@ -62,7 +62,7 @@ namespace Texemon.SceneObjects.Widgets
                 switch (xmlAttribute.Name)
                 {
                     case "FlatFrame": flatframe = bool.Parse(xmlAttribute.Value); break;
-                    case "Style": panelFrame = new NinePatch("Windows_" + xmlAttribute.Value, depth, flatframe); panelFrame.FrameColor = color; break;
+                    case "Style": panelFrame = new NinePatch("Windows_" + xmlAttribute.Value, Depth, flatframe); panelFrame.FrameColor = Color; break;
                     case "TransitionIn": transitionIn = (TransitionType)Enum.Parse(typeof(TransitionType), xmlAttribute.Value); break;
                     case "TransitionOut": transitionOut = (TransitionType)Enum.Parse(typeof(TransitionType), xmlAttribute.Value); break;
                     case "Resize": resizeType = (ResizeType)Enum.Parse(typeof(ResizeType), xmlAttribute.Value); break;
@@ -83,13 +83,13 @@ namespace Texemon.SceneObjects.Widgets
         {
             if ((!Transitioning || transitionIn != TransitionType.Expand) && !terminated)
             {
-                foreach (Widget widget in childList)
+                foreach (Widget widget in ChildList)
                 {
                     if (widget.Visible)
                         widget.Draw(spriteBatch);
                 }
 
-                tooltip?.Draw(spriteBatch);
+                tooltipWidget?.Draw(spriteBatch);
             }
 
             panelFrame?.Draw(spriteBatch, Position);
@@ -150,14 +150,14 @@ namespace Texemon.SceneObjects.Widgets
         private void FinishTransition(TransitionDirection transitionDirection)
         {
             transition = null;
-            if (closed) Terminate();
+            if (Closed) Terminate();
         }
 
         public void Resize(int width, int height)
         {
             if (resizeType == ResizeType.Both || resizeType == ResizeType.Height)
             {
-                currentWindow.Height = height + innerMargin.Y + innerMargin.Height;
+                currentWindow.Height = height + InnerMargin.Y + InnerMargin.Height;
                 endWindow.Height = currentWindow.Height;
             }
         }

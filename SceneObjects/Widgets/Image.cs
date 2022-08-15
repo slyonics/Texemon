@@ -118,35 +118,35 @@ namespace Texemon.SceneObjects.Widgets
         {
             if (icon != null)
             {
-                spriteBatch.Draw(icon, new Vector2(currentWindow.Center.X - icon.Width / 2, currentWindow.Center.Y - icon.Height / 2) + Position, null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth - 0.0001f);
+                spriteBatch.Draw(icon, new Vector2(currentWindow.Center.X - icon.Width / 2, currentWindow.Center.Y - icon.Height / 2) + Position, null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, Depth - 0.0001f);
             }
             else if (picture != null)
             {
-                if (alignment == Alignment.Bottom)
-                    spriteBatch.Draw(picture, new Rectangle(currentWindow.Left + (int)Position.X, (int)Position.Y + currentWindow.Top, currentWindow.Width, currentWindow.Height), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth - 0.0001f);
+                if (Alignment == Alignment.Bottom)
+                    spriteBatch.Draw(picture, new Rectangle(currentWindow.Left + (int)Position.X, (int)Position.Y + currentWindow.Top, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
                 // spriteBatch.Draw(picture, new Rectangle(currentWindow.Left + (int)Position.X, -currentWindow.Height + (int)Position.Y + parent.InnerBounds.Height / 2 - parent.InnerMargin.Y * CrossPlatformGame.Scale, currentWindow.Width, currentWindow.Height), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth - 0.0001f);
-                else spriteBatch.Draw(picture, new Rectangle(currentWindow.X + (int)Position.X, currentWindow.Y + (int)Position.Y, currentWindow.Width, currentWindow.Height), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth - 0.0001f);
+                else spriteBatch.Draw(picture, new Rectangle(currentWindow.X + (int)Position.X, currentWindow.Y + (int)Position.Y, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
             }
             else if (sprite != null)
             {
                 sprite.Scale = new Vector2(SpriteScale);
 
-                switch (alignment)
+                switch (Alignment)
                 {
                     case Alignment.BottomRight:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y) + Position, null, depth - 0.0001f);
+                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y) + Position, null, Depth - 0.0001f);
                         break;
 
                     case Alignment.Center:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position, null, depth - 0.0001f);
+                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position, null, Depth - 0.0001f);
                         break;
 
                     case Alignment.Bottom:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Bottom - parent.InnerMargin.Height) + Position, null, depth - 0.0001f);
+                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Bottom - parent.InnerMargin.Height) + Position, null, Depth - 0.0001f);
                         break;
 
                     default:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y - (sprite.SpriteBounds().Height * SpriteScale) / 2) + Position, null, depth - 0.0001f);
+                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y - (sprite.SpriteBounds().Height * SpriteScale) / 2) + Position, null, Depth - 0.0001f);
                         break;
                 }
             }

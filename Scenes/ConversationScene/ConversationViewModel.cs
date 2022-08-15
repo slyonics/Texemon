@@ -46,7 +46,7 @@ namespace Texemon.Scenes.ConversationScene
                 OnDialogueScrolled = null;
             }
 
-            if (!Closed && !childList.Any(x => x.Transitioning))
+            if (!Closed && !ChildList.Any(x => x.Transitioning))
             {
                 if (Input.CurrentInput.CommandPressed(Command.Confirm))
                 {

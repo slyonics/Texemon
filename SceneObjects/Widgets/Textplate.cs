@@ -45,7 +45,7 @@ namespace Texemon.SceneObjects.Widgets
                 string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Style": textplateFrame = new NinePatch("Textplate_" + xmlAttribute.Value, depth); break;
+                    case "Style": textplateFrame = new NinePatch("Textplate_" + xmlAttribute.Value, Depth); break;
                     case "Text": text = ParseString(xmlAttribute.Value); break;
 
                     case "StyleBinding":
@@ -67,8 +67,8 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.ApplyAlignment();
 
-            int width = Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
-            int height = Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2; //Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
+            int width = Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
+            int height = Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2; //Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
             currentWindow.Width = width;
             currentWindow.Height = height;
             //currentWindow.Y -= height;
@@ -80,10 +80,10 @@ namespace Texemon.SceneObjects.Widgets
         {
             text = ParseString(binding.ToString());
 
-            int width = Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
-            int height = Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2; // Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
+            int width = Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
+            int height = Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2; // Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
 
-            if (alignment == Alignment.Center)
+            if (Alignment == Alignment.Center)
             {
                 currentWindow.Width = width;
                 currentWindow.Height = height;
@@ -106,7 +106,7 @@ namespace Texemon.SceneObjects.Widgets
 
         private void StyleBinding_ModelChanged()
         {
-            textplateFrame = new NinePatch("Textplate_" + styleBinding.Value, depth);
+            textplateFrame = new NinePatch("Textplate_" + styleBinding.Value, Depth);
             textplateFrame.Bounds = currentWindow;
         }
 
@@ -117,7 +117,7 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
 
             textplateFrame.Draw(spriteBatch, Position);
-            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + 4) + Position, font, ParseString(text), color, 0);
+            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + 4) + Position, Font, ParseString(text), Color, 0);
         }
 
         private string ExpandText(string text)

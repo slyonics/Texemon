@@ -48,7 +48,7 @@ namespace Texemon.SceneObjects.Widgets
                 }
             }
 
-            textboxFrame = new NinePatch(style, depth);
+            textboxFrame = new NinePatch(style, Depth);
 
             Binding_ModelChanged();
         }
@@ -80,7 +80,7 @@ namespace Texemon.SceneObjects.Widgets
                     bool shift = (Input.CurrentInput.KeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Input.CurrentInput.KeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift));
                     char keyChar = (char)(key - Microsoft.Xna.Framework.Input.Keys.A + ((shift) ? 'A' : 'a'));
 
-                    if (Text.GetStringLength(font, text + keyChar + '_') <= InnerBounds.Width)
+                    if (Text.GetStringLength(Font, text + keyChar + '_') <= InnerBounds.Width)
                     {
                         if (binding == null)
                         {
@@ -127,13 +127,13 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
             textboxFrame?.Draw(spriteBatch, Position);
 
-            Color drawColor = (parent.Enabled) ? color : new Color(160, 160, 160, 255);
+            Color drawColor = (parent.Enabled) ? Color : new Color(160, 160, 160, 255);
 
-            Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + innerMargin.Left, currentWindow.Center.Y - Text.GetStringHeight(font) / 2) + Position, font, text, drawColor);
+            Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + InnerMargin.Left, currentWindow.Center.Y - Text.GetStringHeight(Font) / 2) + Position, Font, text, drawColor);
 
             if (active && blinkCarat)
             {
-                Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + innerMargin.Left + Text.GetStringLength(font, text), currentWindow.Center.Y - Text.GetStringHeight(font) / 2) + Position, font, "_", drawColor);
+                Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + InnerMargin.Left + Text.GetStringLength(Font, text), currentWindow.Center.Y - Text.GetStringHeight(Font) / 2) + Position, Font, "_", drawColor);
             }
         }
 

@@ -8,7 +8,7 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Label : Widget
     {
-        public string label { get; set; }
+        public string Text { get; set; }
 
         private ModelProperty<string> binding;
 
@@ -42,9 +42,9 @@ namespace Texemon.SceneObjects.Widgets
                 string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Text": label = ExpandText(xmlAttribute.Value); break;
+                    case "Text": Text = ExpandText(xmlAttribute.Value); break;
                     case "TextAlignment": textAlignment = (Alignment)Enum.Parse(typeof(Alignment), xmlAttribute.Value); break;
-                    case "SoftBinding": label = LookupSoftBinding<object>(xmlAttribute.Value).ToString(); break;
+                    case "SoftBinding": Text = LookupSoftBinding<object>(xmlAttribute.Value).ToString(); break;
 
                     case "Binding":
                         binding = LookupBinding<string>(xmlAttribute.Value);
@@ -57,7 +57,7 @@ namespace Texemon.SceneObjects.Widgets
 
             if (bounds.Width == 0 && bounds.Height == 0 && bounds.X == 0 && bounds.Y == 0)
             {
-                bounds = new Rectangle(0, 0, Text.GetStringLength(font, label), Text.GetStringHeight(font));
+                bounds = new Rectangle(0, 0, Main.Text.GetStringLength(Font, Text), Main.Text.GetStringHeight(Font));
             }
         }
 
@@ -66,27 +66,27 @@ namespace Texemon.SceneObjects.Widgets
             if (binding == null || binding.Value == null) return;
 
 
-            label = binding.Value; // String.IsNullOrEmpty(bindingFormat) ? binding.ToString() : binding.ToString(bindingFormat);
+            Text = binding.Value; // String.IsNullOrEmpty(bindingFormat) ? binding.ToString() : binding.ToString(bindingFormat);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
 
-            Color drawColor = (parent.Enabled) ? color : new Color(120, 120, 120, 255);
+            Color drawColor = (parent.Enabled) ? Color : new Color(120, 120, 120, 255);
 
-            switch (textAlignment.HasValue ? textAlignment.Value : alignment)
+            switch (textAlignment.HasValue ? textAlignment.Value : Alignment)
             {
                 case Alignment.Left:
-                    Text.DrawText(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Center.Y - Text.GetStringHeight(font) / 2) + Position, font, label, drawColor, depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Center.Y - Main.Text.GetStringHeight(Font) / 2) + base.Position, Font, Text, drawColor, Depth);
                     break;
 
                 case Alignment.Center:
-                    Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y) + Position, font, label, drawColor, depth);
+                    Main.Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y) + base.Position, Font, Text, drawColor, Depth);
                     break;
 
                 case Alignment.Right:
-                    Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Text.GetStringLength(font, label), currentWindow.Center.Y - Text.GetStringHeight(font) / 2) + Position, font, label, drawColor, depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Center.Y - Main.Text.GetStringHeight(Font) / 2) + base.Position, Font, Text, drawColor, Depth);
                     break;
             }
         }

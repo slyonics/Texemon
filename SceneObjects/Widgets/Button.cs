@@ -37,7 +37,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            base.LoadAttributes(xmlNode);
+            //base.LoadAttributes(xmlNode);
 
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
@@ -61,12 +61,14 @@ namespace Texemon.SceneObjects.Widgets
                     case "SoftBinding":
                         eventParameter = LookupSoftBinding<string>(xmlAttribute.Value);
                         break;
+
+                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
 
-            if (style != null) buttonFrame = new NinePatch(style, depth);
+            if (style != null) buttonFrame = new NinePatch(style, Depth);
 
-            if (!enabled) buttonFrame?.SetSprite(disabledStyle);
+            if (!Enabled) buttonFrame?.SetSprite(disabledStyle);
             else if (selected) buttonFrame?.SetSprite(pushedStyle);
         }
 
@@ -81,7 +83,7 @@ namespace Texemon.SceneObjects.Widgets
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            Color drawColor = (Enabled) ? color : new Color(120, 120, 120, 255);
+            Color drawColor = (Enabled) ? Color : new Color(120, 120, 120, 255);
             buttonFrame.FrameColor = drawColor;
             buttonFrame?.Draw(spriteBatch, Position);
         }
@@ -89,7 +91,7 @@ namespace Texemon.SceneObjects.Widgets
         protected override void EnableBinding_ModelChanged()
         {
             if (buttonFrame == null)
-                enabled = enableBinding.Value;
+                Enabled = enableBinding.Value;
             else
                 Enabled = enableBinding.Value;
         }
@@ -108,7 +110,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void StartLeftClick(Vector2 mousePosition)
         {
-            if (!enabled) return;
+            if (!Enabled) return;
 
             //Audio.PlaySound(GameSound.a_mainmenuselection);
 
@@ -118,7 +120,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void EndLeftClick(Vector2 mouseStart, Vector2 mouseEnd, Widget otherWidget)
         {
-            if (!enabled) return;
+            if (!Enabled) return;
 
             clicking = false;
             buttonFrame?.SetSprite(style);
@@ -165,7 +167,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void StartMouseOver()
         {
-            if (!enabled) return;
+            if (!Enabled) return;
 
             base.StartMouseOver();
 
@@ -174,7 +176,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void EndMouseOver()
         {
-            if (!enabled) return;
+            if (!Enabled) return;
 
             base.EndMouseOver();
 

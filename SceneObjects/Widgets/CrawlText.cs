@@ -126,7 +126,7 @@ namespace Texemon.SceneObjects.Widgets
             {
                 foreach (TextElement textElement in textLines)
                 {
-                    Text.DrawText(spriteBatch, Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), font, textElement.text.ToString(), textElement.color, textElement.line);
+                    Text.DrawText(spriteBatch, Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), Font, textElement.text.ToString(), textElement.color, textElement.line);
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace Texemon.SceneObjects.Widgets
                     continue;
                 }
 
-                int tokenLength = Text.GetStringLength(font, textElement.text.ToString());
+                int tokenLength = Text.GetStringLength(Font, textElement.text.ToString());
                 if (currentLength + tokenLength > windowWidth)
                 {
                     currentLine++;
@@ -247,7 +247,7 @@ namespace Texemon.SceneObjects.Widgets
                 StringBuilder lastElement = textLines.LastOrDefault(x => x.line == currentLine)?.text;
                 lastElement?.Append(textElement.text + " ");
 
-                currentLength += tokenLength + Text.GetStringLength(font, " ");
+                currentLength += tokenLength + Text.GetStringLength(Font, " ");
             }
 
             return textLines;

@@ -22,10 +22,10 @@ namespace Texemon.SceneObjects.Widgets
 
         public Tooltip(Vector2 mouseOverPosition, string tooltipText)
         {
-            color = Graphics.ParseHexcode("#E0BFA2FF");
+            Color = Graphics.ParseHexcode("#E0BFA2FF");
 
             text = tooltipText;
-            font = GameFont.Tooltip;
+            Font = GameFont.Tooltip;
             tooltipFrame = new NinePatch("Windows_GamePanelOpaque", 0.05f);
 
             int startIndex = text.IndexOf('{');
@@ -43,11 +43,11 @@ namespace Texemon.SceneObjects.Widgets
                 endIndex = text.IndexOf('}');
             }
 
-            int width = Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2;
-            int height = Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2;
+            int width = Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2;
+            int height = Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2;
 
-            currentWindow = new Rectangle((int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH, (int)mouseOverPosition.Y - Text.GetStringHeight(font) - TOOLTIP_MARGIN_HEIGHT + height / 2, width, height);
-            if (currentWindow.Right > CrossPlatformGame.ScreenWidth) currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH - Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
+            currentWindow = new Rectangle((int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH, (int)mouseOverPosition.Y - Text.GetStringHeight(Font) - TOOLTIP_MARGIN_HEIGHT + height / 2, width, height);
+            if (currentWindow.Right > CrossPlatformGame.ScreenWidth) currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH - Math.Max(Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
             if (currentWindow.Bottom > CrossPlatformGame.ScreenHeight) currentWindow.Y -= currentWindow.Bottom - CrossPlatformGame.ScreenHeight;
 
             tooltipFrame.Bounds = currentWindow;
@@ -58,13 +58,13 @@ namespace Texemon.SceneObjects.Widgets
             base.Update(gameTime);
 
             Vector2 mouseOverPosition = Input.MousePosition;
-            int width = Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
-            int height = Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, tooltipFrame.FrameHeight * 3);
+            int width = Math.Max(Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
+            int height = Math.Max(Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2, tooltipFrame.FrameHeight * 3);
 
             currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH;
-            currentWindow.Y = (int)mouseOverPosition.Y - Text.GetStringHeight(font) - TOOLTIP_MARGIN_HEIGHT + height / 2;
+            currentWindow.Y = (int)mouseOverPosition.Y - Text.GetStringHeight(Font) - TOOLTIP_MARGIN_HEIGHT + height / 2;
 
-            if (currentWindow.Right > CrossPlatformGame.ScreenWidth) currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH - Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
+            if (currentWindow.Right > CrossPlatformGame.ScreenWidth) currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH - Math.Max(Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
             if (currentWindow.Bottom > CrossPlatformGame.ScreenHeight) currentWindow.Y -= currentWindow.Bottom - CrossPlatformGame.ScreenHeight;
 
             tooltipFrame.Bounds = currentWindow;
@@ -73,7 +73,7 @@ namespace Texemon.SceneObjects.Widgets
         public override void Draw(SpriteBatch spriteBatch)
         {
             tooltipFrame.Draw(spriteBatch, Vector2.Zero);
-            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + 2), font, text, 0.04f, color);
+            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + 2), Font, text, 0.04f, Color);
         }
     }
 }
