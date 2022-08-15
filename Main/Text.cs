@@ -13,7 +13,8 @@ namespace Texemon.Main
         Tooltip,
         BigTooltip,
         Title,
-        Dialogue
+        Dialogue,
+        Adapa
     }
 
     public static class Text
@@ -34,6 +35,7 @@ namespace Texemon.Main
             { GameFont.Dialogue, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
             // { GameFont.Dialogue, new GameFontData() { fontFile = "BitPotionExt", fontSize = 24, fontHeight = 16 } },
             { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
+            { GameFont.Adapa, new GameFontData() { fontFile = "BitPotionExt", fontSize = 14, fontHeight = 10 } },
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();

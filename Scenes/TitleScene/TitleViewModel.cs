@@ -17,7 +17,7 @@ namespace Texemon.Scenes.TitleScene
         public TitleViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel, viewName)
         {
-            if (GameProfile.SaveList.Count > 0) GetWidget<Button>("LoadButton").Enabled = true;
+            GetWidget<Button>("LoadButton").Enabled = (GameProfile.SaveList.Count > 0);
         }
 
         public void NewGame()

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Texemon.Main;
+using Texemon.Models;
 using Texemon.SceneObjects.Controllers;
 
 namespace Texemon.Scenes.SplashScene
@@ -35,7 +36,8 @@ namespace Texemon.Scenes.SplashScene
 
         public void Notify(SkippableWaitController sender)
         {
-            CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            if (GameProfile.SaveList.Count > 0) CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            else  CrossPlatformGame.Transition(typeof(IntroScene.IntroScene));
         }
 
         public bool Terminated { get => false; }

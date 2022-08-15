@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-120,-20,240,140" InnerMargin="16,18,16,18" TransitionIn="Expand" TransitionOut="Shrink">
-		<CrawlText Name="ConversationText" Binding="Dialogue" FontBinding="ConversationFont" Alignment="Stretch" Color="#FFFFFFFF"/>
+	<Panel Style="Panel" Anchor="$CenterX,$CenterY" Bounds="-120,20,240,60" InnerMargin="8,2,8,8" TransitionIn="Expand" TransitionOut="Shrink">
+		<CrawlText Name="ConversationText" Binding="Dialogue" FontBinding="ConversationFont" Alignment="Stretch" Color="#D8D8D8FF"/>
 		<Textplate Name="SpeakerPlate" Style="GamePanelOpaque" Alignment="BottomLeft" Bounds="16,-166,-1,-1" FontBinding="ConversationFont" Binding="Speaker" Color="#FFFFFFFF"/>
-		<Image Sprite="Widgets\Images\Proceed,0,1,32,32,4,400,-1" Alignment="BottomRight" VisibleBinding="ReadyToProceed"/>
+		<Image Sprite="Enter,0,0,12,12,2,1200,-1" Alignment="BottomRight" Bounds="7,7,12,12" VisibleBinding="ReadyToProceed"/>
 	</Panel>
   
 </View>

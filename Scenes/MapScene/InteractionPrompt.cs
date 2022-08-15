@@ -18,6 +18,8 @@ namespace Texemon.Scenes.MapScene
 
         private NinePatch textbox;
 
+        private Color color = new Color(252, 224, 168);
+
         public InteractionPrompt(MapScene iMapScene)
         {
             mapScene = iMapScene;
@@ -38,7 +40,7 @@ namespace Texemon.Scenes.MapScene
                 textbox.Bounds = new Rectangle(0, 0, width + 8, height + 2);
 
                 textbox.Draw(spriteBatch, target.LabelPosition - mapScene.Camera.Position - new Vector2(textbox.Bounds.Width / 2, 0));
-                Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(0, 5) - mapScene.Camera.Position, GAME_FONT, target.Label, 0.03f);
+                Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(0, 5) - mapScene.Camera.Position, GAME_FONT, target.Label, color, 0.03f);
             }
         }
 

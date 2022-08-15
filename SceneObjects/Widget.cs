@@ -236,8 +236,8 @@ namespace Texemon.SceneObjects
                     break;
 
                 case Alignment.BottomRight:
-                    currentWindow.X = parent.InnerBounds.Right;
-                    currentWindow.Y = parent.InnerBounds.Bottom;
+                    currentWindow.X = parent.InnerBounds.Right + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Bottom + bounds.Y;
                     break;
 
                 case Alignment.Bottom:
