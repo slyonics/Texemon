@@ -12,6 +12,15 @@ namespace Texemon.Scenes.IntroScene
 {
     public class SelectionViewModel : ViewModel
     {
+        enum Selection
+        {
+            None,
+            Magic,
+            Technology
+        }
+
+        Selection selection = Selection.None;
+
         public SelectionViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel, viewName)
         {
@@ -20,14 +29,27 @@ namespace Texemon.Scenes.IntroScene
 
         public void Magic()
         {
-            GameProfile.NewState();
-            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
+            selection = Selection.Magic;
+            ReadyToProceed.Value = true;
         }
 
         public void Technology()
         {
-            GameProfile.NewState();
-            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
+            selection = Selection.Technology;
+            ReadyToProceed.Value = true;
         }
+
+        public void Proceed()
+        {
+            GameProfile.NewState();
+
+            switch (selection)
+            {
+                case Selection.Magic: CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City"); break;
+                case Selection.Technology: CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City"); break;
+            }
+        }
+
+        public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
     }
 }

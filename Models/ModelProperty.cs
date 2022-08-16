@@ -6,19 +6,18 @@ using Texemon.SceneObjects;
 
 namespace Texemon.Models
 {
+    public delegate void ModelChangeCallback();
+
     public interface IModelProperty
     {
-        string Name { get; set; }
+        public event ModelChangeCallback ModelChanged;
+        public object GetValue();
     }
 
     [Serializable]
     public class ModelProperty<T> : IModelProperty
     {
-        public delegate void ChangeCallback();
-
         private T model;
-
-        public string Name { get; set; }
 
         public T Value
         {
@@ -31,8 +30,13 @@ namespace Texemon.Models
             get => model;
         }
 
+        public object GetValue()
+        {
+            return Value;
+        }
+
         [field: NonSerialized]
-        public event ChangeCallback ModelChanged;
+        public event ModelChangeCallback ModelChanged;
 
         public ModelProperty(T iModel)
         {

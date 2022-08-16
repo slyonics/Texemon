@@ -55,18 +55,11 @@ namespace Texemon.SceneObjects
 
         protected TransitionController transition = null;
 
-
         protected int tooltipTime;
         protected Tooltip tooltipWidget;
         protected Vector2 tooltipOrigin;
 
         protected bool mousedOver;
-
-        protected ModelProperty<bool> enableBinding;
-        protected ModelProperty<bool> visibleBinding;
-        protected ModelProperty<Color> colorBinding;
-        protected ModelProperty<string> tooltipBinding;
-        protected ModelProperty<string> fontBinding;
 
         public Widget()
             : base()
@@ -92,37 +85,47 @@ namespace Texemon.SceneObjects
         protected virtual void ParseAttribute(string attributeName, string attributeValue)
         {
             PropertyInfo property = GetType().GetProperty(attributeName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
             if (property == null) return;
 
-            object propertyValue = property.GetValue(this);
-            switch (propertyValue)
+            if (attributeValue.StartsWith("Bind "))
             {
-                case bool: property.SetValue(this, bool.Parse(attributeValue)); break;
-                case int: property.SetValue(this, ParseInt(attributeValue)); break;
-                case float: property.SetValue(this, float.Parse(attributeValue)); break;
-                case string: property.SetValue(this, ParseString(attributeValue)); break;
-                case Microsoft.Xna.Framework.Color: property.SetValue(this, Graphics.ParseHexcode(attributeValue)); break;
-                case Vector2:
+                attributeValue = attributeValue.Substring(5);
+                IModelProperty binding = LookupBinding(attributeValue);
+                ModelChangeCallback updateValue = () => property.SetValue(this, binding.GetValue());
+                binding.ModelChanged += updateValue;
+                updateValue();
+            }
+            else
+            {
+                object propertyValue = property.GetValue(this);
+                switch (propertyValue)
                 {
-                    string[] tokens = attributeValue.Split(',');
-                    property.SetValue(this, new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])));
-                    break;
-                }
-                case Rectangle:
-                {
-                    string[] tokens = attributeValue.Split(',');
-                    property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
-                    break;
-                }
+                    case bool: property.SetValue(this, bool.Parse(attributeValue)); break;
+                    case int: property.SetValue(this, ParseInt(attributeValue)); break;
+                    case float: property.SetValue(this, float.Parse(attributeValue)); break;
+                    case string: property.SetValue(this, ParseString(attributeValue)); break;
+                    case Microsoft.Xna.Framework.Color: property.SetValue(this, Graphics.ParseHexcode(attributeValue)); break;
+                    case Vector2:
+                    {
+                        string[] tokens = attributeValue.Split(',');
+                        property.SetValue(this, new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])));
+                        break;
+                    }
+                    case Rectangle:
+                    {
+                        string[] tokens = attributeValue.Split(',');
+                        property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
+                        break;
+                    }
 
-                default:
-                if (propertyValue is Enum)
-                {
-                    Type type = propertyValue.GetType();
-                    property.SetValue(this, Enum.Parse(type, attributeValue));
+                    default:
+                    if (propertyValue is Enum)
+                    {
+                        Type type = propertyValue.GetType();
+                        property.SetValue(this, Enum.Parse(type, attributeValue));
+                    }
+                    break;
                 }
-                break;
             }
         }
 
@@ -130,6 +133,9 @@ namespace Texemon.SceneObjects
         {
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
+                ParseAttribute(xmlAttribute.Name, xmlAttribute.Value);
+
+                /*
                 switch (xmlAttribute.Name)
                 {
                     default:
@@ -164,6 +170,7 @@ namespace Texemon.SceneObjects
                         if (fontBinding.Value != null) FontBinding_ModelChanged();
                         break;
                 }
+                */
             }
         }
 
@@ -417,6 +424,37 @@ namespace Texemon.SceneObjects
             return null;
         }
 
+        public IModelProperty LookupBinding(string bindingName)
+        {
+            string[] tokens = bindingName.Split('.');
+
+            object dataContext;
+            switch (tokens[0])
+            {
+                case "PlayerProfile":
+                    dataContext = GameProfile.PlayerProfile;
+                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+                    break;
+
+                case "DataGrid":
+                    dataContext = GetParent<DataGrid>().Binding[0];
+                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+                    break;
+
+                default:
+                    dataContext = GetParent<ViewModel>();
+                    break;
+            }
+
+            while (tokens.Length > 1)
+            {
+                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
+                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+            }
+
+            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as IModelProperty;
+        }
+
         public ModelProperty<T> LookupBinding<T>(string bindingName)
         {
             string[] tokens = bindingName.Split('.');
@@ -536,31 +574,6 @@ namespace Texemon.SceneObjects
             tooltipTime = 0;
         }
 
-        protected virtual void EnableBinding_ModelChanged()
-        {
-            Enabled = enableBinding.Value;
-        }
-
-        private void VisibleBinding_ModelChanged()
-        {
-            Visible = visibleBinding.Value;
-        }
-
-        public void ColorBinding_ModelChanged()
-        {
-            Color = colorBinding.Value;
-        }
-
-        public void TooltipBinding_ModelChanged()
-        {
-            Tooltip = tooltipBinding.Value;
-        }
-
-        private void FontBinding_ModelChanged()
-        {
-            Font = (GameFont)Enum.Parse(typeof(GameFont), (string)fontBinding.Value);
-        }
-
         public override void Terminate()
         {
             base.Terminate();
@@ -599,10 +612,6 @@ namespace Texemon.SceneObjects
         protected float Depth { get; set; } = 1.0f;
         public virtual bool Visible { get; set; } = true;
         public virtual bool Enabled { get; set; } = true;
-        
-
-        
-
 
         public int TooltipDelay { get; protected set; } = DEFAULT_TOOLTIP_DELAY;
         public string Tooltip { get; protected set; } = "";

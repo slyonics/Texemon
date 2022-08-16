@@ -33,7 +33,7 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            Player = new Hero(this, Tilemap, new Vector2(32, 32), "dude");
+            Player = new Hero(this, Tilemap, new Vector2(32, 32), "GroundDrone");
             AddEntity(Player);
             PlayerController playerController = new PlayerController(this, Player);
             AddController(playerController);

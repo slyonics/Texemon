@@ -117,7 +117,7 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
 
             textplateFrame.Draw(spriteBatch, Position);
-            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y - 2) + Position, Font, ParseString(text), Color, 0);
+            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y ) + Position, Font, ParseString(text), Color, 0);
         }
 
         private string ExpandText(string text)

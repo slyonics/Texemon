@@ -34,8 +34,8 @@ namespace Texemon.SceneObjects.Widgets
                 {
                     case "Binding":
                         Binding = LookupCollectionBinding(xmlAttribute.Value);
-                        Binding.SubscribeModelChanged(new ChangeCallback(Binding_ModelChanged));
-                        Binding.SubscribeCollectionChanged(new ChangeCallback(Binding_CollectionChanged));
+                        Binding.SubscribeModelChanged(new CollectionChangeCallback(Binding_ModelChanged));
+                        Binding.SubscribeCollectionChanged(new CollectionChangeCallback(Binding_CollectionChanged));
                         break;
                 }
             }
