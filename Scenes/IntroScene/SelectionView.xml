@@ -1,18 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	
-	
-		<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-40,120,100">
-			<Button Style="Panel" PushedStyle="SelectedPanel" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Learn the secrets of an arcane world ruled by" Action="Magic" InnerMargin="8,8,8,8">
-				<Label Text="Magic" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
-			</Button>
-			<Label Text="OR" Alignment="Cascading" Color="#F0D0B0FF" Bounds="0,0,120,20" Font="Dialogue"/>
-			<Button Style="Panel" PushedStyle="SelectedPanel" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Begin a new game" Action="Technology" InnerMargin="8,8,8,8">
-				<Label Text="Technology" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
-			</Button>
-		</Panel>
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,100">
+		<Button Style="Panel" PushedStyle="SelectedPanel" Bounds="0,0,120,20" Alignment="Cascading" Radio="True" InnerMargin="8,8,8,8">
+			<Label Text="Magic" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+		<Label Text="OR" Alignment="Cascading" Color="#F0D0B0FF" Bounds="0,0,120,20" Font="Dialogue"/>
+		<Button Style="Panel" PushedStyle="SelectedPanel" Bounds="0,0,120,20" Alignment="Cascading" Radio="True" InnerMargin="8,8,8,8">
+			<Label Text="Technology" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+	</Panel>
 
+	<Panel>
+		<CrawlText>
+		
+		</CrawlText>
+	</Panel>
+	
 	<Panel Style="ClearPanel" Bounds="0,0,$ScreenWidth,$ScreenHeight">
 	</Panel>
 	

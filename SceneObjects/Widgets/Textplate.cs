@@ -15,8 +15,8 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Textplate : Widget
     {
-        private const int TOOLTIP_MARGIN_WIDTH = 24;
-        private const int TOOLTIP_MARGIN_HEIGHT = 12;
+        private const int TOOLTIP_MARGIN_WIDTH = 8;
+        private const int TOOLTIP_MARGIN_HEIGHT = 4;
 
         private string text = "";
         private ModelProperty<string> binding;
@@ -117,7 +117,7 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
 
             textplateFrame.Draw(spriteBatch, Position);
-            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + 4) + Position, Font, ParseString(text), Color, 0);
+            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y - 2) + Position, Font, ParseString(text), Color, 0);
         }
 
         private string ExpandText(string text)
