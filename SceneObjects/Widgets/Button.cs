@@ -22,7 +22,7 @@ namespace Texemon.SceneObjects.Widgets
         private string pushedStyle;
         private string disabledStyle;
         private bool clicking;
-        private GameSound clickSound = GameSound.menu_select;
+        private GameSound Sound { get; set; } = GameSound.menu_select;
 
         private ModelProperty<string> actionParameterBinding;
 
@@ -44,14 +44,8 @@ namespace Texemon.SceneObjects.Widgets
                 string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Style": style = "Buttons_" + xmlAttribute.Value; break;
-                    case "PushedStyle": pushedStyle = "Buttons_" + xmlAttribute.Value; break;
-                    case "DisabledStyle": disabledStyle = "Buttons_" + xmlAttribute.Value; break;
                     case "Action": buttonEvent = GetParent<ViewModel>().GetType().GetMethod(xmlAttribute.Value); break;
                     case "ActionParameter": eventParameter = xmlAttribute.Value; break;
-                    case "Selected": selected = bool.Parse(xmlAttribute.Value); break;
-                    case "Sound": clickSound = string.IsNullOrEmpty(xmlAttribute.Value) ? GameSound.None : (GameSound)Enum.Parse(typeof(GameSound), xmlAttribute.Value); break;
-
                     case "Binding":
                         actionParameterBinding = LookupBinding<string>(xmlAttribute.Value); actionParameterBinding.ModelChanged += ActionParameterBinding_ModelChanged;
                         if (actionParameterBinding.Value != null) ActionParameterBinding_ModelChanged();
@@ -65,7 +59,16 @@ namespace Texemon.SceneObjects.Widgets
                 }
             }
 
-            if (style != null) buttonFrame = new NinePatch(style, Depth);
+            UpdateFrame();
+        }
+
+        private void UpdateFrame()
+        {
+            if (style != null)
+            {
+                if (buttonFrame == null) buttonFrame = new NinePatch(style, Depth);
+                buttonFrame.SetSprite(style);
+            }
 
             if (!Enabled) buttonFrame?.SetSprite(disabledStyle);
             else if (selected) buttonFrame?.SetSprite(pushedStyle);
@@ -75,15 +78,14 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.ApplyAlignment();
 
-            if (buttonFrame != null)
-                buttonFrame.Bounds = currentWindow;
+            if (buttonFrame != null) buttonFrame.Bounds = currentWindow;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
             Color drawColor = (Enabled) ? Color : new Color(120, 120, 120, 255);
-            buttonFrame.FrameColor = drawColor;
+            if (buttonFrame != null) buttonFrame.FrameColor = drawColor;
             buttonFrame?.Draw(spriteBatch, Position);
         }
 
@@ -126,7 +128,7 @@ namespace Texemon.SceneObjects.Widgets
                 }
                 else EndMouseOver();
 
-                Audio.PlaySound(clickSound);
+                Audio.PlaySound(Sound);
             }
         }
 
@@ -145,14 +147,14 @@ namespace Texemon.SceneObjects.Widgets
             }
 
             selected = true;
-            buttonFrame?.SetSprite(pushedStyle);
+            buttonFrame?.SetSprite(PushedStyle);
         }
 
         public override void StartRightClick(Vector2 mousePosition)
         {
             base.StartRightClick(mousePosition);
 
-            if (clicking && !selected) buttonFrame?.SetSprite(style);
+            if (clicking && !selected) buttonFrame?.SetSprite(Style);
             clicking = false;
         }
 
@@ -162,7 +164,7 @@ namespace Texemon.SceneObjects.Widgets
 
             base.StartMouseOver();
 
-            if (clicking) buttonFrame?.SetSprite(pushedStyle);
+            if (clicking) buttonFrame?.SetSprite(PushedStyle);
         }
 
         public override void EndMouseOver()
@@ -171,7 +173,7 @@ namespace Texemon.SceneObjects.Widgets
 
             base.EndMouseOver();
 
-            if (clicking && !selected) buttonFrame?.SetSprite(style);
+            if (clicking && !selected) buttonFrame?.SetSprite(Style);
         }
 
         public void UnSelect()
@@ -179,7 +181,7 @@ namespace Texemon.SceneObjects.Widgets
             //if (!enabled) return;
 
             selected = false;
-            buttonFrame?.SetSprite(style);
+            buttonFrame?.SetSprite(Style);
         }
 
         public override bool Enabled
@@ -187,9 +189,16 @@ namespace Texemon.SceneObjects.Widgets
             set
             {
                 base.Enabled = value;
-                if (base.Enabled) buttonFrame?.SetSprite(style);
-                else if (disabledStyle != null) buttonFrame?.SetSprite(disabledStyle);
+                if (base.Enabled) buttonFrame?.SetSprite(Style);
+                else if (DisabledStyle != null) buttonFrame?.SetSprite(DisabledStyle);
             }
         }
+
+        private string Style { get => style;
+            set { 
+                style = value; 
+                UpdateFrame(); } }
+        private string PushedStyle { get => pushedStyle; set { pushedStyle = value; UpdateFrame(); } }
+        private string DisabledStyle { get => disabledStyle; set { disabledStyle = value; UpdateFrame(); } }
     }
 }

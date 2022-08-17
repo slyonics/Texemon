@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
+using Texemon.Models;
 
 namespace Texemon.Scenes.IntroScene
 {
@@ -20,6 +21,8 @@ namespace Texemon.Scenes.IntroScene
         public IntroScene()
             : base()
         {
+            GameProfile.NewState();
+
             selectionViewModel = AddView(new SelectionViewModel(this, GameView.IntroScene_SelectionView));
         }
 

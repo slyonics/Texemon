@@ -97,35 +97,26 @@ namespace Texemon.SceneObjects
             }
             else
             {
-                object propertyValue = property.GetValue(this);
-                switch (propertyValue)
+                Type type = property.PropertyType;
+                if (type.IsEnum)
                 {
-                    case bool: property.SetValue(this, bool.Parse(attributeValue)); break;
-                    case int: property.SetValue(this, ParseInt(attributeValue)); break;
-                    case float: property.SetValue(this, float.Parse(attributeValue)); break;
-                    case string: property.SetValue(this, ParseString(attributeValue)); break;
-                    case Microsoft.Xna.Framework.Color: property.SetValue(this, Graphics.ParseHexcode(attributeValue)); break;
-                    case Vector2:
-                    {
-                        string[] tokens = attributeValue.Split(',');
-                        property.SetValue(this, new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])));
-                        break;
-                    }
-                    case Rectangle:
-                    {
-                        string[] tokens = attributeValue.Split(',');
-                        property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
-                        break;
-                    }
-
-                    default:
-                    if (propertyValue is Enum)
-                    {
-                        Type type = propertyValue.GetType();
-                        property.SetValue(this, Enum.Parse(type, attributeValue));
-                    }
-                    break;
+                    property.SetValue(this, Enum.Parse(type, attributeValue));
                 }
+                else if (type == typeof(Vector2))
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    property.SetValue(this, new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])));
+                }
+                else if (type == typeof(Rectangle))
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
+                }
+                else if (type == typeof(bool)) property.SetValue(this, bool.Parse(attributeValue));
+                else if (type == typeof(int)) property.SetValue(this, ParseInt(attributeValue));
+                else if (type == typeof(float)) property.SetValue(this, float.Parse(attributeValue));
+                else if (type == typeof(string)) property.SetValue(this, ParseString(attributeValue));
+                else if (type == typeof(Color)) property.SetValue(this, Graphics.ParseHexcode(attributeValue));
             }
         }
 
@@ -134,43 +125,6 @@ namespace Texemon.SceneObjects
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
                 ParseAttribute(xmlAttribute.Name, xmlAttribute.Value);
-
-                /*
-                switch (xmlAttribute.Name)
-                {
-                    default:
-                        ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
-
-                    case "EnableBinding":
-                        enableBinding = LookupBinding<bool>(xmlAttribute.Value);
-                        enableBinding.ModelChanged += EnableBinding_ModelChanged;
-                        EnableBinding_ModelChanged();
-                        break;
-
-                    case "VisibleBinding":
-                        visibleBinding = LookupBinding<bool>(xmlAttribute.Value);
-                        visibleBinding.ModelChanged += VisibleBinding_ModelChanged;
-                        VisibleBinding_ModelChanged();
-                        break;
-
-                    case "ColorBinding":
-                        colorBinding = LookupBinding<Color>(xmlAttribute.Value); colorBinding.ModelChanged += ColorBinding_ModelChanged;
-                        ColorBinding_ModelChanged();
-                        break;
-
-                    case "TooltipSoftBinding": Tooltip = LookupSoftBinding<string>(xmlAttribute.Value); break;
-                    case "TooltipBinding":
-                        tooltipBinding = LookupBinding<string>(xmlAttribute.Value); tooltipBinding.ModelChanged += TooltipBinding_ModelChanged;
-                        if (tooltipBinding.Value != null) TooltipBinding_ModelChanged();
-                        break;
-
-                    case "FontBinding":
-                        fontBinding = LookupBinding<string>(xmlAttribute.Value);
-                        fontBinding.ModelChanged += FontBinding_ModelChanged;
-                        if (fontBinding.Value != null) FontBinding_ModelChanged();
-                        break;
-                }
-                */
             }
         }
 

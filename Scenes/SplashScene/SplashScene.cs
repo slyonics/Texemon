@@ -19,7 +19,7 @@ namespace Texemon.Scenes.SplashScene
 
         public SplashScene()
             : base()
-        {
+        {            
             AddController(new SkippableWaitController(PriorityLevel.MenuLevel, this));
         }
 

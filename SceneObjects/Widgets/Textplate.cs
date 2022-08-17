@@ -21,9 +21,8 @@ namespace Texemon.SceneObjects.Widgets
         private string text = "";
         private ModelProperty<string> binding;
 
-        private ModelProperty<string> styleBinding;
-
         private NinePatch textplateFrame;
+        private string style;
 
         public Textplate(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -42,24 +41,30 @@ namespace Texemon.SceneObjects.Widgets
 
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Style": textplateFrame = new NinePatch("Textplate_" + xmlAttribute.Value, Depth); break;
                     case "Text": text = ParseString(xmlAttribute.Value); break;
-
-                    case "StyleBinding":
-                        styleBinding = LookupBinding<string>(xmlAttribute.Value);
-                        styleBinding.ModelChanged += StyleBinding_ModelChanged;
-                        if (styleBinding.Value != null) StyleBinding_ModelChanged();
-                        break;
 
                     case "Binding":
                         binding = LookupBinding<string>(xmlAttribute.Value);
                         binding.ModelChanged += Binding_ModelChanged;
                         if (binding.Value != null) Binding_ModelChanged();
                         break;
+
+                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
+
+            }
+
+            UpdateFrame();
+        }
+
+        public void UpdateFrame()
+        {
+            if (style != null)
+            {
+                if (textplateFrame == null) textplateFrame = new NinePatch(style, Depth);
+                textplateFrame.SetSprite(style);
             }
         }
 
@@ -104,12 +109,6 @@ namespace Texemon.SceneObjects.Widgets
             textplateFrame.Bounds = currentWindow;
         }
 
-        private void StyleBinding_ModelChanged()
-        {
-            textplateFrame = new NinePatch("Textplate_" + styleBinding.Value, Depth);
-            textplateFrame.Bounds = currentWindow;
-        }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (String.IsNullOrEmpty(text)) return;
@@ -117,7 +116,7 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
 
             textplateFrame.Draw(spriteBatch, Position);
-            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y ) + Position, Font, ParseString(text), Color, 0);
+            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + Text.FONT_DATA[Font].heightOffset) + Position, Font, ParseString(text), Color, 0);
         }
 
         private string ExpandText(string text)
@@ -139,5 +138,7 @@ namespace Texemon.SceneObjects.Widgets
 
             return text;
         }
+
+        private string Style { get => style; set { style = value; UpdateFrame(); } }
     }
 }

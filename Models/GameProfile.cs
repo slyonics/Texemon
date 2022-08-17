@@ -23,8 +23,7 @@ namespace Texemon.Models
         public const string SAVE_FOLDER = "\\Save";
         private static Dictionary<string, object> DEFAULT_SAVE_VALUES = new Dictionary<string, object>()
         {
-            { "AliensAttack", false },
-            { "RandomBattle", 4 },
+            { "NewPlayer", true }
         };
 
         private static int saveSlot;

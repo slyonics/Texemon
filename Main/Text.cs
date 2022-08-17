@@ -15,7 +15,9 @@ namespace Texemon.Main
         Title,
         Dialogue,
         BitPotion,
-        Irisdot21
+        Irisdot21,
+        Silver,
+        Pixel
     }
 
     public static class Text
@@ -25,6 +27,7 @@ namespace Texemon.Main
             public string fontFile;
             public int fontSize;
             public int fontHeight;
+            public int heightOffset;
         }
 
         private const float TEXT_DEPTH = 0.1f;
@@ -37,7 +40,9 @@ namespace Texemon.Main
             // { GameFont.Dialogue, new GameFontData() { fontFile = "BitPotionExt", fontSize = 24, fontHeight = 16 } },
             { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
             { GameFont.BitPotion, new GameFontData() { fontFile = "BitPotionExt", fontSize = 14, fontHeight = 10 } },
-            { GameFont.Irisdot21, new GameFontData() { fontFile = "Irisdot-H21-Condensed", fontSize = 18, fontHeight = 14 } },
+            { GameFont.Irisdot21, new GameFontData() { fontFile = "Irisdot-H21-Condensed", fontSize = 18, fontHeight = 15 } },
+            { GameFont.Silver, new GameFontData() { fontFile = "Silver", fontSize = 18, fontHeight = 10, heightOffset = -2 } },
+            { GameFont.Pixel, new GameFontData() { fontFile = "PixelSquared", fontSize = 14, fontHeight = 10, heightOffset = -3 } },
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();

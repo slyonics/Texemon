@@ -32,8 +32,14 @@ namespace Texemon.Scenes.IntroScene
         {
             selection = Selection.Magic;
             ReadyToProceed.Value = true;
+                        
+            GameProfile.PlayerProfile.WindowStyle.Value = "MagicWindow";
+            GameProfile.PlayerProfile.FrameStyle.Value = "MagicFrame";
+            GameProfile.PlayerProfile.SelectedStyle.Value = "MagicSelected";
+            GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
+            GameProfile.PlayerProfile.Font.Value = GameFont.Silver;
 
-            description.AddLines("Mgaico!");
+            description.AddLines("The use of magic is strictly regulated by the secret authorities of Panopticon where sorcerers may practice only one color of magic. You alone defy this edict to study every color of magic in your quest for power.");
         }
 
         public void Technology()
@@ -41,13 +47,17 @@ namespace Texemon.Scenes.IntroScene
             selection = Selection.Technology;
             ReadyToProceed.Value = true;
 
+            GameProfile.PlayerProfile.WindowStyle.Value = "TechWindow";
+            GameProfile.PlayerProfile.FrameStyle.Value = "TechFrame";
+            GameProfile.PlayerProfile.SelectedStyle.Value = "TechSelected";
+            GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
+            GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
+
             description.AddLines("When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.");
         }
 
         public void Proceed()
         {
-            GameProfile.NewState();
-
             switch (selection)
             {
                 case Selection.Magic: CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City"); break;

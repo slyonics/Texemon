@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
+using Texemon.Models;
 
 namespace Texemon.Scenes.MapScene
 {
@@ -23,7 +22,7 @@ namespace Texemon.Scenes.MapScene
         public InteractionPrompt(MapScene iMapScene)
         {
             mapScene = iMapScene;
-            textbox = new NinePatch("Label", 0.05f);
+            textbox = new NinePatch(GameProfile.PlayerProfile.LabelStyle.Value, 0.05f);
         }
 
         public override void Update(GameTime gameTime)

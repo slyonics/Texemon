@@ -33,6 +33,7 @@ namespace Texemon.SceneObjects.Widgets
         }
 
         private NinePatch panelFrame;
+        private string style;
 
         private TransitionType TransitionIn { get; set; } = TransitionType.None;
         private TransitionType TransitionOut { get; set; } = TransitionType.None;
@@ -56,11 +57,18 @@ namespace Texemon.SceneObjects.Widgets
 
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                switch (xmlAttribute.Name)
-                {
-                    case "Style": panelFrame = new NinePatch("Windows_" + xmlAttribute.Value, Depth); panelFrame.FrameColor = Color; break;
-                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
-                }
+                ParseAttribute(xmlAttribute.Name, xmlAttribute.Value);
+            }
+
+            UpdateFrame();
+        }
+
+        public void UpdateFrame()
+        {
+            if (style != null)
+            {
+                if (panelFrame == null) panelFrame = new NinePatch(style, Depth);
+                panelFrame.SetSprite(style);
             }
         }
 
@@ -146,5 +154,7 @@ namespace Texemon.SceneObjects.Widgets
             transition = null;
             if (Closed) Terminate();
         }
+
+        private string Style { get => style; set { style = value; UpdateFrame(); } }
     }
 }

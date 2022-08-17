@@ -3,7 +3,7 @@
 		"Name": "TestConvo",
 		"DialogueData": [
 			{
-				"Text": "A voice on the PA announces the start of class in five minutes. Look for your classroom in the northwest corner."
+				"Text": "Automatic conversation test."
 			}
 		]
 	},
@@ -13,13 +13,13 @@
 		"EndScript": [ "Actor Actors_Blank" ],
 		"DialogueData": [
 			{
-				"Speaker": "Student",
-				"Text": "They say aliens have been attacking students here lately.",
+				"Speaker": "TestSpeaker",
+				"Text": "This is a test conversation triggered on an NPC.",
 				"Script": [ "Actor Actors_Student", "Animate Talk", "WaitForText", "Animate Idle" ]
 			},
 			{
-				"Speaker": "Student",
-				"Text": "Better be careful walking around.",
+				"Speaker": "TestSpeaker",
+				"Text": "Conversations can span multiple pages.",
 				"Script": [ "Animate Talk", "WaitForText", "Animate Idle" ]
 			}
 		]
