@@ -87,14 +87,6 @@ namespace Texemon.SceneObjects.Widgets
             buttonFrame?.Draw(spriteBatch, Position);
         }
 
-        protected override void EnableBinding_ModelChanged()
-        {
-            if (buttonFrame == null)
-                Enabled = enableBinding.Value;
-            else
-                Enabled = enableBinding.Value;
-        }
-
         public void ActionParameterBinding_ModelChanged()
         {
             eventParameter = actionParameterBinding.Value;

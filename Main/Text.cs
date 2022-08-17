@@ -14,7 +14,8 @@ namespace Texemon.Main
         BigTooltip,
         Title,
         Dialogue,
-        Adapa
+        BitPotion,
+        Irisdot21
     }
 
     public static class Text
@@ -35,7 +36,8 @@ namespace Texemon.Main
             { GameFont.Dialogue, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
             // { GameFont.Dialogue, new GameFontData() { fontFile = "BitPotionExt", fontSize = 24, fontHeight = 16 } },
             { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
-            { GameFont.Adapa, new GameFontData() { fontFile = "BitPotionExt", fontSize = 14, fontHeight = 10 } },
+            { GameFont.BitPotion, new GameFontData() { fontFile = "BitPotionExt", fontSize = 14, fontHeight = 10 } },
+            { GameFont.Irisdot21, new GameFontData() { fontFile = "Irisdot-H21-Condensed", fontSize = 18, fontHeight = 14 } },
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();

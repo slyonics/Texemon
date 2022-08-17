@@ -20,23 +20,28 @@ namespace Texemon.Scenes.IntroScene
         }
 
         Selection selection = Selection.None;
+        CrawlText description;
 
         public SelectionViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel, viewName)
         {
-
+            description = GetWidget<CrawlText>("Description");
         }
 
         public void Magic()
         {
             selection = Selection.Magic;
             ReadyToProceed.Value = true;
+
+            description.AddLines("Mgaico!");
         }
 
         public void Technology()
         {
             selection = Selection.Technology;
             ReadyToProceed.Value = true;
+
+            description.AddLines("When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.");
         }
 
         public void Proceed()
