@@ -33,7 +33,7 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            Player = new Hero(this, Tilemap, new Vector2(32, 32), "GroundDrone");
+            Player = new Hero(this, Tilemap, new Vector2(32, 32), "Inventor");
             AddEntity(Player);
             PlayerController playerController = new PlayerController(this, Player);
             AddController(playerController);
@@ -52,7 +52,7 @@ namespace Texemon.Scenes.MapScene
                     case "NPCs":
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {
-                            Npc npc = new Npc(this, Tilemap, tiledObject, "gal");
+                            Npc npc = new Npc(this, Tilemap, tiledObject, "Base");
                             NPCs.Add(npc);
                             AddEntity(npc);
                         }

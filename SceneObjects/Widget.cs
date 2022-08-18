@@ -61,6 +61,8 @@ namespace Texemon.SceneObjects
 
         protected bool mousedOver;
 
+        private List<Tuple<IModelProperty, ModelChangeCallback>> bindingList = new List<Tuple<IModelProperty, ModelChangeCallback>>();
+
         public Widget()
             : base()
         {
@@ -94,6 +96,8 @@ namespace Texemon.SceneObjects
                 ModelChangeCallback updateValue = () => property.SetValue(this, binding.GetValue());
                 binding.ModelChanged += updateValue;
                 updateValue();
+
+                bindingList.Add(new Tuple<IModelProperty, ModelChangeCallback>(binding, updateValue));
             }
             else
             {
@@ -533,6 +537,7 @@ namespace Texemon.SceneObjects
             base.Terminate();
 
             foreach (Widget widget in ChildList) widget.Terminate();
+            foreach (Tuple<IModelProperty, ModelChangeCallback> binding in bindingList) binding.Item1.Unbind(binding.Item2);
         }
 
         public virtual void Close()

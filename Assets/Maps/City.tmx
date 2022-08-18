@@ -14,7 +14,7 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="NPCs">
-  <object id="3" name="gal" x="208" y="320" width="20" height="20">
+  <object id="3" name="Base" x="208" y="320" width="20" height="20">
    <properties>
     <property name="Interact" value="Conversation TreeConvo"/>
     <property name="Label" value="Townie"/>

@@ -12,6 +12,7 @@ namespace Texemon.Models
     {
         public event ModelChangeCallback ModelChanged;
         public object GetValue();
+        public void Unbind(ModelChangeCallback binding);
     }
 
     [Serializable]
@@ -33,6 +34,11 @@ namespace Texemon.Models
         public object GetValue()
         {
             return Value;
+        }
+
+        public void Unbind(ModelChangeCallback callback)
+        {
+            ModelChanged -= callback;
         }
 
         [field: NonSerialized]

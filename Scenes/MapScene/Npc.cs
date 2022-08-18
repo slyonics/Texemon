@@ -26,7 +26,7 @@ namespace Texemon.Scenes.MapScene
             WalkUp
         }
 
-        public const int NPC_WIDTH = 16;
+        public const int NPC_WIDTH = 24;
         public const int NPC_HEIGHT = 32;
 
         public static readonly Rectangle NPC_BOUNDS = new Rectangle(-7, -8, 13, 6);

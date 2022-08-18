@@ -24,7 +24,7 @@ namespace Texemon.Scenes.MapScene
             WalkUp
         }
 
-        public const int HERO_WIDTH = 16;
+        public const int HERO_WIDTH = 24;
         public const int HERO_HEIGHT = 32;
 
         public static readonly Rectangle HERO_BOUNDS = new Rectangle(-7, -8, 13, 6);
