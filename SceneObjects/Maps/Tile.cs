@@ -23,8 +23,11 @@ namespace Texemon.SceneObjects.Maps
 
         private Tilemap parentMap;
         private Vector2 position;
+        private Vector2 center;
         private List<TileSprite> backgroundSprites = new List<TileSprite>();
         private Dictionary<int, List<TileSprite>> entitySprites = new Dictionary<int, List<TileSprite>>();
+
+        private List<Tile> neighborList = new List<Tile>();
 
         public Tile(Tilemap iTileMap, int iTileX, int iTileY)
         {
@@ -33,6 +36,7 @@ namespace Texemon.SceneObjects.Maps
             TileY = iTileY;
 
             position = new Vector2(TileX * parentMap.TileWidth, TileY * parentMap.TileHeight);
+            center = position + new Vector2(parentMap.TileWidth / 2, parentMap.TileHeight / 2);
         }
 
         public void Update(GameTime gameTime)
@@ -117,8 +121,23 @@ namespace Texemon.SceneObjects.Maps
             tileSprites.Add(tileSprite);
         }
 
+        public void AssignNeighbors()
+        {
+            if (TileX > 0) neighborList.Add(parentMap.GetTile(TileX - 1, TileY));
+            if (TileY > 0) neighborList.Add(parentMap.GetTile(TileX, TileY - 1));
+            if (TileY < parentMap.Columns - 1) neighborList.Add(parentMap.GetTile(TileX, TileY + 1));
+            if (TileX < parentMap.Rows - 1) neighborList.Add(parentMap.GetTile(TileX + 1, TileY));
+
+            if (TileX > 0 && TileY > 0) neighborList.Add(parentMap.GetTile(TileX - 1, TileY - 1));
+            if (TileX > 0 && TileY < parentMap.Columns - 1) neighborList.Add(parentMap.GetTile(TileX - 1, TileY + 1));
+            if (TileX < parentMap.Rows - 1 && TileY > 0) neighborList.Add(parentMap.GetTile(TileX + 1, TileY - 1));
+            if (TileX < parentMap.Rows - 1 && TileY < parentMap.Columns - 1) neighborList.Add(parentMap.GetTile(TileX + 1, TileY + 1));
+        }
+
         public int TileX { get; private set; }
         public int TileY { get; private set; }
+        public Vector2 Center { get => center; }
+        public List<Tile> NeighborList { get => neighborList; }
         public List<Rectangle> ColliderList { get; private set; } = new List<Rectangle>();
     }
 }

@@ -38,6 +38,11 @@ namespace Texemon.Scenes.MapScene
             PlayerController playerController = new PlayerController(this, Player);
             AddController(playerController);
 
+            Hero RobotPrincess = new Hero(this, Tilemap, new Vector2(64, 32), "GroundDrone");
+            AddEntity(RobotPrincess);
+            FollowerController followerController = new FollowerController(this, RobotPrincess);
+            AddController(followerController);
+
             foreach (Tuple<TiledLayer, TiledGroup> layer in Tilemap.ObjectData)
             {
                 switch (layer.Item1.name)
