@@ -14,20 +14,17 @@ namespace Texemon.Scenes.MapScene
         {
             Idling,
             Regrouping,
-            Stuck,
-            PickupHeart,
-            Waiting,
-            Aggressive,
-            Evasive
+            Stuck
         }
 
-        private const int START_REGROUP_DISTANCE = 32;
-        private const int END_REGROUP_DISTANCE = 20;
+        private const int START_REGROUP_DISTANCE = 34;
+        private const int END_REGROUP_DISTANCE = 18;
         private const float STUCK_THRESHOLD = 700.0f;
-        private const int MOVEMENT_HISTORY_LENGTH = 50;
+        private const int MOVEMENT_HISTORY_LENGTH = 30;
 
         private MapScene mapScene;
         private Actor follower;
+        private Actor leader;
 
         private Behavior behavior = Behavior.Idling;
         private float stuckDetection;
@@ -37,24 +34,21 @@ namespace Texemon.Scenes.MapScene
 
         private List<Vector3> movementHistory = new List<Vector3>();
 
-        public FollowerController(MapScene iMapScene, Actor iFollower)
+        public FollowerController(MapScene iMapScene, Actor iFollower, Actor iLeader)
             : base(PriorityLevel.GameLevel)
         {
             mapScene = iMapScene;
             follower = iFollower;
+            leader = iLeader;
         }
 
         public override void PreUpdate(GameTime gameTime)
         {
-            PlayerController humanController = mapScene.ControllerStack[(int)PriorityLevel.GameLevel].Find(x => x is PlayerController) as PlayerController;
-            if (humanController == null) return;
-
-            Actor humanPlayer = humanController.Player;
             switch (behavior)
             {
-                case Behavior.Idling: IdlingAI(humanPlayer); break;
-                case Behavior.Regrouping: RegroupingAI(gameTime, humanPlayer); break;
-                case Behavior.Stuck: StuckAI(gameTime, humanPlayer); break;
+                case Behavior.Idling: IdlingAI(leader); break;
+                case Behavior.Regrouping: RegroupingAI(gameTime, leader); break;
+                case Behavior.Stuck: StuckAI(gameTime, leader); break;
             }
         }
 
@@ -102,7 +96,18 @@ namespace Texemon.Scenes.MapScene
                 Vector2 movement = Vector2.Zero;
                 foreach (Vector3 vector in movementHistory) movement += new Vector2(vector.X, vector.Y) * vector.Z;
 
-                // TODO remove jitter
+                Vector3 leaderMovement = movementHistory.Last();
+                if (leaderMovement.Length() > 0.001f)
+                {
+                    if (follower.Bounds.Top <= leader.Bounds.Top && follower.Bounds.Bottom >= leader.Bounds.Bottom && Math.Abs(leaderMovement.Y) < 0.0001f)
+                    {
+                        movement.Y = 0.0f;
+                    }
+                    else if (follower.Bounds.Right <= leader.Bounds.Right && follower.Bounds.Left >= leader.Bounds.Left && Math.Abs(leaderMovement.X) < 0.0001f)
+                    {
+                        movement.X = 0.0f;
+                    }
+                }
 
                 if (movement.Length() < 0.001f) movement = Vector2.Zero;
                 else movement.Normalize();
