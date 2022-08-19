@@ -49,7 +49,7 @@ namespace Texemon.Scenes.MapScene
 
         public Npc(MapScene iMapScene, Tilemap iTilemap, TiledObject tiledObject, string spriteName, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height),
-                  AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + spriteName)], NPC_ANIMATIONS, NPC_BOUNDS, iOrientation)
+                  NPC_BOUNDS, iOrientation)
         {
             mapScene = iMapScene;
 
@@ -59,6 +59,9 @@ namespace Texemon.Scenes.MapScene
                 {
                     case "Interact": interactionScript = tiledProperty.value.Split('\n'); break;
                     case "Label": Label = tiledProperty.value; break;
+                    case "Sprite":
+                        animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + tiledProperty.value)], NPC_ANIMATIONS);
+                        break;
                 }
             }
         }

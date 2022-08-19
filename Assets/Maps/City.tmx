@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="300" height="260" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="4">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="300" height="260" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="6">
  <properties>
   <property name="Music" value="Wilderness"/>
   <property name="Script" value="Conversation TestConvo"/>
@@ -14,10 +14,25 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="NPCs">
-  <object id="3" name="Base" x="208" y="320" width="20" height="20">
+  <object id="3" name="Sentinel" x="208" y="320" width="20" height="20">
    <properties>
     <property name="Interact" value="Conversation TreeConvo"/>
     <property name="Label" value="Townie"/>
+    <property name="Sprite" value="Sentinel"/>
+   </properties>
+  </object>
+  <object id="4" name="AirDrone" x="64" y="312" width="20" height="20">
+   <properties>
+    <property name="Interact" value="Conversation TreeConvo"/>
+    <property name="Label" value="Townie"/>
+    <property name="Sprite" value="AirDrone"/>
+   </properties>
+  </object>
+  <object id="5" name="Base" x="124" y="384" width="20" height="20">
+   <properties>
+    <property name="Interact" value="Conversation TreeConvo"/>
+    <property name="Label" value="Townie"/>
+    <property name="Sprite" value="gal"/>
    </properties>
   </object>
  </objectgroup>

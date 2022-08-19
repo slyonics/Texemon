@@ -55,6 +55,17 @@ namespace Texemon.SceneObjects.Maps
             orientation = iOrientation;
         }
 
+        public Actor(Scene iScene, Tilemap iTilemap, Vector2 iPosition, Rectangle iBounds, Orientation iOrientation = Orientation.None)
+            : base(iScene, iPosition)
+        {
+            tilemap = iTilemap;
+
+            boundingBox = iBounds;
+            currentBounds = UpdateBounds(position);
+
+            orientation = iOrientation;
+        }
+
         public override void Update(GameTime gameTime)
         {
             controllerList.RemoveAll(x => x.Terminated);
