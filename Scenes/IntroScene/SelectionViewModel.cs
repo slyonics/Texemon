@@ -30,6 +30,8 @@ namespace Texemon.Scenes.IntroScene
 
         public void Magic()
         {
+            if (selection == Selection.Magic) return;
+
             selection = Selection.Magic;
             ReadyToProceed.Value = true;
                         
@@ -44,6 +46,8 @@ namespace Texemon.Scenes.IntroScene
 
         public void Technology()
         {
+            if (selection == Selection.Technology) return;
+
             selection = Selection.Technology;
             ReadyToProceed.Value = true;
 

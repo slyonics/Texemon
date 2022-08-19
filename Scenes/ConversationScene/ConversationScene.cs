@@ -55,7 +55,7 @@ namespace Texemon.Scenes.ConversationScene
             {
                 base.BeginScene();
 
-                Audio.PlayMusic(GameMusic.SMP_DUN);
+                //Audio.PlayMusic(GameMusic.SMP_DUN);
             }
         }
 

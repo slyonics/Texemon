@@ -54,10 +54,7 @@ namespace Texemon.Main
     public enum GameMusic
     {
         Selection,
-        SMP_BTL,
-        SMP_DUN,
-        SMP_TNS,
-        SMP_TTL,
+        Wilderness,
 
         None = -1
     }

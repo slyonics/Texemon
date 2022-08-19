@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="300" height="260" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="4">
  <properties>
-  <property name="Music" value="SMP_BTL"/>
+  <property name="Music" value="Wilderness"/>
   <property name="Script" value="Conversation TestConvo"/>
  </properties>
  <tileset firstgid="1" source="Tilesets/FD_City.tsx"/>

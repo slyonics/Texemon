@@ -32,6 +32,8 @@ namespace Texemon.Scenes.MapScene
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (CrossPlatformGame.CurrentScene != mapScene) return;
+
             if (target != null && mapScene.PriorityLevel == PriorityLevel.GameLevel)
             {
                 int width = Text.GetStringLength(GAME_FONT, target.Label);

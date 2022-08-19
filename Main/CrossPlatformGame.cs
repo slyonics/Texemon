@@ -41,7 +41,7 @@ namespace Texemon.Main
 
         private static Shader transitionShader;
         private static Scene pendingScene;
-        private static Scene currentScene;
+        public static Scene CurrentScene { get; private set; }
         private static List<Scene> sceneStack = new List<Scene>();
 
         private static CrossPlatformGame crossPlatformGame;
@@ -77,7 +77,7 @@ namespace Texemon.Main
 
             AssetCache.LoadContent(Content, GraphicsDevice);
 
-            currentScene = new SplashScene();
+            CurrentScene = new SplashScene();
         }
 
         public void ApplySettings()
@@ -134,14 +134,14 @@ namespace Texemon.Main
 
             if (transitionShader != null)
             {
-                currentScene.Update(gameTime, PriorityLevel.TransitionLevel);
+                CurrentScene.Update(gameTime, PriorityLevel.TransitionLevel);
                 transitionShader.Update(gameTime, null);
                 if (transitionShader.Terminated) transitionShader = null;
             }
             else
             {
                 foreach (Scene scene in sceneStack) scene.Update(gameTime, PriorityLevel.MenuLevel);
-                currentScene.Update(gameTime);
+                CurrentScene.Update(gameTime);
             }
 
             if (pendingScene != null)
@@ -151,11 +151,11 @@ namespace Texemon.Main
                 pendingScene = null;
             }
 
-            if (currentScene.SceneEnded && sceneStack.Count > 0)
+            if (CurrentScene.SceneEnded && sceneStack.Count > 0)
             {
-                currentScene = sceneStack.Last();
-                currentScene.ResumeScene();
-                sceneStack.Remove(currentScene);
+                CurrentScene = sceneStack.Last();
+                CurrentScene.ResumeScene();
+                sceneStack.Remove(CurrentScene);
             }
 
             base.Update(gameTime);
@@ -173,7 +173,7 @@ namespace Texemon.Main
                 }
             }
 
-            currentScene.Draw(GraphicsDevice, spriteBatch, gameRender, compositeRender);
+            CurrentScene.Draw(GraphicsDevice, spriteBatch, gameRender, compositeRender);
 
             Effect shader = (transitionShader == null) ? null : transitionShader.Effect;
             GraphicsDevice.SetRenderTarget(null);
@@ -194,7 +194,7 @@ namespace Texemon.Main
             TransitionController transitionController = new TransitionController(TransitionDirection.Out, 600);
             ColorFade colorFade = new ColorFade(Color.Black, transitionController.TransitionProgress);
             transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = t);
-            currentScene.AddController(transitionController);
+            CurrentScene.AddController(transitionController);
             transitionShader = colorFade;
 
             Task.Run(() => Activator.CreateInstance(sceneType, args)).ContinueWith(t =>
@@ -206,10 +206,10 @@ namespace Texemon.Main
 
         public static void SetCurrentScene(Scene newScene)
         {
-            currentScene.EndScene();
+            CurrentScene.EndScene();
 
             transitionShader.Terminate();
-            currentScene = newScene;
+            CurrentScene = newScene;
             newScene.BeginScene();
         }
 
@@ -217,16 +217,16 @@ namespace Texemon.Main
         {
             lock (sceneStack)
             {
-                sceneStack.Add(currentScene);
+                sceneStack.Add(CurrentScene);
             }
 
-            currentScene = newScene;
+            CurrentScene = newScene;
             newScene.BeginScene();
         }
 
         public static T GetScene<T>() where T : Scene
         {
-            if (currentScene is T) return (T)currentScene;
+            if (CurrentScene is T) return (T)CurrentScene;
             else
             {
                 T result;
