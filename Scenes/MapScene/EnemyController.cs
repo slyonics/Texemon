@@ -4,47 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Texemon.Models;
 using Texemon.SceneObjects.Controllers;
 using Texemon.SceneObjects.Maps;
 
 namespace Texemon.Scenes.MapScene
 {
-    public class NpcController : ScriptController
+    public class EnemyController : ScriptController
     {
         private const float DEFAULT_WALK_LENGTH = 1.0f / 3;
 
         private MapScene mapScene;
-        private Npc npc;
+        private Enemy enemy;
 
         private Tile currentTile;
         private Tile destinationTile;
         private float currentWalkLength;
         private float walkTimeLeft;
 
-        public NpcController(MapScene iScene, Npc iNpc)
-            : base(iScene, iNpc.Behavior, PriorityLevel.GameLevel)
+        public EnemyController(MapScene iScene, Enemy iEnemy)
+            : base(iScene, iEnemy.Behavior, PriorityLevel.GameLevel)
         {
             mapScene = iScene;
-            npc = iNpc;
+            enemy = iEnemy;
 
-            currentTile = mapScene.Tilemap.GetTile(npc.Center);
+            currentTile = mapScene.Tilemap.GetTile(enemy.Center);
         }
 
         public override void PreUpdate(GameTime gameTime)
         {
-            if (!scriptParser.Finished && destinationTile == null) base.PreUpdate(gameTime);
+            if (!scriptParser.Finished) base.PreUpdate(gameTime);
 
             if (destinationTile == null)
             {
-                npc.DesiredVelocity = Vector2.Zero;
-                npc.OrientedAnimation("Idle");
+                enemy.DesiredVelocity = Vector2.Zero;
+                enemy.OrientedAnimation("Idle");
             }
             else
             {
-                npc.DesiredVelocity = Vector2.Zero;
-                npc.Reorient(destinationTile.Center - currentTile.Center);
-                npc.OrientedAnimation("Walk");
+                enemy.DesiredVelocity = Vector2.Zero;
+                enemy.Reorient(destinationTile.Center - currentTile.Center);
+                enemy.OrientedAnimation("Walk");
             }
         }
 
@@ -56,11 +55,11 @@ namespace Texemon.Scenes.MapScene
                 if (walkTimeLeft > 0.0f)
                 {
                     Vector2 npcPosition = Vector2.Lerp(destinationTile.Center, currentTile.Center, walkTimeLeft / currentWalkLength);
-                    npc.CenterOn(new Vector2((int)npcPosition.X, (int)npcPosition.Y));
+                    enemy.CenterOn(new Vector2((int)npcPosition.X, (int)npcPosition.Y));
                 }
                 else
                 {
-                    npc.CenterOn(destinationTile.Center);
+                    enemy.CenterOn(destinationTile.Center);
                     currentTile = destinationTile;
                     destinationTile = null;
                 }
@@ -69,7 +68,7 @@ namespace Texemon.Scenes.MapScene
 
         public bool Move(Orientation direction, float walkLength = DEFAULT_WALK_LENGTH)
         {
-            npc.Orientation = direction;
+            enemy.Orientation = direction;
 
             int tileX = currentTile.TileX;
             int tileY = currentTile.TileY;

@@ -12,7 +12,7 @@ using Texemon.SceneObjects.Maps;
 
 namespace Texemon.Scenes.MapScene
 {
-    public class Npc : Actor, IInteractive
+    public class Enemy : Actor
     {
         protected enum NpcAnimation
         {
@@ -45,9 +45,7 @@ namespace Texemon.Scenes.MapScene
 
         private MapScene mapScene;
 
-        private string[] interactionScript = null;
-
-        public Npc(MapScene iMapScene, Tilemap iTilemap, TiledObject tiledObject, string spriteName, Orientation iOrientation = Orientation.Down)
+        public Enemy(MapScene iMapScene, Tilemap iTilemap, TiledObject tiledObject, string spriteName, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height),
                   NPC_BOUNDS, iOrientation)
         {
@@ -58,8 +56,6 @@ namespace Texemon.Scenes.MapScene
                 switch (tiledProperty.name)
                 {
                     case "Behavior": Behavior = tiledProperty.value.Split('\n'); break;
-                    case "Interact": interactionScript = tiledProperty.value.Split('\n'); break;
-                    case "Label": Label = tiledProperty.value; break;
                     case "Sprite":
                         animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + tiledProperty.value)], NPC_ANIMATIONS);
                         break;
@@ -67,25 +63,6 @@ namespace Texemon.Scenes.MapScene
             }
         }
 
-        public bool Activate(Hero activator)
-        {
-            if (interactionScript == null) return false;
-
-            Rectangle areaOfInterest = Rectangle.Union(SpriteBounds, mapScene.Player.SpriteBounds);
-            EventController eventController = new EventController(mapScene, interactionScript);
-
-            mapScene.AddController(eventController);
-            controllerList.Add(eventController);
-
-            Reorient(activator.Center - Center);
-            OrientedAnimation("Idle");
-
-            return true;
-        }
-
-        public string Label { get; private set; } = "NPC";
         public string[] Behavior { get; private set; } = null;
-        public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height); }
-        public bool Interactive { get => interactionScript != null; }
     }
 }

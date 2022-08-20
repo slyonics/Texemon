@@ -17,6 +17,7 @@ namespace Texemon.Scenes.MapScene
 
         public Hero Player { get; private set; }
         public List<Npc> NPCs { get; private set; } = new List<Npc>();
+        public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
         public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
 
         public MapScene(string mapName)
@@ -58,8 +59,21 @@ namespace Texemon.Scenes.MapScene
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {
                             Npc npc = new Npc(this, Tilemap, tiledObject, "Base");
+                            NpcController npcController = new NpcController(this, npc);
                             NPCs.Add(npc);
                             AddEntity(npc);
+                            AddController(npcController);
+                        }
+                        break;
+
+                    case "Enemies":
+                        foreach (TiledObject tiledObject in layer.Item1.objects)
+                        {
+                            Enemy enemy = new Enemy(this, Tilemap, tiledObject, "Base");
+                            EnemyController enemyController = new EnemyController(this, enemy);
+                            Enemies.Add(enemy);
+                            AddEntity(enemy);
+                            AddController(enemyController);
                         }
                         break;
                 }

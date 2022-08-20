@@ -357,6 +357,12 @@ namespace Texemon.SceneObjects.Maps
             position = new Vector2(destination.X + boundingBox.Left + boundingBox.Width / 2, destination.Y + boundingBox.Bottom);
         }
 
+        public void CenterOn(Vector2 destination)
+        {
+            position = new Vector2(destination.X, destination.Y + boundingBox.Height / 2);
+            UpdateBounds();
+        }
+
         public virtual void OrientedAnimation(string animationName, AnimationFollowup animationFollowup = null)
         {
             PlayAnimation(animationName + orientation.ToString(), animationFollowup);
@@ -394,7 +400,7 @@ namespace Texemon.SceneObjects.Maps
 
         public bool Visible { get => parentScene.Camera.View.Intersects(currentBounds); }
         public bool IgnoreObstacles { get => ignoreObstacles; }
-        public Orientation Orientation { get => orientation; }
+        public Orientation Orientation { get => orientation; set => orientation = value; }
         public Vector2 Displacement { get => displacement; }
         public Vector2 BlockedDisplacement { get => blockedDisplacement; }
         public Vector2 DesiredVelocity { get => desiredVelocity; set => desiredVelocity = value; }
