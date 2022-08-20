@@ -25,30 +25,10 @@
 		]
 	},
 	{
-		"Name": "SawFlyers",
+		"Name": "BattleTime",
 		"DialogueData": [
 			{
-				"Speaker": "Jaime",
-				"Text": "(Several flyers have been posted here by the administration...)"
-			},
-			{
-				"Text": "Remember that aliens aren't real and cannot hurt you! If you see an alien, stay calm and continue your current task."
-			},
-			{
-				"Text": "Under no cirumstances are students allowed use arcane technomagics to battle aliens. Which aren't real."
-			},
-			{
-				"Speaker": "Jaime",
-				"Text": "(... But everyone knows aliens are real now. That's why I had to learn arcane technomagic.)"
-			}
-		]
-	},
-	{
-		"Name": "PreventExit",
-		"DialogueData": [
-			{
-				"Speaker": "",
-				"Text": "It's almost time for class to begin. Look for your classroom in the northwest corner marked on your minimap with a star."
+				"Text": "Battle Scene Goes Here"
 			}
 		]
 	}

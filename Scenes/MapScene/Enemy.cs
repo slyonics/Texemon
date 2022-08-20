@@ -55,7 +55,8 @@ namespace Texemon.Scenes.MapScene
             {
                 switch (tiledProperty.name)
                 {
-                    case "Behavior": Behavior = tiledProperty.value.Split('\n'); break;
+                    case "Idle": IdleScript = tiledProperty.value.Split('\n'); break;
+                    case "Collide": CollideScript = tiledProperty.value.Split('\n'); break;
                     case "Sprite":
                         animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + tiledProperty.value)], NPC_ANIMATIONS);
                         break;
@@ -63,6 +64,15 @@ namespace Texemon.Scenes.MapScene
             }
         }
 
-        public string[] Behavior { get; private set; } = null;
+        public void Collides()
+        {
+            Terminate();
+
+            EventController eventController = new EventController(mapScene, CollideScript);
+            mapScene.AddController(eventController);
+        }
+
+        public string[] IdleScript { get; private set; } = null;
+        public string[] CollideScript { get; private set; } = null;
     }
 }

@@ -28,7 +28,8 @@ Repeat</property>
  <objectgroup id="17" name="Enemies">
   <object id="6" name="Base" x="320" y="304" width="20" height="20">
    <properties>
-    <property name="Behavior">Wait 2000
+    <property name="Collide" value="Conversation BattleTime"/>
+    <property name="Idle">Wait 2000
 Wander 800
 Repeat</property>
     <property name="Sprite" value="Sentinel"/>

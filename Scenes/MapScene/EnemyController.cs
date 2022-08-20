@@ -22,7 +22,7 @@ namespace Texemon.Scenes.MapScene
         private float walkTimeLeft;
 
         public EnemyController(MapScene iScene, Enemy iEnemy)
-            : base(iScene, iEnemy.Behavior, PriorityLevel.GameLevel)
+            : base(iScene, iEnemy.IdleScript, PriorityLevel.GameLevel)
         {
             mapScene = iScene;
             enemy = iEnemy;

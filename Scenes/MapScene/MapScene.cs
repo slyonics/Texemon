@@ -86,15 +86,31 @@ namespace Texemon.Scenes.MapScene
 
             Camera.Center(Player.Center);
 
+            bool eventTriggered = false;
             foreach (EventTrigger eventTrigger in EventTriggers)
             {
                 if (eventTrigger.Bounds.Intersects(Player.Bounds))
                 {
+                    eventTriggered = true;
                     eventTrigger.Terminated = true;
                     AddController(new EventController(this, eventTrigger.Script));
                 }
             }
             EventTriggers.RemoveAll(x => x.Terminated);
+
+            if (!eventTriggered)
+            {
+                foreach (Enemy enemy in Enemies)
+                {
+                    if (enemy.Bounds.Intersects(Player.Bounds))
+                    {
+                        enemy.Collides();
+                    }
+                }
+            }
+
+            NPCs.RemoveAll(x => x.Terminated);
+            Enemies.RemoveAll(x => x.Terminated);
         }
 
         public override void DrawBackground(SpriteBatch spriteBatch)
