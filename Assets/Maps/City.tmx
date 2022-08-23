@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="150" height="120" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="7">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="150" height="120" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="7">
  <properties>
   <property name="Music" value="Wilderness"/>
   <property name="Script" value="Conversation TestConvo"/>
@@ -28,7 +28,8 @@ Repeat</property>
  <objectgroup id="17" name="Enemies">
   <object id="6" name="Base" x="320" y="304" width="20" height="20">
    <properties>
-    <property name="Collide" value="Conversation BattleTime"/>
+    <property name="Collide">Conversation BattleTime
+Encounter DoubleSentinel</property>
     <property name="Idle">Wait 2000
 Wander 800
 Repeat</property>

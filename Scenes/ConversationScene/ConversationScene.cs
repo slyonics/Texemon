@@ -12,7 +12,9 @@ namespace Texemon.Scenes.ConversationScene
 {
     public class ConversationScene : Scene
     {
-        private ConversationModel conversationData;
+        public static List<ConversationRecord> CONVERSATIONS { get; set; }
+
+        private ConversationRecord conversationData;
         private Texture2D backgroundSprite;
         private ConversationViewModel conversationViewModel;
         private ConversationController conversationController;
@@ -20,25 +22,28 @@ namespace Texemon.Scenes.ConversationScene
         public ConversationScene(string conversationName)
             : base()
         {
-            conversationData = ConversationModel.Models.FirstOrDefault(x => x.Name == conversationName);
+            conversationData = CONVERSATIONS.FirstOrDefault(x => x.Name == conversationName);
 
-            string[] conversationScript = conversationData.DialogueData[0].Script;
-            if (conversationScript != null) RunScript(conversationData.DialogueData[0].Script);
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueRecords[0].Script);
 
             conversationViewModel = new ConversationViewModel(this, GameView.ConversationScene_ConversationView, conversationData);
             AddOverlay(conversationViewModel);
 
             if (!string.IsNullOrEmpty(conversationData.Background))
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
+
+            
+            if (CONVERSATIONS == null) CONVERSATIONS = AssetCache.LoadRecords<ConversationRecord>("ConversationData");
         }
 
-        public ConversationScene(ConversationModel iConversationData)
+        public ConversationScene(ConversationRecord iConversationData)
             : base()
         {
             conversationData = iConversationData;
 
-            string[] conversationScript = conversationData.DialogueData[0].Script;
-            if (conversationScript != null) RunScript(conversationData.DialogueData[0].Script);
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueRecords[0].Script);
 
             conversationViewModel = new ConversationViewModel(this, GameView.ConversationScene_ConversationView, conversationData);
             AddOverlay(conversationViewModel);
@@ -46,6 +51,7 @@ namespace Texemon.Scenes.ConversationScene
             if (!string.IsNullOrEmpty(conversationData.Background))
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
         }
+
 
         public override void BeginScene()
         {

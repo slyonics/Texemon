@@ -1,7 +1,7 @@
 [
 	{
 		"Name": "TestConvo",
-		"DialogueData": [
+		"DialogueRecords": [
 			{
 				"Text": "Automatic conversation test."
 			}
@@ -11,7 +11,7 @@
 		"Name": "TreeConvo",
 		"Background": "",
 		"EndScript": [ "Actor Actors_Blank" ],
-		"DialogueData": [
+		"DialogueRecords": [
 			{
 				"Speaker": "TestSpeaker",
 				"Text": "This is a test conversation triggered on an NPC.",
@@ -26,7 +26,7 @@
 	},
 	{
 		"Name": "BattleTime",
-		"DialogueData": [
+		"DialogueRecords": [
 			{
 				"Text": "Battle Scene Goes Here"
 			}

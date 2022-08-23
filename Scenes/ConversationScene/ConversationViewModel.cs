@@ -11,19 +11,19 @@ namespace Texemon.Scenes.ConversationScene
     public class ConversationViewModel : ViewModel
     {
         private ConversationScene conversationScene;
-        private ConversationModel conversationData;
-        private DialogueModel currentDialogue;
+        private ConversationRecord conversationRecord;
+        private DialogueRecord currentDialogue;
         private int dialogueIndex;
 
         private CrawlText crawlText;
 
-        public ConversationViewModel(ConversationScene iScene, GameView viewName, ConversationModel iConversationData)
+        public ConversationViewModel(ConversationScene iScene, GameView viewName, ConversationRecord iConversationRecord)
             : base(iScene, PriorityLevel.GameLevel, viewName)
         {
 
             conversationScene = (parentScene as ConversationScene);
-            conversationData = iConversationData;
-            currentDialogue = conversationData.DialogueData[dialogueIndex];
+            conversationRecord = iConversationRecord;
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
 
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
             Dialogue.Value = currentDialogue.Text;
@@ -84,11 +84,11 @@ namespace Texemon.Scenes.ConversationScene
         {
             dialogueIndex++;
 
-            if (dialogueIndex >= conversationData.DialogueData.Length)
+            if (dialogueIndex >= conversationRecord.DialogueRecords.Length)
             {
-                if (conversationData.EndScript != null)
+                if (conversationRecord.EndScript != null)
                 {
-                    ConversationController conversationController = conversationScene.AddController(new ConversationController(conversationScene, conversationData.EndScript));
+                    ConversationController conversationController = conversationScene.AddController(new ConversationController(conversationScene, conversationRecord.EndScript));
                     conversationController.OnTerminated += EndConversation;
                 }
                 else EndConversation();
@@ -96,7 +96,7 @@ namespace Texemon.Scenes.ConversationScene
                 return;
             }
 
-            currentDialogue = conversationData.DialogueData[dialogueIndex];
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
 
             Dialogue.Value = currentDialogue.Text;
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
@@ -108,7 +108,7 @@ namespace Texemon.Scenes.ConversationScene
 
         private void EndConversation()
         {
-            if (string.IsNullOrEmpty(conversationData.Background)) Close();
+            if (string.IsNullOrEmpty(conversationRecord.Background)) Close();
             else
             {
                 if (conversationScene.EndGame) CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));

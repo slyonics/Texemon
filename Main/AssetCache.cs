@@ -1,14 +1,17 @@
-﻿using K4os.Compression.LZ4;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Texemon.SceneObjects;
+
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+
+using K4os.Compression.LZ4;
+
+using Texemon.Models;
 using Texemon.Scenes.ConversationScene;
+using Texemon.Scenes.BattleScene;
 
 namespace Texemon.Main
 {
@@ -18,6 +21,7 @@ namespace Texemon.Main
         public static Dictionary<GameShader, Effect> EFFECTS = new Dictionary<GameShader, Effect>();
         public static Dictionary<GameSprite, Texture2D> SPRITES = new Dictionary<GameSprite, Texture2D>();
         public static Dictionary<GameMap, string> MAPS = new Dictionary<GameMap, string>();
+        public static Dictionary<string, string> DATA = new Dictionary<string, string>();
 
         public static void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
@@ -59,12 +63,14 @@ namespace Texemon.Main
         private static void LoadData()
         {
             List<Tuple<byte[], byte[]>> dataAssets = LoadAssetData("Data.jam");
-            Dictionary<string, string> dataDictionary = dataAssets.ToDictionary(x => Encoding.ASCII.GetString(x.Item1), x => Encoding.ASCII.GetString(x.Item2));
-            Newtonsoft.Json.JsonSerializer deserializer = Newtonsoft.Json.JsonSerializer.Create();
-            Newtonsoft.Json.JsonTextReader reader;
+            DATA = dataAssets.ToDictionary(x => Encoding.ASCII.GetString(x.Item1), x => Encoding.ASCII.GetString(x.Item2));
+        }
 
-            reader = new Newtonsoft.Json.JsonTextReader(new StringReader(dataDictionary["ConversationData"]));
-            ConversationModel.Models = deserializer.Deserialize<List<ConversationModel>>(reader);
+        public static List<T> LoadRecords<T>(string dataFileName)
+        {
+            Newtonsoft.Json.JsonSerializer deserializer = Newtonsoft.Json.JsonSerializer.Create();
+            Newtonsoft.Json.JsonTextReader reader = new Newtonsoft.Json.JsonTextReader(new StringReader(DATA[dataFileName]));
+            return deserializer.Deserialize<List<T>>(reader);
         }
 
         private static void LoadShaders(GraphicsDevice graphicsDevice)

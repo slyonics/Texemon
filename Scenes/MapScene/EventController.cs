@@ -30,7 +30,7 @@ namespace Texemon.Scenes.MapScene
                 case "ChangeMap": ChangeMap(tokens); Audio.PlaySound(GameSound.wall_enter); break;
                 case "SetWaypoint": SetWaypoint(tokens); break;
                 case "Conversation": Conversation(tokens, scriptParser); break;
-                case "Encounter": Encounter(tokens); break;
+                case "Encounter": Encounter(tokens, scriptParser); break;
                 default: return false;
             }
 
@@ -70,18 +70,12 @@ namespace Texemon.Scenes.MapScene
             CrossPlatformGame.StackScene(conversationScene);
         }
 
-        public static void Encounter(string[] tokens)
+        public static void Encounter(string[] tokens, ScriptParser scriptParser)
         {
-            /*
-            mapScene.MapViewModel.SetActor("Actors_" + tokens[1]);
-
-            MatchScene.MatchScene matchScene;
-            if (tokens.Length > 2) matchScene = new MatchScene.MatchScene(tokens[1], tokens[2]);
-            else matchScene = new MatchScene.MatchScene(tokens[1]);
+            BattleScene.BattleScene matchScene = new BattleScene.BattleScene(tokens[1]);
             var unblock = scriptParser.BlockScript();
             matchScene.OnTerminated += new TerminationFollowup(unblock);
             CrossPlatformGame.StackScene(matchScene);
-            */
         }
     }
 }

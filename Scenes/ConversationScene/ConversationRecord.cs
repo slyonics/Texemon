@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Texemon.Models;
+
 namespace Texemon.Scenes.ConversationScene
 {
-    public class ConversationModel
+    public class ConversationRecord
     {
         public string Name { get; set; }
         public string Background { get; set; }
-        public DialogueModel[] DialogueData { get; set; }
-        public string[] EndScript { get; set; }
-
-        public static List<ConversationModel> Models { get; set; }
+        public DialogueRecord[] DialogueRecords { get; set; }
+        public string[] EndScript { get; set; }        
     }
 
-    public class DialogueModel
+    public class DialogueRecord
     {
         public string Speaker { get; set; }
         public string Text { get; set; }

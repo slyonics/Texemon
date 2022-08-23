@@ -1,0 +1,10 @@
+[
+	{
+		"Name": "DoubleSentinel",
+		"Enemies": [
+			"Sentinel",
+			"Sentinel"
+		],
+		"Script": []
+	}
+]
