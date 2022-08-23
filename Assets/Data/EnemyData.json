@@ -1,6 +1,8 @@
 [
 	{
 		"Name": "Sentinel",
-		"Sprite": "Robot"
+		"Sprite": "Robot",
+		"ShadowOffset": 0,
+		"Health": 100
 	}
 ]

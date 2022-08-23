@@ -15,7 +15,6 @@ namespace Texemon.Scenes.BattleScene
     {
         public const int STANDARD_TURN = 10;
 
-        protected const int DAMAGE_DIGIT_INTERVAL = 80;
         private const int DAMAGE_FLASH_DURATION = 600;
 
         protected const float SHADOW_DEPTH = Camera.MAXIMUM_ENTITY_DEPTH + 0.001f;
@@ -26,8 +25,6 @@ namespace Texemon.Scenes.BattleScene
         protected Texture2D shadow = null;
         protected Effect shader;
 
-        protected int damageDigitTime;
-        protected int nextDamageDigitIndex;
         protected List<char> damageDigitsLeft = new List<char>();
         protected List<DamageParticle> damageDigitList = new List<DamageParticle>();
 
@@ -47,9 +44,7 @@ namespace Texemon.Scenes.BattleScene
             : base(iBattleScene, iPosition, iSprite, iAnimationList)
         {
             battleScene = iBattleScene;
-
-            stats = new BattlerModel(iStats);
-            health = stats.maxHealth;
+            stats = iStats;
             actionTime = 0;
         }
 
@@ -86,12 +81,6 @@ namespace Texemon.Scenes.BattleScene
 
             damageDigitList.RemoveAll(x => x.Terminated);
 
-            if (damageDigitTime > 0)
-            {
-                damageDigitTime -= gameTime.ElapsedGameTime.Milliseconds;
-                if (damageDigitTime <= 0 && nextDamageDigitIndex < damageDigitsLeft.Count) SpawnDamageDigit();
-            }
-
             if (flashTime > 0)
             {
                 flashTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -112,7 +101,7 @@ namespace Texemon.Scenes.BattleScene
         {
             if (shadow == null) return;
 
-            Color shadowColor = Color.Lerp(SHADOW_COLOR, Color.TransparentBlack, Math.Min(1.0f, positionZ / (SpriteBounds.Width + SpriteBounds.Height) / 2));
+            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (SpriteBounds.Width + SpriteBounds.Height) / 2));
             spriteBatch.Draw(shadow, new Vector2((int)(SpriteBounds.Center.X - shadow.Width / 2), (int)(SpriteBounds.Center.Y) + 1), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
@@ -142,23 +131,18 @@ namespace Texemon.Scenes.BattleScene
         {
             health -= damage;
 
-            nextDamageDigitIndex = 0;
             damageDigitsLeft.Clear();
             damageDigitsLeft.AddRange(damage.ToString());
-            SpawnDamageDigit();
+            SpawnDamageDigit(damage.ToString());
 
             if (Dead) battleScene.InitiativeList.Remove(this);
         }
 
-        protected virtual void SpawnDamageDigit()
+        protected virtual void SpawnDamageDigit(string digit)
         {
-            char digit = damageDigitsLeft[nextDamageDigitIndex];
-            DamageParticle damageParticle = new DamageParticle(battleScene, position + new Vector2(nextDamageDigitIndex * 7, 0), digit);
+            DamageParticle damageParticle = new DamageParticle(battleScene, position, digit);
             battleScene.AddParticle(damageParticle);
             damageDigitList.Add(damageParticle);
-
-            nextDamageDigitIndex++;
-            damageDigitTime = DAMAGE_DIGIT_INTERVAL;
         }
 
         public void FlashColor(Color flashColor, int duration = DAMAGE_FLASH_DURATION)

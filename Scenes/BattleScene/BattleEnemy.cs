@@ -28,7 +28,7 @@ namespace Texemon.Scenes.BattleScene
         private int deathTimeLeft;
 
         public BattleEnemy(BattleScene iBattleScene, Vector2 iPosition, EnemyRecord iEnemyData)
-            : base(iBattleScene, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + iEnemyData.Sprite)], null, iEnemyData.stats)
+            : base(iBattleScene, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + iEnemyData.Sprite)], null, new BattlerModel(iEnemyData))
         {
             enemyData = iEnemyData;
 
@@ -38,24 +38,21 @@ namespace Texemon.Scenes.BattleScene
             shader.Parameters["flashInterval"].SetValue(0.0f);
             shader.Parameters["flashColor"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 0.0f));
 
-            shadow = ENEMY_SHADOWS[enemyData.sprite];
+            shadow = ENEMY_SHADOWS[enemyData.Sprite];
 
-            name = enemyData.name;
+            name = enemyData.Name;
         }
 
-        public static new void LoadContent(ContentManager contentManager)
+        public static void Initialize()
         {
-            string[] enemyTextures = Directory.GetFiles("Content\\Graphics\\Enemies");
-            foreach (string textureName in enemyTextures)
+            var enemyTextures = Enum.GetValues(typeof(GameSprite));
+            foreach (GameSprite textureName in enemyTextures)
             {
-                string[] textureNameTokens = textureName.Split(new char[] { '.', '\\' });
-                string enemyName = textureNameTokens[textureNameTokens.Length - 2];
-
-                Texture2D sprite = contentManager.Load<Texture2D>("Graphics//Enemies//" + enemyName);
-                ENEMY_SHADOWS.Add(enemyName, BuildShadow(new Rectangle(-sprite.Width / 2, -sprite.Height / 2, sprite.Width, sprite.Height / 2)));
+                Texture2D sprite = AssetCache.SPRITES[textureName];
+                ENEMY_SHADOWS.Add(textureName.ToString(), BuildShadow(new Rectangle(-sprite.Width / 2, -sprite.Height / 2, sprite.Width, sprite.Height / 2)));
             }
 
-            ENEMY_BATTLER_EFFECT = contentManager.Load<Effect>("Shaders/BattleEnemy");
+            ENEMY_BATTLER_EFFECT = AssetCache.EFFECTS[GameShader.BattleEnemy];
             STATIC_TEXTURE = new Texture2D(CrossPlatformGame.GameInstance.GraphicsDevice, 200, 200);
             Color[] colorData = new Color[STATIC_TEXTURE.Width * STATIC_TEXTURE.Height];
             for (int y = 0; y < STATIC_TEXTURE.Height; y++)
@@ -72,7 +69,7 @@ namespace Texemon.Scenes.BattleScene
         {
             Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (SpriteBounds.Width + SpriteBounds.Height) / 2));
             if (Dead) shadowColor.A = (byte)MathHelper.Lerp(0, shadowColor.A, (float)deathTimeLeft / DEATH_DURATION);
-            spriteBatch.Draw(shadow, new Vector2((int)(SpriteBounds.Center.X - shadow.Width / 2), (int)(SpriteBounds.Center.Y) + 1 + enemyData.shadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
+            spriteBatch.Draw(shadow, new Vector2((int)(SpriteBounds.Center.X - shadow.Width / 2), (int)(SpriteBounds.Center.Y) + 1 + enemyData.ShadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
         public override void Update(GameTime gameTime)
@@ -117,8 +114,8 @@ namespace Texemon.Scenes.BattleScene
         {
             base.StartTurn();
 
-            Dictionary<string, double> attacks = enemyData.attacks.ToDictionary(x => x.script, x => (double)x.weight);
-            string attack = Rng.WeightedEntry<string>(attacks);
+            Dictionary<string[], double> attacks = enemyData.Attacks.ToDictionary(x => x.Script, x => (double)x.Weight);
+            string[] attack = Rng.WeightedEntry<string[]>(attacks);
 
             BattleController battleController = new BattleController(battleScene, this, null, attack);
             battleScene.AddController(battleController);

@@ -70,6 +70,7 @@ namespace Texemon.Main
 
     public enum GameShader
     {
+        BattleEnemy,
         ColorFade,
         Default,
         HeatDistortion,
@@ -192,6 +193,7 @@ namespace Texemon.Main
         Enemies_WizardM,
         Enemies_Wolf,
         Particles_DamageDigits,
+        Particles_Flame,
         Particles_GunSpark,
         Particles_Slash,
         Particles_Smoke,
