@@ -28,11 +28,26 @@ namespace Texemon.Scenes.BattleScene
 
         public BattleScene(string encounterName)
         {
-            RenderTarget2D matchRender = new RenderTarget2D(CrossPlatformGame.GameInstance.GraphicsDevice, 240, 720);
-
             encounterRecord = ENCOUNTERS.First(x => x.Name == encounterName);
 
-            battleViewModel = AddView(new BattleViewModel(this));
+            string[] enemyTokens = encounterRecord.Enemies;
+            List<EnemyRecord> enemyDataList = new List<EnemyRecord>();
+            List<Texture2D> enemySpriteList = new List<Texture2D>();
+            int totalEnemyWidth = 0;
+            foreach (string enemyName in enemyTokens)
+            {
+                EnemyRecord enemyData = ENEMIES.First(x => x.Name == enemyName);
+                Texture2D enemySprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + enemyData.Sprite)];
+
+                enemyDataList.Add(enemyData);
+                enemySpriteList.Add(enemySprite);
+
+                totalEnemyWidth += enemySprite.Width;
+            }
+
+            RenderTarget2D matchRender = new RenderTarget2D(CrossPlatformGame.GameInstance.GraphicsDevice, totalEnemyWidth, 112);
+
+            battleViewModel = AddView(new BattleViewModel(this, totalEnemyWidth, 112));
         }
 
         public override void BeginScene()

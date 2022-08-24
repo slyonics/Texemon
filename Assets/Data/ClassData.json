@@ -1,0 +1,8 @@
+[
+	{
+		"Name": "Sentinel",
+		"Sprite": "Robot",
+		"ShadowOffset": 0,
+		"Health": 100
+	}
+]

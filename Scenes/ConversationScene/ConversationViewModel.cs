@@ -20,7 +20,6 @@ namespace Texemon.Scenes.ConversationScene
         public ConversationViewModel(ConversationScene iScene, GameView viewName, ConversationRecord iConversationRecord)
             : base(iScene, PriorityLevel.GameLevel, viewName)
         {
-
             conversationScene = (parentScene as ConversationScene);
             conversationRecord = iConversationRecord;
             currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
