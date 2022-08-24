@@ -21,7 +21,7 @@ namespace Texemon.Scenes.ConversationScene
 
         public ConversationScene(string conversationName)
             : base()
-        {
+        {            
             conversationData = CONVERSATIONS.FirstOrDefault(x => x.Name == conversationName);
 
             string[] conversationScript = conversationData.DialogueRecords[0].Script;
@@ -32,9 +32,6 @@ namespace Texemon.Scenes.ConversationScene
 
             if (!string.IsNullOrEmpty(conversationData.Background))
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
-
-            
-            if (CONVERSATIONS == null) CONVERSATIONS = AssetCache.LoadRecords<ConversationRecord>("ConversationData");
         }
 
         public ConversationScene(ConversationRecord iConversationData)
@@ -52,6 +49,10 @@ namespace Texemon.Scenes.ConversationScene
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
         }
 
+        public static void Initialize()
+        {
+            if (CONVERSATIONS == null) CONVERSATIONS = AssetCache.LoadRecords<ConversationRecord>("ConversationData");
+        }
 
         public override void BeginScene()
         {

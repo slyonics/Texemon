@@ -77,6 +77,8 @@ namespace Texemon.Main
             Text.Initialize(GraphicsDevice);
 
             AssetCache.LoadContent(Content, GraphicsDevice);
+            Scenes.ConversationScene.ConversationScene.Initialize();
+            Scenes.BattleScene.BattleScene.Initialize();
 
             CurrentScene = new SplashScene();
         }

@@ -2,6 +2,7 @@ namespace Texemon.Main
 {
     public enum GameView
     {
+        BattleScene_BattleView,
         ConversationScene_ConversationView,
         CreditsScene_CreditsView,
         IntroScene_SelectionView,

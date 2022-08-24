@@ -48,6 +48,8 @@ namespace Texemon.Scenes.BattleScene
             var enemyTextures = Enum.GetValues(typeof(GameSprite));
             foreach (GameSprite textureName in enemyTextures)
             {
+                if (textureName == GameSprite.None) continue;
+
                 Texture2D sprite = AssetCache.SPRITES[textureName];
                 ENEMY_SHADOWS.Add(textureName.ToString(), BuildShadow(new Rectangle(-sprite.Width / 2, -sprite.Height / 2, sprite.Width, sprite.Height / 2)));
             }

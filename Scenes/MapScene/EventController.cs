@@ -65,16 +65,14 @@ namespace Texemon.Scenes.MapScene
         public static void Conversation(string[] tokens, ScriptParser scriptParser)
         {
             ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene(tokens[1]);
-            var unblock = scriptParser.BlockScript();
-            conversationScene.OnTerminated += new TerminationFollowup(unblock);
+            conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
             CrossPlatformGame.StackScene(conversationScene);
         }
 
         public static void Encounter(string[] tokens, ScriptParser scriptParser)
         {
             BattleScene.BattleScene matchScene = new BattleScene.BattleScene(tokens[1]);
-            var unblock = scriptParser.BlockScript();
-            matchScene.OnTerminated += new TerminationFollowup(unblock);
+            matchScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
             CrossPlatformGame.StackScene(matchScene);
         }
     }

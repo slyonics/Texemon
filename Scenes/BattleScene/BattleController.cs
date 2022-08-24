@@ -15,8 +15,6 @@ namespace Texemon.Scenes.BattleScene
         private Battler attacker;
         private Battler target;
 
-        private DialogueView dialogueView;
-
         public BattleController(BattleScene iBattleScene, Battler iAttacker, Battler iTarget, string[] script)
            : base(iBattleScene, script, PriorityLevel.CutsceneLevel)
         {
@@ -29,7 +27,7 @@ namespace Texemon.Scenes.BattleScene
         {
             if (scriptParser.Finished)
             {
-                if (dialogueView == null || dialogueView.Terminated) Terminate();
+                //if (dialogueView == null || dialogueView.Terminated) Terminate();
             }
             else scriptParser.Update(gameTime);
         }
@@ -68,7 +66,7 @@ namespace Texemon.Scenes.BattleScene
             AnimationType animationType = (AnimationType)Enum.Parse(typeof(AnimationType), tokens[1]);
             AnimationParticle animationParticle = new AnimationParticle(battleScene, position, animationType, true);
 
-            if (tokens.Length > 4) animationParticle.AddFrameEvent(int.Parse(tokens[4]), scriptParser.BlockForFrame());
+            if (tokens.Length > 4) animationParticle.AddFrameEvent(int.Parse(tokens[4]), new FrameFollowup(scriptParser.BlockScript()));
 
             battleScene.AddParticle(animationParticle);
         }
@@ -83,22 +81,7 @@ namespace Texemon.Scenes.BattleScene
 
         private void Dialogue(string[] tokens)
         {
-            string dialogue = "";
-            for (int i = 3; i < tokens.Length; i++) dialogue += tokens[i] + " ";
-            dialogue.TrimEnd();
-
-            if (dialogueView == null)
-            {
-                dialogueView = new DialogueView(battleScene, BattleScene.COMMAND_WINDOW, dialogue);
-                dialogueView.CrawlFactor = int.Parse(tokens[1]);
-                dialogueView.Sound = GameSound.None;
-                battleScene.AddView(dialogueView);
-
-                DialogueController dialogueController = new DialogueController(PriorityLevel.GameLevel, dialogueView, int.Parse(tokens[2]));
-                dialogueController.OnFinishScrolling += scriptParser.BlockForDialogueScrolling();
-                battleScene.AddController(dialogueController);
-            }
-            else dialogueView.Enqueue(dialogue);
+            
         }
     }
 }

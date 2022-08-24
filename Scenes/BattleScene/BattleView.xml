@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,100" TransitionIn="Expand">
+
+	</Panel>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-140,0,280,110" TransitionIn="Expand">
+
+	</Panel>
+	
+</View>

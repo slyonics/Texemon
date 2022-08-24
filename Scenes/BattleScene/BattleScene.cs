@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework.Graphics;
+
 using Texemon.Models;
 
 namespace Texemon.Scenes.BattleScene
@@ -15,6 +17,8 @@ namespace Texemon.Scenes.BattleScene
 
         private EncounterRecord encounterRecord;
 
+        private BattleViewModel battleViewModel;
+
         private List<Battler> initiativeList = new List<Battler>();
         private List<BattleEnemy> initialEnemies = new List<BattleEnemy>();
         private List<BattleEnemy> enemyList = new List<BattleEnemy>();
@@ -24,11 +28,11 @@ namespace Texemon.Scenes.BattleScene
 
         public BattleScene(string encounterName)
         {
-            Initialize();
-
+            RenderTarget2D matchRender = new RenderTarget2D(CrossPlatformGame.GameInstance.GraphicsDevice, 240, 720);
 
             encounterRecord = ENCOUNTERS.First(x => x.Name == encounterName);
 
+            battleViewModel = AddView(new BattleViewModel(this));
         }
 
         public override void BeginScene()

@@ -10,6 +10,11 @@ namespace Texemon.Scenes.BattleScene
 {
     public class BattlerModel
     {
+        public BattlerModel()
+        {
+
+        }
+
         public BattlerModel(EnemyRecord enemyRecord)
         {
             Name.Value = enemyRecord.Name;
