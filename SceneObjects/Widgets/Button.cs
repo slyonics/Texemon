@@ -14,8 +14,8 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Button : Widget
     {
-        private MethodInfo buttonEvent;
-        private string eventParameter;
+        public MethodInfo Action { get; set; }
+        private string ActionParameter { get; set; }
 
         private NinePatch buttonFrame;
         private string style;
@@ -37,24 +37,11 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            //base.LoadAttributes(xmlNode);
-
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
                 string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Action": buttonEvent = GetParent<ViewModel>().GetType().GetMethod(xmlAttribute.Value); break;
-                    case "ActionParameter": eventParameter = xmlAttribute.Value; break;
-                    case "Binding":
-                        actionParameterBinding = LookupBinding<string>(xmlAttribute.Value); actionParameterBinding.ModelChanged += ActionParameterBinding_ModelChanged;
-                        if (actionParameterBinding.Value != null) ActionParameterBinding_ModelChanged();
-                        break;
-
-                    case "SoftBinding":
-                        eventParameter = LookupSoftBinding<string>(xmlAttribute.Value);
-                        break;
-
                     default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
@@ -91,7 +78,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public void ActionParameterBinding_ModelChanged()
         {
-            eventParameter = actionParameterBinding.Value;
+            ActionParameter = actionParameterBinding.Value;
         }
 
         public override Widget GetWidgetAt(Vector2 mousePosition)
@@ -134,8 +121,8 @@ namespace Texemon.SceneObjects.Widgets
 
         public void Activate()
         {
-            string[] parameters = (String.IsNullOrEmpty(eventParameter)) ? null : new string[] { eventParameter };
-            buttonEvent?.Invoke(GetParent<ViewModel>(), parameters);
+            string[] parameters = (String.IsNullOrEmpty(ActionParameter)) ? null : new string[] { ActionParameter };
+            Action?.Invoke(GetParent<ViewModel>(), parameters);
         }
 
         public void RadioSelect()

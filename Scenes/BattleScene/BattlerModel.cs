@@ -15,6 +15,13 @@ namespace Texemon.Scenes.BattleScene
 
         }
 
+        public BattlerModel(BattlerModel clone)
+        {
+            Name.Value = clone.Name.Value;
+            MaxHealth.Value = clone.Health.Value;
+            Health.Value = MaxHealth.Value;
+        }
+
         public BattlerModel(EnemyRecord enemyRecord)
         {
             Name.Value = enemyRecord.Name;

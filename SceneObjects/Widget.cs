@@ -121,6 +121,7 @@ namespace Texemon.SceneObjects
                 else if (type == typeof(float)) property.SetValue(this, float.Parse(attributeValue));
                 else if (type == typeof(string)) property.SetValue(this, ParseString(attributeValue));
                 else if (type == typeof(Color)) property.SetValue(this, Graphics.ParseHexcode(attributeValue));
+                else if (type == typeof(MethodInfo)) property.SetValue(this, GetParent<ViewModel>().GetType().GetMethod(attributeValue));
             }
         }
 

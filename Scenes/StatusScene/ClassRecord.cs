@@ -23,7 +23,5 @@ namespace Texemon.Scenes.StatusScene
         public string[] InitialEquipment { get; set; }
         public string[] InitialAbilities { get; set; }
         public BattleScene.BattlerModel BattlerModel { get; set; }
-
-        public static ClassRecord[] Records { get; set; }
     }
 }

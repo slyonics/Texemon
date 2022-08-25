@@ -1,8 +1,34 @@
 [
 	{
-		"Name": "Sentinel",
-		"Sprite": "Robot",
-		"ShadowOffset": 0,
-		"Health": 100
+		"ClassType": "Inventor",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+
+		],
+		"BattlerModel": {
+			"Value": {
+				"Name": "Inventor",
+				"Health": 50,
+				"MaxHealth": 50
+			}
+		}
+	},
+	{
+		"ClassType": "Android",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame"
+		],
+		"BattlerModel": {
+			"Value": {
+				"Name": "Inventor",
+				"Health": 30,
+				"MaxHealth": 30
+			}
+		}
 	}
 ]

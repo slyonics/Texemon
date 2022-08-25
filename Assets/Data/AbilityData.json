@@ -1,0 +1,21 @@
+[
+	{
+		"Name": "Flame",
+		"Animation": "Chanting",
+		"Description": [
+			"999 damage",
+			"Incendiary",
+			"VS all enemies"
+		],
+		"Icon": 15,
+		"Charges": 15,
+		"MaxCharges": 15,
+		"Targetting": "AllEnemy",
+		"Script": [
+			"Animate Attack",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage 999"
+		]
+	}
+]

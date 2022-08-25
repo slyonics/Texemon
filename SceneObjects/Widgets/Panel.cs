@@ -33,7 +33,6 @@ namespace Texemon.SceneObjects.Widgets
         }
 
         private NinePatch panelFrame;
-        private string style;
 
         private TransitionType TransitionIn { get; set; } = TransitionType.None;
         private TransitionType TransitionOut { get; set; } = TransitionType.None;
@@ -155,6 +154,7 @@ namespace Texemon.SceneObjects.Widgets
             if (Closed) Terminate();
         }
 
+        private string style;
         private string Style { get => style; set { style = value; UpdateFrame(); } }
     }
 }

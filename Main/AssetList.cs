@@ -62,10 +62,12 @@ namespace Texemon.Main
 
     public enum GameData
     {
+        AbilityData,
         ClassData,
         ConversationData,
         EncounterData,
         EnemyData,
+        ItemData,
 
         None = -1
     }

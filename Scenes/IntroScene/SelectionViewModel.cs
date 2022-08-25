@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Texemon.Main;
 using Texemon.Models;
 using Texemon.SceneObjects.Widgets;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.IntroScene
 {
@@ -64,8 +65,15 @@ namespace Texemon.Scenes.IntroScene
         {
             switch (selection)
             {
-                case Selection.Magic: CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City"); break;
-                case Selection.Technology: CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City"); break;
+                case Selection.Magic:
+                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Inventor));
+                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
+                    CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
+                    break;
+
+                case Selection.Technology:
+                    CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
+                    break;
             }
         }
 

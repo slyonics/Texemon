@@ -14,6 +14,7 @@ namespace Texemon.Scenes.BattleScene
     {
         public static List<EnemyRecord> ENEMIES { get; private set; }
         public static List<EncounterRecord> ENCOUNTERS { get; private set; }
+
         private static readonly Rectangle[] BACKGROUND_SOURCE = new Rectangle[]
         {
             new Rectangle(0, 0, 16, 112),
@@ -71,13 +72,10 @@ namespace Texemon.Scenes.BattleScene
 
         public static void Initialize()
         {
-            if (ENEMIES == null)
-            {
-                ENEMIES = AssetCache.LoadRecords<EnemyRecord>("EnemyData");
-                ENCOUNTERS = AssetCache.LoadRecords<EncounterRecord>("EncounterData");
+            ENEMIES = AssetCache.LoadRecords<EnemyRecord>("EnemyData");
+            ENCOUNTERS = AssetCache.LoadRecords<EncounterRecord>("EncounterData");
 
-                BattleEnemy.Initialize();
-            }
+            BattleEnemy.Initialize();
         }
 
         private void BuildBackground(Texture2D backgroundImage, int width)
