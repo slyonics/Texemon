@@ -26,7 +26,7 @@ Repeat</property>
   </object>
  </objectgroup>
  <objectgroup id="17" name="Enemies">
-  <object id="6" name="Base" x="320" y="304" width="20" height="20">
+  <object id="6" name="Base" x="67" y="77" width="20" height="20">
    <properties>
     <property name="Collide">Conversation BattleTime
 Encounter DoubleSentinel</property>

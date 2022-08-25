@@ -138,6 +138,7 @@ namespace Texemon.Main
         Background_Blank,
         Background_Splash,
         Background_Title,
+        Background_Trees,
         Enemies_ArcherF,
         Enemies_ArcherM,
         Enemies_Bee,

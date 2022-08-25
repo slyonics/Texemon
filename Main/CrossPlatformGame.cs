@@ -32,7 +32,7 @@ namespace Texemon.Main
         private GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
 
-        public RenderTarget2D gameRender;
+        private RenderTarget2D gameRender;
         private RenderTarget2D compositeRender;
 
         private static int scaledScreenWidth = TARGET_SCREEN_WIDTH;

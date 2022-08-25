@@ -14,8 +14,16 @@ namespace Texemon.Scenes.BattleScene
     {
         public static List<EnemyRecord> ENEMIES { get; private set; }
         public static List<EncounterRecord> ENCOUNTERS { get; private set; }
+        private static readonly Rectangle[] BACKGROUND_SOURCE = new Rectangle[]
+        {
+            new Rectangle(0, 0, 16, 112),
+            new Rectangle(16, 0, 16, 112),
+            new Rectangle(32, 0, 16, 112),
+        };
 
         private EncounterRecord encounterRecord;
+
+        public RenderTarget2D backgroundRender;
 
         private BattleViewModel battleViewModel;
 
@@ -45,9 +53,15 @@ namespace Texemon.Scenes.BattleScene
                 totalEnemyWidth += enemySprite.Width;
             }
 
-            RenderTarget2D matchRender = new RenderTarget2D(CrossPlatformGame.GameInstance.GraphicsDevice, totalEnemyWidth, 112);
+            BuildBackground(AssetCache.SPRITES[GameSprite.Background_Trees], totalEnemyWidth);
+
 
             battleViewModel = AddView(new BattleViewModel(this, totalEnemyWidth, 112));
+        }
+
+        ~BattleScene()
+        {
+            backgroundRender.Dispose();
         }
 
         public override void BeginScene()
@@ -64,6 +78,19 @@ namespace Texemon.Scenes.BattleScene
 
                 BattleEnemy.Initialize();
             }
+        }
+
+        private void BuildBackground(Texture2D backgroundImage, int width)
+        {
+            backgroundRender = new RenderTarget2D(CrossPlatformGame.GameInstance.GraphicsDevice, width, 112);
+            CrossPlatformGame.GameInstance.GraphicsDevice.SetRenderTarget(backgroundRender);
+            CrossPlatformGame.GameInstance.GraphicsDevice.Clear(Color.Transparent);
+            SpriteBatch spriteBatch = new SpriteBatch(CrossPlatformGame.GameInstance.GraphicsDevice);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
+            spriteBatch.Draw(backgroundImage, Vector2.Zero, BACKGROUND_SOURCE[0], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.99f);
+            for (int i = 1; i < width / 16; i++) spriteBatch.Draw(backgroundImage, new Vector2(i * 16, 0), BACKGROUND_SOURCE[1], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.99f);
+            spriteBatch.Draw(backgroundImage, new Vector2(width, 0) - new Vector2(16, 0), BACKGROUND_SOURCE[2], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.99f);
+            spriteBatch.End();
         }
 
         private void IntroFinished()
