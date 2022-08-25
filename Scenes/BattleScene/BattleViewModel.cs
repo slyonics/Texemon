@@ -31,7 +31,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-60, -90, 112, 112));
-        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-140, 30, 80, 80));
+        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-140, 30, 120, 80));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
 
         public Panel EnemyPanel { get; private set; }

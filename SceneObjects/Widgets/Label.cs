@@ -49,7 +49,7 @@ namespace Texemon.SceneObjects.Widgets
                     break;
 
                 case Alignment.Center:
-                    Main.Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y) + base.Position, Font, Text, drawColor, Depth);
+                    Main.Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y) + Position, Font, Text, drawColor, Depth);
                     break;
 
                 case Alignment.Right:
