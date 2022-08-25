@@ -7,8 +7,8 @@
 	</Panel>
 
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="3,3,3,3" TransitionIn="Expand">
-		<DataGrid Binding="PlayerProfile.Party" Bounds="0,0,80,80">
-			<Label Text="Wassup">
+		<DataGrid Items="Bind PlayerProfile.Party" Bounds="0,0,120,80">
+			<Label Text="Bind DataGrid.Name" Alignment="Cascading">
 				
 			</Label>
 		</DataGrid>

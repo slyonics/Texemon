@@ -9,16 +9,16 @@ using Texemon.Scenes.BattleScene;
 
 namespace Texemon.Scenes.StatusScene
 {
-    public class HeroModel
+    public class HeroModel : BattlerModel
     {
         public HeroModel(ClassType classType)
+            : base(StatusScene.CLASSES.First(x => x.ClassType == classType).BattlerModel)
         {
             ClassRecord classRecord = StatusScene.CLASSES.First(x => x.ClassType == classType);
 
-            Stats.Value = new BattlerModel(classRecord.BattlerModel);
+
         }
 
-        public ModelProperty<BattlerModel> Stats { get; set; } = new ModelProperty<BattlerModel>(new BattlerModel());
         public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_AirDrone);
     }
 }

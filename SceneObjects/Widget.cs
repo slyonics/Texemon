@@ -61,7 +61,7 @@ namespace Texemon.SceneObjects
 
         protected bool mousedOver;
 
-        private List<Tuple<IModelProperty, ModelChangeCallback>> bindingList = new List<Tuple<IModelProperty, ModelChangeCallback>>();
+        protected List<Tuple<IModelProperty, ModelChangeCallback>> bindingList = new List<Tuple<IModelProperty, ModelChangeCallback>>();
 
         public Widget()
             : base()
@@ -396,7 +396,9 @@ namespace Texemon.SceneObjects
                     break;
 
                 case "DataGrid":
-                    dataContext = GetParent<DataGrid>().Binding[0];
+                    DataGrid dataGrid = GetParent<DataGrid>();
+                    int i = dataGrid.ChildList.IndexOf(this);
+                    dataContext = dataGrid.Items.ElementAtOrDefault(i);
                     tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
                     break;
 
@@ -405,10 +407,27 @@ namespace Texemon.SceneObjects
                     break;
             }
 
+            while (dataContext is IModelProperty)
+            {
+                dataContext = ((IModelProperty)dataContext).GetValue();
+            }
+
             while (tokens.Length > 1)
             {
-                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
+                var property = dataContext.GetType().GetProperty(tokens[0]);
+                dataContext = property.GetValue(dataContext);
+                
                 tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+
+                while (dataContext is IModelProperty)
+                {
+                    dataContext = ((IModelProperty)dataContext).GetValue();
+                }
+            }
+
+            while (dataContext is IModelProperty)
+            {
+                dataContext = ((IModelProperty)dataContext).GetValue();
             }
 
             return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as IModelProperty;
@@ -427,7 +446,7 @@ namespace Texemon.SceneObjects
                     break;
 
                 case "DataGrid":
-                    dataContext = GetParent<DataGrid>().Binding[0];
+                    dataContext = GetParent<DataGrid>().Items.First();
                     tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
                     break;
 
@@ -443,38 +462,6 @@ namespace Texemon.SceneObjects
             }
 
             return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as ModelProperty<T>;
-        }
-
-        public T LookupSoftBinding<T>(string bindingName)
-        {
-            string[] tokens = bindingName.Split('.');
-
-            object dataContext;
-            switch (tokens[0])
-            {
-                case "PlayerProfile":
-                    dataContext = GameProfile.PlayerProfile;
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                case "DataGrid":
-                    DataGrid parent = GetParent<DataGrid>();
-                    dataContext = parent.Binding[parent.ChildList.IndexOf(GetDescendent(parent))];
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                default:
-                    dataContext = GetParent<ViewModel>();
-                    break;
-            }
-
-            while (tokens.Length > 1)
-            {
-                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
-                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-            }
-
-            return (T)dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
         }
 
         public dynamic LookupCollectionBinding(string bindingName)

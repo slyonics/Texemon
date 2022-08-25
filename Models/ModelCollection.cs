@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Texemon.Models
 {
-    public delegate void CollectionChangeCallback();
-
     [Serializable]
-    public class ModelCollection<T> : IEnumerable<ModelProperty<T>>
+    public class ModelCollection<T> : IEnumerable<ModelProperty<T>>, IModelProperty
     {
 
 
@@ -48,6 +46,16 @@ namespace Texemon.Models
             get => modelList[i].Value;
         }
 
+        public object GetValue()
+        {
+            return modelList;
+        }
+
+        public void Unbind(ModelChangeCallback callback)
+        {
+            ModelChanged -= callback;
+        }
+
         IEnumerator<ModelProperty<T>> IEnumerable<ModelProperty<T>>.GetEnumerator()
         {
             foreach (ModelProperty<T> modelProperty in ModelList) yield return modelProperty;
@@ -58,20 +66,20 @@ namespace Texemon.Models
             foreach (ModelProperty<T> modelProperty in ModelList) yield return modelProperty;
         }
 
-        public void SubscribeModelChanged(CollectionChangeCallback callback)
+        public void SubscribeModelChanged(ModelChangeCallback callback)
         {
             ModelChanged += callback;
         }
 
-        public void SubscribeCollectionChanged(CollectionChangeCallback callback)
+        public void SubscribeCollectionChanged(ModelChangeCallback callback)
         {
             CollectionChanged += callback;
         }
 
         [field: NonSerialized]
-        public event CollectionChangeCallback ModelChanged;
+        public event ModelChangeCallback ModelChanged;
 
         [field: NonSerialized]
-        public event CollectionChangeCallback CollectionChanged;
+        public event ModelChangeCallback CollectionChanged;
     }
 }

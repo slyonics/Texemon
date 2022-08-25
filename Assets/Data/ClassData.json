@@ -8,11 +8,9 @@
 
 		],
 		"BattlerModel": {
-			"Value": {
-				"Name": "Inventor",
-				"Health": 50,
-				"MaxHealth": 50
-			}
+			"Name": { "Value": "Inventor" },
+			"Health": { "Value": 50 },
+			"MaxHealth": { "Value": 50 }
 		}
 	},
 	{
@@ -24,11 +22,9 @@
 			"Flame"
 		],
 		"BattlerModel": {
-			"Value": {
-				"Name": "Inventor",
-				"Health": 30,
-				"MaxHealth": 30
-			}
+			"Name": { "Value": "Android" },
+			"Health": { "Value": 30 },
+			"MaxHealth": { "Value": 30 }
 		}
 	}
 ]

@@ -47,7 +47,7 @@ namespace Texemon.Scenes.BattleScene
         private int partyOrder;
 
         public BattlePlayer(BattleScene iBattleScene, Vector2 iPosition, HeroModel iHeroProfile, int iPartyOrder)
-            : base(iBattleScene, iPosition, AssetCache.SPRITES[iHeroProfile.Sprite.Value], HERO_ANIMATIONS, iHeroProfile.Stats.Value)
+            : base(iBattleScene, iPosition, AssetCache.SPRITES[iHeroProfile.Sprite.Value], HERO_ANIMATIONS, iHeroProfile)
         {
             heroProfile = iHeroProfile;
             partyOrder = iPartyOrder;
@@ -57,8 +57,8 @@ namespace Texemon.Scenes.BattleScene
 
             shadow = HERO_SHADOW;
 
-            name = heroProfile.Stats.Value.Name.Value;
-            health = heroProfile.Stats.Value.Health.Value;
+            name = heroProfile.Name.Value;
+            health = heroProfile.Health.Value;
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
@@ -103,7 +103,7 @@ namespace Texemon.Scenes.BattleScene
 
         public void Idle()
         {
-            if (health > heroProfile.Stats.Value.MaxHealth.Value / 4) PlayAnimation("Guarding");
+            if (health > heroProfile.MaxHealth.Value / 4) PlayAnimation("Guarding");
             else if (health > 0) PlayAnimation("Hurting");
             else PlayAnimation("Dead");
         }

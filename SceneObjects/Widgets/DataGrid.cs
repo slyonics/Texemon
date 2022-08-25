@@ -13,7 +13,8 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class DataGrid : Widget
     {
-        public dynamic Binding { get; private set; }
+        private IEnumerable<object> items;
+        public IEnumerable<object> Items { get => items; private set { items = value; ItemsChanged(); } }
 
         private XmlNode dataTemplate;
 
@@ -25,22 +26,15 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            base.LoadAttributes(xmlNode);
+            dataTemplate = xmlNode.ChildNodes[0];
 
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Binding":
-                        Binding = LookupCollectionBinding(xmlAttribute.Value);
-                        Binding.SubscribeModelChanged(new CollectionChangeCallback(Binding_ModelChanged));
-                        Binding.SubscribeCollectionChanged(new CollectionChangeCallback(Binding_CollectionChanged));
-                        break;
+                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
-
-            dataTemplate = xmlNode.ChildNodes[0];
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -58,19 +52,13 @@ namespace Texemon.SceneObjects.Widgets
 
         }
 
-
-        private void Binding_CollectionChanged()
-        {
-            Binding_ModelChanged();
-        }
-
-        private void Binding_ModelChanged()
+        private void ItemsChanged()
         {
             for (int i = 0; i < layoutOffset.Length; i++) layoutOffset[i] = new Vector2();
             foreach (Widget widget in ChildList) widget.Terminate();
             ChildList.Clear();
 
-            foreach (var modelProperty in Binding)
+            foreach (var modelProperty in items)
             {
                 Widget childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + WIDGET_DEPTH_OFFSET }, null, null);
                 AddChild(childWidget, dataTemplate);
@@ -79,17 +67,15 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadChildren(XmlNodeList nodeList, float widgetDepth)
         {
-            foreach (var modelProperty in Binding)
-            {
-                Widget childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + WIDGET_DEPTH_OFFSET }, null, null);
-                AddChild(childWidget, dataTemplate);
-            }
+
         }
 
         public bool IsChildVisible(Widget child)
         {
-            return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y) &&
-                (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y);
+            return true;
+
+            //return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y) &&
+            //    (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y);
         }
 
         public void ScrollUp()

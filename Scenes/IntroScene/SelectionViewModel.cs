@@ -66,12 +66,13 @@ namespace Texemon.Scenes.IntroScene
             switch (selection)
             {
                 case Selection.Magic:
-                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Inventor));
-                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
+                    
                     CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
                     break;
 
                 case Selection.Technology:
+                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Inventor));
+                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
                     CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
                     break;
             }
