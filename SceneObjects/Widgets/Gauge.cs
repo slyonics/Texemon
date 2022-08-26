@@ -46,13 +46,13 @@ namespace Texemon.SceneObjects.Widgets
                     case "Height": height = int.Parse(xmlAttribute.Value); break;
 
                     case "MinimumBinding":
-                        minimumBinding = LookupBinding<float>(xmlAttribute.Value);
+                        minimumBinding = OldLookupBinding<float>(xmlAttribute.Value);
                         minimumBinding.ModelChanged += MinimumBinding_ModelChanged;
                         Minimum = (float)minimumBinding.Value;
                         break;
 
                     case "MaximumBinding":
-                        maximumBinding = LookupBinding<float>(xmlAttribute.Value);
+                        maximumBinding = OldLookupBinding<float>(xmlAttribute.Value);
                         maximumBinding.ModelChanged += MaximumBinding_ModelChanged;
                         Maximum = (float)maximumBinding.Value;
                         break;
@@ -119,7 +119,7 @@ namespace Texemon.SceneObjects.Widgets
                     case "Bar": background = "Gauges_" + xmlAttribute.Value; break;
 
                     case "Binding":
-                        binding = LookupBinding<float>(xmlAttribute.Value);
+                        binding = OldLookupBinding<float>(xmlAttribute.Value);
                         binding.ModelChanged += Binding_ModelChanged;
                         break;
                 }

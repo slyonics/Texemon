@@ -42,7 +42,7 @@ namespace Texemon.SceneObjects.Widgets
                     case "ActiveStyle": activeStyle = "Buttons_" + xmlAttribute.Value; break;
 
                     case "Binding":
-                        binding = LookupBinding<string>(xmlAttribute.Value);
+                        binding = OldLookupBinding<string>(xmlAttribute.Value);
                         binding.ModelChanged += Binding_ModelChanged;
                         break;
                 }

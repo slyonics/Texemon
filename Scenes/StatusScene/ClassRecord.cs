@@ -20,6 +20,7 @@ namespace Texemon.Scenes.StatusScene
     public class ClassRecord
     {
         public ClassType ClassType { get; set; }
+        public string Sprite { get; set; }
         public string[] InitialEquipment { get; set; }
         public string[] InitialAbilities { get; set; }
         public BattleScene.BattlerModel BattlerModel { get; set; }

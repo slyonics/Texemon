@@ -1,6 +1,7 @@
 [
 	{
 		"ClassType": "Inventor",
+		"Sprite": "Inventor",
 		"InitialEquipment": [
 			"Longsword"
 		],
@@ -15,6 +16,7 @@
 	},
 	{
 		"ClassType": "Android",
+		"Sprite": "GroundDrone",
 		"InitialEquipment": [
 			"Longsword"
 		],

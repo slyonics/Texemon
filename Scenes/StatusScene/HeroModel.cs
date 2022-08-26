@@ -15,7 +15,7 @@ namespace Texemon.Scenes.StatusScene
             : base(StatusScene.CLASSES.First(x => x.ClassType == classType).BattlerModel)
         {
             ClassRecord classRecord = StatusScene.CLASSES.First(x => x.ClassType == classType);
-
+            Sprite.Value = (GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + classRecord.Sprite);
 
         }
 

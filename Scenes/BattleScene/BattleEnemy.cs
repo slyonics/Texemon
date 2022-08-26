@@ -38,7 +38,7 @@ namespace Texemon.Scenes.BattleScene
             shader.Parameters["flashInterval"].SetValue(0.0f);
             shader.Parameters["flashColor"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 0.0f));
 
-            shadow = ENEMY_SHADOWS[enemyData.Sprite];
+            shadow = ENEMY_SHADOWS["Enemies_" + enemyData.Sprite];
 
             name = enemyData.Name;
         }
@@ -141,6 +141,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public EnemyRecord EnemyData { get => enemyData; }
+        public Rectangle EnemySize { get => new Rectangle(0, 0, animatedSprite.SpriteBounds().Width, animatedSprite.SpriteBounds().Height); }
 
         public override bool Busy { get => base.Busy || deathTimeLeft > 0; }
     }

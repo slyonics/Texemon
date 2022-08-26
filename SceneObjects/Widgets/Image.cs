@@ -14,7 +14,7 @@ namespace Texemon.SceneObjects.Widgets
     public class Image : Widget
     {
         private Texture2D icon;
-        private AnimatedSprite sprite;
+        private AnimatedSprite Sprite { get; set; }
         private ModelProperty<AnimatedSprite> spriteBinding;
         private ModelProperty<string> pictureBinding;
         private ModelProperty<RenderTarget2D> renderBinding;
@@ -30,37 +30,36 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            base.LoadAttributes(xmlNode);
-
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
                 string[] tokens;
                 switch (xmlAttribute.Name)
                 {
                     case "Icon": icon = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Widgets_Icons_" + xmlAttribute.Value)]; break;
-                    case "Sprite": sprite = LoadSprite(xmlAttribute.Value); break;
                     case "Picture": picture = LoadPicture(xmlAttribute.Value); break;
                     case "SpriteScale":
                         SpriteScale = ParseInt(xmlAttribute.Value);
                         break;
 
                     case "SpriteBinding":
-                        spriteBinding = LookupBinding<AnimatedSprite>(xmlAttribute.Value);
+                        spriteBinding = OldLookupBinding<AnimatedSprite>(xmlAttribute.Value);
                         spriteBinding.ModelChanged += SpriteBinding_ModelChanged;
                         SpriteBinding_ModelChanged();
                         break;
 
                     case "PictureBinding":
-                        pictureBinding = LookupBinding<string>(xmlAttribute.Value);
+                        pictureBinding = OldLookupBinding<string>(xmlAttribute.Value);
                         pictureBinding.ModelChanged += PictureBinding_ModelChanged;
                         PictureBinding_ModelChanged();
                         break;
 
                     case "RenderBinding":
-                        renderBinding = LookupBinding<RenderTarget2D>(xmlAttribute.Value);
+                        renderBinding = OldLookupBinding<RenderTarget2D>(xmlAttribute.Value);
                         renderBinding.ModelChanged += RenderBinding_ModelChanged;
                         RenderBinding_ModelChanged();
                         break;
+
+                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
         }
@@ -94,7 +93,7 @@ namespace Texemon.SceneObjects.Widgets
 
         private void SpriteBinding_ModelChanged()
         {
-            sprite = (AnimatedSprite)spriteBinding.Value;
+            Sprite = (AnimatedSprite)spriteBinding.Value;
         }
 
         private void PictureBinding_ModelChanged()
@@ -111,7 +110,7 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.Update(gameTime);
 
-            sprite?.Update(gameTime);
+            Sprite?.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -127,26 +126,26 @@ namespace Texemon.SceneObjects.Widgets
                 // spriteBatch.Draw(picture, new Rectangle(currentWindow.Left + (int)Position.X, -currentWindow.Height + (int)Position.Y + parent.InnerBounds.Height / 2 - parent.InnerMargin.Y * CrossPlatformGame.Scale, currentWindow.Width, currentWindow.Height), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth - 0.0001f);
                 else spriteBatch.Draw(picture, new Rectangle(currentWindow.X + (int)Position.X, currentWindow.Y + (int)Position.Y, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
             }
-            else if (sprite != null)
+            else if (Sprite != null)
             {
-                sprite.Scale = new Vector2(SpriteScale);
+                Sprite.Scale = new Vector2(SpriteScale);
 
                 switch (Alignment)
                 {
                     case Alignment.BottomRight:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y) + Position, null, Depth - 0.0001f);
+                        Sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (Sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y) + Position, null, Depth - 0.0001f);
                         break;
 
                     case Alignment.Center:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position, null, Depth - 0.0001f);
+                        Sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position, null, Depth - 0.0001f);
                         break;
 
                     case Alignment.Bottom:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Bottom - parent.InnerMargin.Height) + Position, null, Depth - 0.0001f);
+                        Sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Bottom - parent.InnerMargin.Height) + Position, null, Depth - 0.0001f);
                         break;
 
                     default:
-                        sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y - (sprite.SpriteBounds().Height * SpriteScale) / 2) + Position, null, Depth - 0.0001f);
+                        Sprite?.Draw(spriteBatch, new Vector2(currentWindow.Center.X - (Sprite.SpriteBounds().Width * SpriteScale) / 2, currentWindow.Center.Y - (Sprite.SpriteBounds().Height * SpriteScale) / 2) + Position, null, Depth - 0.0001f);
                         break;
                 }
             }
@@ -162,6 +161,6 @@ namespace Texemon.SceneObjects.Widgets
             }
         }
 
-        public AnimatedSprite AnimatedSprite { get => sprite; }
+        public AnimatedSprite AnimatedSprite { get => Sprite; }
     }
 }

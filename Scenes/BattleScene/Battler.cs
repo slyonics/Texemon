@@ -39,6 +39,7 @@ namespace Texemon.Scenes.BattleScene
         protected string name;
         protected int health;
         protected BattlerModel stats;
+        public BattlerModel Stats { get => stats; }
 
         public Battler(BattleScene iBattleScene, Vector2 iPosition, Texture2D iSprite, Dictionary<string, Animation> iAnimationList, BattlerModel iStats)
             : base(iBattleScene, iPosition, iSprite, iAnimationList)
@@ -153,7 +154,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public string Name { get => name; }
-        public BattlerModel Stats { get => stats; }
+        
         public int Health { get => health; }
         public bool Dead { get => health <= 0; }
 

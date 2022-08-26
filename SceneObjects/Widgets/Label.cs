@@ -11,7 +11,7 @@ namespace Texemon.SceneObjects.Widgets
         private string text;
         public string Text { get => text; set => text = ExpandText(value); }
 
-        private Alignment? TextAlignment { get; set; }
+        private Alignment TextAlignment { get; set; }
 
         public Label(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -42,10 +42,10 @@ namespace Texemon.SceneObjects.Widgets
 
             Color drawColor = (parent.Enabled) ? Color : new Color(120, 120, 120, 255);
 
-            switch (TextAlignment.HasValue ? TextAlignment.Value : Alignment)
+            switch (TextAlignment)
             {
                 case Alignment.Left:
-                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Center.Y - Main.Text.GetStringHeight(Font) / 2) + base.Position, Font, Text, drawColor, Depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Top - Main.Text.GetStringHeight(Font)) + Position, Font, Text, drawColor, Depth);
                     break;
 
                 case Alignment.Center:
@@ -53,7 +53,7 @@ namespace Texemon.SceneObjects.Widgets
                     break;
 
                 case Alignment.Right:
-                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Center.Y - Main.Text.GetStringHeight(Font) / 2) + base.Position, Font, Text, drawColor, Depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Center.Y - Main.Text.GetStringHeight(Font) / 2) + Position, Font, Text, drawColor, Depth);
                     break;
             }
         }

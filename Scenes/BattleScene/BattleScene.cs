@@ -51,7 +51,24 @@ namespace Texemon.Scenes.BattleScene
                 enemyDataList.Add(enemyData);
                 enemySpriteList.Add(enemySprite);
 
+                BattleEnemy battleEnemy = new BattleEnemy(this, Vector2.Zero, enemyData);
+                initialEnemies.Add(battleEnemy);
+                enemyList.Add(battleEnemy);
+
+                AddEntity(battleEnemy);
+
                 totalEnemyWidth += enemySprite.Width;
+
+                
+            }
+
+            foreach (var heroModel in GameProfile.PlayerProfile.Party)
+            {
+                BattlePlayer battlePlayer = new BattlePlayer(this, Vector2.Zero, heroModel.Value);
+                playerList.Add(battlePlayer);
+
+
+                AddEntity(battlePlayer);
             }
 
             BuildBackground(AssetCache.SPRITES[GameSprite.Background_Trees], totalEnemyWidth);
@@ -76,6 +93,7 @@ namespace Texemon.Scenes.BattleScene
             ENCOUNTERS = AssetCache.LoadRecords<EncounterRecord>("EncounterData");
 
             BattleEnemy.Initialize();
+            //BattlePlayer.Initialize();
         }
 
         private void BuildBackground(Texture2D backgroundImage, int width)

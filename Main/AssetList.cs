@@ -77,6 +77,7 @@ namespace Texemon.Main
     public enum GameShader
     {
         BattleEnemy,
+        BattlePlayer,
         ColorFade,
         Default,
         HeatDistortion,

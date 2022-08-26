@@ -25,7 +25,9 @@ namespace Texemon.SceneObjects
         Center,
         BottomRight,
         Bottom,
-        BottomLeft
+        BottomLeft,
+        InvertCascade,
+        Horizontal
     }
 
     public abstract class Widget : Overlay
@@ -92,7 +94,7 @@ namespace Texemon.SceneObjects
             if (attributeValue.StartsWith("Bind "))
             {
                 attributeValue = attributeValue.Substring(5);
-                IModelProperty binding = LookupBinding(attributeValue);
+                IModelProperty binding = LookupBinding<IModelProperty>(attributeValue);
                 ModelChangeCallback updateValue = () =>
                 {
                     object value = binding.GetValue();
@@ -103,6 +105,13 @@ namespace Texemon.SceneObjects
                 updateValue();
 
                 bindingList.Add(new Tuple<IModelProperty, ModelChangeCallback>(binding, updateValue));
+            }
+            else if (attributeValue.StartsWith("Ref "))
+            {
+                attributeValue = attributeValue.Substring(4);
+                object reference = LookupBinding<object>(attributeValue);
+                if (reference is string) reference = ParseString(reference as string);
+                property.SetValue(this, reference);
             }
             else
             {
@@ -120,6 +129,17 @@ namespace Texemon.SceneObjects
                 {
                     string[] tokens = attributeValue.Split(',');
                     property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
+                }
+                else if (type == typeof(AnimatedSprite))
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    Texture2D sprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), tokens[0].Replace("\\", "_"))];
+                    AnimatedSprite animatedSprite = new AnimatedSprite(sprite, new Dictionary<string, Animation>()
+                    {
+                        { "loop", new Animation(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]), int.Parse(tokens[5]), int.Parse(tokens[6]), int.Parse(tokens[7])) }
+                    });
+                    animatedSprite.PlayAnimation("loop");
+                    property.SetValue(this, animatedSprite);
                 }
                 else if (type == typeof(bool)) property.SetValue(this, bool.Parse(attributeValue));
                 else if (type == typeof(int)) property.SetValue(this, ParseInt(attributeValue));
@@ -142,6 +162,12 @@ namespace Texemon.SceneObjects
         {
             switch (Alignment)
             {
+                case Alignment.Left:
+                    currentWindow = bounds;
+                    currentWindow.X = parent.InnerBounds.Left + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + bounds.Y;
+                    break;
+
                 case Alignment.Anchored:
                     currentWindow = bounds;
 
@@ -216,6 +242,29 @@ namespace Texemon.SceneObjects
                     currentWindow.Y = parent.InnerBounds.Bottom - bounds.Height;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
+                    break;
+
+                case Alignment.InvertCascade:
+                    if ((int)parent.layoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
+                    {
+                        parent.AdjustLayoutOffset(Alignment, new Vector2(parent.layoutOffset[(int)Alignment].X, bounds.Height));
+                    }
+
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Bottom + (int)parent.layoutOffset[(int)Alignment].Y - bounds.Height - bounds.Y;
+                    currentWindow.Width = bounds.Width;
+                    currentWindow.Height = bounds.Height;
+
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
+                    break;
+
+                case Alignment.Horizontal:
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + (parent.InnerBounds.Height - bounds.Height) / 2 + bounds.Y;
+                    currentWindow.Width = bounds.Width;
+                    currentWindow.Height = bounds.Height;
+
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
                     break;
 
                 case Alignment.BottomLeft:
@@ -389,7 +438,7 @@ namespace Texemon.SceneObjects
             return null;
         }
 
-        public IModelProperty LookupBinding(string bindingName)
+        public T LookupBinding<T>(string bindingName) where T : class
         {
             string[] tokens = bindingName.Split('.');
 
@@ -437,10 +486,10 @@ namespace Texemon.SceneObjects
                 dataContext = ((IModelProperty)dataContext).GetValue();
             }
 
-            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as IModelProperty;
+            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as T;
         }
 
-        public ModelProperty<T> LookupBinding<T>(string bindingName)
+        public ModelProperty<T> OldLookupBinding<T>(string bindingName)
         {
             string[] tokens = bindingName.Split('.');
 
