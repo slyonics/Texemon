@@ -23,9 +23,9 @@ namespace Texemon.SceneObjects.Widgets
         private const int TALK_COOLDOWN = 100;
 
         private ModelProperty<string> binding;
-        private ModelProperty<string> voiceBinding;
 
-        private string textContent = null;
+        private string text;
+        public string Text { get=> text; set { text = value; AddLines(text); } }
         private List<TextElement> textQueue = new List<TextElement>();
         private List<TextElement> textLines = new List<TextElement>();
 
@@ -34,7 +34,7 @@ namespace Texemon.SceneObjects.Widgets
         private int crawlFactor = 1;
 
         private int talkTimer = 0;
-        private GameSound talkSound = GameSound.dialogue_auto_scroll;
+        public GameSound VoiceSound { get; set; } = GameSound.None;
 
         public CrawlText(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -42,46 +42,15 @@ namespace Texemon.SceneObjects.Widgets
 
         }
 
-        ~CrawlText()
-        {
-            if (binding != null) binding.ModelChanged -= Binding_ModelChanged;
-        }
-
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            base.LoadAttributes(xmlNode);
-
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
                 switch (xmlAttribute.Name)
                 {
-                    case "Text": textContent = xmlAttribute.Value; break;
-                    case "VoiceSound": talkSound = string.IsNullOrEmpty(xmlAttribute.Value) ? GameSound.None : (GameSound)Enum.Parse(typeof(GameSound), xmlAttribute.Value); break;
-
-                    case "Binding":
-                        binding = LookupBinding<string>(xmlAttribute.Value);
-                        binding.ModelChanged += Binding_ModelChanged;
-                        if (binding.Value != null) textContent = binding.Value.ToString();
-                        break;
-
-                    case "VoiceBinding":
-                        voiceBinding = LookupBinding<string>(xmlAttribute.Value);
-                        voiceBinding.ModelChanged += VoiceBinding_ModelChanged;
-                        if (voiceBinding.Value != null) VoiceBinding_ModelChanged();
-                        break;
+                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
-        }
-
-        private void Binding_ModelChanged()
-        {
-            AddLines(binding.Value.ToString());
-        }
-
-        private void VoiceBinding_ModelChanged()
-        {
-            talkSound = string.IsNullOrEmpty(voiceBinding.Value as string) ? GameSound.None : (GameSound)Enum.Parse(typeof(GameSound), (string)voiceBinding.Value);
         }
 
         public override void ApplyAlignment()
@@ -90,13 +59,13 @@ namespace Texemon.SceneObjects.Widgets
 
             maxTextLength = currentWindow.Width;
 
-            if (!String.IsNullOrEmpty(textContent))
+            if (!String.IsNullOrEmpty(Text))
             {
-                AddLines(textContent);
+                AddLines(Text);
             }
         }
 
-        public void AddLines(string text)
+        private void AddLines(string text)
         {
             if (string.IsNullOrEmpty(text)) talkTimer = 10000;
             else talkTimer = 0;
@@ -126,7 +95,7 @@ namespace Texemon.SceneObjects.Widgets
             {
                 foreach (TextElement textElement in textLines)
                 {
-                    Text.DrawText(spriteBatch, Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), Font, textElement.text.ToString(), textElement.color, textElement.line);
+                    Main.Text.DrawText(spriteBatch, base.Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), Font, textElement.text.ToString(), textElement.color, textElement.line);
                 }
             }
         }
@@ -173,7 +142,7 @@ namespace Texemon.SceneObjects.Widgets
                     talkTimer -= gameTime.ElapsedGameTime.Milliseconds;
                     if (talkTimer <= 0)
                     {
-                        if (talkSound != GameSound.None) Audio.PlaySound(talkSound);
+                        if (VoiceSound != GameSound.None) Audio.PlaySound(VoiceSound);
                         talkTimer += TALK_COOLDOWN;
                     }
 
@@ -236,7 +205,7 @@ namespace Texemon.SceneObjects.Widgets
                     continue;
                 }
 
-                int tokenLength = Text.GetStringLength(Font, textElement.text.ToString());
+                int tokenLength = Main.Text.GetStringLength(Font, textElement.text.ToString());
                 if (currentLength + tokenLength > windowWidth)
                 {
                     currentLine++;
@@ -247,7 +216,7 @@ namespace Texemon.SceneObjects.Widgets
                 StringBuilder lastElement = textLines.LastOrDefault(x => x.line == currentLine)?.text;
                 lastElement?.Append(textElement.text + " ");
 
-                currentLength += tokenLength + Text.GetStringLength(Font, " ");
+                currentLength += tokenLength + Main.Text.GetStringLength(Font, " ");
             }
 
             return textLines;

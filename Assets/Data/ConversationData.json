@@ -3,7 +3,7 @@
 		"Name": "TestConvo",
 		"DialogueRecords": [
 			{
-				"Text": "Automatic conversation test."
+				"Text": "Automatic #32CCFFFF conversation test."
 			}
 		]
 	},
@@ -18,7 +18,7 @@
 				"Script": [ "Actor Actors_Student", "Animate Talk", "WaitForText", "Animate Idle" ]
 			},
 			{
-				"Speaker": "TestSpeaker",
+				"Speaker": "$PlayerProfile.WindowStyle",
 				"Text": "Conversations can span multiple pages.",
 				"Script": [ "Animate Talk", "WaitForText", "Animate Idle" ]
 			}

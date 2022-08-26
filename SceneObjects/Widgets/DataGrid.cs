@@ -13,6 +13,8 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class DataGrid : Widget
     {
+        private bool finishedLoading = false;
+
         private IEnumerable<object> items;
         public IEnumerable<object> Items { get => items; private set { items = value; ItemsChanged(); } }
 
@@ -35,6 +37,8 @@ namespace Texemon.SceneObjects.Widgets
                     default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
+
+            finishedLoading = true;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -54,6 +58,8 @@ namespace Texemon.SceneObjects.Widgets
 
         private void ItemsChanged()
         {
+            if (!finishedLoading) return;
+
             for (int i = 0; i < layoutOffset.Length; i++) layoutOffset[i] = new Vector2();
             foreach (Widget widget in ChildList) widget.Terminate();
             ChildList.Clear();
@@ -67,7 +73,15 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadChildren(XmlNodeList nodeList, float widgetDepth)
         {
+            for (int i = 0; i < layoutOffset.Length; i++) layoutOffset[i] = new Vector2();
+            foreach (Widget widget in ChildList) widget.Terminate();
+            ChildList.Clear();
 
+            foreach (var modelProperty in items)
+            {
+                Widget childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + WIDGET_DEPTH_OFFSET }, null, null);
+                AddChild(childWidget, dataTemplate);
+            }
         }
 
         public bool IsChildVisible(Widget child)

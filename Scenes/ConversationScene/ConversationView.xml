@@ -2,8 +2,8 @@
 <View>
 
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-120,20,240,60" InnerMargin="8,6,8,8" TransitionIn="Expand" TransitionOut="Shrink">
-		<CrawlText Name="ConversationText" Binding="Dialogue" Font="Bind ConversationFont" Alignment="Stretch" Color="#D8D8D8FF"/>
-		<Textplate Name="SpeakerPlate" Style="Bind PlayerProfile.WindowStyle" Alignment="BottomLeft" Bounds="8,-66,-1,-1" Font="Bind ConversationFont" Binding="Speaker" Color="#E0BFA2FF"/>
+		<CrawlText Name="ConversationText" Text="Bind Dialogue" Font="Bind ConversationFont" Alignment="Stretch" Color="#D8D8D8FF"/>
+		<Textplate Name="SpeakerPlate" Style="Bind PlayerProfile.WindowStyle" Alignment="BottomLeft" Bounds="8,-66,-1,-1" Font="Bind ConversationFont" Text="Bind Speaker" Color="#E0BFA2FF"/>
 		<Image Sprite="Enter,0,0,12,12,2,1200,-1" Alignment="BottomRight" Bounds="7,7,12,12" Visible="Bind ReadyToProceed"/>
 	</Panel>
   

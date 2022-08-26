@@ -48,8 +48,7 @@ namespace Texemon.Scenes.MapScene
         private string[] interactionScript = null;
 
         public Npc(MapScene iMapScene, Tilemap iTilemap, TiledObject tiledObject, string spriteName, Orientation iOrientation = Orientation.Down)
-            : base(iMapScene, iTilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height),
-                  NPC_BOUNDS, iOrientation)
+            : base(iMapScene, iTilemap, new Vector2(), NPC_BOUNDS, iOrientation)
         {
             mapScene = iMapScene;
 
@@ -65,6 +64,8 @@ namespace Texemon.Scenes.MapScene
                         break;
                 }
             }
+
+            CenterOn(iTilemap.GetTile(new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height)).Center);
         }
 
         public bool Activate(Hero activator)

@@ -93,7 +93,12 @@ namespace Texemon.SceneObjects
             {
                 attributeValue = attributeValue.Substring(5);
                 IModelProperty binding = LookupBinding(attributeValue);
-                ModelChangeCallback updateValue = () => property.SetValue(this, binding.GetValue());
+                ModelChangeCallback updateValue = () =>
+                {
+                    object value = binding.GetValue();
+                    if (value is string) value = ParseString(value as string);
+                    property.SetValue(this, value);
+                };
                 binding.ModelChanged += updateValue;
                 updateValue();
 
@@ -363,6 +368,7 @@ namespace Texemon.SceneObjects
 
         public Widget GetDescendent(Widget superParent)
         {
+            if (parent == null) return null;
             if (parent == superParent) return this;
 
             return parent.GetDescendent(superParent);
@@ -398,6 +404,7 @@ namespace Texemon.SceneObjects
                 case "DataGrid":
                     DataGrid dataGrid = GetParent<DataGrid>();
                     int i = dataGrid.ChildList.IndexOf(this);
+                    if (i == -1) i = dataGrid.ChildList.IndexOf(GetDescendent(dataGrid));
                     dataContext = dataGrid.Items.ElementAtOrDefault(i);
                     tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
                     break;
@@ -462,32 +469,6 @@ namespace Texemon.SceneObjects
             }
 
             return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as ModelProperty<T>;
-        }
-
-        public dynamic LookupCollectionBinding(string bindingName)
-        {
-            string[] tokens = bindingName.Split('.');
-
-            object dataContext;
-            switch (tokens[0])
-            {
-                case "PlayerProfile":
-                    dataContext = GameProfile.PlayerProfile;
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                default:
-                    dataContext = GetParent<ViewModel>();
-                    break;
-            }
-
-            while (tokens.Length > 1)
-            {
-                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
-                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-            }
-
-            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
         }
 
         public void AdjustLayoutOffset(Alignment alignment, Vector2 offset)

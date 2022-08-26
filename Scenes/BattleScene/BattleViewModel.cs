@@ -21,7 +21,7 @@ namespace Texemon.Scenes.BattleScene
         {
             enemyWidth = iEnemyWidth;
             enemyHeight = iEnemyHeight;
-            EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 3, -90, enemyWidth + 6, enemyHeight + 6);
+            EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 3, -110, enemyWidth + 6, enemyHeight + 6);
 
             BackgroundRender.Value = iScene.backgroundRender;
 
@@ -30,7 +30,7 @@ namespace Texemon.Scenes.BattleScene
             EnemyPanel = GetWidget<Panel>("EnemyPanel");
         }
 
-        public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-60, -90, 112, 112));
+        public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
         public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-140, 30, 120, 80));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
 

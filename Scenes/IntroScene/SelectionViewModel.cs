@@ -42,7 +42,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Silver;
 
-            description.AddLines("The use of magic is strictly regulated by the secret authorities of Panopticon where sorcerers may practice only one color of magic. You alone defy this edict to study every color of magic in your quest for power.");
+            description.Text = "The use of magic is strictly regulated by the secret authorities of Panopticon where sorcerers may practice only one color of magic. You alone defy this edict to study every color of magic in your quest for power.";
         }
 
         public void Technology()
@@ -58,7 +58,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
 
-            description.AddLines("When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.");
+            description.Text = "When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.";
         }
 
         public void Proceed()

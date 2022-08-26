@@ -52,8 +52,6 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            //base.LoadAttributes(xmlNode);
-
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
                 ParseAttribute(xmlAttribute.Name, xmlAttribute.Value);
