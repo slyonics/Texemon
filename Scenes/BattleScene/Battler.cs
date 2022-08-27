@@ -11,7 +11,7 @@ using Texemon.SceneObjects.Particles;
 
 namespace Texemon.Scenes.BattleScene
 {
-    public abstract class Battler : Entity
+    public abstract class Battler : Widget
     {
         public const int STANDARD_TURN = 10;
 
@@ -22,31 +22,35 @@ namespace Texemon.Scenes.BattleScene
         protected const float END_SHADOW = 0.7f;
         protected static readonly Color SHADOW_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 
+        protected BattleScene battleScene;
+
         protected Texture2D shadow = null;
+        protected float positionZ = 0;
         protected Effect shader;
-
-        protected List<char> damageDigitsLeft = new List<char>();
-        protected List<DamageParticle> damageDigitList = new List<DamageParticle>();
-
         protected int flashTime;
         protected int flashDuration;
-
-        protected BattleScene battleScene;
 
         protected int actionTime;
         protected bool turnActive;
 
-        protected string name;
-        protected int health;
         protected BattlerModel stats;
         public BattlerModel Stats { get => stats; }
 
-        public Battler(BattleScene iBattleScene, Vector2 iPosition, Texture2D iSprite, Dictionary<string, Animation> iAnimationList, BattlerModel iStats)
-            : base(iBattleScene, iPosition, iSprite, iAnimationList)
+        public AnimatedSprite AnimatedSprite { get; private set; }
+
+        public Battler(Widget iParent, float widgetDepth)
+            : base(iParent, widgetDepth)
+        {
+
+        }
+
+        public Battler(BattleScene iBattleScene, Texture2D iSprite, Dictionary<string, Animation> iAnimationList, BattlerModel iStats)
         {
             battleScene = iBattleScene;
             stats = iStats;
             actionTime = 0;
+
+            AnimatedSprite = new AnimatedSprite(iSprite, iAnimationList);
         }
 
         protected static Texture2D BuildShadow(Rectangle bounds)
@@ -80,8 +84,6 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime);
 
-            damageDigitList.RemoveAll(x => x.Terminated);
-
             if (flashTime > 0)
             {
                 flashTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -91,22 +93,22 @@ namespace Texemon.Scenes.BattleScene
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Camera camera)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            DrawShadow(spriteBatch, camera);
+            DrawShadow(spriteBatch);
 
-            base.Draw(spriteBatch, camera);
+            base.Draw(spriteBatch);
         }
 
-        protected virtual void DrawShadow(SpriteBatch spriteBatch, Camera camera)
+        protected virtual void DrawShadow(SpriteBatch spriteBatch)
         {
             if (shadow == null) return;
 
-            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (SpriteBounds.Width + SpriteBounds.Height) / 2));
-            spriteBatch.Draw(shadow, new Vector2((int)(SpriteBounds.Center.X - shadow.Width / 2), (int)(SpriteBounds.Center.Y) + 1), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
+            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (currentWindow.Width + currentWindow.Height) / 2));
+            spriteBatch.Draw(shadow, new Vector2((int)(Center.X - shadow.Width / 2), (int)(Center.Y) + 1), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
-        public virtual void DrawShader(SpriteBatch spriteBatch, Camera camera, Matrix matrix)
+        public virtual void DrawShader(SpriteBatch spriteBatch)
         {
 
         }
@@ -128,22 +130,20 @@ namespace Texemon.Scenes.BattleScene
 
         }
 
-        public virtual void Damage(int damage)
+        public virtual void PlayAnimation(string animationName, AnimationFollowup animationFollowup = null)
         {
-            health -= damage;
-
-            damageDigitsLeft.Clear();
-            damageDigitsLeft.AddRange(damage.ToString());
-            SpawnDamageDigit(damage.ToString());
-
-            if (Dead) battleScene.InitiativeList.Remove(this);
+            if (animationFollowup == null) AnimatedSprite.PlayAnimation(animationName);
+            else AnimatedSprite.PlayAnimation(animationName, animationFollowup);
         }
 
-        protected virtual void SpawnDamageDigit(string digit)
+        public virtual void Damage(int damage)
         {
-            DamageParticle damageParticle = new DamageParticle(battleScene, position, digit);
-            battleScene.AddParticle(damageParticle);
-            damageDigitList.Add(damageParticle);
+            Stats.Health.Value -= damage;
+
+            battleScene.AddParticle(new DamageParticle(battleScene, Center, damage.ToString()));
+
+
+            if (Dead) battleScene.InitiativeList.Remove(this);
         }
 
         public void FlashColor(Color flashColor, int duration = DAMAGE_FLASH_DURATION)
@@ -152,13 +152,14 @@ namespace Texemon.Scenes.BattleScene
 
             flashTime = flashDuration = duration;
         }
-
-        public string Name { get => name; }
         
-        public int Health { get => health; }
-        public bool Dead { get => health <= 0; }
+        public bool Dead { get => Stats.Health.Value <= 0; }
 
         public int ActionTime { get => actionTime; set => actionTime = value; }
-        public virtual bool Busy { get => turnActive || damageDigitList.Count > 0; }
+        public virtual bool Busy { get => turnActive; }
+
+        public Vector2 Center { get => AbsolutePosition + new Vector2(currentWindow.Width / 2, currentWindow.Height / 2); }
+        public Vector2 Bottom { get => AbsolutePosition + new Vector2(currentWindow.Width / 2, currentWindow.Height); }
+        public Vector2 Top { get => AbsolutePosition + new Vector2(currentWindow.Width / 2, 0); }
     }
 }

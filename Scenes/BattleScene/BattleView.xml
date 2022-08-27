@@ -3,20 +3,24 @@
 
 	<Panel Name="EnemyPanel" Style="Bind PlayerProfile.FrameStyle" Anchor="$CenterX,$CenterY" Bounds="Bind EnemyWindow" InnerMargin="3,3,3,3" TransitionIn="Expand">
 		<DataGrid Items="Bind Enemies" Alignment="Stretch">
-			<Button Style="Blank" PushedStyle="Bind PlayerProfile.FrameSelectedStyle" Alignment="Horizontal" Bounds="Ref DataGrid.EnemySize">
+			<BattleEnemy Style="Blank" PushedStyle="Bind PlayerProfile.FrameSelectedStyle" Alignment="Horizontal" Bounds="Ref DataGrid.EnemySize">
 				<Image Sprite="Ref DataGrid.AnimatedSprite" Alignment="Bottom" Depth="0.5"/>
-			</Button>
+			</BattleEnemy>
 		</DataGrid>
 		<Image Picture="Bind BackgroundRender" Alignment="Stretch" Depth="1.0"/>
 	</Panel>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="16,16,16,16" TransitionIn="Expand">
+	<Panel Name="PlayerPanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="8,16,8,8" TransitionIn="Expand">
 		<DataGrid Items="Bind Players" Alignment="Stretch">
-			<Panel Alignment="Vertical" Bounds="0,0,70,20">
-				<Image Sprite="Ref DataGrid.AnimatedSprite" Alignment="BottomLeft"/>
-				<Label Text="Ref DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left"/>
+			<Panel Alignment="Vertical" Bounds="0,0,80,20">
+				<BattlePlayer Sprite="Ref DataGrid.AnimatedSprite" Alignment="BottomLeft"/>
+				<Label Text="Bind DataGrid.Stats.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left"/>
 			</Panel>
 		</DataGrid>
+	</Panel>
+
+	<Panel Name="BattlePanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,30,170,80" InnerMargin="8,4,8,8" TransitionIn="Expand">
+		<CrawlText Font="Bind PlayerProfile.Font" Text="Bind BattleNarration" Name="Narration" Alignment="Stretch"/>
 	</Panel>
 	
 </View>

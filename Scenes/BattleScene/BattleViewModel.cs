@@ -27,7 +27,6 @@ namespace Texemon.Scenes.BattleScene
             foreach (BattlePlayer player in battleScene.PlayerList) Players.Add(player);
 
             EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 3, -110, enemyWidth + 6, enemyHeight + 6);
-            PlayerWindow.Value = new Rectangle(-150, 30, 130, (battleScene.PlayerList.Count) * 20 + 4);
 
             BackgroundRender.Value = iScene.backgroundRender;
 
@@ -40,8 +39,9 @@ namespace Texemon.Scenes.BattleScene
         public ModelCollection<BattlePlayer> Players { get; set; } = new ModelCollection<BattlePlayer>();
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
-        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
+        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (GameProfile.PlayerProfile.Party.Count()) * 20 + 4));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
+        public ModelProperty<string> BattleNarration { get; set; } = new ModelProperty<string>("Your foes assemble...");
 
 
         public Panel EnemyPanel { get; private set; }

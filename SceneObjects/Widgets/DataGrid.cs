@@ -73,15 +73,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadChildren(XmlNodeList nodeList, float widgetDepth)
         {
-            for (int i = 0; i < layoutOffset.Length; i++) layoutOffset[i] = new Vector2();
-            foreach (Widget widget in ChildList) widget.Terminate();
-            ChildList.Clear();
-
-            foreach (var modelProperty in items)
-            {
-                Widget childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + WIDGET_DEPTH_OFFSET }, null, null);
-                AddChild(childWidget, dataTemplate);
-            }
+            ItemsChanged();
         }
 
         public bool IsChildVisible(Widget child)

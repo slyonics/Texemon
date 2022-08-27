@@ -3,6 +3,14 @@
 		"Name": "Sentinel",
 		"Sprite": "Robot",
 		"ShadowOffset": 0,
-		"Health": 100
+		"Health": 100,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
 	}
 ]

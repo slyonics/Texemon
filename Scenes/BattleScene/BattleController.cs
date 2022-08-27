@@ -52,9 +52,10 @@ namespace Texemon.Scenes.BattleScene
         {
             switch (parameter)
             {
-                case "$targetCenterX": return target.SpriteBounds.Center.X.ToString();
-                case "$targetCenterY": return target.SpriteBounds.Center.Y.ToString();
-                case "$targetTop": return target.SpriteBounds.Top.ToString();
+                case "$targetCenterX": return target.Center.X.ToString();
+                case "$targetCenterY": return target.Center.Y.ToString();
+                case "$targetTop": return target.Top.ToString();
+                case "$targetBottom": return target.Bottom.ToString();
                 case "$targetY": return ((int)target.Position.Y).ToString();
                 default: return base.ParseParameter(parameter);
             }

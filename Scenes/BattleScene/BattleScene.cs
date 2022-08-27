@@ -40,39 +40,18 @@ namespace Texemon.Scenes.BattleScene
             encounterRecord = ENCOUNTERS.First(x => x.Name == encounterName);
 
             string[] enemyTokens = encounterRecord.Enemies;
-            List<EnemyRecord> enemyDataList = new List<EnemyRecord>();
             List<Texture2D> enemySpriteList = new List<Texture2D>();
             int totalEnemyWidth = 0;
             foreach (string enemyName in enemyTokens)
             {
                 EnemyRecord enemyData = ENEMIES.First(x => x.Name == enemyName);
                 Texture2D enemySprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + enemyData.Sprite)];
-
-                enemyDataList.Add(enemyData);
                 enemySpriteList.Add(enemySprite);
-
-                BattleEnemy battleEnemy = new BattleEnemy(this, Vector2.Zero, enemyData);
-                initialEnemies.Add(battleEnemy);
-                enemyList.Add(battleEnemy);
-
-                AddEntity(battleEnemy);
-
                 totalEnemyWidth += enemySprite.Width;
-
-                
             }
-
-            foreach (var heroModel in GameProfile.PlayerProfile.Party)
-            {
-                BattlePlayer battlePlayer = new BattlePlayer(this, Vector2.Zero, heroModel.Value);
-                playerList.Add(battlePlayer);
-
-
-                AddEntity(battlePlayer);
-            }
+            initialEnemies = new List<BattleEnemy>(enemyList);
 
             BuildBackground(AssetCache.SPRITES[GameSprite.Background_Trees], totalEnemyWidth);
-
 
             battleViewModel = AddView(new BattleViewModel(this, totalEnemyWidth, 112));
         }
@@ -114,11 +93,22 @@ namespace Texemon.Scenes.BattleScene
             introFinished = true;
         }
 
-        private void SpawnEnemies()
+        public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
         {
-            foreach (BattleEnemy battleEnemy in initialEnemies) Add(battleEnemy);
+            base.Update(gameTime, priorityLevel);
+
+            enemyList.RemoveAll(x => x.Terminated);
+            if (!controllerList.Any(y => y.Exists(x => x is BattleController)) && !playerList.Exists(x => x.Busy) && !enemyList.Exists(x => x.Busy))
+            {
+                if (enemyList.Count == 0)
+                {
+                    // VICTORY
+                }
+                else ActivateNextBattler();
+            }
         }
 
+        /*
         public void Add(Battler battler)
         {
             EnqueueInitiative(battler);
@@ -126,6 +116,7 @@ namespace Texemon.Scenes.BattleScene
             if (battler is BattleEnemy) enemyList.Add(battler as BattleEnemy);
             else if (battler is BattlePlayer) playerList.Add(battler as BattlePlayer);
         }
+        */
 
         public void ActivateNextBattler()
         {

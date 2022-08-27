@@ -41,28 +41,32 @@ namespace Texemon.Scenes.BattleScene
         };
 
         private HeroModel heroProfile;
+        public HeroModel HeroProfile { get => heroProfile; }
+
+        public BattlePlayer(Widget iParent, float widgetDepth)
+            : base(iParent, widgetDepth)
+        {
+
+        }
 
         public BattlePlayer(BattleScene iBattleScene, Vector2 iPosition, HeroModel iHeroProfile)
-            : base(iBattleScene, iPosition, AssetCache.SPRITES[iHeroProfile.Sprite.Value], HERO_ANIMATIONS, iHeroProfile)
+            : base(iBattleScene, AssetCache.SPRITES[iHeroProfile.Sprite.Value], HERO_ANIMATIONS, iHeroProfile)
         {
             heroProfile = iHeroProfile;
 
             shader = AssetCache.EFFECTS[GameShader.BattlePlayer].Clone();
             shader.Parameters["flashInterval"].SetValue(0.0f);
-
-            name = heroProfile.Name.Value;
-            health = heroProfile.Health.Value;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Camera camera)
+        public override void Draw(SpriteBatch spriteBatch)
         {
 
         }
 
-        public override void DrawShader(SpriteBatch spriteBatch, Camera camera, Matrix matrix)
+        public override void DrawShader(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
-            animatedSprite.Draw(spriteBatch, position - new Vector2(0.0f, positionZ), camera, 0.0f);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
+            AnimatedSprite.Draw(spriteBatch, Bottom - new Vector2(0.0f, positionZ), null, 0.0f);
             spriteBatch.End();
         }
 
@@ -96,11 +100,11 @@ namespace Texemon.Scenes.BattleScene
 
         public void Idle()
         {
-            if (health > heroProfile.MaxHealth.Value / 4) PlayAnimation("Guarding");
-            else if (health > 0) PlayAnimation("Hurting");
+            if (Stats.Health.Value > heroProfile.MaxHealth.Value / 4) PlayAnimation("Guarding");
+            else if (Stats.Health.Value > 0) PlayAnimation("Hurting");
             else PlayAnimation("Dead");
         }
 
-        public HeroModel HeroProfile { get => heroProfile; }
+        
     }
 }

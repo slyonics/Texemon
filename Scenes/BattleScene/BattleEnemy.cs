@@ -27,8 +27,14 @@ namespace Texemon.Scenes.BattleScene
         private int attackTimeLeft;
         private int deathTimeLeft;
 
-        public BattleEnemy(BattleScene iBattleScene, Vector2 iPosition, EnemyRecord iEnemyData)
-            : base(iBattleScene, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + iEnemyData.Sprite)], null, new BattlerModel(iEnemyData))
+        public BattleEnemy(Widget iParent, float widgetDepth)
+            : base(iParent, widgetDepth)
+        {
+
+        }
+
+        public BattleEnemy(BattleScene iBattleScene, EnemyRecord iEnemyData)
+            : base(iBattleScene, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + iEnemyData.Sprite)], null, new BattlerModel(iEnemyData))
         {
             enemyData = iEnemyData;
 
@@ -39,8 +45,6 @@ namespace Texemon.Scenes.BattleScene
             shader.Parameters["flashColor"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 0.0f));
 
             shadow = ENEMY_SHADOWS["Enemies_" + enemyData.Sprite];
-
-            name = enemyData.Name;
         }
 
         public static void Initialize()
@@ -67,11 +71,11 @@ namespace Texemon.Scenes.BattleScene
             STATIC_TEXTURE.SetData<Color>(colorData);
         }
 
-        protected override void DrawShadow(SpriteBatch spriteBatch, Camera camera)
+        protected override void DrawShadow(SpriteBatch spriteBatch)
         {
-            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (SpriteBounds.Width + SpriteBounds.Height) / 2));
+            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (currentWindow.Width + currentWindow.Height) / 2));
             if (Dead) shadowColor.A = (byte)MathHelper.Lerp(0, shadowColor.A, (float)deathTimeLeft / DEATH_DURATION);
-            spriteBatch.Draw(shadow, new Vector2((int)(SpriteBounds.Center.X - shadow.Width / 2), (int)(SpriteBounds.Center.Y) + 1 + enemyData.ShadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
+            spriteBatch.Draw(shadow, new Vector2((int)(Center.X - shadow.Width / 2), (int)(Center.Y) + 1 + enemyData.ShadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
         public override void Update(GameTime gameTime)
@@ -88,8 +92,8 @@ namespace Texemon.Scenes.BattleScene
             if (attackTimeLeft > 0)
             {
                 attackTimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
-                if (attackTimeLeft > 0 && (attackTimeLeft / (ATTACK_DURATION / 4)) % 2 == 0) animatedSprite.SpriteEffects = SpriteEffects.FlipHorizontally;
-                else animatedSprite.SpriteEffects = SpriteEffects.None;
+                if (attackTimeLeft > 0 && (attackTimeLeft / (ATTACK_DURATION / 4)) % 2 == 0) AnimatedSprite.SpriteEffects = SpriteEffects.FlipHorizontally;
+                else AnimatedSprite.SpriteEffects = SpriteEffects.None;
             }
 
             if (deathTimeLeft > 0)
@@ -100,15 +104,15 @@ namespace Texemon.Scenes.BattleScene
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Camera camera)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            DrawShadow(spriteBatch, camera);
+            DrawShadow(spriteBatch);
         }
 
-        public override void DrawShader(SpriteBatch spriteBatch, Camera camera, Matrix matrix)
+        public override void DrawShader(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
-            animatedSprite.Draw(spriteBatch, position + (attackTimeLeft > 0 ? new Vector2(0, 8) : Vector2.Zero), camera, 0.0f);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
+            AnimatedSprite.Draw(spriteBatch, Bottom + (attackTimeLeft > 0 ? new Vector2(0, 8) : Vector2.Zero), null, 0.5f);
             spriteBatch.End();
         }
 
@@ -141,7 +145,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public EnemyRecord EnemyData { get => enemyData; }
-        public Rectangle EnemySize { get => new Rectangle(0, 0, animatedSprite.SpriteBounds().Width, animatedSprite.SpriteBounds().Height); }
+        public Rectangle EnemySize { get => new Rectangle(0, 0, AnimatedSprite.SpriteBounds().Width, AnimatedSprite.SpriteBounds().Height); }
 
         public override bool Busy { get => base.Busy || deathTimeLeft > 0; }
     }
