@@ -15,10 +15,9 @@ namespace Texemon.SceneObjects.Widgets
     {
         private Texture2D icon;
         private AnimatedSprite Sprite { get; set; }
-        private ModelProperty<AnimatedSprite> spriteBinding;
-        private ModelProperty<string> pictureBinding;
-        private ModelProperty<RenderTarget2D> renderBinding;
+
         private Texture2D picture;
+        private Texture2D Picture { get => picture; set { picture = value; } }
 
         public float SpriteScale { get; set; } = 1.0f;
 
@@ -32,78 +31,12 @@ namespace Texemon.SceneObjects.Widgets
         {
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
                 switch (xmlAttribute.Name)
                 {
                     case "Icon": icon = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Widgets_Icons_" + xmlAttribute.Value)]; break;
-                    case "Picture": picture = LoadPicture(xmlAttribute.Value); break;
-                    case "SpriteScale":
-                        SpriteScale = ParseInt(xmlAttribute.Value);
-                        break;
-
-                    case "SpriteBinding":
-                        spriteBinding = OldLookupBinding<AnimatedSprite>(xmlAttribute.Value);
-                        spriteBinding.ModelChanged += SpriteBinding_ModelChanged;
-                        SpriteBinding_ModelChanged();
-                        break;
-
-                    case "PictureBinding":
-                        pictureBinding = OldLookupBinding<string>(xmlAttribute.Value);
-                        pictureBinding.ModelChanged += PictureBinding_ModelChanged;
-                        PictureBinding_ModelChanged();
-                        break;
-
-                    case "RenderBinding":
-                        renderBinding = OldLookupBinding<RenderTarget2D>(xmlAttribute.Value);
-                        renderBinding.ModelChanged += RenderBinding_ModelChanged;
-                        RenderBinding_ModelChanged();
-                        break;
-
                     default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
                 }
             }
-        }
-
-        public override void ApplyAlignment()
-        {
-            base.ApplyAlignment();
-        }
-
-        private Texture2D LoadPicture(string path)
-        {
-            return AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), path)];
-        }
-
-
-
-        private AnimatedSprite LoadSprite(string parameters)
-        {
-            string[] tokens = parameters.Split(',');
-            Texture2D sprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), tokens[0].Replace("\\", "_"))];
-            Dictionary<string, Animation> animationList = new Dictionary<string, Animation>()
-            {
-                { "loop", new Animation(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]), int.Parse(tokens[5]), int.Parse(tokens[6]), int.Parse(tokens[7])) }
-            };
-
-            var result = new AnimatedSprite(sprite, animationList);
-            result.PlayAnimation("loop");
-
-            return result;
-        }
-
-        private void SpriteBinding_ModelChanged()
-        {
-            Sprite = (AnimatedSprite)spriteBinding.Value;
-        }
-
-        private void PictureBinding_ModelChanged()
-        {
-            picture = LoadPicture(pictureBinding.Value);
-        }
-
-        private void RenderBinding_ModelChanged()
-        {
-            picture = renderBinding.Value;
         }
 
         public override void Update(GameTime gameTime)
@@ -119,12 +52,12 @@ namespace Texemon.SceneObjects.Widgets
             {
                 spriteBatch.Draw(icon, new Vector2(currentWindow.Center.X - icon.Width / 2, currentWindow.Center.Y - icon.Height / 2) + Position, null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, Depth - 0.0001f);
             }
-            else if (picture != null)
+            else if (Picture != null)
             {
                 if (Alignment == Alignment.Bottom)
-                    spriteBatch.Draw(picture, new Rectangle(currentWindow.Left + (int)Position.X, (int)Position.Y + currentWindow.Top, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
+                    spriteBatch.Draw(Picture, new Rectangle(currentWindow.Left + (int)Position.X, (int)Position.Y + currentWindow.Top, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
                 // spriteBatch.Draw(picture, new Rectangle(currentWindow.Left + (int)Position.X, -currentWindow.Height + (int)Position.Y + parent.InnerBounds.Height / 2 - parent.InnerMargin.Y * CrossPlatformGame.Scale, currentWindow.Width, currentWindow.Height), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, depth - 0.0001f);
-                else spriteBatch.Draw(picture, new Rectangle(currentWindow.X + (int)Position.X, currentWindow.Y + (int)Position.Y, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
+                else spriteBatch.Draw(Picture, new Rectangle(currentWindow.X + (int)Position.X, currentWindow.Y + (int)Position.Y, currentWindow.Width, currentWindow.Height), null, Color, 0.0f, Vector2.Zero, SpriteEffects.None, Depth - 0.0001f);
             }
             else if (Sprite != null)
             {
@@ -160,7 +93,5 @@ namespace Texemon.SceneObjects.Widgets
                 GetParent<ViewModel>().LeftClickChild(mouseStart, mouseEnd, this, otherWidget);
             }
         }
-
-        public AnimatedSprite AnimatedSprite { get => Sprite; }
     }
 }

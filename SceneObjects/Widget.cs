@@ -147,6 +147,7 @@ namespace Texemon.SceneObjects
                 else if (type == typeof(string)) property.SetValue(this, ParseString(attributeValue));
                 else if (type == typeof(Color)) property.SetValue(this, Graphics.ParseHexcode(attributeValue));
                 else if (type == typeof(MethodInfo)) property.SetValue(this, GetParent<ViewModel>().GetType().GetMethod(attributeValue));
+                else if (type == typeof(Texture2D)) property.SetValue(this, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), attributeValue)]);
             }
         }
 

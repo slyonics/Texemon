@@ -27,7 +27,7 @@ namespace Texemon.Scenes.BattleScene
             foreach (BattlePlayer player in battleScene.PlayerList) Players.Add(player);
 
             EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 3, -110, enemyWidth + 6, enemyHeight + 6);
-            PlayerWindow.Value = new Rectangle(-140, 30, 120, (battleScene.PlayerList.Count) * 20 + 4);
+            PlayerWindow.Value = new Rectangle(-150, 30, 130, (battleScene.PlayerList.Count) * 20 + 4);
 
             BackgroundRender.Value = iScene.backgroundRender;
 

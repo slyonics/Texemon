@@ -39,6 +39,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.WindowStyle.Value = "MagicWindow";
             GameProfile.PlayerProfile.FrameStyle.Value = "MagicFrame";
             GameProfile.PlayerProfile.SelectedStyle.Value = "MagicSelected";
+            GameProfile.PlayerProfile.FrameSelectedStyle.Value = "MagicFrameSelected";
             GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Silver;
 
@@ -55,6 +56,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.WindowStyle.Value = "TechWindow";
             GameProfile.PlayerProfile.FrameStyle.Value = "TechFrame";
             GameProfile.PlayerProfile.SelectedStyle.Value = "TechSelected";
+            GameProfile.PlayerProfile.FrameSelectedStyle.Value = "TechFrameSelected";
             GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
 

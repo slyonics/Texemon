@@ -2,12 +2,12 @@
 <View>
 
 	<Panel Name="EnemyPanel" Style="Bind PlayerProfile.FrameStyle" Anchor="$CenterX,$CenterY" Bounds="Bind EnemyWindow" InnerMargin="3,3,3,3" TransitionIn="Expand">
-		<Image RenderBinding="BackgroundRender" Alignment="Stretch" Depth="1.0"/>
 		<DataGrid Items="Bind Enemies" Alignment="Stretch">
-			<Button Style="Bind PlayerProfile.FrameStyle" Alignment="Horizontal" Bounds="Ref DataGrid.EnemySize">
-				<Image Sprite="Ref DataGrid.AnimatedSprite" Alignment="Bottom"/>
+			<Button Style="Blank" PushedStyle="Bind PlayerProfile.FrameSelectedStyle" Alignment="Horizontal" Bounds="Ref DataGrid.EnemySize">
+				<Image Sprite="Ref DataGrid.AnimatedSprite" Alignment="Bottom" Depth="0.5"/>
 			</Button>
 		</DataGrid>
+		<Image Picture="Bind BackgroundRender" Alignment="Stretch" Depth="1.0"/>
 	</Panel>
 
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="16,16,16,16" TransitionIn="Expand">

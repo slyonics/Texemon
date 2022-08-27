@@ -21,6 +21,7 @@ namespace Texemon.Models
         public ModelProperty<string> WindowStyle { get; set; } = new ModelProperty<string>("Blank");
         public ModelProperty<string> FrameStyle { get; set; } = new ModelProperty<string>("Blank");
         public ModelProperty<string> SelectedStyle { get; set; } = new ModelProperty<string>("Blank");
+        public ModelProperty<string> FrameSelectedStyle { get; set; } = new ModelProperty<string>("Blank");
         public ModelProperty<string> LabelStyle { get; set; } = new ModelProperty<string>("Blank");
         public ModelProperty<GameFont> Font { get; set; } = new ModelProperty<GameFont>(GameFont.Silver);
 
