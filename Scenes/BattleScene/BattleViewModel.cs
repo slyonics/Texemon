@@ -17,15 +17,22 @@ namespace Texemon.Scenes.BattleScene
         int enemyWidth;
         int enemyHeight;
 
-        public BattleViewModel(BattleScene iScene, int iEnemyWidth, int iEnemyHeight)
+        public BattleViewModel(BattleScene iScene, EncounterRecord encounterRecord)
             : base(iScene, PriorityLevel.GameLevel)
         {
             battleScene = iScene;
-            enemyWidth = iEnemyWidth;
-            enemyHeight = iEnemyHeight;
-            foreach (BattleEnemy enemy in battleScene.EnemyList) Enemies.Add(enemy);
-            foreach (BattlePlayer player in battleScene.PlayerList) Players.Add(player);
 
+            string[] enemyTokens = encounterRecord.Enemies;
+            int totalEnemyWidth = 0;
+            foreach (string enemyName in enemyTokens)
+            {
+                EnemyRecord enemyRecord = BattleScene.ENEMIES.First(x => x.Name == enemyName);
+                Texture2D enemySprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + enemyRecord.Sprite)];
+                totalEnemyWidth += enemySprite.Width;
+                InitialEnemies.Add(enemyRecord);
+            }
+            enemyWidth = totalEnemyWidth;
+            enemyHeight = 112;
             EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 3, -110, enemyWidth + 6, enemyHeight + 6);
 
             BackgroundRender.Value = iScene.backgroundRender;
@@ -35,8 +42,12 @@ namespace Texemon.Scenes.BattleScene
             EnemyPanel = GetWidget<Panel>("EnemyPanel");
         }
 
-        public ModelCollection<BattleEnemy> Enemies { get; set; } = new ModelCollection<BattleEnemy>();
-        public ModelCollection<BattlePlayer> Players { get; set; } = new ModelCollection<BattlePlayer>();
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+        }
+
+        public List<EnemyRecord> InitialEnemies { get; set; } = new List<EnemyRecord>();
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
         public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (GameProfile.PlayerProfile.Party.Count()) * 20 + 4));

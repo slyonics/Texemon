@@ -7,6 +7,7 @@ using System.IO;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Xml;
 
 namespace Texemon.Scenes.BattleScene
 {
@@ -21,7 +22,7 @@ namespace Texemon.Scenes.BattleScene
         private static Effect ENEMY_BATTLER_EFFECT;
         private static Texture2D STATIC_TEXTURE;
 
-        private EnemyRecord enemyData;
+        public EnemyRecord EnemyRecord { get; set; }
 
         private int fadeInTime;
         private int attackTimeLeft;
@@ -30,21 +31,23 @@ namespace Texemon.Scenes.BattleScene
         public BattleEnemy(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
         {
-
-        }
-
-        public BattleEnemy(BattleScene iBattleScene, EnemyRecord iEnemyData)
-            : base(iBattleScene, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + iEnemyData.Sprite)], null, new BattlerModel(iEnemyData))
-        {
-            enemyData = iEnemyData;
-
             shader = ENEMY_BATTLER_EFFECT.Clone();
             shader.Parameters["destroyInterval"].SetValue(1.1f);
             shader.Parameters["noise"].SetValue(STATIC_TEXTURE);
             shader.Parameters["flashInterval"].SetValue(0.0f);
             shader.Parameters["flashColor"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 0.0f));
+        }
 
-            shadow = ENEMY_SHADOWS["Enemies_" + enemyData.Sprite];
+        public override void LoadAttributes(XmlNode xmlNode)
+        {
+            base.LoadAttributes(xmlNode);
+
+            stats = new BattlerModel(EnemyRecord);
+
+            AnimatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + EnemyRecord.Sprite)], null);
+            shadow = ENEMY_SHADOWS["Enemies_" + EnemyRecord.Sprite];
+
+            bounds = AnimatedSprite.SpriteBounds();
         }
 
         public static void Initialize()
@@ -71,11 +74,12 @@ namespace Texemon.Scenes.BattleScene
             STATIC_TEXTURE.SetData<Color>(colorData);
         }
 
+
         protected override void DrawShadow(SpriteBatch spriteBatch)
         {
             Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (currentWindow.Width + currentWindow.Height) / 2));
             if (Dead) shadowColor.A = (byte)MathHelper.Lerp(0, shadowColor.A, (float)deathTimeLeft / DEATH_DURATION);
-            spriteBatch.Draw(shadow, new Vector2((int)(Center.X - shadow.Width / 2), (int)(Center.Y) + 1 + enemyData.ShadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
+            spriteBatch.Draw(shadow, new Vector2((int)(Center.X - shadow.Width / 2), (int)(Center.Y) + 1 + EnemyRecord.ShadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
 
         public override void Update(GameTime gameTime)
@@ -106,6 +110,7 @@ namespace Texemon.Scenes.BattleScene
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            AnimatedSprite.Draw(spriteBatch, Bottom, null, Depth);
             DrawShadow(spriteBatch);
         }
 
@@ -120,7 +125,7 @@ namespace Texemon.Scenes.BattleScene
         {
             base.StartTurn();
 
-            Dictionary<string[], double> attacks = enemyData.Attacks.ToDictionary(x => x.Script, x => (double)x.Weight);
+            Dictionary<string[], double> attacks = EnemyRecord.Attacks.ToDictionary(x => x.Script, x => (double)x.Weight);
             string[] attack = Rng.WeightedEntry<string[]>(attacks);
 
             BattleController battleController = new BattleController(battleScene, this, null, attack);
@@ -144,7 +149,6 @@ namespace Texemon.Scenes.BattleScene
             }
         }
 
-        public EnemyRecord EnemyData { get => enemyData; }
         public Rectangle EnemySize { get => new Rectangle(0, 0, AnimatedSprite.SpriteBounds().Width, AnimatedSprite.SpriteBounds().Height); }
 
         public override bool Busy { get => base.Busy || deathTimeLeft > 0; }

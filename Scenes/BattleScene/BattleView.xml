@@ -2,19 +2,17 @@
 <View>
 
 	<Panel Name="EnemyPanel" Style="Bind PlayerProfile.FrameStyle" Anchor="$CenterX,$CenterY" Bounds="Bind EnemyWindow" InnerMargin="3,3,3,3" TransitionIn="Expand">
-		<DataGrid Items="Bind Enemies" Alignment="Stretch">
-			<BattleEnemy Style="Blank" PushedStyle="Bind PlayerProfile.FrameSelectedStyle" Alignment="Horizontal" Bounds="Ref DataGrid.EnemySize">
-				<Image Sprite="Ref DataGrid.AnimatedSprite" Alignment="Bottom" Depth="0.5"/>
-			</BattleEnemy>
+		<DataGrid Items="Ref InitialEnemies" Alignment="Stretch">
+			<Scenes.BattleScene.BattleEnemy EnemyRecord="Ref DataGrid" Alignment="Horizontal"/>
 		</DataGrid>
 		<Image Picture="Bind BackgroundRender" Alignment="Stretch" Depth="1.0"/>
 	</Panel>
 
 	<Panel Name="PlayerPanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="8,16,8,8" TransitionIn="Expand">
-		<DataGrid Items="Bind Players" Alignment="Stretch">
-			<Panel Alignment="Vertical" Bounds="0,0,80,20">
-				<BattlePlayer Sprite="Ref DataGrid.AnimatedSprite" Alignment="BottomLeft"/>
-				<Label Text="Bind DataGrid.Stats.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left"/>
+		<DataGrid Items="Bind PlayerProfile.Party" Alignment="Stretch">
+			<Panel Alignment="Vertical" Bounds="0,0,102,20">
+				<Scenes.BattleScene.BattlePlayer HeroProfile="Bind DataGrid" Alignment="BottomLeft"/>
+				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left" Bounds="10,0,80,20"/>
 			</Panel>
 		</DataGrid>
 	</Panel>

@@ -29,7 +29,7 @@ namespace Texemon.Scenes.BattleScene
         private BattleViewModel battleViewModel;
 
         private List<Battler> initiativeList = new List<Battler>();
-        private List<BattleEnemy> initialEnemies = new List<BattleEnemy>();
+        
         private List<BattleEnemy> enemyList = new List<BattleEnemy>();
         private List<BattlePlayer> playerList = new List<BattlePlayer>();
 
@@ -38,7 +38,7 @@ namespace Texemon.Scenes.BattleScene
         public BattleScene(string encounterName)
         {
             encounterRecord = ENCOUNTERS.First(x => x.Name == encounterName);
-
+            
             string[] enemyTokens = encounterRecord.Enemies;
             List<Texture2D> enemySpriteList = new List<Texture2D>();
             int totalEnemyWidth = 0;
@@ -46,14 +46,11 @@ namespace Texemon.Scenes.BattleScene
             {
                 EnemyRecord enemyData = ENEMIES.First(x => x.Name == enemyName);
                 Texture2D enemySprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + enemyData.Sprite)];
-                enemySpriteList.Add(enemySprite);
                 totalEnemyWidth += enemySprite.Width;
             }
-            initialEnemies = new List<BattleEnemy>(enemyList);
-
             BuildBackground(AssetCache.SPRITES[GameSprite.Background_Trees], totalEnemyWidth);
 
-            battleViewModel = AddView(new BattleViewModel(this, totalEnemyWidth, 112));
+            battleViewModel = AddView(new BattleViewModel(this, ENCOUNTERS.First(x => x.Name == encounterName)));
         }
 
         ~BattleScene()

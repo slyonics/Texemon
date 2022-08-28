@@ -339,7 +339,8 @@ namespace Texemon.SceneObjects
                         continue;
 
                     default:
-                        widget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + node.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + depthOffset }, null, null);
+                        if (node.Name.Contains('.')) widget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + "." + node.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + depthOffset }, null, null);
+                        else widget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + node.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + depthOffset }, null, null);
                         break;
                 }
 
@@ -456,6 +457,7 @@ namespace Texemon.SceneObjects
                     int i = dataGrid.ChildList.IndexOf(this);
                     if (i == -1) i = dataGrid.ChildList.IndexOf(GetDescendent(dataGrid));
                     dataContext = dataGrid.Items.ElementAtOrDefault(i);
+                    if (tokens.Length == 1) return dataContext as T;
                     tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
                     break;
 
