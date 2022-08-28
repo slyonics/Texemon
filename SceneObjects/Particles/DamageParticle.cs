@@ -12,8 +12,8 @@ namespace Texemon.SceneObjects.Particles
 {
     public class DamageParticle : Particle
     {
-        private const int DIGIT_WIDTH = 56;
-        private const int DIGIT_HEIGHT = 77;
+        private const int DIGIT_WIDTH = 8;
+        private const int DIGIT_HEIGHT = 11;
         private const int DECAY_DURATION = 500;
         private const int NEXT_DIGIT_INTERVAL = 80;
 
@@ -28,7 +28,7 @@ namespace Texemon.SceneObjects.Particles
         private int nextDigitTimer;
 
         public DamageParticle(Scene iScene, Vector2 iPosition, string digits)
-            : base(iScene, iPosition, false)
+            : base(iScene, iPosition, true)
         {
             DIGIT_SOURCES = new Rectangle[10];
             for (int i = 0; i < DIGIT_SOURCES.Length; i++) DIGIT_SOURCES[i] = new Rectangle(i * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT);
@@ -37,7 +37,7 @@ namespace Texemon.SceneObjects.Particles
             initialPosition = iPosition;
             digitsRemaining = digits.Substring(1, digits.Length - 1);
 
-            velocityZ = 100 * 2;
+            velocityZ = DIGIT_HEIGHT * 10;
             landingFollowup += StartDecay;
             nextDigitTimer = NEXT_DIGIT_INTERVAL;
         }
@@ -65,7 +65,7 @@ namespace Texemon.SceneObjects.Particles
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ), DIGIT_SOURCES[digitIndex], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.2f);
+            spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
         }
 
         private void StartDecay()

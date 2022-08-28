@@ -23,6 +23,7 @@ namespace Texemon.SceneObjects
 
         protected List<Entity> entityList = new List<Entity>();
         protected List<Particle> particleList = new List<Particle>();
+        protected List<Particle> overlayParticleList = new List<Particle>();
 
         protected Shader spriteShader;
         protected Shader sceneShader;
@@ -110,6 +111,10 @@ namespace Texemon.SceneObjects
             while (i < particleList.Count) { particleList[i].Update(gameTime); i++; }
             particleList.RemoveAll(x => x.Terminated);
 
+            i = 0;
+            while (i < overlayParticleList.Count) { overlayParticleList[i].Update(gameTime); i++; }
+            overlayParticleList.RemoveAll(x => x.Terminated);
+
             if (activeControllers != null)
             {
                 i = 0;
@@ -183,11 +188,13 @@ namespace Texemon.SceneObjects
         public virtual void DrawOverlay(SpriteBatch spriteBatch)
         {
             foreach (Overlay overlay in overlayList) overlay.Draw(spriteBatch);
+            foreach (Particle particle in overlayParticleList) particle.Draw(spriteBatch, Camera);
         }
 
         public T AddParticle<T>(T newParticle) where T : Particle
         {
-            particleList.Add(newParticle);
+            if (newParticle.Foreground) overlayParticleList.Add(newParticle);
+            else particleList.Add(newParticle);
             return newParticle;
         }
 

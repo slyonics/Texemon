@@ -48,6 +48,8 @@ namespace Texemon.Scenes.BattleScene
             shadow = ENEMY_SHADOWS["Enemies_" + EnemyRecord.Sprite];
 
             bounds = AnimatedSprite.SpriteBounds();
+
+            battleScene.AddBattler(this);
         }
 
         public static void Initialize()

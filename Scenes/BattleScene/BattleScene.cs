@@ -29,9 +29,6 @@ namespace Texemon.Scenes.BattleScene
         private BattleViewModel battleViewModel;
 
         private List<Battler> initiativeList = new List<Battler>();
-        
-        private List<BattleEnemy> enemyList = new List<BattleEnemy>();
-        private List<BattlePlayer> playerList = new List<BattlePlayer>();
 
         private bool introFinished;
 
@@ -94,10 +91,10 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime, priorityLevel);
 
-            enemyList.RemoveAll(x => x.Terminated);
-            if (!controllerList.Any(y => y.Exists(x => x is BattleController)) && !playerList.Exists(x => x.Busy) && !enemyList.Exists(x => x.Busy))
+            EnemyList.RemoveAll(x => x.Terminated);
+            if (!controllerList.Any(y => y.Exists(x => x is BattleController)) && !PlayerList.Exists(x => x.Busy) && !EnemyList.Exists(x => x.Busy))
             {
-                if (enemyList.Count == 0)
+                if (EnemyList.Count == 0)
                 {
                     // VICTORY
                 }
@@ -105,15 +102,12 @@ namespace Texemon.Scenes.BattleScene
             }
         }
 
-        /*
-        public void Add(Battler battler)
+        public void AddBattler(Battler battler)
         {
             EnqueueInitiative(battler);
-            entityList.Add(battler);
-            if (battler is BattleEnemy) enemyList.Add(battler as BattleEnemy);
-            else if (battler is BattlePlayer) playerList.Add(battler as BattlePlayer);
+            if (battler is BattleEnemy) EnemyList.Add(battler as BattleEnemy);
+            else if (battler is BattlePlayer) PlayerList.Add(battler as BattlePlayer);
         }
-        */
 
         public void ActivateNextBattler()
         {
@@ -137,7 +131,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public List<Battler> InitiativeList { get => initiativeList; }
-        public List<BattlePlayer> PlayerList { get => playerList; }
-        public List<BattleEnemy> EnemyList { get => enemyList; }
+        public List<BattlePlayer> PlayerList { get; } = new List<BattlePlayer>();
+        public List<BattleEnemy> EnemyList { get; } = new List<BattleEnemy>();
     }
 }

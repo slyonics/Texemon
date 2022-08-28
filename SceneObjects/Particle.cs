@@ -11,27 +11,27 @@ namespace Texemon.SceneObjects
 {
     public abstract class Particle : Entity
     {
-        private bool foreground;
+        public bool Foreground { get; private set; } = false;
 
         public Particle(Scene iScene, Vector2 iPosition, Texture2D iSprite, Dictionary<string, Animation> iAnimationList, bool iForeground = false)
             : base(iScene, iPosition, iSprite, iAnimationList)
         {
-            foreground = iForeground;
+            Foreground = iForeground;
 
-            if (foreground) position.Y += SpriteBounds.Height / 2;
+            if (Foreground) position.Y += SpriteBounds.Height / 2;
         }
 
         public Particle(Scene iScene, Vector2 iPosition, bool iForeground = false)
             : base(iScene, iPosition)
         {
-            foreground = iForeground;
+            Foreground = iForeground;
         }
 
         public override float DepthPosition
         {
             get
             {
-                if (foreground) return parentScene.Camera.MaxVisibleY;
+                if (Foreground) return parentScene.Camera.MaxVisibleY;
                 else return base.DepthPosition;
             }
         }

@@ -36,7 +36,7 @@ namespace Texemon.Scenes.BattleScene
             { HeroAnimation.Chanting.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
             { HeroAnimation.Spell.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 3, 80) },
             { HeroAnimation.Hit.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 600) },
-            { HeroAnimation.Hurting.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.Hurting.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 2, 100) },
             { HeroAnimation.Dead.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) }
         };
 
@@ -55,13 +55,12 @@ namespace Texemon.Scenes.BattleScene
             stats = new BattlerModel(HeroProfile);
             AnimatedSprite = new AnimatedSprite(AssetCache.SPRITES[HeroProfile.Sprite.Value], HERO_ANIMATIONS);
             bounds = AnimatedSprite.SpriteBounds();
+            battleScene.AddBattler(this);
         }
-
-        
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            AnimatedSprite.Draw(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Center.Y + bounds.Y + bounds.Height / 2) + Position, null, Depth);
+            AnimatedSprite.Draw(spriteBatch, Bottom, null, Depth);
         }
 
         public override void DrawShader(SpriteBatch spriteBatch)
@@ -103,7 +102,7 @@ namespace Texemon.Scenes.BattleScene
 
         public void Idle()
         {
-            if (Stats.Health.Value > HeroProfile.MaxHealth.Value / 4) PlayAnimation("Guarding");
+            if (Stats.Health.Value > HeroProfile.MaxHealth.Value / 4) PlayAnimation("Ready");
             else if (Stats.Health.Value > 0) PlayAnimation("Hurting");
             else PlayAnimation("Dead");
         }

@@ -38,6 +38,8 @@ namespace Texemon.Scenes.BattleScene
 
         public AnimatedSprite AnimatedSprite { get; protected set; }
 
+        private List<Particle> particleList = new List<Particle>();
+
         public Battler(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
         {
@@ -86,6 +88,8 @@ namespace Texemon.Scenes.BattleScene
             }
 
             AnimatedSprite.Update(gameTime);
+
+            particleList.RemoveAll(x => x.Terminated);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -135,8 +139,9 @@ namespace Texemon.Scenes.BattleScene
         {
             Stats.Health.Value -= damage;
 
-            battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString()));
-
+            particleList.Add(
+            battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString()))
+            );
 
             if (Dead) battleScene.InitiativeList.Remove(this);
         }
@@ -151,7 +156,7 @@ namespace Texemon.Scenes.BattleScene
         public bool Dead { get => Stats.Health.Value <= 0; }
 
         public int ActionTime { get => actionTime; set => actionTime = value; }
-        public virtual bool Busy { get => turnActive; }
+        public virtual bool Busy { get => turnActive || particleList.Count > 0; }
 
         public Vector2 Bottom { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y + bounds.Height / 2) + Position; }
         public Vector2 Top { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y - bounds.Height / 2) + Position; }
