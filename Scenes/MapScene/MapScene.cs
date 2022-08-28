@@ -80,9 +80,9 @@ namespace Texemon.Scenes.MapScene
             }
         }
 
-        public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime, priorityLevel);
+            base.Update(gameTime);
 
             Camera.Center(Player.Center);
 

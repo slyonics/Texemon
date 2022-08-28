@@ -62,13 +62,13 @@ namespace Texemon.SceneObjects
             OnTerminated?.Invoke();
         }
 
-        public virtual void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
+        public virtual void Update(GameTime gameTime)
         {
             int i = 0;
 
             for (i = 0; i < Enum.GetNames(typeof(PriorityLevel)).Length; i++)
             {
-                if (controllerList[i].Count > 0 && (PriorityLevel)i >= priorityLevel)
+                if (controllerList[i].Count > 0)
                 {
                     priorityLevel = (PriorityLevel)i;
                 }
@@ -188,7 +188,6 @@ namespace Texemon.SceneObjects
         public virtual void DrawOverlay(SpriteBatch spriteBatch)
         {
             foreach (Overlay overlay in overlayList) overlay.Draw(spriteBatch);
-            foreach (Particle particle in overlayParticleList) particle.Draw(spriteBatch, Camera);
         }
 
         public T AddParticle<T>(T newParticle) where T : Particle

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Xna.Framework.Graphics;
+using Texemon.SceneObjects.Widgets;
 using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.BattleScene
@@ -58,18 +59,13 @@ namespace Texemon.Scenes.BattleScene
             battleScene.AddBattler(this);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void DrawShader(SpriteBatch spriteBatch)
         {
-            AnimatedSprite.Draw(spriteBatch, Bottom, null, Depth);
-        }
+            if (!drawSprite) return;
 
-        public override void DrawShader(SpriteBatch spriteBatch)
-        {
-            /*
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
-            AnimatedSprite.Draw(spriteBatch, Bottom - new Vector2(0.0f, positionZ), null, 0.0f);
+            AnimatedSprite.Draw(spriteBatch, Bottom, null, Depth);
             spriteBatch.End();
-            */
         }
 
         public override void StartTurn()
@@ -106,7 +102,5 @@ namespace Texemon.Scenes.BattleScene
             else if (Stats.Health.Value > 0) PlayAnimation("Hurting");
             else PlayAnimation("Dead");
         }
-
-        
     }
 }

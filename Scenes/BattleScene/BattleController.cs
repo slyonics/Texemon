@@ -15,6 +15,9 @@ namespace Texemon.Scenes.BattleScene
         private Battler attacker;
         private Battler target;
 
+        ConversationScene.ConversationScene convoScene;
+        double timeleft = 0;
+
         public BattleController(BattleScene iBattleScene, Battler iAttacker, Battler iTarget, string[] script)
            : base(iBattleScene, script, PriorityLevel.CutsceneLevel)
         {
@@ -27,7 +30,19 @@ namespace Texemon.Scenes.BattleScene
         {
             if (scriptParser.Finished)
             {
-                //if (dialogueView == null || dialogueView.Terminated) Terminate();
+                if (convoScene != null)
+                {
+                    if (convoScene.ConversationViewModel.ReadyToProceed.Value)
+                    {
+                        timeleft -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                        if (timeleft < 0)
+                        {
+                            convoScene.ConversationViewModel.Terminate();
+                            convoScene = null;
+                        }
+                    }
+                }
+                else Terminate();
             }
             else scriptParser.Update(gameTime);
         }
@@ -77,12 +92,34 @@ namespace Texemon.Scenes.BattleScene
             List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
-            scriptParser.RunScript("Animate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 5");
+            scriptParser.RunScript("Dialogue prepare yourself\nAnimate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 5");
         }
 
         private void Dialogue(string[] tokens)
         {
-            
+            if (tokens.Length == 2)
+            {
+                convoScene = new ConversationScene.ConversationScene(tokens[1], new Rectangle(-20, 30, 170, 80), true);
+                var unblock = scriptParser.BlockScript();
+                convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
+                CrossPlatformGame.StackScene(convoScene);
+            }
+            else
+            {
+                var convoRecord = new ConversationScene.ConversationRecord()
+                {
+                    DialogueRecords = new ConversationScene.DialogueRecord[] {
+                            new ConversationScene.DialogueRecord() { Text = String.Join(' ', tokens.Skip(1))  }
+                        }
+                };
+
+                convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);
+                var unblock = scriptParser.BlockScript();
+                convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
+                CrossPlatformGame.StackScene(convoScene);
+            }
+
+            timeleft = 1000;
         }
     }
 }

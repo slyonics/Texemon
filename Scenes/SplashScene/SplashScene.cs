@@ -23,7 +23,7 @@ namespace Texemon.Scenes.SplashScene
             AddController(new SkippableWaitController(PriorityLevel.MenuLevel, this));
         }
 
-        public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
+        public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
         }

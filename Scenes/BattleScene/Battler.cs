@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using Texemon.SceneObjects.Particles;
+using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.BattleScene
 {
@@ -39,6 +40,8 @@ namespace Texemon.Scenes.BattleScene
         public AnimatedSprite AnimatedSprite { get; protected set; }
 
         private List<Particle> particleList = new List<Particle>();
+
+        protected bool drawSprite = false;
 
         public Battler(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -79,6 +82,8 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime);
 
+            drawSprite = false;
+
             if (flashTime > 0)
             {
                 flashTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -94,22 +99,17 @@ namespace Texemon.Scenes.BattleScene
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            DrawShadow(spriteBatch);
-
             base.Draw(spriteBatch);
+
+            drawSprite = true;
         }
 
-        protected virtual void DrawShadow(SpriteBatch spriteBatch)
+        public virtual void DrawShadow(SpriteBatch spriteBatch)
         {
             if (shadow == null) return;
 
             Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (currentWindow.Width + currentWindow.Height) / 2));
             spriteBatch.Draw(shadow, new Vector2((int)(Top.X - shadow.Width / 2), (int)(Top.Y) + 1), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
-        }
-
-        public virtual void DrawShader(SpriteBatch spriteBatch)
-        {
-
         }
 
         public virtual void StartTurn()
@@ -157,6 +157,8 @@ namespace Texemon.Scenes.BattleScene
 
         public int ActionTime { get => actionTime; set => actionTime = value; }
         public virtual bool Busy { get => turnActive || particleList.Count > 0; }
+
+        public override bool Transitioning { get => GetParent<Panel>().Transitioning; }
 
         public Vector2 Bottom { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y + bounds.Height / 2) + Position; }
         public Vector2 Top { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y - bounds.Height / 2) + Position; }

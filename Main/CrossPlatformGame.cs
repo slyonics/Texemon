@@ -138,13 +138,19 @@ namespace Texemon.Main
 
             if (transitionShader != null)
             {
-                CurrentScene.Update(gameTime, PriorityLevel.TransitionLevel);
+                CurrentScene.Update(gameTime);
                 transitionShader.Update(gameTime, null);
                 if (transitionShader.Terminated) transitionShader = null;
             }
             else
             {
-                foreach (Scene scene in sceneStack) scene.Update(gameTime, PriorityLevel.MenuLevel);
+                int i = 0;
+                while (i < sceneStack.Count)
+                {
+                    sceneStack[i].Update(gameTime);
+                    i++;
+                }
+
                 CurrentScene.Update(gameTime);
             }
 

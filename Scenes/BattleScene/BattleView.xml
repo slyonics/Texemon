@@ -18,7 +18,7 @@
 	</Panel>
 
 	<Panel Name="BattlePanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,30,170,80" InnerMargin="8,4,8,8" TransitionIn="Expand">
-		<CrawlText Font="Bind PlayerProfile.Font" Text="Bind BattleNarration" Name="Narration" Alignment="Stretch"/>
+		
 	</Panel>
 	
 </View>

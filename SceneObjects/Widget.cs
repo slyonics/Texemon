@@ -596,7 +596,7 @@ namespace Texemon.SceneObjects
         public int TooltipDelay { get; protected set; } = DEFAULT_TOOLTIP_DELAY;
         public string Tooltip { get; protected set; } = "";
 
-        public bool Transitioning { get => transition != null; }
+        public virtual bool Transitioning { get => transition != null; }
 
         public bool Closed { get; protected set; } = false;
         public override bool Terminated { get => terminated && !Transitioning; }

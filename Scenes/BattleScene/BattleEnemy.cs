@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml;
+using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.BattleScene
 {
@@ -77,7 +78,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
 
-        protected override void DrawShadow(SpriteBatch spriteBatch)
+        public override void DrawShadow(SpriteBatch spriteBatch)
         {
             Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (currentWindow.Width + currentWindow.Height) / 2));
             if (Dead) shadowColor.A = (byte)MathHelper.Lerp(0, shadowColor.A, (float)deathTimeLeft / DEATH_DURATION);
@@ -87,6 +88,8 @@ namespace Texemon.Scenes.BattleScene
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (Transitioning) return;
 
             if (fadeInTime < FADE_IN_DURATION)
             {
@@ -112,14 +115,15 @@ namespace Texemon.Scenes.BattleScene
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            AnimatedSprite.Draw(spriteBatch, Bottom, null, Depth);
             DrawShadow(spriteBatch);
         }
 
-        public override void DrawShader(SpriteBatch spriteBatch)
+        public void DrawShader(SpriteBatch spriteBatch)
         {
+            if (Transitioning) return;
+
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
-            AnimatedSprite.Draw(spriteBatch, Bottom + (attackTimeLeft > 0 ? new Vector2(0, 8) : Vector2.Zero), null, 0.5f);
+            AnimatedSprite.Draw(spriteBatch, Bottom + (attackTimeLeft > 0 ? new Vector2(0, 8) : Vector2.Zero), null, Depth);
             spriteBatch.End();
         }
 
@@ -153,6 +157,8 @@ namespace Texemon.Scenes.BattleScene
 
         public Rectangle EnemySize { get => new Rectangle(0, 0, AnimatedSprite.SpriteBounds().Width, AnimatedSprite.SpriteBounds().Height); }
 
-        public override bool Busy { get => base.Busy || deathTimeLeft > 0; }
+        public override bool Busy { get => base.Busy || deathTimeLeft > 0 || Transitioning || fadeInTime < FADE_IN_DURATION; }
+
+        public override bool Transitioning { get => GetParent<Panel>().Transitioning; }
     }
 }

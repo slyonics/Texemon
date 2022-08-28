@@ -42,6 +42,13 @@ namespace Texemon.Scenes.BattleScene
             EnemyPanel = GetWidget<Panel>("EnemyPanel");
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -52,9 +59,10 @@ namespace Texemon.Scenes.BattleScene
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
         public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (GameProfile.PlayerProfile.Party.Count()) * 20 + 4));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
-        public ModelProperty<string> BattleNarration { get; set; } = new ModelProperty<string>("Your foes assemble...");
 
-
+        public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
         public Panel EnemyPanel { get; private set; }
+
+        public bool Transitioning { get => EnemyPanel.Transitioning; }
     }
 }

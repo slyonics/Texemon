@@ -3,7 +3,10 @@ namespace Texemon.Main
     public enum GameView
     {
         BattleScene_BattleView,
+        BattleScene_CommandView,
         ConversationScene_ConversationView,
+        ConversationScene_ConversationView2,
+        ConversationScene_ConversationView3,
         CreditsScene_CreditsView,
         IntroScene_SelectionView,
         TitleScene_SettingsView,
@@ -56,6 +59,7 @@ namespace Texemon.Main
 
     public enum GameMusic
     {
+        Battle,
         Selection,
         Wilderness,
 

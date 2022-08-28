@@ -17,8 +17,8 @@ namespace Texemon.Scenes.ConversationScene
 
         private CrawlText crawlText;
 
-        public ConversationViewModel(ConversationScene iScene, GameView viewName, ConversationRecord iConversationRecord)
-            : base(iScene, PriorityLevel.GameLevel, viewName)
+        public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord)
+            : base(iScene, PriorityLevel.GameLevel, GameView.ConversationScene_ConversationView)
         {
             conversationScene = (parentScene as ConversationScene);
             conversationRecord = iConversationRecord;
@@ -26,6 +26,23 @@ namespace Texemon.Scenes.ConversationScene
 
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
             Dialogue.Value = currentDialogue.Text;
+
+            crawlText = GetWidget<CrawlText>("ConversationText");
+        }
+
+        public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord, Rectangle conversationBounds, bool autoProceed)
+            : base(iScene, PriorityLevel.GameLevel)
+        {
+            conversationScene = (parentScene as ConversationScene);
+            conversationRecord = iConversationRecord;
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
+
+            Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
+            Dialogue.Value = currentDialogue.Text;
+            Window.Value = conversationBounds;
+
+            if (autoProceed) LoadView(GameView.ConversationScene_ConversationView3);
+            else LoadView(GameView.ConversationScene_ConversationView2);
 
             crawlText = GetWidget<CrawlText>("ConversationText");
         }
@@ -117,6 +134,7 @@ namespace Texemon.Scenes.ConversationScene
 
         public event Action OnDialogueScrolled;
 
+        public ModelProperty<Rectangle> Window { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-120, 20, 240, 60));
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
         public ModelProperty<GameFont> ConversationFont { get; set; } = GameProfile.PlayerProfile.Font;
         public ModelProperty<string> Dialogue { get; set; } = new ModelProperty<string>("");
