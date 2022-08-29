@@ -75,6 +75,7 @@ namespace Texemon.Scenes.BattleScene
             PlayAnimation("Ready");
 
             // MENU STUFF
+            battleScene.BattleViewModel.PlayerTurn.Value = true;
         }
 
         public override void EndTurn(int initiativeModifier = 0)

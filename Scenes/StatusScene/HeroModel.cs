@@ -20,5 +20,6 @@ namespace Texemon.Scenes.StatusScene
         }
 
         public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_AirDrone);
+        public ModelCollection<string> Equipment { get; set; } = new ModelCollection<string>();
     }
 }

@@ -600,7 +600,7 @@ namespace Texemon.SceneObjects
         public string Name { get; protected set; } = "Widget";
         protected GameFont Font { get; set; } = GameFont.Tooltip;
         public Color Color { get; protected set; } = Color.White;
-        protected float Depth { get; set; } = 1.0f;
+        public float Depth { get; set; } = 1.0f;
         public virtual bool Visible { get; set; } = true;
         public virtual bool Enabled { get; set; } = true;
 

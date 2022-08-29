@@ -61,8 +61,7 @@ namespace Texemon.Scenes.BattleScene
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
+        public ModelProperty<bool> PlayerTurn { get; set; } = new ModelProperty<bool>(false);
         public Panel EnemyPanel { get; private set; }
-
-        public bool Transitioning { get => EnemyPanel.Transitioning; }
     }
 }

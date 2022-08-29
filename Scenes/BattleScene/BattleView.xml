@@ -21,7 +21,24 @@
 	</Panel>
 
 	<Panel Name="BattlePanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,30,170,80" InnerMargin="8,4,8,8" TransitionIn="Expand">
-		
+		<Panel Bounds="0,0,170,20" Visible="Bind PlayerTurn">
+			<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="-8,-4,62,20" Alignment="Left" InnerMargin="8,8,8,8">
+				<Label Text="Equipment" Bounds="2,-8,40,20"/>
+			</Button>
+			<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="-8,-4,62,20" Alignment="Left" InnerMargin="8,8,8,8">
+				<Label Text="Abilities" Bounds="10,-8,29,20"/>
+			</Button>
+			<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="-8,-4,62,20" Alignment="Left" InnerMargin="8,8,8,8">
+				<Label Text="Actions" Bounds="10,-8,26,20"/>
+			</Button>
+		</Panel>
+		<Panel Style="Bind PlayerProfile.WindowStyle" Bounds="-8,8,80,68" InnerMargin="8,9,8,8" Visible="Bind PlayerTurn">
+			<DataGrid Items="Ref ActivePlayer.Equipment">
+				<Button Radio="True" Style="Bind PlayerProfile.LabelStyle">
+					<Label Text="Mycommand"/>
+				</Button>
+			</DataGrid>
+		</Panel>
 	</Panel>
 	
 </View>

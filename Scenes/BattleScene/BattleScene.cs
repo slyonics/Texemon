@@ -71,7 +71,6 @@ namespace Texemon.Scenes.BattleScene
             ENCOUNTERS = AssetCache.LoadRecords<EncounterRecord>("EncounterData");
 
             BattleEnemy.Initialize();
-            //BattlePlayer.Initialize();
         }
 
         private void BuildBackground(Texture2D backgroundImage, int width)
@@ -95,7 +94,7 @@ namespace Texemon.Scenes.BattleScene
             while (i < overlayParticleList.Count) { overlayParticleList[i].Update(gameTime); i++; }
             overlayParticleList.RemoveAll(x => x.Terminated);
 
-            if (battleViewModel.Transitioning) return;
+            if (battleViewModel.EnemyPanel.Transitioning) return;
             else if (!introFinished)
             {
                 introFinished = true;
@@ -199,5 +198,6 @@ namespace Texemon.Scenes.BattleScene
         public List<Battler> InitiativeList { get => initiativeList; }
         public List<BattlePlayer> PlayerList { get; } = new List<BattlePlayer>();
         public List<BattleEnemy> EnemyList { get; } = new List<BattleEnemy>();
+        public BattleViewModel BattleViewModel { get => battleViewModel; }
     }
 }

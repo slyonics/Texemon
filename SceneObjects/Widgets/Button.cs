@@ -73,6 +73,9 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
             Color drawColor = (Enabled) ? Color : new Color(120, 120, 120, 255);
             if (buttonFrame != null) buttonFrame.FrameColor = drawColor;
+
+
+
             buttonFrame?.Draw(spriteBatch, Position);
         }
 
@@ -135,6 +138,12 @@ namespace Texemon.SceneObjects.Widgets
 
             selected = true;
             buttonFrame?.SetSprite(PushedStyle);
+            if (buttonFrame != null)
+            {
+                buttonFrame.FrameDepth = ((Button)parent.ChildList.Last()).Depth + Widget.WIDGET_PEER_DEPTH_OFFSET;
+            }
+
+            foreach (Widget child in ChildList) child.Depth = buttonFrame.FrameDepth + Widget.WIDGET_DEPTH_OFFSET;
         }
 
         public override void StartRightClick(Vector2 mousePosition)
@@ -169,6 +178,13 @@ namespace Texemon.SceneObjects.Widgets
 
             selected = false;
             buttonFrame?.SetSprite(Style);
+
+            if (buttonFrame != null)
+            {
+                buttonFrame.FrameDepth = Depth;
+            }
+
+            foreach (Widget child in ChildList) child.Depth = this.Depth + Widget.WIDGET_DEPTH_OFFSET;
         }
 
         public override bool Enabled
