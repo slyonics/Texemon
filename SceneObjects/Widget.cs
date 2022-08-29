@@ -98,8 +98,13 @@ namespace Texemon.SceneObjects
                 ModelChangeCallback updateValue = () =>
                 {
                     object value = binding.GetValue();
-                    if (value is string) value = ParseString(value as string);
-                    property.SetValue(this, value);
+                    if (value is string)
+                    {
+                        value = ParseString(value as string);
+                        property.SetValue(this, value);
+                    }
+                    else if (property.PropertyType == typeof(string)) property.SetValue(this, value.ToString());
+                    else property.SetValue(this, value);
                 };
                 binding.ModelChanged += updateValue;
                 updateValue();
@@ -110,8 +115,13 @@ namespace Texemon.SceneObjects
             {
                 attributeValue = attributeValue.Substring(4);
                 object reference = LookupBinding<object>(attributeValue);
-                if (reference is string) reference = ParseString(reference as string);
-                property.SetValue(this, reference);
+                if (reference is string)
+                {
+                    reference = ParseString(reference as string);
+                    property.SetValue(this, reference);
+                }
+                else if (property.PropertyType == typeof(string)) property.SetValue(this, reference.ToString());
+                else property.SetValue(this, reference);
             }
             else
             {
@@ -165,8 +175,9 @@ namespace Texemon.SceneObjects
             {
                 case Alignment.Left:
                     currentWindow = bounds;
-                    currentWindow.X = parent.InnerBounds.Left + bounds.X;
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
                     currentWindow.Y = parent.InnerBounds.Top + bounds.Y;
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
                     break;
 
                 case Alignment.Anchored:

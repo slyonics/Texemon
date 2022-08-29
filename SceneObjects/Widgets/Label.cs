@@ -53,7 +53,7 @@ namespace Texemon.SceneObjects.Widgets
                     break;
 
                 case Alignment.Right:
-                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Center.Y - Main.Text.GetStringHeight(Font) / 2) + Position, Font, Text, drawColor, Depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Top - Main.Text.GetStringHeight(Font)) + Position, Font, Text, drawColor, Depth);
                     break;
             }
         }

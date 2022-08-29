@@ -32,6 +32,9 @@ namespace Texemon.Scenes.BattleScene
 
         private bool introFinished = false;
 
+
+        protected List<Particle> overlayParticleList = new List<Particle>();
+
         public BattleScene(string encounterName)
         {
             encounterRecord = ENCOUNTERS.First(x => x.Name == encounterName);
@@ -88,6 +91,10 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime);
 
+            int i = 0;
+            while (i < overlayParticleList.Count) { overlayParticleList[i].Update(gameTime); i++; }
+            overlayParticleList.RemoveAll(x => x.Terminated);
+
             if (battleViewModel.Transitioning) return;
             else if (!introFinished)
             {
@@ -137,7 +144,7 @@ namespace Texemon.Scenes.BattleScene
             foreach (BattlePlayer battlePlayer in PlayerList) battlePlayer.DrawShader(spriteBatch);
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
-            foreach (Particle particle in overlayParticleList) particle.Draw(spriteBatch, Camera);
+            foreach (Particle particle in overlayParticleList) particle.Draw(spriteBatch, null);
             spriteBatch.End();
 
             graphicsDevice.SetRenderTarget(compositeRender);
@@ -159,6 +166,13 @@ namespace Texemon.Scenes.BattleScene
             EnqueueInitiative(battler);
             if (battler is BattleEnemy) EnemyList.Add(battler as BattleEnemy);
             else if (battler is BattlePlayer) PlayerList.Add(battler as BattlePlayer);
+        }
+
+        public override T AddParticle<T>(T newParticle)
+        {
+            if (newParticle.Foreground) overlayParticleList.Add(newParticle);
+            else particleList.Add(newParticle);
+            return newParticle;
         }
 
         public void ActivateNextBattler()

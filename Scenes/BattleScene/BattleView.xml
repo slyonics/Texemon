@@ -12,7 +12,10 @@
 		<DataGrid Items="Bind PlayerProfile.Party" Alignment="Stretch">
 			<Panel Alignment="Vertical" Bounds="0,0,102,20">
 				<Scenes.BattleScene.BattlePlayer HeroProfile="Bind DataGrid" Alignment="BottomLeft"/>
-				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left" Bounds="10,0,80,20"/>
+				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Cascading" TextAlignment="Left" Bounds="10,0,0,20"/>
+				<Label Text="Bind DataGrid.Health" Font="Dialogue" Alignment="Left" TextAlignment="Right" Bounds="90,-3,0,20"/>
+				<Label Text="/" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="0,0,5,20"/>
+				<Label Text="Bind DataGrid.MaxHealth" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="-1,3,0,20"/>
 			</Panel>
 		</DataGrid>
 	</Panel>

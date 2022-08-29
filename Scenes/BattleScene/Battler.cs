@@ -137,7 +137,7 @@ namespace Texemon.Scenes.BattleScene
 
         public virtual void Damage(int damage)
         {
-            Stats.Health.Value -= damage;
+            Stats.Health.Value = Stats.Health.Value - damage;
 
             particleList.Add(
             battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString()))

@@ -12,20 +12,20 @@ namespace Texemon.Scenes.BattleScene
     {
         public BattlerModel()
         {
-
+            Health.Value = MaxHealth.Value;
         }
 
         public BattlerModel(BattlerModel clone)
         {
             Name.Value = clone.Name.Value;
-            MaxHealth.Value = clone.Health.Value;
+            MaxHealth.Value = clone.MaxHealth.Value;
             Health.Value = MaxHealth.Value;
         }
 
         public BattlerModel(EnemyRecord enemyRecord)
         {
             Name.Value = enemyRecord.Name;
-            MaxHealth.Value = enemyRecord.Health;
+            MaxHealth.Value = enemyRecord.MaxHealth;
             Health.Value = MaxHealth.Value;
         }
 

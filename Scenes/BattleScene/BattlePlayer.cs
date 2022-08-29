@@ -53,7 +53,7 @@ namespace Texemon.Scenes.BattleScene
         public override void LoadAttributes(XmlNode xmlNode)
         {
             base.LoadAttributes(xmlNode);
-            stats = new BattlerModel(HeroProfile);
+            stats = HeroProfile;
             AnimatedSprite = new AnimatedSprite(AssetCache.SPRITES[HeroProfile.Sprite.Value], HERO_ANIMATIONS);
             bounds = AnimatedSprite.SpriteBounds();
             battleScene.AddBattler(this);
