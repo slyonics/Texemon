@@ -23,6 +23,7 @@ namespace Texemon.Scenes.StatusScene
         public string Sprite { get; set; }
         public string[] InitialEquipment { get; set; }
         public string[] InitialAbilities { get; set; }
+        public string[] Actions { get; set; }
         public BattleScene.BattlerModel BattlerModel { get; set; }
     }
 }

@@ -75,7 +75,7 @@ namespace Texemon.Scenes.BattleScene
 
             PlayAnimation("Ready");
 
-            HeroModel.NameColor.Value = Color.Red;
+            HeroModel.NameColor.Value = new Color(206, 109, 10);
 
             // MENU STUFF
             battleScene.BattleViewModel.StartPlayerTurn(this);            

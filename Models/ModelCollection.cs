@@ -21,7 +21,7 @@ namespace Texemon.Models
                 ModelChanged?.Invoke();
             }
 
-            private get => modelList;
+            get => modelList;
         }
 
         public ModelCollection()
