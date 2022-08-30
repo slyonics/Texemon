@@ -3,6 +3,11 @@
 		"ClassType": "Inventor",
 		"Sprite": "Inventor",
 		"InitialEquipment": [
+			"Longsword",
+			"Longsword",
+			"Longsword",
+			"Longsword",
+			"Longsword",
 			"Longsword"
 		],
 		"InitialAbilities": [

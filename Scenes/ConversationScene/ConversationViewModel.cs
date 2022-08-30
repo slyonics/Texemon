@@ -17,6 +17,8 @@ namespace Texemon.Scenes.ConversationScene
 
         private CrawlText crawlText;
 
+        public bool AutoProceed { get; set; }
+
         public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord)
             : base(iScene, PriorityLevel.GameLevel, GameView.ConversationScene_ConversationView)
         {
@@ -45,6 +47,8 @@ namespace Texemon.Scenes.ConversationScene
             else LoadView(GameView.ConversationScene_ConversationView2);
 
             crawlText = GetWidget<CrawlText>("ConversationText");
+
+            AutoProceed = autoProceed;
         }
 
         public override void Update(GameTime gameTime)
@@ -71,7 +75,7 @@ namespace Texemon.Scenes.ConversationScene
                         crawlText.FinishText();
                         conversationScene.FinishDialogue();
                     }
-                    else NextDialogue();
+                    else if (!AutoProceed) NextDialogue();
                 }
             }
 
@@ -91,7 +95,7 @@ namespace Texemon.Scenes.ConversationScene
                         crawlText.FinishText();
                         conversationScene.FinishDialogue();
                     }
-                    else NextDialogue();
+                    else if (!AutoProceed) NextDialogue();
                     break;
             }
         }

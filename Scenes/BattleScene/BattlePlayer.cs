@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Xna.Framework.Graphics;
+using Texemon.Models;
 using Texemon.SceneObjects.Widgets;
 using Texemon.Scenes.StatusScene;
 
@@ -41,7 +42,7 @@ namespace Texemon.Scenes.BattleScene
             { HeroAnimation.Dead.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) }
         };
 
-        public HeroModel HeroProfile { get; set; }
+        public HeroModel HeroModel { get; set; }
 
         public BattlePlayer(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -53,8 +54,8 @@ namespace Texemon.Scenes.BattleScene
         public override void LoadAttributes(XmlNode xmlNode)
         {
             base.LoadAttributes(xmlNode);
-            stats = HeroProfile;
-            AnimatedSprite = new AnimatedSprite(AssetCache.SPRITES[HeroProfile.Sprite.Value], HERO_ANIMATIONS);
+            stats = HeroModel;
+            AnimatedSprite = new AnimatedSprite(AssetCache.SPRITES[HeroModel.Sprite.Value], HERO_ANIMATIONS);
             bounds = AnimatedSprite.SpriteBounds();
             battleScene.AddBattler(this);
         }
@@ -74,13 +75,17 @@ namespace Texemon.Scenes.BattleScene
 
             PlayAnimation("Ready");
 
+            HeroModel.NameColor.Value = Color.Red;
+
             // MENU STUFF
-            battleScene.BattleViewModel.PlayerTurn.Value = true;
+            battleScene.BattleViewModel.StartPlayerTurn(this);            
         }
 
         public override void EndTurn(int initiativeModifier = 0)
         {
             base.EndTurn(initiativeModifier);
+
+            HeroModel.NameColor.Value = Color.White;
 
             // commandMenu.Terminate();
         }
@@ -99,9 +104,11 @@ namespace Texemon.Scenes.BattleScene
 
         public void Idle()
         {
-            if (Stats.Health.Value > HeroProfile.MaxHealth.Value / 4) PlayAnimation("Ready");
+            if (Stats.Health.Value > HeroModel.MaxHealth.Value / 4) PlayAnimation("Ready");
             else if (Stats.Health.Value > 0) PlayAnimation("Hurting");
             else PlayAnimation("Dead");
         }
+
+        
     }
 }

@@ -25,16 +25,8 @@ namespace Texemon.Scenes.StatusScene
     }
 
     [Serializable]
-    public class ItemRecord
+    public class ItemRecord : CommandRecord
     {
-        public string Name;
-        public ItemType ItemType;
-        public string Animation;
-        public string[] Description;
-        public int Icon;
-        public int Charges;
-        public int MaxCharges;
-        public TargetType Targetting;
-        public string[] Script;
+        public ItemType ItemType { get; set; }
     }
 }

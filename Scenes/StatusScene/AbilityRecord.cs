@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 namespace Texemon.Scenes.StatusScene
 {
     [Serializable]
-    public class AbilityRecord
+    public class AbilityRecord : CommandRecord
     {
-        public string Name;
-        public string Animation;
-        public string[] Description;
-        public int Icon;
-        public int Charges;
-        public int MaxCharges;
-        public TargetType Targetting;
-        public string[] Script;
+
     }
 }

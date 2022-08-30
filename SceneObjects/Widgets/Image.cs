@@ -14,6 +14,8 @@ namespace Texemon.SceneObjects.Widgets
     public class Image : Widget
     {
         private Texture2D icon;
+        private string Icon { set { icon = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Widgets_Icons_" + value)]; } }
+
         private AnimatedSprite Sprite { get; set; }
 
         private Texture2D picture;
@@ -25,18 +27,6 @@ namespace Texemon.SceneObjects.Widgets
             : base(iParent, widgetDepth)
         {
 
-        }
-
-        public override void LoadAttributes(XmlNode xmlNode)
-        {
-            foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
-            {
-                switch (xmlAttribute.Name)
-                {
-                    case "Icon": icon = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Widgets_Icons_" + xmlAttribute.Value)]; break;
-                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
-                }
-            }
         }
 
         public override void Update(GameTime gameTime)

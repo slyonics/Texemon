@@ -7,7 +7,7 @@
 			"Physical",
 			"VS 1 enemy"
 		],
-		"Icon": 1,
+		"Icon": "Sword",
 		"Charges": -1,
 		"MaxCharges": -1,
 		"Targetting": "SingleEnemy",

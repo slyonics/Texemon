@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Texemon.Models;
 using Texemon.SceneObjects.Widgets;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.BattleScene
 {
@@ -52,6 +53,13 @@ namespace Texemon.Scenes.BattleScene
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+        }
+
+        public void StartPlayerTurn(BattlePlayer battlePlayer)
+        {
+            PlayerTurn.Value = true;
+            CommandViewModel commandViewModel = new CommandViewModel(battleScene, battlePlayer.HeroModel);
+            battleScene.AddView(commandViewModel);
         }
 
         public List<EnemyRecord> InitialEnemies { get; set; } = new List<EnemyRecord>();

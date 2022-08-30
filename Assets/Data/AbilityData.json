@@ -7,7 +7,7 @@
 			"Incendiary",
 			"VS all enemies"
 		],
-		"Icon": 15,
+		"Icon": "Fire",
 		"Charges": 15,
 		"MaxCharges": 15,
 		"Targetting": "AllEnemy",
