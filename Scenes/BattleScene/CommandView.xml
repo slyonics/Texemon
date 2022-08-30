@@ -18,7 +18,7 @@
 				<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Bounds="0,-1,78,10" Alignment="Vertical">
 					<Image Icon="Ref DataGrid.Icon" Alignment="Left" Bounds="1,1,8,8"/>
 					<Label Text="Ref DataGrid.Name" Alignment="Left" TextAlignment="Left" Bounds="2,11,53,8"/>
-					<Label Text="88" Alignment="Left" TextAlignment="Right" Bounds="0,11,14,8"/>
+					<Label Visible="Ref DataGrid.ShowCharges" Text="Ref DataGrid.Charges" Alignment="Left" TextAlignment="Right" Bounds="0,11,14,8"/>
 				</Button>
 			</DataGrid>
 		</Panel>
