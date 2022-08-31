@@ -3,9 +3,9 @@
 		"Name": "Flame",
 		"Animation": "Chanting",
 		"Description": [
-			"999 damage",
-			"Incendiary",
-			"VS all enemies"
+			"- 999 damage",
+			"- Incendiary",
+			"- VS all enemies"
 		],
 		"Icon": "Fire",
 		"Charges": 15,
@@ -22,9 +22,9 @@
 		"Name": "Heal",
 		"Animation": "Chanting",
 		"Description": [
-			"999 damage",
-			"Incendiary",
-			"VS all enemies"
+			"- 999 damage",
+			"- Incendiary",
+			"- VS all enemies"
 		],
 		"Icon": "Fire",
 		"Charges": 15,

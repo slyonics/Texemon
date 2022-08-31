@@ -161,7 +161,7 @@ namespace Texemon.Main
                 pendingScene = null;
             }
 
-            if (CurrentScene.SceneEnded && sceneStack.Count > 0)
+            while (CurrentScene.SceneEnded && sceneStack.Count > 0)
             {
                 CurrentScene = sceneStack.Last();
                 CurrentScene.ResumeScene();

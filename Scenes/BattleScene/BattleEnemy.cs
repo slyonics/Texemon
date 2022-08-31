@@ -80,7 +80,7 @@ namespace Texemon.Scenes.BattleScene
 
         public override void DrawShadow(SpriteBatch spriteBatch)
         {
-            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (currentWindow.Width + currentWindow.Height) / 2));
+            Color shadowColor = Color.Lerp(SHADOW_COLOR, new Color(0, 0, 0, 0), Math.Min(1.0f, positionZ / (AnimatedSprite.SpriteBounds().Width + AnimatedSprite.SpriteBounds().Height) / 2));
             if (Dead) shadowColor.A = (byte)MathHelper.Lerp(0, shadowColor.A, (float)deathTimeLeft / DEATH_DURATION);
             spriteBatch.Draw(shadow, new Vector2((int)(Center.X - shadow.Width / 2), (int)(Center.Y) + 1 + EnemyRecord.ShadowOffset), null, shadowColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, SHADOW_DEPTH);
         }
@@ -109,7 +109,7 @@ namespace Texemon.Scenes.BattleScene
             {
                 deathTimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
                 shader.Parameters["destroyInterval"].SetValue((float)deathTimeLeft / DEATH_DURATION);
-                if (deathTimeLeft <= 0) terminated = true;
+                if (deathTimeLeft <= 0) { terminated = true; deathTimeLeft = 0; }
             }
         }
 

@@ -103,7 +103,7 @@ namespace Texemon.SceneObjects
                         value = ParseString(value as string);
                         property.SetValue(this, value);
                     }
-                    else if (property.PropertyType == typeof(string)) property.SetValue(this, value.ToString());
+                    else if (property.PropertyType == typeof(string) && value != null) property.SetValue(this, value.ToString());
                     else property.SetValue(this, value);
                 };
                 binding.ModelChanged += updateValue;
@@ -120,7 +120,7 @@ namespace Texemon.SceneObjects
                     reference = ParseString(reference as string);
                     property.SetValue(this, reference);
                 }
-                else if (property.PropertyType == typeof(string)) property.SetValue(this, reference.ToString());
+                else if (property.PropertyType == typeof(string) && reference != null) property.SetValue(this, reference.ToString());
                 else property.SetValue(this, reference);
             }
             else

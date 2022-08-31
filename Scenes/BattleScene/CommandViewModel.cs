@@ -54,6 +54,8 @@ namespace Texemon.Scenes.BattleScene
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Equipment.ModelList;
             ActivePlayer.HeroModel.LastCategory.Value = 0;
+
+            Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
         }
 
         public void SelectAbilities()
@@ -64,6 +66,8 @@ namespace Texemon.Scenes.BattleScene
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Abilities.ModelList;
             ActivePlayer.HeroModel.LastCategory.Value = 1;
+
+            Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
         }
 
         public void SelectActions()
@@ -74,6 +78,8 @@ namespace Texemon.Scenes.BattleScene
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Actions.ModelList;
             ActivePlayer.HeroModel.LastCategory.Value = 2;
+
+            Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
         }
 
         public void SelectCommand(object parameter)
@@ -89,10 +95,22 @@ namespace Texemon.Scenes.BattleScene
 
             targetViewModel = new TargetViewModel(battleScene, ActivePlayer, record);
             battleScene.AddView(targetViewModel);
+
+            Description1.Value = record.Description.ElementAtOrDefault(0);
+            Description2.Value = record.Description.ElementAtOrDefault(1);
+            Description3.Value = record.Description.ElementAtOrDefault(2);
+            Description4.Value = record.Description.ElementAtOrDefault(3);
+            Description5.Value = record.Description.ElementAtOrDefault(4);
         }
 
 
         public BattlePlayer ActivePlayer { get; set; }
         public ModelCollection<CommandRecord> AvailableCommands { get; set; } = new ModelCollection<CommandRecord>();
+
+        public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description3 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description4 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description5 { get; set; } = new ModelProperty<string>("");
     }
 }

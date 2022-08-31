@@ -113,7 +113,15 @@ namespace Texemon.Scenes.BattleScene
             {
                 if (EnemyList.Count == 0)
                 {
-                    // VICTORY
+                    var convoRecord = new ConversationScene.ConversationRecord()
+                    {
+                        DialogueRecords = new ConversationScene.DialogueRecord[] {
+                            new ConversationScene.DialogueRecord() { Text = "Victory!" }
+                        }
+                    };
+                    var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
+                    convoScene.OnTerminated += new TerminationFollowup(EndScene);
+                    CrossPlatformGame.StackScene(convoScene);
                 }
                 else ActivateNextBattler();
             }
@@ -192,7 +200,7 @@ namespace Texemon.Scenes.BattleScene
 
             initiativeList.Remove(battler);
             int insertIndex = initiativeList.FindLastIndex(x => x.ActionTime <= battler.ActionTime);
-            initiativeList.Insert(insertIndex, battler);
+            initiativeList.Insert(Math.Max(insertIndex + 1, initiativeList.Count - 1), battler);
         }
 
         public List<Battler> InitiativeList { get => initiativeList; }

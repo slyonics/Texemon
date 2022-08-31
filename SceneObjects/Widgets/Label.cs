@@ -9,7 +9,7 @@ namespace Texemon.SceneObjects.Widgets
     public class Label : Widget
     {
         private string text;
-        public string Text { get => text; set => text = ExpandText(value); }
+        public string Text { get => text; set { text = string.IsNullOrEmpty(value) ?  "" : ExpandText(value); } }
 
         private Alignment TextAlignment { get; set; }
 

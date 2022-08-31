@@ -3,9 +3,9 @@
 		"Name": "Longsword",
 		"Animation": "Guarding",
 		"Description": [
-			"15 damage",
-			"Physical",
-			"VS 1 enemy"
+			"- 15 damage",
+			"- Physical",
+			"- VS 1 enemy"
 		],
 		"Icon": "Sword",
 		"Charges": -1,

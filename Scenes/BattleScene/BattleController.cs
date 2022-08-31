@@ -57,6 +57,9 @@ namespace Texemon.Scenes.BattleScene
                 case "Flash": target.FlashColor(new Color(byte.Parse(tokens[1]), byte.Parse(tokens[2]), byte.Parse(tokens[3]))); break;
                 case "Attack": Attack(tokens); break;
                 case "Dialogue": Dialogue(tokens); break;
+                case "Flee": StackDialogue("You flee..."); break;
+                case "Defend": StackDialogue("You defend..."); break;
+                case "Wait": StackDialogue("You wait..."); break;
                 default: return false;
             }
 
@@ -91,7 +94,7 @@ namespace Texemon.Scenes.BattleScene
             List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
-            scriptParser.RunScript("Dialogue prepare yourself\nAnimate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 5");
+            scriptParser.RunScript("Dialogue prepare yourself\nAnimate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 25");
         }
 
         private void Dialogue(string[] tokens)
@@ -105,18 +108,25 @@ namespace Texemon.Scenes.BattleScene
             }
             else
             {
-                var convoRecord = new ConversationScene.ConversationRecord()
-                {
-                    DialogueRecords = new ConversationScene.DialogueRecord[] {
-                            new ConversationScene.DialogueRecord() { Text = String.Join(' ', tokens.Skip(1))  }
-                        }
-                };
-
-                convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);
-                var unblock = scriptParser.BlockScript();
-                convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
-                CrossPlatformGame.StackScene(convoScene);
+                StackDialogue(String.Join(' ', tokens.Skip(1)));
             }
+
+            timeleft = 1000;
+        }
+
+        private void StackDialogue(string text)
+        {
+            var convoRecord = new ConversationScene.ConversationRecord()
+            {
+                DialogueRecords = new ConversationScene.DialogueRecord[] {
+                            new ConversationScene.DialogueRecord() { Text = text }
+                        }
+            };
+
+            convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);
+            var unblock = scriptParser.BlockScript();
+            convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
+            CrossPlatformGame.StackScene(convoScene);
 
             timeleft = 1000;
         }

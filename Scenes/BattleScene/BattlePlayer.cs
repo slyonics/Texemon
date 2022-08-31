@@ -58,6 +58,10 @@ namespace Texemon.Scenes.BattleScene
             AnimatedSprite = new AnimatedSprite(AssetCache.SPRITES[HeroModel.Sprite.Value], HERO_ANIMATIONS);
             bounds = AnimatedSprite.SpriteBounds();
             battleScene.AddBattler(this);
+
+            if (Stats.Health.Value > HeroModel.MaxHealth.Value / 4) HeroModel.HealthColor.Value = new Color(252, 252, 252, 255);
+            else if (Stats.Health.Value > 0) HeroModel.HealthColor.Value = new Color(228, 0, 88, 255);
+            else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
         }
 
         public void DrawShader(SpriteBatch spriteBatch)
@@ -85,7 +89,7 @@ namespace Texemon.Scenes.BattleScene
         {
             base.EndTurn(initiativeModifier);
 
-            HeroModel.NameColor.Value = Color.White;
+            HeroModel.NameColor.Value = new Color(252, 252, 252, 255);
 
             battleScene.BattleViewModel.EndPlayerTurn(this);
         }
@@ -95,6 +99,10 @@ namespace Texemon.Scenes.BattleScene
             base.Damage(damage);
 
             PlayAnimation("Hit", Idle);
+
+            if (Stats.Health.Value > HeroModel.MaxHealth.Value / 4) HeroModel.HealthColor.Value = new Color(252, 252, 252, 255);
+            else if (Stats.Health.Value > 0) HeroModel.HealthColor.Value = new Color(228, 0, 88, 255);
+            else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
         }
 
         public override void Animate(string animationName)

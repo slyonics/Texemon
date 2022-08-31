@@ -3,7 +3,7 @@
 		"Name": "Sentinel",
 		"Sprite": "Robot",
 		"ShadowOffset": 0,
-		"MaxHealth": 100,
+		"MaxHealth": 30,
 		"Attacks": [
 			{
 				"Script": [
@@ -17,7 +17,7 @@
 		"Name": "Slime",
 		"Sprite": "Slime",
 		"ShadowOffset": 0,
-		"MaxHealth": 100,
+		"MaxHealth": 30,
 		"Attacks": [
 			{
 				"Script": [

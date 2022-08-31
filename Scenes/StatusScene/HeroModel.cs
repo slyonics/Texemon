@@ -36,14 +36,22 @@ namespace Texemon.Scenes.StatusScene
                 {
                     Name = action,
                     Icon = action,
-                    Targetting = TargetType.Self
+                    Targetting = TargetType.Self,
+                    Script = new string[] { action }
                 };
+                switch (action)
+                {
+                    case "Wait": item.Description = new string[] { "Hold turn briefly", "and act later" }; break;
+                    case "Defend": item.Description = new string[] { "Spend turn", "evading and", "blocking attacks" }; break;
+                    case "Flee": item.Description = new string[] { "Try and escape", "from battle" }; break;
+                }
                 Actions.Add(item);
             }
         }
 
         public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_AirDrone);
-        public ModelProperty<Color> NameColor { get; private set; } = new ModelProperty<Color>(Color.White);
+        public ModelProperty<Color> NameColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+        public ModelProperty<Color> HealthColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
         public ModelProperty<int> LastCategory { get; private set; } = new ModelProperty<int>(0);
         public ModelProperty<int> LastSlot { get; private set; } = new ModelProperty<int>(0);
         public ModelCollection<CommandRecord> Equipment { get; set; } = new ModelCollection<CommandRecord>();

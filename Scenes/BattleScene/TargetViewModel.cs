@@ -77,11 +77,31 @@ namespace Texemon.Scenes.BattleScene
 
             switch (Command.Targetting)
             {
+                case TargetType.Self:
+                case TargetType.SingleAlly:
+                case TargetType.SingleEnemy:
+                    {
+                        BattleController battleController = new BattleController(battleScene, Player, target.target, Command.Script);
+                        battleScene.AddController(battleController);
+                    }
+                    break;
 
+                case TargetType.AllEnemy:
+                    foreach (BattleEnemy battleEnemy in battleScene.EnemyList)
+                    {
+                        BattleController battleController = new BattleController(battleScene, Player, battleEnemy, Command.Script);
+                        battleScene.AddController(battleController);
+                    }
+                    break;
+
+                case TargetType.AllAlly:
+                    foreach (BattlePlayer battlePlayer in battleScene.PlayerList)
+                    {
+                        BattleController battleController = new BattleController(battleScene, Player, battlePlayer, Command.Script);
+                        battleScene.AddController(battleController);
+                    }
+                    break;
             }
-
-            BattleController battleController = new BattleController(battleScene, Player, target.target, Command.Script);
-            battleScene.AddController(battleController);
         }
 
         public BattlePlayer Player { get; set; }

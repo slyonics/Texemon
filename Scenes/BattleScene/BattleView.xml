@@ -13,9 +13,9 @@
 			<Panel Alignment="Vertical" Bounds="0,0,102,20">
 				<Scenes.BattleScene.BattlePlayer HeroModel="Bind DataGrid" Alignment="BottomLeft"/>
 				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Color="Bind DataGrid.NameColor" Alignment="Cascading" TextAlignment="Left" Bounds="10,0,0,20"/>
-				<Label Text="Bind DataGrid.Health" Font="Dialogue" Alignment="Left" TextAlignment="Right" Bounds="90,-3,0,20"/>
-				<Label Text="/" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="0,0,5,20"/>
-				<Label Text="Bind DataGrid.MaxHealth" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="-1,3,0,20"/>
+				<Label Text="Bind DataGrid.Health" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Right" Bounds="90,-3,0,20"/>
+				<Label Text="/" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="0,0,5,20"/>
+				<Label Text="Bind DataGrid.MaxHealth" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="-1,3,0,20"/>
 			</Panel>
 		</DataGrid>
 	</Panel>
