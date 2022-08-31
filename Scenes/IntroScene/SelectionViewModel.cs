@@ -75,6 +75,7 @@ namespace Texemon.Scenes.IntroScene
                 case Selection.Technology:
                     GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Inventor));
                     GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
+                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
                     CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
                     break;
             }

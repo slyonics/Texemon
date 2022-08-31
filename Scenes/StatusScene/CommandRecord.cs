@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace Texemon.Scenes.StatusScene
 {
+    public enum TargetType
+    {
+        SingleEnemy,
+        AllEnemy,
+        SingleAlly,
+        AllAlly,
+        All,
+        Self,
+        Auto
+    }
+
     [Serializable]
     public class CommandRecord
     {

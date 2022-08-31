@@ -69,9 +69,8 @@ namespace Texemon.Scenes.BattleScene
             {
                 case "$targetCenterX": return target.Center.X.ToString();
                 case "$targetCenterY": return target.Center.Y.ToString();
-                case "$targetTop": return target.Top.ToString();
-                case "$targetBottom": return target.Bottom.ToString();
-                case "$targetY": return ((int)target.Bottom.Y).ToString();
+                case "$targetTop": return target.Top.Y.ToString();
+                case "$targetBottom": return target.Bottom.Y.ToString();
                 default: return base.ParseParameter(parameter);
             }
         }

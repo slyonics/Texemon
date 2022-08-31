@@ -87,7 +87,7 @@ namespace Texemon.Scenes.BattleScene
 
             HeroModel.NameColor.Value = Color.White;
 
-            // commandMenu.Terminate();
+            battleScene.BattleViewModel.EndPlayerTurn(this);
         }
 
         public override void Damage(int damage)
@@ -109,6 +109,12 @@ namespace Texemon.Scenes.BattleScene
             else PlayAnimation("Dead");
         }
 
-        
+        public override Rectangle SpriteBounds
+        {
+            get
+            {
+                return new Rectangle(currentWindow.Left - 14 + (int)Position.X, currentWindow.Top - 4 + (int)Position.Y, 130, 23);
+            }
+        }
     }
 }

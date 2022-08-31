@@ -16,50 +16,83 @@ namespace Texemon.Scenes.BattleScene
     {
         BattleScene battleScene;
 
+        TargetViewModel targetViewModel;
 
-        public CommandViewModel(BattleScene iScene, HeroModel iHeroModel)
+
+        public CommandViewModel(BattleScene iScene, BattlePlayer iBattlePlayer)
             : base(iScene, PriorityLevel.GameLevel)
         {
             battleScene = iScene;
 
-            ActivePlayer.Value = iHeroModel;
+            ActivePlayer = iBattlePlayer;
 
             LoadView(GameView.BattleScene_CommandView);
 
-            switch (ActivePlayer.Value.LastCategory.Value)
+            int lastCategory = ActivePlayer.HeroModel.LastCategory.Value;
+            ActivePlayer.HeroModel.LastCategory.Value = -1;
+            switch (lastCategory)
             {
                 case 0:
                     SelectEquipment();
                     GetWidget<Button>("Equipment").RadioSelect(); break;
 
                 case 1:
-                    SelectAbilities(); GetWidget<Button>("Abilities").RadioSelect(); break;
+                    SelectAbilities();
+                    GetWidget<Button>("Abilities").RadioSelect(); break;
 
                 case 2:
-                    SelectActions(); GetWidget<Button>("Actions").RadioSelect(); break;
+                    SelectActions();
+                    GetWidget<Button>("Actions").RadioSelect(); break;
             }
         }
 
         public void SelectEquipment()
         {
-            AvailableCommands.ModelList = ActivePlayer.Value.Equipment.ModelList;
-            ActivePlayer.Value.LastCategory.Value = 0;
+            if (ActivePlayer.HeroModel.LastCategory.Value == 0) return;
+
+            targetViewModel?.Terminate();
+
+            AvailableCommands.ModelList = ActivePlayer.HeroModel.Equipment.ModelList;
+            ActivePlayer.HeroModel.LastCategory.Value = 0;
         }
 
         public void SelectAbilities()
         {
-            AvailableCommands.ModelList = ActivePlayer.Value.Abilities.ModelList;
-            ActivePlayer.Value.LastCategory.Value = 1;
+            if (ActivePlayer.HeroModel.LastCategory.Value == 1) return;
+
+            targetViewModel?.Terminate();
+
+            AvailableCommands.ModelList = ActivePlayer.HeroModel.Abilities.ModelList;
+            ActivePlayer.HeroModel.LastCategory.Value = 1;
         }
 
         public void SelectActions()
         {
-            AvailableCommands.ModelList = ActivePlayer.Value.Actions.ModelList;
-            ActivePlayer.Value.LastCategory.Value = 2;
+            if (ActivePlayer.HeroModel.LastCategory.Value == 2) return;
+
+            targetViewModel?.Terminate();
+
+            AvailableCommands.ModelList = ActivePlayer.HeroModel.Actions.ModelList;
+            ActivePlayer.HeroModel.LastCategory.Value = 2;
+        }
+
+        public void SelectCommand(object parameter)
+        {
+            CommandRecord record;
+            if (parameter is IModelProperty)
+            {
+                record = (CommandRecord)((IModelProperty)parameter).GetValue();
+            }
+            else record = (CommandRecord)parameter;
+
+            targetViewModel?.Terminate();
+
+            targetViewModel = new TargetViewModel(battleScene, ActivePlayer, record);
+            battleScene.AddView(targetViewModel);
         }
 
 
-        public ModelProperty<HeroModel> ActivePlayer { get; set; } = new ModelProperty<HeroModel>(null);
+        public BattlePlayer ActivePlayer { get; set; }
         public ModelCollection<CommandRecord> AvailableCommands { get; set; } = new ModelCollection<CommandRecord>();
     }
 }

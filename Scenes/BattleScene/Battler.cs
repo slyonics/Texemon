@@ -163,5 +163,14 @@ namespace Texemon.Scenes.BattleScene
         public Vector2 Bottom { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y + bounds.Height / 2) + Position; }
         public Vector2 Top { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y - bounds.Height / 2) + Position; }
         public Vector2 Center { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position; }
+
+
+        public virtual Rectangle SpriteBounds
+        {
+            get
+            {
+                return new Rectangle(currentWindow.Left + (int)Position.X, currentWindow.Top + (int)Position.Y, currentWindow.Width, currentWindow.Height);
+            }
+        }
     }
 }

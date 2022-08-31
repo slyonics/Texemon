@@ -4,6 +4,7 @@ namespace Texemon.Main
     {
         BattleScene_BattleView,
         BattleScene_CommandView,
+        BattleScene_TargetView,
         ConversationScene_ConversationView,
         ConversationScene_ConversationView2,
         ConversationScene_ConversationView3,

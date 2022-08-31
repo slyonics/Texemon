@@ -15,9 +15,6 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Textplate : Widget
     {
-        private const int TOOLTIP_MARGIN_WIDTH = 8;
-        private const int TOOLTIP_MARGIN_HEIGHT = 4;
-
         private string text = "";
         private string Text { get => text; set { text = value; ResizeTextplate(); } }
 
@@ -57,19 +54,34 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.ApplyAlignment();
 
-            int width = Main.Text.GetStringLength(Font, Text) + TOOLTIP_MARGIN_WIDTH * 2; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
-            int height = Main.Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2; //Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
-            currentWindow.Width = width;
-            currentWindow.Height = height;
-            //currentWindow.Y -= height;
+            int width = Main.Text.GetStringLength(Font, Text) + InnerMargin.X + InnerMargin.Width; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
+            int height = Main.Text.GetStringHeight(Font) + InnerMargin.Y + InnerMargin.Height; //Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
+
+            if (Alignment == Alignment.Center)
+            {
+                currentWindow.Width = width;
+                currentWindow.Height = height;
+
+                base.ApplyAlignment();
+
+                currentWindow.X -= width / 2;
+                currentWindow.Y -= height / 2;
+                currentWindow.Width = width;
+                currentWindow.Height = height;
+            }
+            else
+            {
+                currentWindow.Width = width;
+                currentWindow.Height = height;
+            }
 
             textplateFrame.Bounds = currentWindow;
         }
 
         private void ResizeTextplate()
         {
-            int width = Main.Text.GetStringLength(Font, Text) + TOOLTIP_MARGIN_WIDTH * 2; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
-            int height = Main.Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2; // Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
+            int width = Main.Text.GetStringLength(Font, Text) + InnerMargin.X + InnerMargin.Width; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
+            int height = Main.Text.GetStringHeight(Font) + InnerMargin.Y + InnerMargin.Height; // Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
 
             if (Alignment == Alignment.Center)
             {
@@ -99,7 +111,7 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
 
             textplateFrame.Draw(spriteBatch, Position);
-            Main.Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + Main.Text.FONT_DATA[Font].heightOffset) + base.Position, Font, base.ParseString(Text), Color, 0);
+            Main.Text.DrawCenteredText(spriteBatch, new Vector2(InnerBounds.Center.X, InnerBounds.Center.Y + Main.Text.FONT_DATA[Font].heightOffset) + Position, Font, base.ParseString(Text), Color, 0);
         }
     }
 }

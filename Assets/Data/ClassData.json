@@ -11,7 +11,8 @@
 			"Longsword"
 		],
 		"InitialAbilities": [
-			"Flame"
+			"Flame",
+			"Heal"
 		],
 		"Actions": [
 			"Wait",

@@ -13,17 +13,6 @@ namespace Texemon.Scenes.StatusScene
         Consumable
     }
 
-    public enum TargetType
-    {
-        SingleEnemy,
-        AllEnemy,
-        SingleAlly,
-        AllAlly,
-        All,
-        Self,
-        Auto
-    }
-
     [Serializable]
     public class ItemRecord : CommandRecord
     {

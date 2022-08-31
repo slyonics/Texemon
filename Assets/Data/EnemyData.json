@@ -12,5 +12,19 @@
 				"Weight": 100
 			}
 		]
+	},
+	{
+		"Name": "Slime",
+		"Sprite": "Slime",
+		"ShadowOffset": 0,
+		"MaxHealth": 100,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
 	}
 ]

@@ -15,7 +15,7 @@ namespace Texemon.SceneObjects.Widgets
     public class Button : Widget
     {
         public MethodInfo Action { get; set; }
-        private string ActionParameter { get; set; }
+        private object ActionParameter { get; set; }
 
         private NinePatch buttonFrame;
         private string style;
@@ -23,8 +23,6 @@ namespace Texemon.SceneObjects.Widgets
         private string disabledStyle;
         private bool clicking;
         private GameSound Sound { get; set; } = GameSound.menu_select;
-
-        private ModelProperty<string> actionParameterBinding;
 
         public bool Radio { get; private set; } = false;
         private bool selected = false;
@@ -37,14 +35,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
-            {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
-                }
-            }
+            base.LoadAttributes(xmlNode);
 
             UpdateFrame();
         }
@@ -77,11 +68,6 @@ namespace Texemon.SceneObjects.Widgets
 
 
             buttonFrame?.Draw(spriteBatch, Position);
-        }
-
-        public void ActionParameterBinding_ModelChanged()
-        {
-            ActionParameter = actionParameterBinding.Value;
         }
 
         public override Widget GetWidgetAt(Vector2 mousePosition)
@@ -124,7 +110,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public void Activate()
         {
-            string[] parameters = (String.IsNullOrEmpty(ActionParameter)) ? null : new string[] { ActionParameter };
+            object[] parameters = (ActionParameter == null) ? null : new object[] { ActionParameter };
             Action?.Invoke(GetParent<ViewModel>(), parameters);
         }
 

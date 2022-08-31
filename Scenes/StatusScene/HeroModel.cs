@@ -36,6 +36,7 @@ namespace Texemon.Scenes.StatusScene
                 {
                     Name = action,
                     Icon = action,
+                    Targetting = TargetType.Self
                 };
                 Actions.Add(item);
             }

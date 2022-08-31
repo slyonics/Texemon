@@ -17,5 +17,24 @@
 			"Flash 255 27 0",
 			"Damage 999"
 		]
+	},
+	{
+		"Name": "Heal",
+		"Animation": "Chanting",
+		"Description": [
+			"999 damage",
+			"Incendiary",
+			"VS all enemies"
+		],
+		"Icon": "Fire",
+		"Charges": 15,
+		"MaxCharges": 15,
+		"Targetting": "SingleAlly",
+		"Script": [
+			"Animate Attack",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage 999"
+		]
 	}
 ]

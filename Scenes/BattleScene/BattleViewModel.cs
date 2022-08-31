@@ -17,6 +17,7 @@ namespace Texemon.Scenes.BattleScene
         BattleScene battleScene;
         int enemyWidth;
         int enemyHeight;
+        CommandViewModel commandViewModel;
 
         public BattleViewModel(BattleScene iScene, EncounterRecord encounterRecord)
             : base(iScene, PriorityLevel.GameLevel)
@@ -34,7 +35,7 @@ namespace Texemon.Scenes.BattleScene
             }
             enemyWidth = totalEnemyWidth;
             enemyHeight = 112;
-            EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 3, -110, enemyWidth + 6, enemyHeight + 6);
+            EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 4, -110, enemyWidth + 8, enemyHeight + 6);
 
             BackgroundRender.Value = iScene.backgroundRender;
 
@@ -58,14 +59,20 @@ namespace Texemon.Scenes.BattleScene
         public void StartPlayerTurn(BattlePlayer battlePlayer)
         {
             PlayerTurn.Value = true;
-            CommandViewModel commandViewModel = new CommandViewModel(battleScene, battlePlayer.HeroModel);
+            commandViewModel = new CommandViewModel(battleScene, battlePlayer);
             battleScene.AddView(commandViewModel);
+        }
+
+        public void EndPlayerTurn(BattlePlayer battlePlayer)
+        {
+            PlayerTurn.Value = false;
+            commandViewModel.Terminate();
         }
 
         public List<EnemyRecord> InitialEnemies { get; set; } = new List<EnemyRecord>();
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
-        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (GameProfile.PlayerProfile.Party.Count()) * 20 + 4));
+        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (GameProfile.PlayerProfile.Party.Count()) * 20 + 3));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
