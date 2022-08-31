@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 using Microsoft.Xna.Framework.Graphics;
 
@@ -87,18 +88,34 @@ namespace Texemon.Scenes.BattleScene
                     break;
 
                 case TargetType.AllEnemy:
-                    foreach (BattleEnemy battleEnemy in battleScene.EnemyList)
                     {
-                        BattleController battleController = new BattleController(battleScene, Player, battleEnemy, Command.Script);
-                        battleScene.AddController(battleController);
+                        int delay = 0;
+                        foreach (BattleEnemy battleEnemy in battleScene.EnemyList)
+                        {                            
+                            string[] script = new string[Command.Script.Count() + 1];
+                            script[0] = "Wait " + delay;
+                            for (int i = 1; i < script.Count(); i++) script[i] = Command.Script[i - 1];
+                            delay += 200;
+
+                            BattleController battleController = new BattleController(battleScene, Player, battleEnemy, script);
+                            battleScene.AddController(battleController);
+                        }
                     }
                     break;
 
                 case TargetType.AllAlly:
-                    foreach (BattlePlayer battlePlayer in battleScene.PlayerList)
                     {
-                        BattleController battleController = new BattleController(battleScene, Player, battlePlayer, Command.Script);
-                        battleScene.AddController(battleController);
+                        int delay = 0;
+                        foreach (BattlePlayer battlePlayer in battleScene.PlayerList)
+                        {
+                            string[] script = new string[Command.Script.Count() + 1];
+                            script[0] = "Wait " + delay;
+                            for (int i = 1; i < script.Count(); i++) script[i] = Command.Script[i - 1];                            
+                            delay += 200;
+
+                            BattleController battleController = new BattleController(battleScene, Player, battlePlayer, script);
+                            battleScene.AddController(battleController);
+                        }
                     }
                     break;
             }

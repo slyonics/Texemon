@@ -29,6 +29,30 @@ namespace Texemon.Scenes.IntroScene
             description = GetWidget<CrawlText>("Description");
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (Input.CurrentInput.CommandDown(Command.Up))
+            {
+                Audio.PlaySound(GameSound.menu_select);
+                GetWidget<Button>("Magic").RadioSelect();
+                Magic();
+            }
+            else if (Input.CurrentInput.CommandDown(Command.Down))
+            {
+                Audio.PlaySound(GameSound.menu_select);
+                GetWidget<Button>("Technology").RadioSelect();
+                Technology();
+            }
+            else if (Input.CurrentInput.CommandReleased(Command.Confirm) && selection != Selection.None)
+            {
+                Audio.PlaySound(GameSound.menu_select);
+                GetWidget<Button>("OK").RadioSelect();
+                Proceed();
+            }
+        }
+
         public void Magic()
         {
             if (selection == Selection.Magic) return;
@@ -74,7 +98,6 @@ namespace Texemon.Scenes.IntroScene
 
                 case Selection.Technology:
                     GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Inventor));
-                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
                     GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
                     CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
                     break;

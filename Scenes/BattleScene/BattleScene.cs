@@ -32,6 +32,8 @@ namespace Texemon.Scenes.BattleScene
 
         private bool introFinished = false;
 
+        private GameMusic mapMusic;
+
 
         protected List<Particle> overlayParticleList = new List<Particle>();
 
@@ -62,7 +64,15 @@ namespace Texemon.Scenes.BattleScene
         {
             sceneStarted = true;
 
+            mapMusic = Audio.CurrentMusic;
             Audio.PlayMusic(GameMusic.Battle);            
+        }
+
+        public override void EndScene()
+        {
+            Audio.PlayMusic(mapMusic);
+
+            base.EndScene();
         }
 
         public static void Initialize()
@@ -101,7 +111,7 @@ namespace Texemon.Scenes.BattleScene
                 var convoRecord = new ConversationScene.ConversationRecord()
                 {
                     DialogueRecords = new ConversationScene.DialogueRecord[] {
-                            new ConversationScene.DialogueRecord() { Text = "Your foes assemble..." }
+                            new ConversationScene.DialogueRecord() { Text = encounterRecord.Intro }
                         }
                 };
                 var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));

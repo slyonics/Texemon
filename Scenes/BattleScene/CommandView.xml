@@ -22,7 +22,7 @@
 				</Button>
 			</DataGrid>
 		</Panel>
-		<Panel Bounds="86,12,84,68" InnerMargin="2,11,8,5">
+		<Panel Bounds="86,12,80,68" InnerMargin="0,11,0,5">
 			<Label Text="Bind Description1" Bounds="0,0,0,10" Alignment="Vertical" TextAlignment="Center"/>
 			<Label Text="Bind Description2" Bounds="0,0,0,10" Alignment="Vertical" TextAlignment="Center"/>
 			<Label Text="Bind Description3" Bounds="0,0,0,10" Alignment="Vertical" TextAlignment="Center"/>

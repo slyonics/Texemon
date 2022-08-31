@@ -15,7 +15,7 @@
 			"Heal"
 		],
 		"Actions": [
-			"Wait",
+			"Delay",
 			"Defend",
 			"Flee"
 		],
@@ -34,7 +34,7 @@
 			"Flame"
 		],
 		"Actions": [
-			"Wait",
+			"Delay",
 			"Defend",
 			"Flee"
 		],

@@ -41,7 +41,7 @@ namespace Texemon.Scenes.StatusScene
                 };
                 switch (action)
                 {
-                    case "Wait": item.Description = new string[] { "Hold turn briefly", "and act later" }; break;
+                    case "Delay": item.Description = new string[] { "Hold turn briefly", "and act later" }; break;
                     case "Defend": item.Description = new string[] { "Spend turn", "evading and", "blocking attacks" }; break;
                     case "Flee": item.Description = new string[] { "Try and escape", "from battle" }; break;
                 }

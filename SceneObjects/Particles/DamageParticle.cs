@@ -27,6 +27,8 @@ namespace Texemon.SceneObjects.Particles
         private int decayTimer;
         private int nextDigitTimer;
 
+        Color color = Color.White;
+
         public DamageParticle(Scene iScene, Vector2 iPosition, string digits)
             : base(iScene, iPosition, true)
         {
@@ -40,6 +42,23 @@ namespace Texemon.SceneObjects.Particles
             velocityZ = DIGIT_HEIGHT * 10;
             landingFollowup += StartDecay;
             nextDigitTimer = NEXT_DIGIT_INTERVAL;
+        }
+
+        public DamageParticle(Scene iScene, Vector2 iPosition, string digits, Color iColor)
+            : base(iScene, iPosition, true)
+        {
+            DIGIT_SOURCES = new Rectangle[10];
+            for (int i = 0; i < DIGIT_SOURCES.Length; i++) DIGIT_SOURCES[i] = new Rectangle(i * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT);
+            digitIndex = digits.First() - '0';
+
+            initialPosition = iPosition;
+            digitsRemaining = digits.Substring(1, digits.Length - 1);
+
+            velocityZ = DIGIT_HEIGHT * 10;
+            landingFollowup += StartDecay;
+            nextDigitTimer = NEXT_DIGIT_INTERVAL;
+
+            color = iColor;
         }
 
         public override void Update(GameTime gameTime)
@@ -65,7 +84,7 @@ namespace Texemon.SceneObjects.Particles
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
+            spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
         }
 
         private void StartDecay()

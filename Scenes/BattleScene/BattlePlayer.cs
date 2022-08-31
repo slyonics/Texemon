@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Xna.Framework.Graphics;
 using Texemon.Models;
+using Texemon.SceneObjects.Particles;
 using Texemon.SceneObjects.Widgets;
 using Texemon.Scenes.StatusScene;
 
@@ -39,7 +40,7 @@ namespace Texemon.Scenes.BattleScene
             { HeroAnimation.Spell.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 3, 80) },
             { HeroAnimation.Hit.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 600) },
             { HeroAnimation.Hurting.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 2, 100) },
-            { HeroAnimation.Dead.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) }
+            { HeroAnimation.Dead.ToString(), new Animation(1, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) }
         };
 
         public HeroModel HeroModel { get; set; }
@@ -105,6 +106,15 @@ namespace Texemon.Scenes.BattleScene
             else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
         }
 
+        public override void Heal(int healing)
+        {
+            base.Heal(healing);
+
+            if (Stats.Health.Value > HeroModel.MaxHealth.Value / 4) HeroModel.HealthColor.Value = new Color(252, 252, 252, 255);
+            else if (Stats.Health.Value > 0) HeroModel.HealthColor.Value = new Color(228, 0, 88, 255);
+            else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
+        }
+
         public override void Animate(string animationName)
         {
             PlayAnimation(animationName, Idle);
@@ -116,6 +126,9 @@ namespace Texemon.Scenes.BattleScene
             else if (Stats.Health.Value > 0) PlayAnimation("Hurting");
             else PlayAnimation("Dead");
         }
+
+        public override Vector2 Top { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y - bounds.Height / 4) + Position; }
+        public override Vector2 Center { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y + bounds.Height / 4) + Position; }
 
         public override Rectangle SpriteBounds
         {

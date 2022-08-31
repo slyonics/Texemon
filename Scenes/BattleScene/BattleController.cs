@@ -54,12 +54,13 @@ namespace Texemon.Scenes.BattleScene
                 case "Animate": attacker.Animate(tokens[1]); break;
                 case "Effect": Effect(tokens); break;
                 case "Damage": target.Damage(int.Parse(tokens[1])); break;
+                case "Heal": target.Heal(int.Parse(tokens[1])); break;
                 case "Flash": target.FlashColor(new Color(byte.Parse(tokens[1]), byte.Parse(tokens[2]), byte.Parse(tokens[3]))); break;
                 case "Attack": Attack(tokens); break;
                 case "Dialogue": Dialogue(tokens); break;
                 case "Flee": StackDialogue("You flee..."); break;
                 case "Defend": StackDialogue("You defend..."); break;
-                case "Wait": StackDialogue("You wait..."); break;
+                case "Delay": StackDialogue("You delay..."); break;
                 default: return false;
             }
 
@@ -94,7 +95,7 @@ namespace Texemon.Scenes.BattleScene
             List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
-            scriptParser.RunScript("Dialogue prepare yourself\nAnimate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 25");
+            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 12");
         }
 
         private void Dialogue(string[] tokens)

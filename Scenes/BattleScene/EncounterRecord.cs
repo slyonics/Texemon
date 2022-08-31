@@ -13,6 +13,7 @@ namespace Texemon.Scenes.BattleScene
         public string Name { get; set; }
         public string[] Enemies { get; set; }
         public string[] Script { get; set; }
+        public string Intro { get; set; } = "Your foes assemble...";
 
         public static List<EncounterRecord> Records { get; set; }
     }

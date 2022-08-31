@@ -147,5 +147,7 @@ namespace Texemon.Main
 
             get => musicVolume;
         }
+
+        public static GameMusic CurrentMusic { get => currentMusic; }
     }
 }

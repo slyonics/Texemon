@@ -25,7 +25,7 @@ namespace Texemon.SceneObjects.Particles
         private static readonly Dictionary<string, Animation> PARTICLE_ANIMATIONS = new Dictionary<string, Animation>()
         {
             { AnimationType.Slash.ToString(), new Animation(0, 0, 64, 64, 7, 50) },
-            { AnimationType.Star.ToString(), new Animation(0, 0, 16, 16, 9, 40) },
+            { AnimationType.Star.ToString(), new Animation(0, 0, 16, 16, 9, 80) },
             { AnimationType.Heart.ToString(), new Animation(0, 0, 256, 256, 30, 40, 1536) },
             { AnimationType.GunSpark.ToString(), new Animation(0, 0, 192, 192, 12, 50) },
             { AnimationType.Flame.ToString(), new Animation(0, 0, 96, 96, 7, 90) },
@@ -35,9 +35,14 @@ namespace Texemon.SceneObjects.Particles
         private List<Tuple<int, FrameFollowup>> frameEventList = new List<Tuple<int, FrameFollowup>>();
 
         public AnimationParticle(Scene iScene, Vector2 iPosition, AnimationType iAnimationType, bool iForeground = false)
-            : base(iScene, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Particles_" + iAnimationType)], PARTICLE_ANIMATIONS, iForeground)
+            : base(iScene, iPosition, iForeground)
         {
+            parentScene = iScene;
+            position = iPosition;
+            animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Particles_" + iAnimationType)], PARTICLE_ANIMATIONS);
             animatedSprite.PlayAnimation(iAnimationType.ToString(), AnimationFinished);
+
+            if (Foreground) position.Y += SpriteBounds.Height / 2;
         }
 
         public override void Update(GameTime gameTime)

@@ -39,7 +39,7 @@ namespace Texemon.Scenes.BattleScene
 
         public AnimatedSprite AnimatedSprite { get; protected set; }
 
-        private List<Particle> particleList = new List<Particle>();
+        protected List<Particle> particleList = new List<Particle>();
 
         protected bool drawSprite = false;
 
@@ -144,6 +144,13 @@ namespace Texemon.Scenes.BattleScene
             if (Dead) battleScene.InitiativeList.Remove(this);
         }
 
+        public virtual void Heal(int healing)
+        {
+            Stats.Health.Value = Math.Min(Stats.MaxHealth.Value, Stats.Health.Value + healing);
+
+            particleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, healing.ToString(), new Color(28, 210, 160))));
+        }
+
         public void FlashColor(Color flashColor, int duration = DAMAGE_FLASH_DURATION)
         {
             shader.Parameters["flashColor"].SetValue(flashColor.ToVector4());
@@ -158,9 +165,9 @@ namespace Texemon.Scenes.BattleScene
 
         public override bool Transitioning { get => GetParent<Panel>().Transitioning; }
 
-        public Vector2 Bottom { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y + bounds.Height / 2) + Position; }
-        public Vector2 Top { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y - bounds.Height / 2) + Position; }
-        public Vector2 Center { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position; }
+        public virtual Vector2 Bottom { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y + bounds.Height / 2) + Position; }
+        public virtual Vector2 Top { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y - bounds.Height / 2) + Position; }
+        public virtual Vector2 Center { get => new Vector2(currentWindow.Center.X, currentWindow.Center.Y + bounds.Y) + Position; }
 
 
         public virtual Rectangle SpriteBounds

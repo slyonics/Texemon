@@ -13,6 +13,7 @@
 		"Targetting": "AllEnemy",
 		"Script": [
 			"Animate Attack",
+			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
 			"Damage 999"
@@ -32,9 +33,9 @@
 		"Targetting": "SingleAlly",
 		"Script": [
 			"Animate Attack",
-			"Effect Flame $targetCenterX $targetCenterY 3",
-			"Flash 255 27 0",
-			"Damage 999"
+			"Effect Star $targetCenterX $targetCenterY 6",
+			"Flash 27 210 140",
+			"Heal 30"
 		]
 	}
 ]
