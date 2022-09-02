@@ -27,6 +27,8 @@ namespace Texemon.SceneObjects.Maps
 
         private bool pathingError = false;
 
+        public Vector2 DestinationPoint { get => destinationPoint; }
+
         public PathingController(PriorityLevel iPriorityLevel, Tilemap iTilemap, Actor iActor, Vector2 iDestination, float iWalkSpeed, int searchLimit = DEFAULT_SEARCH_LIMIT)
             : base(iPriorityLevel)
         {
@@ -108,7 +110,6 @@ namespace Texemon.SceneObjects.Maps
         public void AlignActorToPath()
         {
             if (!pathingTask.IsCompleted || Terminated) return;
-            //if (actor is Villager && ((Villager)actor).Activated) return;
 
             actor.Reorient(segmentEnd - segmentStart);
 

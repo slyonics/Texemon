@@ -390,7 +390,8 @@ namespace Texemon.SceneObjects.Maps
                 {
                     for (int y = tileStartY; y <= tileEndY; y++)
                     {
-                        colliderList.AddRange(tilemap.GetTile(x, y).ColliderList);
+                        Tile nearbyTile = tilemap.GetTile(x, y);
+                        if (nearbyTile != null) colliderList.AddRange(tilemap.GetTile(x, y).ColliderList);
                     }
                 }
 
