@@ -39,7 +39,7 @@ namespace Texemon.Scenes.BattleScene
 
         public AnimatedSprite AnimatedSprite { get; protected set; }
 
-        protected List<Particle> particleList = new List<Particle>();
+        public List<Particle> ParticleList { get; } = new List<Particle>();
 
         protected bool drawSprite = false;
 
@@ -94,7 +94,7 @@ namespace Texemon.Scenes.BattleScene
 
             AnimatedSprite.Update(gameTime);
 
-            particleList.RemoveAll(x => x.Terminated);
+            ParticleList.RemoveAll(x => x.Terminated);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -139,7 +139,7 @@ namespace Texemon.Scenes.BattleScene
         {
             Stats.Health.Value = Math.Max(0, Stats.Health.Value - damage);
 
-            particleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString())));
+            ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString())));
 
             if (Dead) battleScene.InitiativeList.Remove(this);
         }
@@ -148,7 +148,7 @@ namespace Texemon.Scenes.BattleScene
         {
             Stats.Health.Value = Math.Min(Stats.MaxHealth.Value, Stats.Health.Value + healing);
 
-            particleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, healing.ToString(), new Color(28, 210, 160))));
+            ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, healing.ToString(), new Color(28, 210, 160))));
         }
 
         public void FlashColor(Color flashColor, int duration = DAMAGE_FLASH_DURATION)
@@ -161,7 +161,7 @@ namespace Texemon.Scenes.BattleScene
         public bool Dead { get => Stats.Health.Value <= 0; }
 
         public int ActionTime { get => actionTime; set => actionTime = value; }
-        public virtual bool Busy { get => turnActive || particleList.Count > 0; }
+        public virtual bool Busy { get => turnActive || ParticleList.Count > 0; }
 
         public override bool Transitioning { get => GetParent<Panel>().Transitioning; }
 

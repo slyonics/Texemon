@@ -119,7 +119,7 @@ namespace Texemon.Scenes.BattleScene
             }
 
             EnemyList.RemoveAll(x => x.Terminated);
-            if (!controllerList.Any(y => y.Exists(x => x is BattleController)) && !PlayerList.Exists(x => x.Busy) && !EnemyList.Exists(x => x.Busy) && CrossPlatformGame.CurrentScene == this)
+            if (!controllerList.Any(y => y.Any(x => x is BattleController)) && !PlayerList.Any(x => x.Busy) && !EnemyList.Any(x => x.Busy) && CrossPlatformGame.CurrentScene == this)
             {
                 if (EnemyList.Count == 0)
                 {

@@ -88,6 +88,7 @@ namespace Texemon.Scenes.BattleScene
             if (tokens.Length > 4) animationParticle.AddFrameEvent(int.Parse(tokens[4]), new FrameFollowup(scriptParser.BlockScript()));
 
             battleScene.AddParticle(animationParticle);
+            attacker.ParticleList.Add(animationParticle);
         }
 
         private void Attack(string[] tokens)

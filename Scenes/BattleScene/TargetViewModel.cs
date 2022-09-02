@@ -55,6 +55,8 @@ namespace Texemon.Scenes.BattleScene
                     Targets.ModelList = new List<ModelProperty<TargetButton>>();
                     foreach (BattlePlayer battlePlayer in battleScene.PlayerList)
                     {
+                        if (battlePlayer.Dead) continue;
+
                         Rectangle bounds = battlePlayer.SpriteBounds;
                         Targets.Add(new TargetButton() { Name = "", NameVisible = false, Bounds = bounds, target = battlePlayer });
                     }
@@ -69,8 +71,18 @@ namespace Texemon.Scenes.BattleScene
             LoadView(GameView.BattleScene_TargetView);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            var input = Input.CurrentInput;
+            if (input.CommandPressed(Main.Command.Cancel)) Terminate();
+        }
+
         public void SelectTarget(object parameter)
         {
+            if (Command.Charges > 0) Command.Charges--;
+
             Terminate();
             Player.EndTurn();
 

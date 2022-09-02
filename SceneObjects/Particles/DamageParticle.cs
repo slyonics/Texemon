@@ -71,7 +71,7 @@ namespace Texemon.SceneObjects.Particles
                 nextDigitTimer -= gameTime.ElapsedGameTime.Milliseconds;
                 if (nextDigitTimer <= 0 && digitsRemaining.Length > 0)
                 {
-                    DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(DIGIT_WIDTH, 0), digitsRemaining);
+                    DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(DIGIT_WIDTH, 0), digitsRemaining, color);
                     parentScene.AddParticle(nextParticle);
                 }
             }
