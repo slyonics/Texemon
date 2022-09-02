@@ -9,6 +9,15 @@ namespace Texemon.Scenes.StatusScene
     [Serializable]
     public class AbilityRecord : CommandRecord
     {
+        public AbilityRecord()
+        {
 
+        }
+
+        public AbilityRecord(AbilityRecord clone)
+            : base(clone)
+        {
+
+        }
     }
 }

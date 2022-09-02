@@ -312,6 +312,9 @@ namespace Texemon.Scenes.BattleScene
                 battleScene.AddView(targetViewModel);
             }
 
+            ActivePlayer.HeroModel.LastSlot.Value = AvailableCommands.ToList().FindIndex(x => x.Value == record);
+
+
             Description1.Value = record.Description.ElementAtOrDefault(0);
             Description2.Value = record.Description.ElementAtOrDefault(1);
             Description3.Value = record.Description.ElementAtOrDefault(2);

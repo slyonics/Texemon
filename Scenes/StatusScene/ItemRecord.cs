@@ -16,6 +16,17 @@ namespace Texemon.Scenes.StatusScene
     [Serializable]
     public class ItemRecord : CommandRecord
     {
+        public ItemRecord()
+        {
+
+        }
+
+        public ItemRecord(ItemRecord clone)
+            :base(clone)
+        {
+            ItemType = clone.ItemType;
+        }
+
         public ItemType ItemType { get; set; }
     }
 }

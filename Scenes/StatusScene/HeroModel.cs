@@ -21,13 +21,13 @@ namespace Texemon.Scenes.StatusScene
             foreach (string equipment in classRecord.InitialEquipment)
             {
                 ItemRecord item = StatusScene.ITEMS.First(x => x.Name == equipment);
-                Equipment.Add(item);
+                Equipment.Add(new ItemRecord(item));
             }
 
             foreach (string ability in classRecord.InitialAbilities)
             {
                 AbilityRecord item = StatusScene.ABILITIES.First(x => x.Name == ability);
-                Abilities.Add(item);
+                Abilities.Add(new AbilityRecord(item));
             }
 
             foreach (string action in classRecord.Actions)

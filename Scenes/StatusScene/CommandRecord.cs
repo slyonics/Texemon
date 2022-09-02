@@ -20,6 +20,23 @@ namespace Texemon.Scenes.StatusScene
     [Serializable]
     public class CommandRecord
     {
+        public CommandRecord()
+        {
+
+        }
+
+        public CommandRecord(CommandRecord clone)
+        {
+            Name = clone.Name;
+            Animation = clone.Animation;
+            Description = (string[])clone.Description.Clone();
+            Icon = clone.Icon;
+            Charges = clone.Charges;
+            MaxCharges = clone.MaxCharges;
+            Targetting = clone.Targetting;
+            Script = (string[])clone.Script.Clone();
+        }
+
         public string Name { get; set; }
         public string Animation { get; set; }
         public string[] Description { get; set; }

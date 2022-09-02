@@ -101,6 +101,7 @@ namespace Texemon.Scenes.BattleScene
                         if (battleScene.BattleViewModel.LastEnemyTarget != null)
                         {
                             index = Targets.ToList().FindIndex(x => x.Value.target == battleScene.BattleViewModel.LastEnemyTarget);
+                            if (index < 0 || index >= Targets.Count()) index = 0;
                             Targets.ElementAt(index).Value.button.RadioSelect();
                         }
                         else
@@ -124,6 +125,7 @@ namespace Texemon.Scenes.BattleScene
                         if (battleScene.BattleViewModel.LastPlayerTarget != null)
                         {
                             index = Targets.ToList().FindIndex(x => x.Value.target == battleScene.BattleViewModel.LastPlayerTarget);
+                            if (index < 0 || index >= Targets.Count()) index = 0;
                             Targets.ElementAt(index).Value.button.RadioSelect();
                         }
                         else
@@ -226,16 +228,16 @@ namespace Texemon.Scenes.BattleScene
             Terminate();
             Player.EndTurn();
 
-            TargetButton target = (TargetButton)((IModelProperty)parameter).GetValue();
+            TargetButton targetButton = (TargetButton)((IModelProperty)parameter).GetValue();
 
             if (Command.Targetting == TargetType.SingleEnemy)
             {
-                battleScene.BattleViewModel.LastEnemyTarget = Targets.ElementAt(index).Value.target as BattleEnemy;
+                battleScene.BattleViewModel.LastEnemyTarget = Targets.ToList().Find(x => x.Value.target == targetButton.target).Value.target as BattleEnemy;
 
             }
             else if (Command.Targetting == TargetType.SingleAlly)
             {
-                battleScene.BattleViewModel.LastPlayerTarget = Targets.ElementAt(index).Value.target as BattlePlayer;
+                battleScene.BattleViewModel.LastPlayerTarget = Targets.ToList().Find(x => x.Value.target == targetButton.target).Value.target as BattlePlayer;
             }
 
             switch (Command.Targetting)
@@ -244,7 +246,7 @@ namespace Texemon.Scenes.BattleScene
                 case TargetType.SingleAlly:
                 case TargetType.SingleEnemy:
                     {
-                        BattleController battleController = new BattleController(battleScene, Player, target.target, Command.Script);
+                        BattleController battleController = new BattleController(battleScene, Player, targetButton.target, Command.Script);
                         battleScene.AddController(battleController);
                     }
                     break;
