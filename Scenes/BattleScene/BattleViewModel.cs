@@ -18,6 +18,8 @@ namespace Texemon.Scenes.BattleScene
         int enemyWidth;
         int enemyHeight;
         CommandViewModel commandViewModel;
+        public BattleEnemy LastEnemyTarget { get; set; }
+        public BattlePlayer LastPlayerTarget { get; set; }
 
         public BattleViewModel(BattleScene iScene, EncounterRecord encounterRecord)
             : base(iScene, PriorityLevel.GameLevel)

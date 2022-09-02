@@ -12,9 +12,9 @@ namespace Texemon.Scenes.StatusScene
         AllEnemy,
         SingleAlly,
         AllAlly,
-        All,
+        //All,
         Self,
-        Auto
+        //Auto
     }
 
     [Serializable]

@@ -22,9 +22,17 @@ namespace Texemon.Scenes.BattleScene
             public Rectangle Bounds { get; set; }
 
             public Battler target;
+
+            public Button button;
         }
 
         BattleScene battleScene;
+
+        DataGrid targetList;
+
+        int index = -1;
+
+        int confirmCooldown = 100;
 
 
         public TargetViewModel(BattleScene iScene, BattlePlayer iPlayer, CommandRecord iCommandRecord)
@@ -48,6 +56,7 @@ namespace Texemon.Scenes.BattleScene
                         Rectangle bounds = battleScene.EnemyList[0].SpriteBounds;
                         for (int i = 1; i < battleScene.EnemyList.Count; i++) bounds = Rectangle.Union(bounds, battleScene.EnemyList[i].SpriteBounds);
                         Targets.Add(new TargetButton() { Name = "All Enemies", NameVisible = true, Bounds = bounds });
+
                         break;
                     }
 
@@ -69,6 +78,63 @@ namespace Texemon.Scenes.BattleScene
             }
 
             LoadView(GameView.BattleScene_TargetView);
+
+            targetList = GetWidget<DataGrid>("TargetList");
+
+            switch (Command.Targetting)
+            {
+                case TargetType.Self:
+                case TargetType.AllEnemy:
+                    index = 0;
+                    ((Button)targetList.ChildList.First()).RadioSelect();
+                    break;
+
+                case TargetType.SingleEnemy:
+                    {
+                        int i = 0;
+                        foreach (ModelProperty<TargetButton> buttonPropery in Targets)
+                        {
+                            buttonPropery.Value.button = targetList.ChildList.ElementAt(i) as Button;
+                            i++;
+                        }
+
+                        if (battleScene.BattleViewModel.LastEnemyTarget != null)
+                        {
+                            index = Targets.ToList().FindIndex(x => x.Value.target == battleScene.BattleViewModel.LastEnemyTarget);
+                            Targets.ElementAt(index).Value.button.RadioSelect();
+                        }
+                        else
+                        {
+                            index = 0;
+                            battleScene.BattleViewModel.LastEnemyTarget = Targets.First().Value.target as BattleEnemy;
+                            ((Button)targetList.ChildList.First()).RadioSelect();
+                        }
+                    }
+                    break;
+
+                case TargetType.SingleAlly:
+                    {
+                        int i = 0;
+                        foreach (ModelProperty<TargetButton> buttonPropery in Targets)
+                        {
+                            buttonPropery.Value.button = targetList.ChildList.ElementAt(i) as Button;
+                            i++;
+                        }
+
+                        if (battleScene.BattleViewModel.LastPlayerTarget != null)
+                        {
+                            index = Targets.ToList().FindIndex(x => x.Value.target == battleScene.BattleViewModel.LastPlayerTarget);
+                            Targets.ElementAt(index).Value.button.RadioSelect();
+                        }
+                        else
+                        {
+                            index = 0;
+                            battleScene.BattleViewModel.LastPlayerTarget = Targets.First().Value.target as BattlePlayer;
+                            ((Button)targetList.ChildList.First()).RadioSelect();
+                        }
+                    }
+                    break;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -76,7 +142,81 @@ namespace Texemon.Scenes.BattleScene
             base.Update(gameTime);
 
             var input = Input.CurrentInput;
-            if (input.CommandPressed(Main.Command.Cancel)) Terminate();
+            if (input.CommandPressed(Main.Command.Up)) PreviousTarget();
+            else if (input.CommandPressed(Main.Command.Down)) NextTarget();
+            else if (input.CommandPressed(Main.Command.Left)) PreviousTarget();
+            else if (input.CommandPressed(Main.Command.Right)) NextTarget();
+            else if (input.CommandPressed(Main.Command.Confirm) && confirmCooldown <= 0) SelectCurrentTarget();
+            else if (input.CommandPressed(Main.Command.Cancel)) Terminate();
+
+            if (confirmCooldown > 0) confirmCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+        }
+
+        private void PreviousTarget()
+        {
+            switch (Command.Targetting)
+            {
+                case TargetType.Self:
+                case TargetType.AllAlly:
+                case TargetType.AllEnemy:
+                    if (((Button)targetList.ChildList.First()).Selected) return;
+                    break;
+
+            }
+
+            Audio.PlaySound(GameSound.menu_select);
+
+            index--;
+            if (index < 0) index = Targets.Count() - 1;
+
+            if (Command.Targetting == TargetType.SingleEnemy || Command.Targetting == TargetType.AllEnemy)
+            {
+                battleScene.BattleViewModel.LastEnemyTarget = Targets.ElementAt(index).Value.target as BattleEnemy;
+                Targets.ElementAt(index).Value.button.RadioSelect();
+
+            }
+            else if (Command.Targetting == TargetType.SingleAlly || Command.Targetting == TargetType.AllAlly)
+            {
+                battleScene.BattleViewModel.LastPlayerTarget = Targets.ElementAt(index).Value.target as BattlePlayer;
+                Targets.ElementAt(index).Value.button.RadioSelect();
+            }
+        }
+
+        private void NextTarget()
+        {
+            switch (Command.Targetting)
+            {
+                case TargetType.Self:
+                case TargetType.AllAlly:
+                case TargetType.AllEnemy:
+                    if (((Button)targetList.ChildList.First()).Selected) return;
+                    break;
+
+            }
+
+            Audio.PlaySound(GameSound.menu_select);
+
+            index++;
+            if (index >= Targets.Count()) index = 0;
+
+            if (Command.Targetting == TargetType.SingleEnemy || Command.Targetting == TargetType.AllEnemy)
+            {
+                if (Command.Targetting == TargetType.SingleEnemy) battleScene.BattleViewModel.LastEnemyTarget = Targets.ElementAt(index).Value.target as BattleEnemy;
+                Targets.ElementAt(index).Value.button.RadioSelect();
+
+            }
+            else if (Command.Targetting == TargetType.SingleAlly || Command.Targetting == TargetType.AllAlly)
+            {
+                if (Command.Targetting == TargetType.SingleAlly) battleScene.BattleViewModel.LastPlayerTarget = Targets.ElementAt(index).Value.target as BattlePlayer;
+                Targets.ElementAt(index).Value.button.RadioSelect();
+            }
+        }
+
+        private void SelectCurrentTarget()
+        {
+            Audio.PlaySound(GameSound.menu_select);
+
+            SelectTarget(Targets.ElementAt(index));
         }
 
         public void SelectTarget(object parameter)
@@ -87,6 +227,16 @@ namespace Texemon.Scenes.BattleScene
             Player.EndTurn();
 
             TargetButton target = (TargetButton)((IModelProperty)parameter).GetValue();
+
+            if (Command.Targetting == TargetType.SingleEnemy)
+            {
+                battleScene.BattleViewModel.LastEnemyTarget = Targets.ElementAt(index).Value.target as BattleEnemy;
+
+            }
+            else if (Command.Targetting == TargetType.SingleAlly)
+            {
+                battleScene.BattleViewModel.LastPlayerTarget = Targets.ElementAt(index).Value.target as BattlePlayer;
+            }
 
             switch (Command.Targetting)
             {

@@ -33,13 +33,13 @@ namespace Texemon.Scenes.IntroScene
         {
             base.Update(gameTime);
 
-            if (Input.CurrentInput.CommandDown(Command.Up))
+            if (Input.CurrentInput.CommandPressed(Command.Up))
             {
                 Audio.PlaySound(GameSound.menu_select);
                 GetWidget<Button>("Magic").RadioSelect();
                 Magic();
             }
-            else if (Input.CurrentInput.CommandDown(Command.Down))
+            else if (Input.CurrentInput.CommandPressed(Command.Down))
             {
                 Audio.PlaySound(GameSound.menu_select);
                 GetWidget<Button>("Technology").RadioSelect();

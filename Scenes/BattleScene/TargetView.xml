@@ -2,7 +2,7 @@
 <View>
 
 	<Panel Name="BattlePanel" Anchor="0,0" Bounds="0,0,$ScreenWidth,$ScreenHeight">
-		<DataGrid Bounds="0,0,$ScreenWidth,$ScreenHeight" Items="Bind Targets">
+		<DataGrid Name="TargetList" Bounds="0,0,$ScreenWidth,$ScreenHeight" Items="Bind Targets">
 			<Button Radio="True" Style="Bind PlayerProfile.FrameStyle" PushedStyle="Bind PlayerProfile.FrameSelectedStyle" Bounds="Ref DataGrid.Bounds" Action="SelectTarget" ActionParameter="Ref DataGrid">
 				<Textplate Style="Bind PlayerProfile.LabelStyle" Alignment="Center" Bounds="0,-33,-1,10" InnerMargin="2,2,2,0" Text="Ref DataGrid.Name" Visible="Ref DataGrid.NameVisible"/>
 			</Button>

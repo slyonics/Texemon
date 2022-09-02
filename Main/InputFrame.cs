@@ -157,6 +157,7 @@ namespace Texemon.Main
                 {
                     if (newKeyState.IsKeyDown(key))
                     {
+                        Input.MOUSE_MODE = false;
                         commandState.down = true;
                         keyPresses++;
                         break;
@@ -169,6 +170,7 @@ namespace Texemon.Main
                     {
                         if (newGamePadState.IsButtonDown(button))
                         {
+                            Input.MOUSE_MODE = false;
                             commandState.down = true;
                             buttonPresses++;
                             break;

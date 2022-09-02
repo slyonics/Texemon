@@ -3,10 +3,9 @@
 		"Name": "DoubleSentinel",
 		"Enemies": [
 			"Sentinel",
-			"Sentinel",
 			"Sentinel"
 		],
 		"Script": [],
-		"Intro": "Three sentinels appear and move into attack formation!"
+		"Intro": "Two sentinels appear and move into attack formation!"
 	}
 ]

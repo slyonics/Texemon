@@ -26,6 +26,7 @@ namespace Texemon.SceneObjects.Widgets
 
         public bool Radio { get; private set; } = false;
         private bool selected = false;
+        public bool Selected { get => selected; }
 
         public Button(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)

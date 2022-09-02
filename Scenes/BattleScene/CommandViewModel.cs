@@ -22,6 +22,7 @@ namespace Texemon.Scenes.BattleScene
         Button abilitiesButton;
         Button actionsButton;
 
+        int category = -1;
         int slot = -1;
 
 
@@ -42,7 +43,6 @@ namespace Texemon.Scenes.BattleScene
             if (ActivePlayer.HeroModel.Abilities.Count() == 0) abilitiesButton.Enabled = false;
 
             int lastCategory = ActivePlayer.HeroModel.LastCategory.Value;
-            ActivePlayer.HeroModel.LastCategory.Value = -1;
             switch (lastCategory)
             {
                 case 0:
@@ -61,11 +61,11 @@ namespace Texemon.Scenes.BattleScene
                     break;
             }
 
-            slot = ActivePlayer.HeroModel.LastSlot.Value;
-            if (slot >= 0)
+            if (!Input.MOUSE_MODE)
             {
+                slot = ActivePlayer.HeroModel.LastSlot.Value;
                 (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-                SelectCommandBody(AvailableCommands.ElementAt(slot), false);
+                SelectCommand(AvailableCommands.ElementAt(slot));
                 ActivePlayer.HeroModel.LastSlot.Value = slot;
             }
         }
@@ -73,6 +73,8 @@ namespace Texemon.Scenes.BattleScene
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (Input.MOUSE_MODE) slot = -1;
 
             var input = Input.CurrentInput;
             if (targetViewModel == null)
@@ -96,7 +98,11 @@ namespace Texemon.Scenes.BattleScene
             {
                 case 0:
                     Audio.PlaySound(GameSound.menu_select);
-                    SelectActionsBody(false);
+                    SelectActions();
+                    slot = 0;
+                    (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                    SelectCommand(AvailableCommands.ElementAt(slot));
+                    ActivePlayer.HeroModel.LastSlot.Value = slot;
                     actionsButton.RadioSelect();
                     break;
 
@@ -105,12 +111,20 @@ namespace Texemon.Scenes.BattleScene
                     {
                         Audio.PlaySound(GameSound.menu_select);
                         equipmentButton.RadioSelect();
-                        SelectEquipmentBody(false);
+                        SelectEquipment();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                     }
                     else
                     {
                         Audio.PlaySound(GameSound.menu_select);
-                        SelectActionsBody(false);
+                        SelectActions();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                         actionsButton.RadioSelect();
                     }
                     break;
@@ -120,13 +134,21 @@ namespace Texemon.Scenes.BattleScene
                     {
                         Audio.PlaySound(GameSound.menu_select);
                         abilitiesButton.RadioSelect();
-                        SelectAbilitiesBody(false);
+                        SelectAbilities();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                     }
                     else if (equipmentButton.Enabled)
                     {
                         Audio.PlaySound(GameSound.menu_select);
                         equipmentButton.RadioSelect();
-                        SelectEquipmentBody(false);
+                        SelectEquipment();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                     }
                     else return;
                     break;
@@ -142,20 +164,32 @@ namespace Texemon.Scenes.BattleScene
                     {
                         Audio.PlaySound(GameSound.menu_select);
                         abilitiesButton.RadioSelect();
-                        SelectAbilitiesBody(false);
+                        SelectAbilities();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                     }
                     else
                     {
                         Audio.PlaySound(GameSound.menu_select);
-                        SelectActionsBody(false);
+                        SelectActions();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                         actionsButton.RadioSelect();
                     }
                     break;
 
                 case 1:
                     Audio.PlaySound(GameSound.menu_select);
-                    SelectActionsBody(false);
+                    SelectActions();
                     actionsButton.RadioSelect();
+                    slot = 0;
+                    (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                    SelectCommand(AvailableCommands.ElementAt(slot));
+                    ActivePlayer.HeroModel.LastSlot.Value = slot;
                     break;
 
                 case 2:
@@ -163,13 +197,21 @@ namespace Texemon.Scenes.BattleScene
                     {
                         Audio.PlaySound(GameSound.menu_select);
                         equipmentButton.RadioSelect();
-                        SelectEquipmentBody(false);
+                        SelectEquipment();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                     }
                     else if (abilitiesButton.Enabled)
                     {
                         Audio.PlaySound(GameSound.menu_select);
                         abilitiesButton.RadioSelect();
-                        SelectAbilitiesBody(false);
+                        SelectAbilities();
+                        slot = 0;
+                        (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
+                        SelectCommand(AvailableCommands.ElementAt(slot));
+                        ActivePlayer.HeroModel.LastSlot.Value = slot;
                     }
                     else return;
                     break;
@@ -185,7 +227,7 @@ namespace Texemon.Scenes.BattleScene
             else slot--;
 
             (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-            SelectCommandBody(AvailableCommands.ElementAt(slot), false);
+            SelectCommand(AvailableCommands.ElementAt(slot));
             ActivePlayer.HeroModel.LastSlot.Value = slot;
         }
 
@@ -198,7 +240,7 @@ namespace Texemon.Scenes.BattleScene
             else slot++;
 
             (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-            SelectCommandBody(AvailableCommands.ElementAt(slot), false);
+            SelectCommand(AvailableCommands.ElementAt(slot));
             ActivePlayer.HeroModel.LastSlot.Value = slot;
         }
 
@@ -215,94 +257,45 @@ namespace Texemon.Scenes.BattleScene
 
         public void SelectEquipment()
         {
-            SelectEquipmentBody(true);
-        }
-
-        public void SelectEquipmentBody(bool mouseMode)
-        {
-            if (ActivePlayer.HeroModel.LastCategory.Value == 0) return;
+            if (category == 0) return;
 
             targetViewModel?.Terminate();
             targetViewModel = null;
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Equipment.ModelList;
-            ActivePlayer.HeroModel.LastCategory.Value = 0;
+            ActivePlayer.HeroModel.LastCategory.Value = category = 0;
 
             Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
-
-            if (mouseMode) slot = -1;
-            else
-            {
-                slot = 0;
-                (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-                SelectCommandBody(AvailableCommands.ElementAt(slot), false);
-                ActivePlayer.HeroModel.LastSlot.Value = slot;
-            }
         }
 
         public void SelectAbilities()
         {
-            SelectAbilitiesBody(true);
-        }
-
-        public void SelectAbilitiesBody(bool mouseMode)
-        {
-            if (ActivePlayer.HeroModel.LastCategory.Value == 1) return;
+            if (category == 1) return;
 
             targetViewModel?.Terminate();
             targetViewModel = null;
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Abilities.ModelList;
-            ActivePlayer.HeroModel.LastCategory.Value = 1;
+            ActivePlayer.HeroModel.LastCategory.Value = category = 1;
 
             Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
-
-            if (mouseMode) slot = -1;
-            else
-            {
-                slot = 0;
-                (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-                SelectCommandBody(AvailableCommands.ElementAt(slot), false);
-                ActivePlayer.HeroModel.LastSlot.Value = slot;
-            }
         }
 
         public void SelectActions()
         {
-            SelectActionsBody(true);
-        }
-
-        public void SelectActionsBody(bool mouseMode)
-        {
-            if (ActivePlayer.HeroModel.LastCategory.Value == 2) return;
+            if (category == 2) return;
 
             targetViewModel?.Terminate();
             targetViewModel = null;
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Actions.ModelList;
-            ActivePlayer.HeroModel.LastCategory.Value = 2;
+            ActivePlayer.HeroModel.LastCategory.Value = category = 2;
 
             Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
-
-            if (mouseMode) slot = -1;
-            else
-            {
-                slot = 0;
-                (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-                SelectCommandBody(AvailableCommands.ElementAt(slot), false);
-                ActivePlayer.HeroModel.LastSlot.Value = slot;
-            }
         }
 
         public void SelectCommand(object parameter)
         {
-            SelectCommandBody(parameter, true);
-        }
-
-        public void SelectCommandBody(object parameter, bool mouseMode)
-        {
-            if (mouseMode) ActivePlayer.HeroModel.LastSlot.Value = -1;
-
             CommandRecord record;
             if (parameter is IModelProperty)
             {
@@ -313,7 +306,7 @@ namespace Texemon.Scenes.BattleScene
             targetViewModel?.Terminate();
             targetViewModel = null;
 
-            if (mouseMode)
+            if (Input.MOUSE_MODE)
             {
                 targetViewModel = new TargetViewModel(battleScene, ActivePlayer, record);
                 battleScene.AddView(targetViewModel);
