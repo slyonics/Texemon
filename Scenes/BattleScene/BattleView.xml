@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Name="EnemyPanel" Style="Bind PlayerProfile.FrameStyle" Anchor="$CenterX,$CenterY" Bounds="Bind EnemyWindow" InnerMargin="4,3,4,3" TransitionIn="Expand">
+	<Panel Name="EnemyPanel" Style="Bind PlayerProfile.FrameStyle" Anchor="$CenterX,$CenterY" Bounds="Bind EnemyWindow" InnerMargin="4,3,4,3" TransitionIn="Expand" TransitionOut="Shrink">
 		<DataGrid Items="Ref InitialEnemies" Alignment="Stretch">
 			<Scenes.BattleScene.BattleEnemy EnemyRecord="Ref DataGrid" Alignment="Horizontal"/>
 		</DataGrid>
 		<Image Picture="Bind BackgroundRender" Alignment="Stretch" Depth="1.0"/>
 	</Panel>
 
-	<Panel Name="PlayerPanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="8,16,8,8" TransitionIn="Expand">
+	<Panel Name="PlayerPanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="8,16,8,8" TransitionIn="Expand" TransitionOut="Shrink">
 		<DataGrid Items="Bind PlayerProfile.Party" Alignment="Stretch">
 			<Panel Alignment="Vertical" Bounds="0,0,102,20">
 				<Scenes.BattleScene.BattlePlayer HeroModel="Bind DataGrid" Alignment="BottomLeft"/>
@@ -20,7 +20,7 @@
 		</DataGrid>
 	</Panel>
 
-	<Panel Name="BattlePanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,30,170,80" InnerMargin="8,4,8,8" TransitionIn="Expand">
+	<Panel Name="BattlePanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,30,170,80" InnerMargin="8,4,8,8" TransitionIn="Expand" TransitionOut="Shrink">
 
 	</Panel>
 	

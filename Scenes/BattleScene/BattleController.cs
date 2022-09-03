@@ -58,7 +58,7 @@ namespace Texemon.Scenes.BattleScene
                 case "Flash": target.FlashColor(new Color(byte.Parse(tokens[1]), byte.Parse(tokens[2]), byte.Parse(tokens[3]))); break;
                 case "Attack": Attack(tokens); break;
                 case "Dialogue": Dialogue(tokens); break;
-                case "Flee": StackDialogue("You flee..."); break;
+                case "Flee": Flee(tokens); break;
                 case "Defend": StackDialogue("You defend..."); break;
                 case "Delay": StackDialogue("You delay..."); break;
                 default: return false;
@@ -97,6 +97,25 @@ namespace Texemon.Scenes.BattleScene
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
             scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Slash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 5");
+        }
+
+        private void Flee(string[] tokens)
+        {
+            //StackDialogue("You flee...");
+
+            var convoRecord = new ConversationScene.ConversationRecord()
+            {
+                DialogueRecords = new ConversationScene.DialogueRecord[] {
+                            new ConversationScene.DialogueRecord() { Text = "Escaped from battle." }
+                        }
+            };
+
+            convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), false);
+            scriptParser.BlockScript();
+            convoScene.OnTerminated += battleScene.BattleViewModel.Close;
+            CrossPlatformGame.StackScene(convoScene);
+
+            timeleft = 1000;
         }
 
         private void Dialogue(string[] tokens)

@@ -71,6 +71,20 @@ namespace Texemon.Scenes.BattleScene
             commandViewModel.Terminate();
         }
 
+        public override void Close()
+        {
+            base.Close();
+
+            battleScene.EnemyList.Clear();
+        }
+
+        public override void Terminate()
+        {
+            base.Terminate();
+
+            battleScene.EndScene();
+        }
+
         public List<EnemyRecord> InitialEnemies { get; set; } = new List<EnemyRecord>();
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());

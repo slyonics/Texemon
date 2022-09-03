@@ -83,6 +83,8 @@ namespace Texemon.Scenes.MapScene
                 case Orientation.Left: interactionZone.X -= (int)(Player.BoundingBox.Width * 1.5f); break;
             }
 
+            
+
             FindInteractables();
         }
 
@@ -94,16 +96,26 @@ namespace Texemon.Scenes.MapScene
 
             Hero player = mapScene.Player;
             IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => player.Distance(x.Bounds));
-            Rectangle interactionZone = player.Bounds;
+            Rectangle interactZone = player.Bounds;
+            int zoneWidth = mapScene.Tilemap.TileWidth;
+            int zoneHeight = mapScene.Tilemap.TileHeight;
             switch (player.Orientation)
             {
-                case Orientation.Up: interactionZone.Y -= mapScene.Tilemap.TileHeight; break;
-                case Orientation.Right: interactionZone.X += mapScene.Tilemap.TileWidth; break;
-                case Orientation.Down: interactionZone.Y += mapScene.Tilemap.TileHeight; break;
-                case Orientation.Left: interactionZone.X -= mapScene.Tilemap.TileWidth; break;
+                case Orientation.Up:
+                    interactZone = new Rectangle((int)player.Position.X - 1 - zoneWidth / 2, (int)player.Position.Y - zoneHeight - 4, zoneWidth, zoneHeight);
+                    break;
+                case Orientation.Right:
+                    interactZone = new Rectangle((int)player.Position.X + 1, (int)player.Position.Y - zoneHeight, zoneWidth, zoneHeight);
+                    break;
+                case Orientation.Down: player.InteractionZone.Y += mapScene.Tilemap.TileHeight;
+                    interactZone = new Rectangle((int)player.Position.X - 1 - zoneWidth / 2, (int)player.Position.Y - zoneHeight / 2, zoneWidth, zoneHeight);
+                    break;
+                case Orientation.Left:
+                    interactZone = new Rectangle((int)player.Position.X - 1 - zoneWidth, (int)player.Position.Y - zoneHeight, zoneWidth, zoneHeight);
+                    break;
             }
-
-            interactable = sortedInteractableList.FirstOrDefault(x => x.Bounds.Intersects(interactionZone));
+            player.InteractionZone = interactZone;
+            interactable = sortedInteractableList.FirstOrDefault(x => x.Bounds.Intersects(player.InteractionZone));
             interactionView.Target(interactable);
         }
     }

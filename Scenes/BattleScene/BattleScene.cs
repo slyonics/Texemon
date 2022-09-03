@@ -100,6 +100,8 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime);
 
+            if (battleViewModel.Closed) return;
+
             int i = 0;
             while (i < overlayParticleList.Count) { overlayParticleList[i].Update(gameTime); i++; }
             overlayParticleList.RemoveAll(x => x.Terminated);
@@ -130,7 +132,7 @@ namespace Texemon.Scenes.BattleScene
                         }
                     };
                     var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
-                    convoScene.OnTerminated += new TerminationFollowup(EndScene);
+                    convoScene.OnTerminated += new TerminationFollowup(battleViewModel.Close);
                     CrossPlatformGame.StackScene(convoScene);
                 }
                 else ActivateNextBattler();

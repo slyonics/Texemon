@@ -48,5 +48,15 @@ namespace Texemon.Scenes.MapScene
         {
             
         }
+
+        public override void Draw(SpriteBatch spriteBatch, Camera camera)
+        {
+            base.Draw(spriteBatch, camera);
+
+            if (Settings.GetProgramSetting<bool>("DebugMode"))
+                Debug.DrawBox(spriteBatch, InteractionZone);
+        }
+
+        public Rectangle InteractionZone;
     }
 }
