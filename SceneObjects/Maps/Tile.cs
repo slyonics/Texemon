@@ -49,7 +49,7 @@ namespace Texemon.SceneObjects.Maps
             float depth = 0.9f;
             foreach (TileSprite backgroundSprite in backgroundSprites)
             {
-                spriteBatch.Draw(backgroundSprite.atlas, position - camera.Position, backgroundSprite.source, backgroundSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
+                spriteBatch.Draw(backgroundSprite.atlas, position - camera.Position - new Vector2(camera.CenteringOffsetX, camera.CenteringOffsetY), backgroundSprite.source, backgroundSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
                 depth -= 0.001f;
             }
         }

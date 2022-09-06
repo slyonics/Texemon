@@ -34,12 +34,12 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            Player = new Hero(this, Tilemap, new Vector2(32, 32), "Inventor");
+            Player = new Hero(this, Tilemap, new Vector2(32, 96), "Inventor");
             AddEntity(Player);
             PlayerController playerController = new PlayerController(this, Player);
             AddController(playerController);
 
-            Hero RobotPrincess = new Hero(this, Tilemap, new Vector2(64, 32), "GroundDrone");
+            Hero RobotPrincess = new Hero(this, Tilemap, new Vector2(64, 96), "GroundDrone");
             AddEntity(RobotPrincess);
             FollowerController followerController = new FollowerController(this, RobotPrincess, Player);
             AddController(followerController);
