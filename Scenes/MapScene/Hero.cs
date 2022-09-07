@@ -44,7 +44,7 @@ namespace Texemon.Scenes.MapScene
         private MapScene mapScene;
 
         public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, string spriteName, Orientation iOrientation = Orientation.Down)
-            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + spriteName)], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
+            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), spriteName)], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
         {
             
         }

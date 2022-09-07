@@ -27,7 +27,7 @@
 			"- Incendiary",
 			"- VS all enemies"
 		],
-		"Icon": "Fire",
+		"Icon": "Heal",
 		"Charges": 15,
 		"MaxCharges": 15,
 		"Targetting": "SingleAlly",

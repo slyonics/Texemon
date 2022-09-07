@@ -321,6 +321,7 @@ namespace Texemon.SceneObjects
                 switch (tokens[0])
                 {
                     case "$PlayerProfile": return (GameProfile.PlayerProfile.GetType().GetProperty(tokens[1]).GetValue(GameProfile.PlayerProfile) as ModelProperty<string>).Value;
+                    case "$Party": return GameProfile.PlayerProfile.Party.ElementAt(int.Parse(tokens[1])).Value.Name.Value;
                 }
             }
 

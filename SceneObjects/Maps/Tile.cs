@@ -19,6 +19,7 @@ namespace Texemon.SceneObjects.Maps
             public Texture2D atlas;
             public Color color = Color.White;
             public int height;
+            public Vector2 offset;
         }
 
         private Tilemap parentMap;
@@ -49,7 +50,7 @@ namespace Texemon.SceneObjects.Maps
             float depth = 0.9f;
             foreach (TileSprite backgroundSprite in backgroundSprites)
             {
-                spriteBatch.Draw(backgroundSprite.atlas, position - camera.Position - new Vector2(camera.CenteringOffsetX, camera.CenteringOffsetY), backgroundSprite.source, backgroundSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
+                spriteBatch.Draw(backgroundSprite.atlas, position + backgroundSprite.offset - camera.Position - new Vector2(camera.CenteringOffsetX, camera.CenteringOffsetY), backgroundSprite.source, backgroundSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
                 depth -= 0.001f;
             }
         }
@@ -61,13 +62,13 @@ namespace Texemon.SceneObjects.Maps
                 float depth = camera.GetDepth(position.Y + tileSprites.Key * parentMap.TileHeight);
                 foreach (TileSprite tileSprite in tileSprites.Value)
                 {
-                    spriteBatch.Draw(tileSprite.atlas, position, tileSprite.source, tileSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
+                    spriteBatch.Draw(tileSprite.atlas, position + tileSprite.offset, tileSprite.source, tileSprite.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
                     depth -= 0.0001f;
                 }
             }
         }
 
-        public void ApplyBackgroundTile(TiledTile tiledTile, Rectangle source, Texture2D atlas)
+        public void ApplyBackgroundTile(TiledTile tiledTile, TiledLayer tiledLayer, Rectangle source, Texture2D atlas)
         {
             TileSprite tileSprite = new TileSprite()
             {
@@ -77,7 +78,7 @@ namespace Texemon.SceneObjects.Maps
 
             if (tiledTile != null)
             {
-                foreach (TiledObject tiledObject in tiledTile.objects) ColliderList.Add(new Rectangle((int)(tiledObject.x + position.X), (int)(tiledObject.y + position.Y), (int)tiledObject.width, (int)tiledObject.height));
+                foreach (TiledObject tiledObject in tiledTile.objects) ColliderList.Add(new Rectangle((int)(tiledObject.x + position.X + tiledLayer.offsetX), (int)(tiledObject.y + position.Y + tiledLayer.offsetY), (int)tiledObject.width, (int)tiledObject.height));
                 foreach (TiledProperty tiledProperty in tiledTile.properties)
                 {
                     switch (tiledProperty.name)
@@ -87,10 +88,12 @@ namespace Texemon.SceneObjects.Maps
                 }
             }
 
+            tileSprite.offset = new Vector2(tiledLayer.offsetX, tiledLayer.offsetY);
+
             backgroundSprites.Add(tileSprite);
         }
 
-        public void ApplyEntityTile(TiledTile tiledTile, Rectangle source, Texture2D atlas, int height)
+        public void ApplyEntityTile(TiledTile tiledTile, TiledLayer tiledLayer, Rectangle source, Texture2D atlas, int height)
         {
             List<TileSprite> tileSprites;
             if (!entitySprites.TryGetValue(height, out tileSprites))
@@ -108,7 +111,7 @@ namespace Texemon.SceneObjects.Maps
 
             if (tiledTile != null)
             {
-                foreach (TiledObject tiledObject in tiledTile.objects) ColliderList.Add(new Rectangle((int)(tiledObject.x + position.X), (int)(tiledObject.y + position.Y), (int)tiledObject.width, (int)tiledObject.height));
+                foreach (TiledObject tiledObject in tiledTile.objects) ColliderList.Add(new Rectangle((int)(tiledObject.x + position.X + tiledLayer.offsetX), (int)(tiledObject.y + position.Y + tiledLayer.offsetY), (int)tiledObject.width, (int)tiledObject.height));
                 foreach (TiledProperty tiledProperty in tiledTile.properties)
                 {
                     switch (tiledProperty.name)
@@ -117,6 +120,8 @@ namespace Texemon.SceneObjects.Maps
                     }
                 }
             }
+
+            tileSprite.offset = new Vector2(tiledLayer.offsetX, tiledLayer.offsetY);
 
             tileSprites.Add(tileSprite);
         }

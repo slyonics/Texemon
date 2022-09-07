@@ -15,7 +15,7 @@ namespace Texemon.Scenes.MapScene
     {
         public Tilemap Tilemap { get; set; }
 
-        public Hero Player { get; private set; }
+        public Hero PartyLeader { get; private set; }
         public List<Npc> NPCs { get; private set; } = new List<Npc>();
         public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
         public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
@@ -34,15 +34,22 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            Player = new Hero(this, Tilemap, new Vector2(32, 96), "Inventor");
-            AddEntity(Player);
-            PlayerController playerController = new PlayerController(this, Player);
+
+            PartyLeader = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value.Sprite.Value.ToString());
+            AddEntity(PartyLeader);
+            PlayerController playerController = new PlayerController(this, PartyLeader);
             AddController(playerController);
 
-            Hero RobotPrincess = new Hero(this, Tilemap, new Vector2(64, 96), "GroundDrone");
-            AddEntity(RobotPrincess);
-            FollowerController followerController = new FollowerController(this, RobotPrincess, Player);
-            AddController(followerController);
+            Actor leader = PartyLeader;
+            foreach (var partymember in Models.GameProfile.PlayerProfile.Party.Skip(1))
+            {
+                Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), partymember.Value.Sprite.Value.ToString());
+                AddEntity(follower);
+                FollowerController followerController = new FollowerController(this, follower, leader);
+                AddController(followerController);
+
+                leader = follower;
+            }            
 
             foreach (Tuple<TiledLayer, TiledGroup> layer in Tilemap.ObjectData)
             {
@@ -80,16 +87,24 @@ namespace Texemon.Scenes.MapScene
             }
         }
 
+        public MapScene(string mapName, int startX, int startY, Orientation orientation)
+            : this(mapName)
+        {
+            PartyLeader.CenterOn(Tilemap.GetTile(startX, startY).Center);
+            PartyLeader.Orientation = orientation;
+            PartyLeader.Idle();
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            Camera.Center(Player.Center);
+            Camera.Center(PartyLeader.Center);
 
             bool eventTriggered = false;
             foreach (EventTrigger eventTrigger in EventTriggers)
             {
-                if (eventTrigger.Bounds.Intersects(Player.Bounds))
+                if (eventTrigger.Bounds.Intersects(PartyLeader.Bounds))
                 {
                     eventTriggered = true;
                     eventTrigger.Terminated = true;
@@ -102,7 +117,7 @@ namespace Texemon.Scenes.MapScene
             {
                 foreach (Enemy enemy in Enemies)
                 {
-                    if (enemy.Bounds.Intersects(Player.Bounds))
+                    if (enemy.Bounds.Intersects(PartyLeader.Bounds))
                     {
                         enemy.Collides();
                     }

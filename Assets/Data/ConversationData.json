@@ -8,6 +8,35 @@
 		]
 	},
 	{
+		"Name": "IntroInventor",
+		"DialogueRecords": [
+			{
+				"Speaker": "$Party.0",
+				"Text": "Inventor, please tell me why I was created."
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "Your full purpose was beyond the capacity of my intellect to understand."
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "You will have to discover the truth yourself in the ruins of the labratory where you were designed."
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "The journey will be dangerous. Let me construct some guardians to protect you along the way."
+			}
+		]
+	},
+	{
+		"Name": "TalkInventor",
+		"DialogueRecords": [
+			{
+				"Text": "Automatic #32CCFFFF conversation test."
+			}
+		]
+	},
+	{
 		"Name": "TreeConvo",
 		"Background": "",
 		"EndScript": [ "Actor Actors_Blank" ],

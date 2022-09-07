@@ -104,7 +104,7 @@ namespace Texemon.SceneObjects.Maps
                         TiledTile tilesetTile = tiledMap.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
                         TiledSourceRect spriteSource = tiledMap.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
 
-                        tiles[x, y].ApplyBackgroundTile(tilesetTile, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas);
+                        tiles[x, y].ApplyBackgroundTile(tilesetTile, tiledLayer, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas);
                     }
                 }
             }
@@ -126,7 +126,7 @@ namespace Texemon.SceneObjects.Maps
                         TiledTile tilesetTile = tiledMap.GetTiledTile(tiledMapTileset, tiledTileset, tileId);
                         TiledSourceRect spriteSource = tiledMap.GetSourceRect(tiledMapTileset, tiledTileset, tileId);
 
-                        tiles[x, y].ApplyEntityTile(tilesetTile, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas, height);
+                        tiles[x, y].ApplyEntityTile(tilesetTile, tiledLayer, new Rectangle(spriteSource.x, spriteSource.y, spriteSource.width, spriteSource.height), tileset.SpriteAtlas, height);
                     }
                 }
             }

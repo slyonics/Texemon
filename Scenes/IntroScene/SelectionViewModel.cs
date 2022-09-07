@@ -23,6 +23,8 @@ namespace Texemon.Scenes.IntroScene
         Selection selection = Selection.None;
         CrawlText description;
 
+        TechNameViewModel techNameViewModel;
+
         public SelectionViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel, viewName)
         {
@@ -32,6 +34,8 @@ namespace Texemon.Scenes.IntroScene
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (techNameViewModel != null) return;
 
             if (Input.CurrentInput.CommandPressed(Command.Up))
             {
@@ -97,9 +101,8 @@ namespace Texemon.Scenes.IntroScene
                     break;
 
                 case Selection.Technology:
-                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Inventor));
-                    GameProfile.PlayerProfile.Party.Add(new HeroModel(ClassType.Android));
-                    CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab");
+                    techNameViewModel = parentScene.AddView(new TechNameViewModel(parentScene, GameView.IntroScene_TechNameView));
+                    ReadyToProceed.Value = false;
                     break;
             }
         }

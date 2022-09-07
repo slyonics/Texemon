@@ -94,7 +94,7 @@ namespace Texemon.Scenes.MapScene
             interactableList.AddRange(mapScene.NPCs.FindAll(x => x.Interactive));
             interactableList.AddRange(mapScene.EventTriggers.FindAll(x => x.Interactive));
 
-            Hero player = mapScene.Player;
+            Hero player = mapScene.PartyLeader;
             IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => player.Distance(x.Bounds));
             Rectangle interactZone = player.Bounds;
             int zoneWidth = mapScene.Tilemap.TileWidth;

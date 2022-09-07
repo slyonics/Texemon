@@ -52,6 +52,7 @@ namespace Texemon.Scenes.MapScene
         {
             mapScene = iMapScene;
 
+            string sprite = "";
             foreach (TiledProperty tiledProperty in tiledObject.properties)
             {
                 switch (tiledProperty.name)
@@ -59,20 +60,24 @@ namespace Texemon.Scenes.MapScene
                     case "Behavior": Behavior = tiledProperty.value.Split('\n'); break;
                     case "Interact": interactionScript = tiledProperty.value.Split('\n'); break;
                     case "Label": Label = tiledProperty.value; break;
+                    case "Direction": Orientation = (Orientation)Enum.Parse(typeof(Orientation), tiledProperty.value); break;
                     case "Sprite":
-                        animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + tiledProperty.value)], NPC_ANIMATIONS);
+                        sprite = tiledProperty.value;
                         break;
                 }
             }
 
+            animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + sprite)], NPC_ANIMATIONS);
             CenterOn(iTilemap.GetTile(new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height)).Center);
+
+            Idle();
         }
 
         public bool Activate(Hero activator)
         {
             if (interactionScript == null) return false;
 
-            Rectangle areaOfInterest = Rectangle.Union(SpriteBounds, mapScene.Player.SpriteBounds);
+            Rectangle areaOfInterest = Rectangle.Union(SpriteBounds, mapScene.PartyLeader.SpriteBounds);
             EventController eventController = new EventController(mapScene, interactionScript);
 
             mapScene.AddController(eventController);

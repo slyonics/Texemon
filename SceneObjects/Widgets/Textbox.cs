@@ -12,13 +12,14 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Textbox : Widget
     {
-        private ModelProperty<string> binding;
         private string text;
+        public string Text { get => text; set => text = value; }
 
         private NinePatch textboxFrame;
         private string style;
         private string activeStyle;
         private bool active;
+        public bool Active { get => active; set { active = value; UpdateFrame(); } }
 
         private bool blinkCarat;
         private int blinkTime;
@@ -33,38 +34,14 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.LoadAttributes(xmlNode);
 
-            foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
-            {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    case "Style": style = "Buttons_" + xmlAttribute.Value; break;
-                    case "ActiveStyle": activeStyle = "Buttons_" + xmlAttribute.Value; break;
-
-                    case "Binding":
-                        binding = OldLookupBinding<string>(xmlAttribute.Value);
-                        binding.ModelChanged += Binding_ModelChanged;
-                        break;
-                }
-            }
-
-            textboxFrame = new NinePatch(style, Depth);
-
-            Binding_ModelChanged();
-        }
-
-        public void Binding_ModelChanged()
-        {
-            if (binding == null || binding.Value == null) return;
-
-            text = binding.Value;
+            UpdateFrame();
         }
 
         public override void ApplyAlignment()
         {
             base.ApplyAlignment();
 
-            textboxFrame.Bounds = currentWindow;
+            if (textboxFrame != null) textboxFrame.Bounds = currentWindow;
         }
 
         public override void Update(GameTime gameTime)
@@ -80,42 +57,27 @@ namespace Texemon.SceneObjects.Widgets
                     bool shift = (Input.CurrentInput.KeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Input.CurrentInput.KeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift));
                     char keyChar = (char)(key - Microsoft.Xna.Framework.Input.Keys.A + ((shift) ? 'A' : 'a'));
 
-                    if (Text.GetStringLength(Font, text + keyChar + '_') <= InnerBounds.Width)
+                    if (Main.Text.GetStringLength(Font, Text + keyChar + '_') <= InnerBounds.Width)
                     {
-                        if (binding == null)
-                        {
-                            text += keyChar;
-                        }
-                        else
-                        {
-                            string boundText = binding.Value as string;
-
-                            binding.Value = boundText + keyChar;
-                        }
+                        Text = Text + keyChar;
                     }
 
                     blinkTime = 0;
                 }
-                else if (Input.CurrentInput.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Back) && text.Length > 0)
+                else if (Input.CurrentInput.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Back) && Text.Length > 0)
                 {
-                    if (binding == null) text = text.Substring(0, text.Length - 1);
-                    else
-                    {
-                        string boundText = binding.Value as string;
-                        binding.Value = boundText.Substring(0, boundText.Length - 1);
-                    }
+                    Text = Text.Substring(0, Text.Length - 1);
 
                     blinkTime = 0;
                 }
                 else if (Input.CurrentInput.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
                 {
-                    active = false;
+                    Active = false;
 
                     if (active) textboxFrame.SetSprite(activeStyle);
                     else textboxFrame.SetSprite(style);
                 }
             }
-
 
             blinkCarat = blinkTime < 700;
 
@@ -129,19 +91,30 @@ namespace Texemon.SceneObjects.Widgets
 
             Color drawColor = (parent.Enabled) ? Color : new Color(160, 160, 160, 255);
 
-            Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + InnerMargin.Left, currentWindow.Center.Y - Text.GetStringHeight(Font) / 2) + Position, Font, text, drawColor);
+            Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + InnerMargin.Left, currentWindow.Top + InnerMargin.Top) + Position, Font, text, drawColor);
 
             if (active && blinkCarat)
             {
-                Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + InnerMargin.Left + Text.GetStringLength(Font, text), currentWindow.Center.Y - Text.GetStringHeight(Font) / 2) + Position, Font, "_", drawColor);
+                Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left + InnerMargin.Left + Main.Text.GetStringLength(Font, Text), currentWindow.Top + InnerMargin.Top) + Position, Font, "_", drawColor);
             }
+        }
+
+        private void UpdateFrame()
+        {
+            if (style != null)
+            {
+                if (textboxFrame == null) textboxFrame = new NinePatch(style, Depth);
+                textboxFrame.SetSprite(style);
+            }
+
+            if (active) textboxFrame?.SetSprite(activeStyle);
         }
 
         public override void StartLeftClick(Vector2 mousePosition)
         {
             Audio.PlaySound(GameSound.menu_select);
 
-            active = !active;
+            Active = !active;
 
             if (active) textboxFrame.SetSprite(activeStyle);
             else textboxFrame.SetSprite(style);
@@ -149,8 +122,8 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void EndLeftClick(Vector2 mouseStart, Vector2 mouseEnd, Widget otherWidget)
         {
-            if (otherWidget == this) active = true;
-            else active = false;
+            if (otherWidget == this) Active = true;
+            else Active = false;
 
             if (active) textboxFrame.SetSprite(activeStyle);
             else textboxFrame.SetSprite(style);
@@ -158,9 +131,23 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoseFocus()
         {
-            active = false;
+            Active = false;
 
             textboxFrame.SetSprite(style);
         }
+
+        private string Style
+        {
+            get => style;
+            set
+            {
+                style = value;
+                UpdateFrame();
+            }
+        }
+        private string ActiveStyle { get => activeStyle;
+            set {
+                activeStyle = value;
+                UpdateFrame(); } }
     }
 }
