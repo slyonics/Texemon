@@ -13,7 +13,8 @@ namespace Texemon.Scenes.ConversationScene
         public string Name { get; set; }
         public string Background { get; set; }
         public DialogueRecord[] DialogueRecords { get; set; }
-        public string[] EndScript { get; set; }        
+        public string[] EndScript { get; set; }
+        public string Bounds { get; set; }
     }
 
     public class DialogueRecord

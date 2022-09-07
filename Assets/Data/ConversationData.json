@@ -9,6 +9,7 @@
 	},
 	{
 		"Name": "IntroInventor",
+		"Bounds": "-120,-70,240,50",
 		"DialogueRecords": [
 			{
 				"Speaker": "$Party.0",

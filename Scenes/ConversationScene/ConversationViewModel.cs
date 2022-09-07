@@ -21,7 +21,7 @@ namespace Texemon.Scenes.ConversationScene
         public bool AutoProceed { get; set; }
 
         public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord)
-            : base(iScene, PriorityLevel.GameLevel, GameView.ConversationScene_ConversationView)
+            : base(iScene, PriorityLevel.GameLevel)
         {
             conversationScene = (parentScene as ConversationScene);
             conversationRecord = iConversationRecord;
@@ -29,6 +29,14 @@ namespace Texemon.Scenes.ConversationScene
 
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
             Dialogue.Value = currentDialogue.Text;
+
+            if (!string.IsNullOrEmpty(conversationRecord.Bounds))
+            {
+                string[] tokens = conversationRecord.Bounds.Split(',');
+                Window.Value = new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3]));
+            }
+
+            LoadView(GameView.ConversationScene_ConversationView);
 
             crawlText = GetWidget<CrawlText>("ConversationText");
         }
