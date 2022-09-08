@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="3">
  <properties>
-  <property name="Music" value="Wilderness"/>
+  <property name="Music" value="NewDestinations"/>
  </properties>
  <tileset firstgid="1" source="Tilesets/ColorTileA2.tsx"/>
  <tileset firstgid="1569" source="Tilesets/ColorTileC.tsx"/>
@@ -11,6 +11,18 @@
    <properties>
     <property name="Direction" value="Down"/>
     <property name="Label" value="Home"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Enemies">
+  <object id="2" name="Base" x="344" y="332" width="20" height="20">
+   <properties>
+    <property name="Collide">Conversation BattleTime
+Encounter DoubleSentinel</property>
+    <property name="Idle">Wait 2000
+Wander 800
+Repeat</property>
+    <property name="Sprite" value="Sentinel"/>
    </properties>
   </object>
  </objectgroup>

@@ -72,7 +72,7 @@ namespace Texemon.Scenes.StatusScene
             }
         }
 
-        public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_AirDrone);
+        public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_Base);
         public ModelProperty<GameSprite> ShadowSprite { get; set; } = new ModelProperty<GameSprite>();
         public ModelProperty<int> FlightHeight { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<Color> NameColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));

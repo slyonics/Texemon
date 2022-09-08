@@ -15,7 +15,9 @@ namespace Texemon.Scenes.MapScene
     {
         public Tilemap Tilemap { get; set; }
 
-        public Hero PartyLeader { get; private set; }
+        public List<Hero> Party { get; private set; } = new List<Hero>();
+        public Hero PartyLeader { get => Party.FirstOrDefault(); }
+
         public List<Npc> NPCs { get; private set; } = new List<Npc>();
         public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
         public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
@@ -34,15 +36,17 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            PartyLeader = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value);
-            AddEntity(PartyLeader);
-            PlayerController playerController = new PlayerController(this, PartyLeader);
+            var leaderHero = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value);
+            Party.Add(leaderHero);
+            AddEntity(leaderHero);
+            PlayerController playerController = new PlayerController(this, leaderHero);
             AddController(playerController);
 
-            Actor leader = PartyLeader;
+            Actor leader = leaderHero;
             foreach (var partymember in Models.GameProfile.PlayerProfile.Party.Skip(1))
             {
                 Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), partymember.Value);
+                Party.Add(follower);
                 AddEntity(follower);
                 FollowerController followerController = new FollowerController(this, follower, leader);
                 AddController(followerController);
@@ -89,9 +93,19 @@ namespace Texemon.Scenes.MapScene
         public MapScene(string mapName, int startX, int startY, Orientation orientation)
             : this(mapName)
         {
-            PartyLeader.CenterOn(Tilemap.GetTile(startX, startY).Center);
+            PartyLeader.CenterOn(Tilemap.GetTile(startX, startY).Bottom);
             PartyLeader.Orientation = orientation;
             PartyLeader.Idle();
+
+            int i = 1;
+            foreach (Hero hero in Party.Skip(1))
+            {
+                hero.CenterOn(new Vector2(PartyLeader.SpriteBounds.Left + i * 6, PartyLeader.SpriteBounds.Bottom - 12 + (i % 2) * 6));
+                hero.Orientation = orientation;
+                hero.Idle();
+
+                i++;
+            }
         }
 
         public MapScene(string mapName, string sourceMapName)
@@ -110,9 +124,18 @@ namespace Texemon.Scenes.MapScene
                 case Orientation.Left: spawnPosition = new Vector2(); break;
             }
             PartyLeader.CenterOn(spawnPosition);
-
             PartyLeader.Orientation = orientation;
             PartyLeader.Idle();
+
+            int i = 1;
+            foreach (Hero hero in Party.Skip(1))
+            {
+                hero.CenterOn(new Vector2(PartyLeader.SpriteBounds.Left + i * 6, PartyLeader.SpriteBounds.Bottom - 12 + (i % 2) * 6));
+                hero.Orientation = orientation;
+                hero.Idle();
+
+                i++;
+            }
         }
 
         public override void Update(GameTime gameTime)

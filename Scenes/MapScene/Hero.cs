@@ -46,10 +46,20 @@ namespace Texemon.Scenes.MapScene
         public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, StatusScene.HeroModel heroModel, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.Sprite.Value.ToString())], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
         {
+            mapScene = iMapScene;
+
             if (heroModel.FlightHeight.Value > 0)
             {
                 SetFlight(heroModel.FlightHeight.Value, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.ShadowSprite.Value.ToString())]);
             }
+
+            /*
+            if (mapScene.Tilemap.Name == "TechHomeworld")
+            {
+                animatedSprite.Scale = new Vector2(0.5f, 0.5f);
+                if (shadowSprite != null) shadowSprite.Scale = new Vector2(0.5f, 0.5f);
+            }
+            */
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)

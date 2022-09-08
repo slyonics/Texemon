@@ -127,7 +127,13 @@ namespace Texemon.Scenes.MapScene
                 return;
             }
 
-            if (pathingController.PathingError) follower.Teleport(mapScene.Tilemap.GetNavNode(follower, humanPlayer).Center);
+            if (pathingController.PathingError)
+            {
+                var targetNode = mapScene.Tilemap.GetNavNode(follower, humanPlayer);
+                if (targetNode != null) follower.Teleport(targetNode.Center);
+                else follower.Teleport(humanPlayer.Position);
+            }
+
             if (pathingController.Terminated)
             {
                 behavior = Behavior.Regrouping;

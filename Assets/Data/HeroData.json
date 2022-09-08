@@ -19,7 +19,7 @@
 	{
 		"Name": "TechHero",
 		"Class": "Android",
-		"Sprite": "GroundDrone",
+		"Sprite": "Android",
 		"InitialEquipment": [
 			"Longsword"
 		],
@@ -35,7 +35,7 @@
 	{
 		"Name": "SupportDrone",
 		"Class": "Drone",
-		"Sprite": "AirDrone",
+		"Sprite": "SupportDrone",
 		"FlightHeight": "8",
 		"InitialEquipment": [
 			"Longsword"
@@ -52,7 +52,7 @@
 	{
 		"Name": "FlameDrone",
 		"Class": "Drone",
-		"Sprite": "GroundDrone",
+		"Sprite": "FlameDrone",
 		"InitialEquipment": [
 			"Longsword"
 		],
@@ -66,9 +66,9 @@
 		}
 	},
 	{
-		"Name": "GunDrone",
+		"Name": "ElectricDrone",
 		"Class": "Drone",
-		"Sprite": "GroundDrone",
+		"Sprite": "ElectricDrone",
 		"InitialEquipment": [
 			"Longsword"
 		],

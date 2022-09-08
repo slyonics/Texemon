@@ -34,14 +34,12 @@ namespace Texemon.SceneObjects.Maps
 
         private NavNode[,] navMesh;
 
-        public string Name { get; private set; }
+        public string Name { get => gameMap.ToString(); }
 
         public Tilemap(Scene iScene, GameMap iGameMap)
             : base(iScene, Vector2.Zero)
         {
             gameMap = iGameMap;
-
-            Name = gameMap.ToString();
 
             tiledMap = new TiledMap();
             tiledMap.ParseXml(AssetCache.MAPS[gameMap]);

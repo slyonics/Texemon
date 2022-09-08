@@ -49,7 +49,8 @@ namespace Texemon.SceneObjects.Maps
             tilemap = iMapScene;
             actor = iActor;
             destinationNode = tilemap.GetNavNode(actor, iDestination);
-            destinationPoint = destinationNode.Center;
+            if (destinationNode == null) destinationPoint = iDestination.Center;
+            else destinationPoint = destinationNode.Center;
             walkSpeed = iWalkSpeed;
 
             actor.ControllerList.Add(this);

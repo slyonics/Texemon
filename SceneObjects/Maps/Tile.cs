@@ -176,6 +176,7 @@ namespace Texemon.SceneObjects.Maps
         public int TileX { get; private set; }
         public int TileY { get; private set; }
         public Vector2 Center { get => center; }
+        public Vector2 Bottom { get => center + new Vector2(0, parentMap.TileHeight / 2); }
         public List<Tile> NeighborList { get => neighborList; }
         public List<Rectangle> ColliderList { get; private set; } = new List<Rectangle>();
     }

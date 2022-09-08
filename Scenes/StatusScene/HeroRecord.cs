@@ -12,7 +12,7 @@ namespace Texemon.Scenes.StatusScene
         TechHero,
         SupportDrone,
         FlameDrone,
-        GunDrone
+        ElectricDrone
     }
 
     public class HeroRecord
