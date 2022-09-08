@@ -44,8 +44,11 @@ namespace Texemon.Scenes.IntroScene
 
         public void Proceed()
         {
-            var hero = new HeroModel(ClassType.Android);
+            var hero = new HeroModel(HeroType.TechHero);
             GameProfile.PlayerProfile.Party.Add(hero);
+            GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.SupportDrone));
+            GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.FlameDrone));
+            GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.GunDrone));
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
         }
 

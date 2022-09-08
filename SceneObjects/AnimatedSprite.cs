@@ -270,5 +270,7 @@ namespace Texemon.SceneObjects
 
         public string AnimationName { get => animationIndex; }
         public int Frame { get => frameIndex; }
+
+        public Dictionary<string, Animation> AnimationList { get => animationList; }
     }
 }

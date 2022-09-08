@@ -1,0 +1,84 @@
+[
+	{
+		"Name": "Inventor",
+		"Class": "Human",
+		"Sprite": "Inventor",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame",
+			"Heal"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Inventor" },
+			"MaxHealth": { "Value": 200 }
+		}
+	},
+	{
+		"Name": "TechHero",
+		"Class": "Android",
+		"Sprite": "GroundDrone",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Android" },
+			"MaxHealth": { "Value": 50 }
+		}
+	},
+	{
+		"Name": "SupportDrone",
+		"Class": "Drone",
+		"Sprite": "AirDrone",
+		"FlightHeight": "8",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Droney" },
+			"MaxHealth": { "Value": 20 }
+		}
+	},
+	{
+		"Name": "FlameDrone",
+		"Class": "Drone",
+		"Sprite": "GroundDrone",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Droney" },
+			"MaxHealth": { "Value": 30 }
+		}
+	},
+	{
+		"Name": "GunDrone",
+		"Class": "Drone",
+		"Sprite": "GroundDrone",
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Droney" },
+			"MaxHealth": { "Value": 30 }
+		}
+	}
+]

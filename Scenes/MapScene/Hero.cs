@@ -43,10 +43,13 @@ namespace Texemon.Scenes.MapScene
 
         private MapScene mapScene;
 
-        public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, string spriteName, Orientation iOrientation = Orientation.Down)
-            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), spriteName)], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
+        public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, StatusScene.HeroModel heroModel, Orientation iOrientation = Orientation.Down)
+            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.Sprite.Value.ToString())], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
         {
-            
+            if (heroModel.FlightHeight.Value > 0)
+            {
+                SetFlight(heroModel.FlightHeight.Value, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.ShadowSprite.Value.ToString())]);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)

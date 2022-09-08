@@ -13,11 +13,11 @@
 		"DialogueRecords": [
 			{
 				"Speaker": "$Party.0",
-				"Text": "Inventor, please tell me why I was created."
+				"Text": "Inventor, can you tell me the purpose for wh?"
 			},
 			{
 				"Speaker": "Inventor",
-				"Text": "Your full purpose was beyond the capacity of my intellect to understand."
+				"Text": "Your ."
 			},
 			{
 				"Speaker": "Inventor",
@@ -25,7 +25,7 @@
 			},
 			{
 				"Speaker": "Inventor",
-				"Text": "The journey will be dangerous. Let me construct some guardians to protect you along the way."
+				"Text": "The journey will be dangerous. Let me construct drones to protect you along the way."
 			}
 		]
 	},

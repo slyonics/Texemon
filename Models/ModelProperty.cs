@@ -44,6 +44,11 @@ namespace Texemon.Models
         [field: NonSerialized]
         public event ModelChangeCallback ModelChanged;
 
+        public ModelProperty()
+        {
+
+        }
+
         public ModelProperty(T iModel)
         {
             model = iModel;

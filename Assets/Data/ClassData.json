@@ -1,46 +1,32 @@
 [
 	{
-		"ClassType": "Inventor",
-		"Sprite": "Inventor",
-		"InitialEquipment": [
-			"Longsword",
-			"Longsword",
-			"Longsword",
-			"Longsword",
-			"Longsword",
-			"Longsword"
-		],
-		"InitialAbilities": [
-			"Flame",
-			"Heal"
-		],
+		"ClassType": "Human",
+		"InitialEquipment": [],
+		"InitialAbilities": [],
 		"Actions": [
 			"Delay",
 			"Defend",
 			"Flee"
-		],
-		"BattlerModel": {
-			"Name": { "Value": "Inventor" },
-			"MaxHealth": { "Value": 50 }
-		}
+		]
 	},
 	{
 		"ClassType": "Android",
-		"Sprite": "GroundDrone",
-		"InitialEquipment": [
-			"Longsword"
-		],
-		"InitialAbilities": [
-			"Flame"
-		],
+		"InitialEquipment": [],
+		"InitialAbilities": [],
 		"Actions": [
 			"Delay",
 			"Defend",
 			"Flee"
-		],
-		"BattlerModel": {
-			"Name": { "Value": "Android" },
-			"MaxHealth": { "Value": 30 }
-		}
+		]
+	},
+	{
+		"ClassType": "Drone",
+		"InitialEquipment": [],
+		"InitialAbilities": [],
+		"Actions": [
+			"Delay",
+			"Defend",
+			"Flee"
+		]
 	}
 ]

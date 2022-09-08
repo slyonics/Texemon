@@ -35,6 +35,9 @@ namespace Texemon.SceneObjects.Maps
         protected bool ignoreObstacles = false;
         protected bool hitTerrain;
 
+        protected int flightHeight;
+        protected AnimatedSprite shadowSprite;
+
         protected Orientation orientation;
         private bool[] movementArcs = new bool[4];
 
@@ -74,12 +77,14 @@ namespace Texemon.SceneObjects.Maps
             velocity = desiredVelocity;
 
             Move(gameTime);
-            UpdateElevation(gameTime);
+            //UpdateElevation(gameTime);
+            positionZ = flightHeight;
 
             currentBounds = UpdateBounds(position);
             displacement = position - startingPosition;
 
             animatedSprite?.Update(gameTime);
+            shadowSprite?.Update(gameTime);
         }
 
         public override void Move(GameTime gameTime)
@@ -91,6 +96,8 @@ namespace Texemon.SceneObjects.Maps
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
+            float depth = (camera == null) ? 0 : camera.GetDepth(DepthPosition);
+            shadowSprite?.Draw(spriteBatch, position, camera, depth);
             base.Draw(spriteBatch, camera);
 
             if (Settings.GetProgramSetting<bool>("DebugMode")) Debug.DrawBox(spriteBatch, currentBounds);
@@ -366,6 +373,12 @@ namespace Texemon.SceneObjects.Maps
         public virtual void OrientedAnimation(string animationName, AnimationFollowup animationFollowup = null)
         {
             PlayAnimation(animationName + orientation.ToString(), animationFollowup);
+        }
+
+        public void SetFlight(int newHeight, Texture2D shadow)
+        {
+            shadowSprite = new AnimatedSprite(shadow, new Dictionary<string, Animation>(animatedSprite.AnimationList));
+            positionZ = flightHeight = newHeight;
         }
 
         public override Vector2 Position { set { position = value; } }

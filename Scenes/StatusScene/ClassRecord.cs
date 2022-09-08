@@ -8,10 +8,8 @@ namespace Texemon.Scenes.StatusScene
 {
     public enum ClassType
     {
-        Inventor,
         Android,
-        Robot,
-        Magician,
+        Drone,
         Human,
         Monster,
         Spirit
@@ -20,10 +18,8 @@ namespace Texemon.Scenes.StatusScene
     public class ClassRecord
     {
         public ClassType ClassType { get; set; }
-        public string Sprite { get; set; }
         public string[] InitialEquipment { get; set; }
         public string[] InitialAbilities { get; set; }
         public string[] Actions { get; set; }
-        public BattleScene.BattlerModel BattlerModel { get; set; }
     }
 }

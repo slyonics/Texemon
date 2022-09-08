@@ -75,6 +75,7 @@ namespace Texemon.Main
         ConversationData,
         EncounterData,
         EnemyData,
+        HeroData,
         ItemData,
 
         None = -1
@@ -123,6 +124,7 @@ namespace Texemon.Main
         Actors_crystal,
         Actors_doors1,
         Actors_doors2,
+        Actors_DroneShadow,
         Actors_dude,
         Actors_fire1,
         Actors_fire2,

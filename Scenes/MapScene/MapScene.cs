@@ -34,7 +34,7 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-            PartyLeader = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value.Sprite.Value.ToString());
+            PartyLeader = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value);
             AddEntity(PartyLeader);
             PlayerController playerController = new PlayerController(this, PartyLeader);
             AddController(playerController);
@@ -42,7 +42,7 @@ namespace Texemon.Scenes.MapScene
             Actor leader = PartyLeader;
             foreach (var partymember in Models.GameProfile.PlayerProfile.Party.Skip(1))
             {
-                Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), partymember.Value.Sprite.Value.ToString());
+                Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), partymember.Value);
                 AddEntity(follower);
                 FollowerController followerController = new FollowerController(this, follower, leader);
                 AddController(followerController);

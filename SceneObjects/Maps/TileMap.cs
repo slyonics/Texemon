@@ -244,7 +244,8 @@ namespace Texemon.SceneObjects.Maps
         public NavNode GetNavNode(Actor seeker, Actor target)
         {
             NavNode targetNode = GetNavNode(target);
-            if (targetNode != null && targetNode.FitsActor(seeker)) return targetNode;
+            if (targetNode == null) return null;
+            if (targetNode.FitsActor(seeker)) return targetNode;
 
             List<NavNode> nodeList = new List<NavNode>();
             nodeList.Add(targetNode);
