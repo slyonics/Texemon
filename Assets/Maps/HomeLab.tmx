@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="5">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="6">
  <tileset firstgid="1" source="Tilesets/ColorTileA4.tsx"/>
  <tileset firstgid="1849" source="Tilesets/ColorTileA5.tsx"/>
  <tileset firstgid="1977" source="Tilesets/ColorTileB.tsx"/>
  <objectgroup id="17" name="Triggers">
-  <object id="4" name="Intro Sequence" x="64" y="96" width="48" height="48">
+  <object id="4" name="Intro Sequence" type="Automatic" x="64" y="96" width="48" height="48">
    <properties>
     <property name="Script" value="Conversation IntroInventor"/>
+   </properties>
+  </object>
+  <object id="5" name="TechHomeworld" type="Travel" x="240" y="112" width="32" height="16">
+   <properties>
+    <property name="Direction" value="Up"/>
+    <property name="Label" value="Outside"/>
    </properties>
   </object>
  </objectgroup>
@@ -18,13 +24,6 @@
     <property name="Interact" value="Conversation TalkInventor"/>
     <property name="Label" value="Inventor"/>
     <property name="Sprite" value="Inventor"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup id="9" name="Travel">
-  <object id="1" name="Default" x="240" y="112" width="32" height="16">
-   <properties>
-    <property name="Direction" value="North"/>
    </properties>
   </object>
  </objectgroup>

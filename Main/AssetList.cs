@@ -289,6 +289,7 @@ namespace Texemon.Main
     public enum GameMap
     {
         HomeLab,
+        TechHomeworld,
         Test,
         Tilesets_ColorTileA1,
         Tilesets_ColorTileA2,

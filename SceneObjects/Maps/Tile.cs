@@ -20,6 +20,11 @@ namespace Texemon.SceneObjects.Maps
             public Color color = Color.White;
             public int height;
             public Vector2 offset;
+
+            public Rectangle[] anims;
+            public int animationTime;
+            public int animFrame;
+            public int animTimeLeft;
         }
 
         private Tilemap parentMap;
@@ -42,7 +47,20 @@ namespace Texemon.SceneObjects.Maps
 
         public void Update(GameTime gameTime)
         {
-
+            foreach (TileSprite backgroundSprite in backgroundSprites)
+            {
+                if (backgroundSprite.anims != null)
+                {
+                    backgroundSprite.animTimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
+                    while (backgroundSprite.animTimeLeft < 0)
+                    {
+                        backgroundSprite.animTimeLeft += backgroundSprite.animationTime;
+                        backgroundSprite.animFrame++;
+                        if (backgroundSprite.animFrame >= backgroundSprite.anims.Length) backgroundSprite.animFrame = 0;
+                        backgroundSprite.source = backgroundSprite.anims[backgroundSprite.animFrame];
+                    }
+                }
+            }
         }
 
         public void DrawBackground(SpriteBatch spriteBatch, Camera camera)
@@ -84,11 +102,27 @@ namespace Texemon.SceneObjects.Maps
                     switch (tiledProperty.name)
                     {
                         case "Color": var color = System.Drawing.ColorTranslator.FromHtml(tiledProperty.value); tileSprite.color = new Color(color.R, color.G, color.B, color.A); break;
+                        case "AnimationTime": tileSprite.animationTime = int.Parse(tiledProperty.value); break;
+                        case "AnimationOffsets":
+                            {
+                                string[] tokens = tiledProperty.value.Split(',');
+                                tileSprite.anims = new Rectangle[tokens.Length];
+                                for (int i = 0; i < tokens.Length; i++)
+                                {
+                                    tileSprite.anims[i] = new Rectangle(source.X + source.Width * int.Parse(tokens[i]), source.Y, source.Width, source.Height);
+                                }
+                            }
+                            break;
                     }
                 }
             }
 
             tileSprite.offset = new Vector2(tiledLayer.offsetX, tiledLayer.offsetY);
+
+            if (tileSprite.anims != null)
+            {
+                tileSprite.animTimeLeft = tileSprite.animationTime;
+            }
 
             backgroundSprites.Add(tileSprite);
         }

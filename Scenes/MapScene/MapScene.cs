@@ -34,7 +34,6 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
-
             PartyLeader = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value.Sprite.Value.ToString());
             AddEntity(PartyLeader);
             PlayerController playerController = new PlayerController(this, PartyLeader);
@@ -95,6 +94,27 @@ namespace Texemon.Scenes.MapScene
             PartyLeader.Idle();
         }
 
+        public MapScene(string mapName, string sourceMapName)
+            : this(mapName)
+        {
+            var spawnZone = EventTriggers.First(x => x.Name == sourceMapName);
+
+            Orientation orientation = (Orientation)Enum.Parse(typeof(Orientation), spawnZone.GetProperty("Direction"));
+
+            Vector2 spawnPosition = Vector2.Zero;
+            switch (orientation)
+            {
+                case Orientation.Up: spawnPosition = new Vector2(spawnZone.Bounds.Center.X, spawnZone.Bounds.Top); break;
+                case Orientation.Right: spawnPosition = new Vector2(); break;
+                case Orientation.Down: spawnPosition = new Vector2(spawnZone.Bounds.Center.X, spawnZone.Bounds.Bottom + PartyLeader.Bounds.Height); break;
+                case Orientation.Left: spawnPosition = new Vector2(); break;
+            }
+            PartyLeader.CenterOn(spawnPosition);
+
+            PartyLeader.Orientation = orientation;
+            PartyLeader.Idle();
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -104,7 +124,7 @@ namespace Texemon.Scenes.MapScene
             bool eventTriggered = false;
             foreach (EventTrigger eventTrigger in EventTriggers)
             {
-                if (eventTrigger.Bounds.Intersects(PartyLeader.Bounds))
+                if (eventTrigger.Bounds.Intersects(PartyLeader.Bounds) && !eventTrigger.Interactive)
                 {
                     eventTriggered = true;
                     eventTrigger.Terminated = true;

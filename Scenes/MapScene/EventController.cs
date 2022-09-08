@@ -27,7 +27,7 @@ namespace Texemon.Scenes.MapScene
             switch (tokens[0])
             {
                 case "EndGame": EndGame = true; break;
-                case "ChangeMap": ChangeMap(tokens); Audio.PlaySound(GameSound.wall_enter); break;
+                case "ChangeMap": ChangeMap(tokens, mapScene); break;
                 case "SetWaypoint": SetWaypoint(tokens); break;
                 case "Conversation": Conversation(tokens, scriptParser); break;
                 case "Encounter": Encounter(tokens, scriptParser); break;
@@ -46,13 +46,10 @@ namespace Texemon.Scenes.MapScene
             else return base.ParseParameter(parameter);
         }
 
-        public static void ChangeMap(string[] tokens)
+        public static void ChangeMap(string[] tokens, MapScene mapScene)
         {
-            Type sceneType = Type.GetType(tokens[1]);
-            if (tokens.Length == 6) CrossPlatformGame.Transition(sceneType, tokens[2], int.Parse(tokens[3]), int.Parse(tokens[4]), (Orientation)Enum.Parse(typeof(Orientation), tokens[5]));
-            else if (tokens.Length == 3) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], tokens[2]);
-            else if (tokens.Length == 2) CrossPlatformGame.Transition(sceneType);
-            else CrossPlatformGame.Transition(sceneType, tokens[2]);
+            if (tokens.Length == 5) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], int.Parse(tokens[2]), int.Parse(tokens[3]), (Orientation)Enum.Parse(typeof(Orientation), tokens[4]));
+            else if (tokens.Length == 2) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], mapScene.Tilemap.Name);
         }
 
         public static void SetWaypoint(string[] tokens)

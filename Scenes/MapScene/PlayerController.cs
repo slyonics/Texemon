@@ -46,8 +46,8 @@ namespace Texemon.Scenes.MapScene
             if (Input.LeftMouseState == Microsoft.Xna.Framework.Input.ButtonState.Pressed &&
                 Input.MousePosition.X >= 0 && Input.MousePosition.Y >= 0 && Input.MousePosition.X < CrossPlatformGame.ScreenWidth && Input.MousePosition.Y < CrossPlatformGame.ScreenHeight)
             {
-                movement = Input.MousePosition + mapScene.Camera.Position - Player.Position;
-                if (movement.Length() > 0.001f) movement.Normalize();
+                movement = Input.MousePosition + mapScene.Camera.Position - Player.Position + new Vector2(mapScene.Camera.CenteringOffsetX, mapScene.Camera.CenteringOffsetY);
+                if (movement.Length() > 1.0f) movement.Normalize();
                 else movement = Vector2.Zero;
             }
             if (inputFrame.CommandDown(Command.Left)) movement.X -= 1.0f;

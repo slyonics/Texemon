@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Anchor="$CenterX,$CenterY" Bounds="-70,-90,140,80" Style="Bind PlayerProfile.WindowStyle" InnerMargin="8,8,8,8">
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-75,-90,150,80" Style="Bind PlayerProfile.WindowStyle" InnerMargin="8,8,8,8">
 		<Label Text="Please name this android" Alignment="Vertical" Color="#F0D0B0FF" Font="Bind PlayerProfile.Font"/>
 		<Textbox Name="NamingBox" Text="Android" Style="Bind PlayerProfile.WindowStyle" ActiveStyle="Bind PlayerProfile.SelectedStyle" Active="True" Bounds="0,8,100,20" InnerMargin="8,3,8,3" Font="Bind PlayerProfile.Font" Alignment="Vertical"/>
 

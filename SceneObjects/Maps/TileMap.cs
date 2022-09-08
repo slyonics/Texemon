@@ -34,10 +34,14 @@ namespace Texemon.SceneObjects.Maps
 
         private NavNode[,] navMesh;
 
+        public string Name { get; private set; }
+
         public Tilemap(Scene iScene, GameMap iGameMap)
             : base(iScene, Vector2.Zero)
         {
             gameMap = iGameMap;
+
+            Name = gameMap.ToString();
 
             tiledMap = new TiledMap();
             tiledMap.ParseXml(AssetCache.MAPS[gameMap]);
@@ -60,17 +64,15 @@ namespace Texemon.SceneObjects.Maps
             foreach (TiledGroup tiledGroup in tiledMap.Groups) LoadLayers(tiledGroup.layers, tiledGroup);
             LoadLayers(tiledMap.Layers, null);
 
-
-
-                for (int y = Rows - 1; y >= 0; y--)
+            for (int y = Rows - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < Columns; x++)
                 {
-                    for (int x = 0; x < Columns; x++)
-                    {
-                        tiles[x, y].AssignNeighbors();
-                    }
+                    tiles[x, y].AssignNeighbors();
                 }
+            }
 
-                BuildNavMesh();
+            BuildNavMesh();
         }
 
         protected virtual void LoadLayers(TiledLayer[] tiledLayers, TiledGroup tiledGroup)
