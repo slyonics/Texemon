@@ -79,6 +79,7 @@ namespace Texemon.Main
         EnemyData,
         HeroData,
         ItemData,
+        ShopData,
 
         None = -1
     }

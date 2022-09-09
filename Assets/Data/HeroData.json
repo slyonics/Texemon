@@ -36,7 +36,7 @@
 		"Name": "SupportDrone",
 		"Class": "Drone",
 		"Sprite": "SupportDrone",
-		"FlightHeight": "2",
+		"FlightHeight": "4",
 		"InitialEquipment": [
 			"Longsword"
 		],

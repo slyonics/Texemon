@@ -100,8 +100,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
 
-            description.Text = "When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.";
-            //"When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.";
+            description.Text = "Saved from a doomed world, a revolutionary android prototype seeks purpose and answers. Construct and upgrade robotic companions or recruit helpful lifeforms on a long journey to the labratory where it all began.";
         }
 
         public void Proceed()

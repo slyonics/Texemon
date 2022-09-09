@@ -1,0 +1,22 @@
+[
+	{
+		"Name": "Longsword",
+		"Animation": "Guarding",
+		"Description": [
+			"- 10-20 damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Sword",
+		"Charges": -1,
+		"MaxCharges": -1,
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Slash",
+			"Effect Slash $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage $random(10,20)"
+		]
+	}
+]

@@ -10,9 +10,16 @@ namespace Texemon.Scenes.ShopScene
 {
     public class ShopScene : Scene
     {
+        public static List<ShopRecord> SHOPS { get; private set; }
+
         public ShopScene()
         {
 
+        }
+
+        public static void Initialize()
+        {
+            SHOPS = AssetCache.LoadRecords<ShopRecord>("ShopData");
         }
 
         public static List<ItemRecord> ITEMS { get => StatusScene.StatusScene.ITEMS; }

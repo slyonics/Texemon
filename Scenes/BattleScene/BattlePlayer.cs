@@ -43,7 +43,14 @@ namespace Texemon.Scenes.BattleScene
             { HeroAnimation.Dead.ToString(), new Animation(1, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) }
         };
 
-        public HeroModel HeroModel { get; set; }
+        private AnimatedSprite shadowSprite;
+
+        private HeroModel heroModel;
+        public HeroModel HeroModel { get => heroModel; set { heroModel = value; if (HeroModel.FlightHeight.Value > 1)
+                {
+                    shadowSprite = new AnimatedSprite(AssetCache.SPRITES[HeroModel.ShadowSprite.Value], HERO_ANIMATIONS);
+                }
+            } }
 
         public BattlePlayer(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -65,12 +72,19 @@ namespace Texemon.Scenes.BattleScene
             else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+
+            shadowSprite?.Draw(spriteBatch, Bottom, null, Depth);
+        }
+
         public void DrawShader(SpriteBatch spriteBatch)
         {
             if (!drawSprite) return;
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
-            AnimatedSprite.Draw(spriteBatch, Bottom, null, Depth);
+            AnimatedSprite.Draw(spriteBatch, Bottom - new Vector2(0, Dead ? 0 : HeroModel.FlightHeight.Value), null, Depth);
             spriteBatch.End();
         }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.8" tiledversion="1.8.4" name="ColorTileB" tilewidth="16" tileheight="16" tilecount="256" columns="16">
+<tileset version="1.8" tiledversion="1.8.6" name="ColorTileB" tilewidth="16" tileheight="16" tilecount="256" columns="16">
  <image source="../../Graphics/Tiles/ColorTileB.png" trans="7e7e7e" width="256" height="256"/>
  <tile id="8">
   <objectgroup draworder="index" id="2">
@@ -51,9 +51,24 @@
    <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="51">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="8"/>
+  </objectgroup>
+ </tile>
  <tile id="56">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="6" width="13" height="9"/>
+  </objectgroup>
+ </tile>
+ <tile id="112">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="6" width="16" height="10"/>
+  </objectgroup>
+ </tile>
+ <tile id="113">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="6" width="16" height="8"/>
   </objectgroup>
  </tile>
  <tile id="132">

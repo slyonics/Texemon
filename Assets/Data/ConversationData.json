@@ -13,10 +13,10 @@
 		"DialogueRecords": [
 			{
 				"Speaker": "$Party.0",
-				"Text": "Inventor, can you tell me about the purpose I was created for?"
+				"Text": "Doctor, can you tell me about the purpose I was created for?"
 			},
 			{
-				"Speaker": "Inventor",
+				"Speaker": "Doctor",
 				"Text": "Your purpose was to revolutionize our homeworld and bring prosperity to all."
 			},
 			{
@@ -24,11 +24,11 @@
 				"Text": "Bring prosperity how? I still want to fulfill my original purpose."
 			},
 			{
-				"Speaker": "Inventor",
+				"Speaker": "Doctor",
 				"Text": "You will have to discover the truth yourself in the ruins of the labratory where you were designed."
 			},
 			{
-				"Speaker": "Inventor",
+				"Speaker": "Doctor",
 				"Text": "The journey will be dangerous. Let me construct drones to protect you along the way."
 			}
 		]
