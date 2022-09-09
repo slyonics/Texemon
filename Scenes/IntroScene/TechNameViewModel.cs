@@ -22,6 +22,8 @@ namespace Texemon.Scenes.IntroScene
 
         Textbox namingBox;
 
+        int confirmCooldown = 100;
+
         public TechNameViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.MenuLevel, viewName)
         {
@@ -32,16 +34,28 @@ namespace Texemon.Scenes.IntroScene
         {
             base.Update(gameTime);
 
-            if (Input.CurrentInput.CommandReleased(Command.Confirm) && !namingBox.Active)
+            if (Input.CurrentInput.CommandPressed(Command.Cancel))
+            {
+                Terminate();
+            }
+            else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0)
+            {
+                GetWidget<Button>("OK").RadioSelect();
+                namingBox.Active = false;
+            }
+            else if (Input.CurrentInput.CommandReleased(Command.Confirm) && confirmCooldown <= 0)
             {
                 Audio.PlaySound(GameSound.menu_select);
-                GetWidget<Button>("OK").RadioSelect();
                 Proceed();
             }
+
+            if (confirmCooldown > 0) confirmCooldown -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
         public void Proceed()
         {
+            GameProfile.SetSaveData<bool>("NewTechGame", true);
+
             var hero = new HeroModel(HeroType.TechHero);
             GameProfile.PlayerProfile.Party.Add(hero);
             GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.SupportDrone));

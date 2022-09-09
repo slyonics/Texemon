@@ -61,6 +61,12 @@ namespace Texemon.Scenes.MapScene
                     case "Triggers":
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {
+                            var prop = tiledObject.properties.FirstOrDefault(x => x.name == "EnableIf");
+                            if (prop != null && !Models.GameProfile.GetSaveData<bool>(prop.value)) continue;
+
+                            prop = tiledObject.properties.FirstOrDefault(x => x.name == "DisableIf");
+                            if (prop != null && Models.GameProfile.GetSaveData<bool>(prop.value)) continue;
+
                             EventTriggers.Add(new EventTrigger(this, tiledObject));
                         }
                         break;

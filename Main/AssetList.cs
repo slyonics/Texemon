@@ -11,6 +11,7 @@ namespace Texemon.Main
         CreditsScene_CreditsView,
         IntroScene_SelectionView,
         IntroScene_TechNameView,
+        ShopScene_ShopView,
         TitleScene_SettingsView,
         TitleScene_TitleView,
 

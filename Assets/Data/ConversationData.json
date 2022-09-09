@@ -13,11 +13,15 @@
 		"DialogueRecords": [
 			{
 				"Speaker": "$Party.0",
-				"Text": "Inventor, can you tell me the purpose for wh?"
+				"Text": "Inventor, can you tell me about the purpose I was created for?"
 			},
 			{
 				"Speaker": "Inventor",
-				"Text": "Your ."
+				"Text": "Your purpose was to revolutionize our homeworld and bring prosperity to all."
+			},
+			{
+				"Speaker": "$Party.0",
+				"Text": "Bring prosperity how? I still want to fulfill my original purpose."
 			},
 			{
 				"Speaker": "Inventor",

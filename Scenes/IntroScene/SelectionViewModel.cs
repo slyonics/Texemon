@@ -35,7 +35,16 @@ namespace Texemon.Scenes.IntroScene
         {
             base.Update(gameTime);
 
-            if (techNameViewModel != null) return;
+            if (techNameViewModel != null)
+            {
+                if (techNameViewModel.Terminated)
+                {
+                    techNameViewModel = null;
+                    ReadyToProceed.Value = true;
+                    GetWidget<Button>("OK").UnSelect();
+                }
+                else return;
+            }
 
             if (Input.CurrentInput.CommandPressed(Command.Up))
             {
@@ -49,10 +58,13 @@ namespace Texemon.Scenes.IntroScene
                 GetWidget<Button>("Technology").RadioSelect();
                 Technology();
             }
+            else if (Input.CurrentInput.CommandPressed(Command.Confirm) && selection != Selection.None)
+            {
+                GetWidget<Button>("OK").RadioSelect();
+            }
             else if (Input.CurrentInput.CommandReleased(Command.Confirm) && selection != Selection.None)
             {
                 Audio.PlaySound(GameSound.menu_select);
-                GetWidget<Button>("OK").RadioSelect();
                 Proceed();
             }
         }
@@ -89,6 +101,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
 
             description.Text = "When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.";
+            //"When the Castle Corporation ordered you to destroy your revolutionary AI you fled with the last surviving backup. Now, in the twilight of civilization, you return with your greatest creation so that she may realize her true destiny.";
         }
 
         public void Proceed()
