@@ -83,7 +83,7 @@ namespace Texemon.Scenes.MapScene
 
             Tile npcDestination = mapScene.Tilemap.GetTile(tileX, tileY);
             if (npcDestination == null) return false;
-            //if (!mapScene.Tilemap.CanTraverse(npc, npcDestination)) return false;
+            if (!mapScene.Tilemap.CanTraverse(npc, npcDestination)) return false;
             //if (((CaterpillarController)mapScene.HeroList[0].ControllerList.Find(x => x is CaterpillarController)).OccupiedTile == npcDestination) return false;
 
             destinationTile = npcDestination;

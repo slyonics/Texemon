@@ -21,7 +21,8 @@
 		"Class": "Android",
 		"Sprite": "Android",
 		"InitialEquipment": [
-			"Longsword"
+			"Longsword",
+			"Revolver"
 		],
 		"InitialAbilities": [
 			"Flame"

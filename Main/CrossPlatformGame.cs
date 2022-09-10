@@ -80,6 +80,7 @@ namespace Texemon.Main
             Scenes.ConversationScene.ConversationScene.Initialize();
             Scenes.BattleScene.BattleScene.Initialize();
             Scenes.StatusScene.StatusScene.Initialize();
+            Scenes.ShopScene.ShopScene.Initialize();
 
             CurrentScene = new SplashScene();
         }

@@ -9,7 +9,7 @@
 	</Panel>
 
 	<Panel Name="PlayerPanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="8,16,8,8" TransitionIn="Expand" TransitionOut="Shrink">
-		<DataGrid Items="Bind PlayerProfile.Party" Alignment="Stretch">
+		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Alignment="Stretch">
 			<Panel Alignment="Vertical" Bounds="0,0,102,20">
 				<Scenes.BattleScene.BattlePlayer HeroModel="Bind DataGrid" Alignment="BottomLeft"/>
 				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Color="Bind DataGrid.NameColor" Alignment="Cascading" TextAlignment="Left" Bounds="10,0,0,20"/>

@@ -350,6 +350,33 @@ namespace Texemon.SceneObjects.Maps
             return path;
         }
 
+        public bool CanTraverse(Actor actor, Tile destinationTile)
+        {
+            Rectangle destinationBounds = new Rectangle((int)destinationTile.Center.X + actor.BoundingBox.Left, (int)destinationTile.Center.Y + actor.BoundingBox.Top, actor.BoundingBox.Width, actor.BoundingBox.Height);
+            Rectangle boundsForActor = Rectangle.Union(actor.Bounds, destinationBounds);
+
+            int tileStartX = boundsForActor.Left / TileWidth;
+            int tileEndX = boundsForActor.Right / TileWidth;
+            int tileStartY = boundsForActor.Top / TileHeight;
+            int tileEndY = boundsForActor.Bottom / TileHeight;
+
+            List<Rectangle> colliderList = new List<Rectangle>();
+            for (int x = tileStartX; x <= tileEndX; x++)
+            {
+                for (int y = tileStartY; y <= tileEndY; y++)
+                {
+                    colliderList.AddRange(GetTile(x, y).ColliderList);
+                }
+            }
+
+            foreach (Rectangle collider in colliderList)
+            {
+                if (collider.Intersects(boundsForActor)) return false;
+            }
+
+            return true;
+        }
+
         public TiledMap MapData { get => tiledMap; }
         public List<Tuple<TiledLayer, TiledGroup>> ObjectData { get; } = new List<Tuple<TiledLayer, TiledGroup>>();
 

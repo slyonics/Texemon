@@ -20,6 +20,8 @@ namespace Texemon.SceneObjects.Widgets
 
         private XmlNode dataTemplate;
 
+        public bool Scrolling { get; set; } = true;
+
         public DataGrid(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
         {
@@ -81,19 +83,23 @@ namespace Texemon.SceneObjects.Widgets
 
         public bool IsChildVisible(Widget child)
         {
-            return true;
+            if (!Scrolling) return true;
 
-            //return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y) &&
-            //    (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y);
+            return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y + 4) &&
+                   (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y - 4);
         }
 
         public void ScrollUp()
         {
+            if (!Scrolling) return;
+
             scrollOffset.Y -= ChildList.Last().OuterBounds.Height;
         }
 
         public void ScrollDown()
         {
+            if (!Scrolling) return;
+
             scrollOffset.Y += ChildList.Last().OuterBounds.Height;
         }
 

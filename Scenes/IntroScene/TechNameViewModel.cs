@@ -46,6 +46,7 @@ namespace Texemon.Scenes.IntroScene
             else if (Input.CurrentInput.CommandReleased(Command.Confirm) && confirmCooldown <= 0)
             {
                 Audio.PlaySound(GameSound.menu_select);
+                GetWidget<Button>("OK").UnSelect();
                 Proceed();
             }
 

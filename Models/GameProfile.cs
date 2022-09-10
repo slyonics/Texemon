@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Texemon.Main;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Models
 {
@@ -29,6 +30,7 @@ namespace Texemon.Models
         private static int saveSlot;
         private static Dictionary<string, object> saveData;
         private static PlayerProfile playerProfile;
+        private static ModelCollection<ItemRecord> inventory;
 
         public static void NewState()
         {
@@ -36,6 +38,7 @@ namespace Texemon.Models
             saveSlot = 0;
             saveData = new Dictionary<string, object>(DEFAULT_SAVE_VALUES);
             playerProfile = new PlayerProfile();
+            inventory = new ModelCollection<ItemRecord>();
         }
 
         public static void LoadState(string saveFileName)
@@ -53,6 +56,7 @@ namespace Texemon.Models
             {
                 saveData = (Dictionary<string, object>)binaryFormatter.Deserialize(fileStream);
                 playerProfile = (PlayerProfile)binaryFormatter.Deserialize(fileStream);
+                inventory = (ModelCollection<ItemRecord>)binaryFormatter.Deserialize(fileStream);
             }
         }
 
@@ -81,6 +85,9 @@ namespace Texemon.Models
                 fileStream.Flush();
 
                 binaryFormatter.Serialize(fileStream, playerProfile);
+                fileStream.Flush();
+
+                binaryFormatter.Serialize(fileStream, inventory);
                 fileStream.Flush();
             }
         }
@@ -114,6 +121,7 @@ namespace Texemon.Models
         }
 
         public static PlayerProfile PlayerProfile { get => playerProfile; }
+        public static ModelCollection<ItemRecord> Inventory { get => inventory; }
 
         public static List<string> SaveList
         {

@@ -18,5 +18,25 @@
 			"Flash 255 27 0",
 			"Damage $random(10,20)"
 		]
+	},
+	{
+		"Name": "Revolver",
+		"Animation": "Guarding",
+		"Description": [
+			"- 10-20 damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Gun",
+		"Charges": -1,
+		"MaxCharges": -1,
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Slash",
+			"Effect Gunshot $targetCenterX $targetCenterY 4",
+			"Flash 255 27 0",
+			"Damage $random(10,20)"
+		]
 	}
 ]
