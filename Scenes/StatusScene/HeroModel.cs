@@ -27,24 +27,28 @@ namespace Texemon.Scenes.StatusScene
             foreach (string equipment in classRecord.InitialEquipment)
             {
                 ItemRecord item = StatusScene.ITEMS.First(x => x.Name == equipment);
+                item.ChargesLeft = item.Charges;
                 Equipment.Add(new ItemRecord(item));
             }
 
             foreach (string equipment in heroRecord.InitialEquipment)
             {
                 ItemRecord item = StatusScene.ITEMS.First(x => x.Name == equipment);
+                item.ChargesLeft = item.Charges;
                 Equipment.Add(new ItemRecord(item));
             }
 
             foreach (string ability in classRecord.InitialAbilities)
             {
                 AbilityRecord item = StatusScene.ABILITIES.First(x => x.Name == ability);
+                item.ChargesLeft = item.Charges;
                 Abilities.Add(new AbilityRecord(item));
             }
 
             foreach (string ability in heroRecord.InitialAbilities)
             {
                 AbilityRecord item = StatusScene.ABILITIES.First(x => x.Name == ability);
+                item.ChargesLeft = item.Charges;
                 Abilities.Add(new AbilityRecord(item));
             }
 

@@ -9,7 +9,6 @@
 		],
 		"Icon": "Fire",
 		"Charges": 15,
-		"MaxCharges": 15,
 		"Targetting": "AllEnemy",
 		"Script": [
 			"Animate Attack",
@@ -29,7 +28,6 @@
 		],
 		"Icon": "Heal",
 		"Charges": 15,
-		"MaxCharges": 15,
 		"Targetting": "SingleAlly",
 		"Script": [
 			"Animate Attack",

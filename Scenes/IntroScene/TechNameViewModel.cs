@@ -61,6 +61,11 @@ namespace Texemon.Scenes.IntroScene
 
             var hero = new HeroModel(HeroType.TechHero);
             GameProfile.PlayerProfile.Party.Add(hero);
+
+            GameProfile.Inventory.Add(new ItemRecord(StatusScene.StatusScene.ITEMS.First(x => x.Name == "Drone Parts")));
+            GameProfile.Inventory.Add(new ItemRecord(StatusScene.StatusScene.ITEMS.First(x => x.Name == "Drone Parts")));
+            GameProfile.Inventory.Add(new ItemRecord(StatusScene.StatusScene.ITEMS.First(x => x.Name == "Drone Parts")));
+
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
         }
 

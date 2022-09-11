@@ -31,6 +31,7 @@ namespace Texemon.Scenes.MapScene
                 case "SetWaypoint": SetWaypoint(tokens); break;
                 case "Conversation": Conversation(tokens, scriptParser); break;
                 case "Encounter": Encounter(tokens, scriptParser); break;
+                case "Shop": Shop(tokens); break;
                 default: return false;
             }
 
@@ -71,6 +72,13 @@ namespace Texemon.Scenes.MapScene
             BattleScene.BattleScene matchScene = new BattleScene.BattleScene(tokens[1]);
             matchScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
             CrossPlatformGame.StackScene(matchScene);
+        }
+
+        public void Shop(string[] tokens)
+        {
+            ShopScene.ShopScene shopScene = new ShopScene.ShopScene(tokens[1]);
+            shopScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
+            CrossPlatformGame.StackScene(shopScene);
         }
     }
 }

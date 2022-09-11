@@ -223,7 +223,7 @@ namespace Texemon.Scenes.BattleScene
 
         public void SelectTarget(object parameter)
         {
-            if (Command.Charges > 0) Command.Charges--;
+            if (Command.ChargesLeft > 0) Command.ChargesLeft--;
 
             Terminate();
             Player.EndTurn();

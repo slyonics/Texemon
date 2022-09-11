@@ -15,28 +15,29 @@ namespace Texemon.Scenes.ShopScene
     public class ShopViewModel : ViewModel
     {
         ShopScene shopScene;
+        ShopRecord shopRecord;
 
         ConfirmViewModel confirmViewModel;
 
-        Button equipmentButton;
-        Button abilitiesButton;
-        Button actionsButton;
-
-        int category = -1;
         int slot = -1;
 
-
-        public ShopViewModel(ShopScene iScene)
+        public ShopViewModel(ShopScene iScene, ShopRecord iShopRecord)
             : base(iScene, PriorityLevel.GameLevel)
         {
             shopScene = iScene;
+            shopRecord = iShopRecord;
+
+            foreach (VoucherRecord voucherRecord in shopRecord.Vouchers)
+            {
+                AvailableVouchers.Add(voucherRecord);
+            }
 
             LoadView(GameView.ShopScene_ShopView);
 
             if (!Input.MOUSE_MODE)
             {
                 (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-                SelectCommand(AvailableCommands.ElementAt(slot));
+                SelectCommand(AvailableVouchers.ElementAt(slot));
             }
         }
 
@@ -77,11 +78,11 @@ namespace Texemon.Scenes.ShopScene
             Audio.PlaySound(GameSound.menu_select);
 
             if (slot == -1) slot = 0;
-            else if (slot == 0) slot = AvailableCommands.Count() - 1;
+            else if (slot == 0) slot = AvailableVouchers.Count() - 1;
             else slot--;
 
             (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-            SelectCommand(AvailableCommands.ElementAt(slot));
+            SelectCommand(AvailableVouchers.ElementAt(slot));
         }
 
         private void CursorDown()
@@ -89,11 +90,11 @@ namespace Texemon.Scenes.ShopScene
             Audio.PlaySound(GameSound.menu_select);
 
             if (slot == -1) slot = 0;
-            else if (slot == AvailableCommands.Count() - 1) slot = 0;
+            else if (slot == AvailableVouchers.Count() - 1) slot = 0;
             else slot++;
 
             (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
-            SelectCommand(AvailableCommands.ElementAt(slot));
+            SelectCommand(AvailableVouchers.ElementAt(slot));
         }
 
         private void CursorSelect()
@@ -109,12 +110,12 @@ namespace Texemon.Scenes.ShopScene
 
         public void SelectCommand(object parameter)
         {
-            CommandRecord record;
+            VoucherRecord record;
             if (parameter is IModelProperty)
             {
-                record = (CommandRecord)((IModelProperty)parameter).GetValue();
+                record = (VoucherRecord)((IModelProperty)parameter).GetValue();
             }
-            else record = (CommandRecord)parameter;
+            else record = (VoucherRecord)parameter;
 
             confirmViewModel?.Terminate();
             confirmViewModel = null;
@@ -126,15 +127,17 @@ namespace Texemon.Scenes.ShopScene
             }
 
 
+            /*
             Description1.Value = record.Description.ElementAtOrDefault(0);
             Description2.Value = record.Description.ElementAtOrDefault(1);
             Description3.Value = record.Description.ElementAtOrDefault(2);
             Description4.Value = record.Description.ElementAtOrDefault(3);
             Description5.Value = record.Description.ElementAtOrDefault(4);
+            */
         }
 
 
-        public ModelCollection<CommandRecord> AvailableCommands { get; set; } = new ModelCollection<CommandRecord>();
+        public ModelCollection<VoucherRecord> AvailableVouchers { get; set; } = new ModelCollection<VoucherRecord>();
 
         public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");

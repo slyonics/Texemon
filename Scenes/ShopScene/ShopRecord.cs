@@ -6,20 +6,24 @@ using System.Threading.Tasks;
 
 namespace Texemon.Scenes.ShopScene
 {
-    [Serializable]
-    public class Record
+    public class CostRecord
     {
-
+        public int Money { get; set; }
+        public string[] Items { get; set; }
     }
 
-    [Serializable]
+    public class VoucherRecord
+    {
+        public string Name { get; set; }
+        public string Icon { get; set; }
+        public string Description { get; set; }
+    }
+
     public class ShopRecord
     {
-        public ShopRecord()
-        {
+        public string Name { get; set; }
+        public string Intro { get; set; }
 
-        }
-
-
+        public VoucherRecord[] Vouchers { get; set; }
     }
 }

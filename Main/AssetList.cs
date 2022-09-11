@@ -172,6 +172,7 @@ namespace Texemon.Main
         Enemies_WizardF,
         Enemies_WizardM,
         Enemies_Wolf,
+        Particles_Bash,
         Particles_Block,
         Particles_DamageDigits,
         Particles_Flame,

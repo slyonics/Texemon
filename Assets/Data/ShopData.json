@@ -1,22 +1,50 @@
 [
 	{
-		"Name": "Longsword",
-		"Animation": "Guarding",
-		"Description": [
-			"- 10-20 damage",
-			"- Physical",
-			"- VS 1 enemy"
-		],
-		"Icon": "Sword",
-		"Charges": -1,
-		"MaxCharges": -1,
-		"Targetting": "SingleEnemy",
-		"Script": [
-			"Animate Attack",
-			"Sound Slash",
-			"Effect Slash $targetCenterX $targetCenterY 3",
-			"Flash 255 27 0",
-			"Damage $random(10,20)"
+		"Name": "InventorShop",
+		"Intro": "I can craft drones from spare parts. Find rare parts to craft more powerful drones.",
+		"Vouchers": 
+		[
+			{
+				"Name": "Support Drone",
+				"Icon": "Armor",
+				"Description": "",
+				"Cost": {
+					"Items": [
+						"Drone Parts",
+						"Repair Kit"
+					]
+				}
+			},
+			{
+				"Name": "Shield Drone",
+				"Icon": "Armor",
+				"Cost": {
+					"Items": [
+						"Drone Parts",
+						"Repair Kit"
+					]
+				}
+			},
+			{
+				"Name": "Shock Drone",
+				"Icon": "Armor",
+				"Cost": {
+					"Items": [
+						"Drone Parts",
+						"Repair Kit"
+					]
+				}
+			},
+			{
+				"Name": "Flame Drone",
+				"Icon": "Armor",
+				"Cost": {
+					"Items": [
+						"Drone Parts",
+						"Repair Kit"
+					]
+				}
+			}
 		]
 	}
 ]

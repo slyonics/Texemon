@@ -18,7 +18,8 @@ namespace Texemon.SceneObjects.Particles
         GunSpark,
         Smoke,
         Flame,
-        Gunshot
+        Gunshot,
+        Bash
     }
 
     public class AnimationParticle : Particle
@@ -31,7 +32,8 @@ namespace Texemon.SceneObjects.Particles
             { AnimationType.GunSpark.ToString(), new Animation(0, 0, 192, 192, 12, 50) },
             { AnimationType.Flame.ToString(), new Animation(0, 0, 96, 96, 7, 90) },
             { AnimationType.Smoke.ToString(), new Animation(0, 0, 32, 32, 7, 50) },
-            { AnimationType.Gunshot.ToString(), new Animation(0, 0, 48, 48, 6, 50) }
+            { AnimationType.Gunshot.ToString(), new Animation(0, 0, 48, 48, 6, 50) },
+            { AnimationType.Bash.ToString(), new Animation(0, 0, 96, 96, 4, 50) },
         };
 
         private List<Tuple<int, FrameFollowup>> frameEventList = new List<Tuple<int, FrameFollowup>>();

@@ -26,5 +26,7 @@ namespace Texemon.Models
         public ModelProperty<GameFont> Font { get; set; } = new ModelProperty<GameFont>(GameFont.Silver);
 
         public ModelCollection<HeroModel> Party { get; set; } = new ModelCollection<HeroModel>();
+        public ModelProperty<int> Money { get; set; } = new ModelProperty<int>(50);
+
     }
 }

@@ -12,14 +12,30 @@ namespace Texemon.Scenes.ShopScene
     {
         public static List<ShopRecord> SHOPS { get; private set; }
 
-        public ShopScene()
-        {
+        private ShopViewModel shopViewModel;
 
+        public ShopScene(string shopName)
+        {
+            ShopRecord shopRecord = SHOPS.First(x => x.Name == shopName);
+
+            shopViewModel = AddView(new ShopViewModel(this, shopRecord));
         }
 
         public static void Initialize()
         {
             SHOPS = AssetCache.LoadRecords<ShopRecord>("ShopData");
+        }
+
+        public override void BeginScene()
+        {
+            sceneStarted = true;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (shopViewModel.Terminated) EndScene();
         }
 
         public static List<ItemRecord> ITEMS { get => StatusScene.StatusScene.ITEMS; }
