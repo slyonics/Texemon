@@ -65,9 +65,7 @@ namespace Texemon.Scenes.ShopScene
             var input = Input.CurrentInput;
             if (heroNameViewModel == null)
             {
-                if (input.CommandPressed(Command.Left)) CursorLeft();
-                else if (input.CommandPressed(Command.Right)) CursorRight();
-                else if (input.CommandPressed(Command.Up)) CursorUp();
+                if (input.CommandPressed(Command.Up)) CursorUp();
                 else if (input.CommandPressed(Command.Down)) CursorDown();
                 else if (input.CommandPressed(Command.Confirm)) CursorSelect();
                 else if (input.CommandPressed(Command.Cancel)) Terminate();
@@ -75,18 +73,19 @@ namespace Texemon.Scenes.ShopScene
             else
             {
                 if (input.CommandPressed(Command.Cancel)) heroNameViewModel.Terminate();
-                if (heroNameViewModel.Terminated) heroNameViewModel = null;
+                if (heroNameViewModel.Terminated)
+                {
+                    if (heroNameViewModel.Confirmed != null)
+                    {
+                        ReadyToProceed.Value = false;
+                        GetWidget<CrawlText>("Description").Text = heroNameViewModel.Confirmed + " was added to the party.";
+                        Button button = (GetWidget<DataGrid>("EntryList").ChildList[slot] as Button);
+                        button.UnSelect();
+                        button.Enabled = false;
+                    }
+                    heroNameViewModel = null;
+                }
             }
-        }
-
-        private void CursorLeft()
-        {
-            
-        }
-
-        private void CursorRight()
-        {
-            
         }
 
         private void CursorUp()
@@ -144,8 +143,9 @@ namespace Texemon.Scenes.ShopScene
             GetWidget<CrawlText>("Description").Text = record.Description;
             ReadyToProceed.Value = true;
 
-            Cost.ModelList.Clear();
-            foreach (CostRecord cost in record.Cost) Cost.Add(cost);
+            var cost = new List<ModelProperty<CostRecord>>();
+            foreach (CostRecord costRecord in record.Cost) cost.Add(new ModelProperty<CostRecord>(new CostRecord() { Item = costRecord.Item }));
+            Cost.ModelList = cost;
 
             /*
             Description1.Value = record.Description.ElementAtOrDefault(0);

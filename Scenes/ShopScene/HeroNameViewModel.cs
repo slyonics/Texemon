@@ -65,6 +65,7 @@ namespace Texemon.Scenes.ShopScene
             var mapScene = CrossPlatformGame.SceneStack.First(x => x is MapScene.MapScene) as MapScene.MapScene;
             mapScene.AddPartyMember(heroModel);
 
+            Confirmed = namingBox.Text;
         }
 
         public void Cancel()
@@ -72,5 +73,7 @@ namespace Texemon.Scenes.ShopScene
             namingBox.Active = false;
             Terminate();
         }
+
+        public string Confirmed { get; set; } = null;
     }
 }
