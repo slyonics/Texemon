@@ -3,11 +3,11 @@
 
 	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,100">
 		<Button Name="Magic" Style="MagicWindow" PushedStyle="MagicSelected" Bounds="0,0,120,20" Alignment="Cascading" Action="Magic" Radio="True" InnerMargin="8,8,8,8">
-			<Label Text="Magic" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+			<Label Text="Robot Magic" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 		</Button>
 		<Label Text="OR" Alignment="Cascading" Color="#F0D0B0FF" Bounds="0,0,120,20" Font="Dialogue"/>
 		<Button Name="Technology" Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,120,20" Alignment="Cascading" Action="Technology" Radio="True" InnerMargin="8,8,8,8">
-			<Label Text="Technology" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+			<Label Text="Magic Robot" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 		</Button>
 	</Panel>
 

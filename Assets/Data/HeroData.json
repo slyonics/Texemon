@@ -47,12 +47,12 @@
 		}
 	},
 	{
-		"Name": "FlamethrowerDrone",
+		"Name": "BlowtorchDrone",
 		"Class": "Drone",
-		"Sprite": "FlamethrowerDrone",
+		"Sprite": "BlowtorchDrone",
 		"InitialEquipment": [],
 		"InitialAbilities": [
-			"Flamethrower"
+			"Blowtorch"
 		],
 		"Actions": [],
 		"BattlerModel": {

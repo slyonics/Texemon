@@ -96,37 +96,37 @@
 		"Name": "Taser",
 		"Animation": "Chanting",
 		"Description": [
-			"- 999 damage",
-			"- Incendiary",
-			"- VS all enemies"
+			"- 10-20 damage",
+			"- Electrical",
+			"- VS 1 enemy"
 		],
 		"Icon": "Lightning",
 		"Charges": -1,
-		"Targetting": "AllEnemy",
+		"Targetting": "SingleEnemy",
 		"Script": [
 			"Animate Attack",
-			"Effect Star $targetCenterX $targetCenterY 6",
-			"Flash 27 210 140",
-			"Damage 30 Electric"
+			"Effect Shock $targetCenterX $targetCenterY 3",
+			"Flash 251 206 177",
+			"Damage $random(10,20) Electric"
 		]
 	},
 	{
-		"Name": "Flamethrower",
+		"Name": "Blowtorch",
 		"Animation": "Chanting",
 		"Description": [
-			"- 30 damage",
+			"- 10-20 damage",
 			"- Incendiary",
-			"- VS all enemies"
+			"- VS 1 enemy"
 		],
 		"Icon": "Fire",
 		"Charges": -1,
-		"Targetting": "AllEnemy",
+		"Targetting": "SingleEnemy",
 		"Script": [
 			"Animate Attack",
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage 30 Fire"
+			"Damage $random(10,20) Fire"
 		]
 	}
 ]

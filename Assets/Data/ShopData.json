@@ -30,11 +30,11 @@
 				]
 			},
 			{
-				"Name": "Flamethrower Drone",
+				"Name": "Blowtorch Drone",
 				"Description": "Attack drone equipped with an incendiary weapon module.",
 				"Cost": [
 					{ "Item": "Drone Parts" },
-					{ "Item": "Flamethrower" }
+					{ "Item": "Blowtorch" }
 				]
 			}
 		]

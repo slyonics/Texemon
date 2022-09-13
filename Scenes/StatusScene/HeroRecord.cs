@@ -12,7 +12,7 @@ namespace Texemon.Scenes.StatusScene
         TechHero,
         RepairDrone,
         DeflectorDrone,
-        FlamethrowerDrone,
+        BlowtorchDrone,
         TaserDrone
     }
 

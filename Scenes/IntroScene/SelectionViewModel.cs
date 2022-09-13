@@ -81,9 +81,9 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.SelectedStyle.Value = "MagicSelected";
             GameProfile.PlayerProfile.FrameSelectedStyle.Value = "MagicFrameSelected";
             GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
-            GameProfile.PlayerProfile.Font.Value = GameFont.Silver;
+            GameProfile.PlayerProfile.Font.Value = GameFont.SandyForest;
 
-            description.Text = "The use of magic is strictly regulated by the secret authorities of Panopticon where sorcerers may practice only one color of magic. You alone defy this edict to study every color of magic in your quest for power.";
+            description.Text = "After the full potential of magic has been explored, the only way to progress is by expanding the limits of what is possible. A new discipline of magic offers a vision of the future inspired by robotics technology, but sparks controversy among existing disciplines.";
         }
 
         public void Technology()
@@ -100,7 +100,8 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
 
-            description.Text = "Saved from a doomed world, a revolutionary android prototype seeks purpose and answers. Construct and upgrade robotic companions or recruit helpful lifeforms on a long journey to the labratory where it all began.";
+            description.Text = "A revolutionary android prototype with the capacity for magic is salvaged from a doomed world and may hold the potential to saving it. Seeking their missing components, the android embarks on a journey to the laboratory where they were built.";
+        
         }
 
         public void Proceed()

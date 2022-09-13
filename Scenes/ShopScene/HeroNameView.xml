@@ -6,10 +6,10 @@
 		<Textbox Name="NamingBox" Text="Android" Style="Bind PlayerProfile.WindowStyle" ActiveStyle="Bind PlayerProfile.SelectedStyle" Active="True" Bounds="0,8,80,20" InnerMargin="8,3,8,3" Font="Bind PlayerProfile.Font" Alignment="Vertical"/>
 
 		<Panel Bounds="0,-8,120,20" Alignment="ReverseVertical">
-			<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,60,20" Alignment="Cascading" Action="Proceed" InnerMargin="8,8,8,8">
+			<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="-5,0,60,20" Alignment="Cascading" Action="Proceed" InnerMargin="8,8,8,8">
 				<Label Text="OK" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 			</Button>
-			<Button Name="Cancel" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,60,20" Alignment="Cascading" Action="Cancel" InnerMargin="8,8,8,8">
+			<Button Name="Cancel" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="10,0,60,20" Alignment="Cascading" Action="Cancel" InnerMargin="8,8,8,8">
 				<Label Text="Cancel" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 			</Button>
 		</Panel>
