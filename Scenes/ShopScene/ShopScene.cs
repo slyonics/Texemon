@@ -12,13 +12,13 @@ namespace Texemon.Scenes.ShopScene
     {
         public static List<ShopRecord> SHOPS { get; private set; }
 
-        private ShopViewModel shopViewModel;
+        private ConstructViewModel shopViewModel;
 
         public ShopScene(string shopName)
         {
             ShopRecord shopRecord = SHOPS.First(x => x.Name == shopName);
 
-            shopViewModel = AddView(new ShopViewModel(this, shopRecord));
+            shopViewModel = AddView(new ConstructViewModel(this, shopRecord));
         }
 
         public static void Initialize()

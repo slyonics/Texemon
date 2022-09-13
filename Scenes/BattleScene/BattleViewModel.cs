@@ -88,7 +88,7 @@ namespace Texemon.Scenes.BattleScene
         public List<EnemyRecord> InitialEnemies { get; set; } = new List<EnemyRecord>();
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
-        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (GameProfile.PlayerProfile.Party.Count()) * 20 + 3));
+        public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (4) * 20 + 3));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);

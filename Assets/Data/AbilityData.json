@@ -19,6 +19,25 @@
 		]
 	},
 	{
+		"Name": "Thunder",
+		"Animation": "Chanting",
+		"Description": [
+			"- 10x Mana damage",
+			"- Electric",
+			"- VS all enemies"
+		],
+		"Icon": "Fire",
+		"Charges": 15,
+		"Targetting": "AllEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Fireball",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage 999"
+		]
+	},
+	{
 		"Name": "Heal",
 		"Animation": "Chanting",
 		"Description": [
@@ -31,9 +50,83 @@
 		"Targetting": "SingleAlly",
 		"Script": [
 			"Animate Attack",
+			"Effect GreenHeal $targetCenterX $targetBottom 6",
+			"Flash 27 210 140",
+			"Heal 30"
+		]
+	},
+	{
+		"Name": "Repair",
+		"Animation": "Chanting",
+		"Description": [
+			"- Restore 300HP",
+			"- Revive from 0HP",
+			"- Machines only",
+			"- For one ally"
+		],
+		"Icon": "Heal",
+		"Charges": 8,
+		"Targetting": "SingleAlly",
+		"Script": [
+			"Animate Attack",
+			"Effect BlueHeal $targetCenterX $targetBottom 6",
+			"Flash 27 140 210",
+			"Repair 300"
+		]
+	},
+	{
+		"Name": "Deflector",
+		"Animation": "Chanting",
+		"Description": [
+			"- 999 damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Shield",
+		"Charges": 4,
+		"Targetting": "AllAlly",
+		"Script": [
+			"Animate Attack",
 			"Effect Star $targetCenterX $targetCenterY 6",
 			"Flash 27 210 140",
 			"Heal 30"
+		]
+	},
+	{
+		"Name": "Taser",
+		"Animation": "Chanting",
+		"Description": [
+			"- 999 damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Lightning",
+		"Charges": -1,
+		"Targetting": "AllEnemy",
+		"Script": [
+			"Animate Attack",
+			"Effect Star $targetCenterX $targetCenterY 6",
+			"Flash 27 210 140",
+			"Damage 30 Electric"
+		]
+	},
+	{
+		"Name": "Flamethrower",
+		"Animation": "Chanting",
+		"Description": [
+			"- 30 damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Fire",
+		"Charges": -1,
+		"Targetting": "AllEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Fireball",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage 30 Fire"
 		]
 	}
 ]

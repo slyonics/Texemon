@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-150,-110,140,220" InnerMargin="0,0,0,6">
+		<Button Name="Back" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,60,20" Alignment="ReverseVertical" Action="Back" InnerMargin="8,8,8,8">
+			<Label Text="Back" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+		<DataGrid Name="EntryList" Items="Bind AvailableEntries" Alignment="Stretch">
+			<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,140,24" InnerMargin="8,3,8,3" Alignment="Vertical" Action="SelectEntry" ActionParameter="Ref DataGrid">
+				<Image Sprite="Ref DataGrid.Sprite" Alignment="BottomLeft" Bounds="20,23,8,8"/>
+				<Label Font="Bind PlayerProfile.Font" Text="Ref DataGrid.Name" Alignment="Left" TextAlignment="Left" Bounds="20,12,53,8"/>
+			</Button>
+		</DataGrid>
+	</Panel>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,-104,150,124" Visible="Bind ReadyToProceed">
+		<Panel Alignment="Cascading" Bounds="0,0,150,24" InnerMargin="8,3,8,6">
+			<Label Text="Build Cost" Font="Bind PlayerProfile.Font" Alignment="Left"/>
+		</Panel>
+		<Panel Alignment="Cascading" Bounds="0,0,150,10" InnerMargin="8,3,8,6">
+			<DataGrid Alignment="Stretch" Items="Bind Cost">
+				<Label Text="Ref Item" Alignment="Vertical"/>
+			</DataGrid>
+		</Panel>
+	</Panel>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,30,150,66" InnerMargin="8,3,8,6">
+		<CrawlText Font="Bind PlayerProfile.Font" Name="Description" Bounds="0,0,134,40"/>
+		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,90,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Visible="Bind ReadyToProceed">
+			<Label Text="Construct" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+	</Panel>
+	
+</View>

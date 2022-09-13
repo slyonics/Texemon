@@ -74,8 +74,6 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime);
 
-            if (Input.MOUSE_MODE) slot = -1;
-
             var input = Input.CurrentInput;
             if (targetViewModel == null)
             {
@@ -275,6 +273,8 @@ namespace Texemon.Scenes.BattleScene
             targetViewModel?.Terminate();
             targetViewModel = null;
 
+            if (Input.MOUSE_MODE) slot = -1;
+
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Abilities.ModelList;
             ActivePlayer.HeroModel.LastCategory.Value = category = 1;
 
@@ -287,6 +287,8 @@ namespace Texemon.Scenes.BattleScene
 
             targetViewModel?.Terminate();
             targetViewModel = null;
+
+            if (Input.MOUSE_MODE) slot = -1;
 
             AvailableCommands.ModelList = ActivePlayer.HeroModel.Actions.ModelList;
             ActivePlayer.HeroModel.LastCategory.Value = category = 2;
@@ -306,13 +308,15 @@ namespace Texemon.Scenes.BattleScene
             targetViewModel?.Terminate();
             targetViewModel = null;
 
+            if (Input.MOUSE_MODE) slot = -1;
+
             if (Input.MOUSE_MODE)
             {
                 targetViewModel = new TargetViewModel(battleScene, ActivePlayer, record);
                 battleScene.AddView(targetViewModel);
             }
 
-            ActivePlayer.HeroModel.LastSlot.Value = AvailableCommands.ToList().FindIndex(x => x.Value == record);
+            ActivePlayer.HeroModel.LastSlot.Value = slot = AvailableCommands.ToList().FindIndex(x => x.Value == record);
 
 
             Description1.Value = record.Description.ElementAtOrDefault(0);

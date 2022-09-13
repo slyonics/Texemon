@@ -55,6 +55,7 @@ namespace Texemon.Scenes.BattleScene
                 case "Effect": Effect(tokens); break;
                 case "Damage": target.Damage(int.Parse(tokens[1])); break;
                 case "Heal": target.Heal(int.Parse(tokens[1])); break;
+                case "Repair": target.Repair(int.Parse(tokens[1])); break;
                 case "Flash": target.FlashColor(new Color(byte.Parse(tokens[1]), byte.Parse(tokens[2]), byte.Parse(tokens[3]))); break;
                 case "Attack": Attack(tokens); break;
                 case "Dialogue": Dialogue(tokens); break;

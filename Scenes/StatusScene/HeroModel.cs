@@ -17,6 +17,9 @@ namespace Texemon.Scenes.StatusScene
         {
             HeroRecord heroRecord = StatusScene.HEROES.First(x => x.Name == heroType);
             ClassRecord classRecord = StatusScene.CLASSES.First(x => x.ClassType == heroRecord.Class);
+
+            Class.Value = heroRecord.Class;
+
             Sprite.Value = (GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + heroRecord.Sprite);
             if (heroRecord.FlightHeight > 0)
             {
@@ -74,6 +77,9 @@ namespace Texemon.Scenes.StatusScene
             {
 
             }
+
+            if (Equipment.Count() == 0) LastCategory.Value = 1;
+            if (LastCategory.Value == 1 && Abilities.Count() == 0) LastCategory.Value = 2;
         }
 
         public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_Base);

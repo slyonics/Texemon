@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Texemon.Models;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.BattleScene
 {
@@ -30,7 +31,8 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public ModelProperty<string> Name { get; set; } = new ModelProperty<string>("Enemy");
+        public ModelProperty<ClassType> Class { get; set; } = new ModelProperty<ClassType>(ClassType.Monster);
         public ModelProperty<int> Health { get; set; } = new ModelProperty<int>(50);
-        public ModelProperty<int> MaxHealth { get; set; } = new ModelProperty<int>(50);
+        public ModelProperty<int> MaxHealth { get; set; } = new ModelProperty<int>(50);        
     }
 }

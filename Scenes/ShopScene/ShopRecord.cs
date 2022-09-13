@@ -9,7 +9,8 @@ namespace Texemon.Scenes.ShopScene
     public class CostRecord
     {
         public int Money { get; set; }
-        public string[] Items { get; set; }
+        public string Item { get; set; }
+
     }
 
     public class VoucherRecord
@@ -17,6 +18,8 @@ namespace Texemon.Scenes.ShopScene
         public string Name { get; set; }
         public string Icon { get; set; }
         public string Description { get; set; }
+        public CostRecord[] Cost { get; set; }
+        public AnimatedSprite Sprite { get; set; }
     }
 
     public class ShopRecord

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Texemon.SceneObjects.Maps;
-
+using Texemon.Scenes.StatusScene;
 using TiledCS;
 
 namespace Texemon.Scenes.MapScene
@@ -142,6 +142,19 @@ namespace Texemon.Scenes.MapScene
 
                 i++;
             }
+        }
+
+        public void AddPartyMember(HeroModel heroModel)
+        {
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), heroModel);            
+            AddEntity(follower);
+            FollowerController followerController = new FollowerController(this, follower, Party.Last());
+            AddController(followerController);
+            Party.Add(follower);
+            follower.CenterOn(new Vector2(PartyLeader.SpriteBounds.Center.X, PartyLeader.SpriteBounds.Bottom + 2));
+            follower.Orientation = Orientation.Down;
+            follower.Idle();
+            AddParticle(new SceneObjects.Particles.AnimationParticle(this, follower.Center, SceneObjects.Particles.AnimationType.Smoke));
         }
 
         public override void Update(GameTime gameTime)

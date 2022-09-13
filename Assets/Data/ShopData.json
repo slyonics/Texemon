@@ -5,45 +5,37 @@
 		"Vouchers": 
 		[
 			{
-				"Name": "Support Drone",
-				"Icon": "Armor",
-				"Description": "",
-				"Cost": {
-					"Items": [
-						"Drone Parts",
-						"Repair Kit"
-					]
-				}
+				"Name": "Repair Drone",
+				"Description": "Support drone capable of repairing mechanical characters.",
+				"Cost": 
+				[
+					{ "Item": "Drone Parts" },
+					{ "Item": "Repair Kit" }
+				]
 			},
 			{
-				"Name": "Shield Drone",
-				"Icon": "Armor",
-				"Cost": {
-					"Items": [
-						"Drone Parts",
-						"Repair Kit"
-					]
-				}
+				"Name": "Deflector Drone",
+				"Description": "Support drone capable of protecting the party from enemy attacks.",
+				"Cost": [
+					{ "Item": "Drone Parts" },
+					{ "Item": "Deflector" }
+				]
 			},
 			{
-				"Name": "Shock Drone",
-				"Icon": "Armor",
-				"Cost": {
-					"Items": [
-						"Drone Parts",
-						"Repair Kit"
-					]
-				}
+				"Name": "Taser Drone",
+				"Description": "Attack drone equipped with an electrical weapon module.",
+				"Cost": [
+					{ "Item": "Drone Parts" },
+					{ "Item": "Taser" }
+				]
 			},
 			{
-				"Name": "Flame Drone",
-				"Icon": "Armor",
-				"Cost": {
-					"Items": [
-						"Drone Parts",
-						"Repair Kit"
-					]
-				}
+				"Name": "Flamethrower Drone",
+				"Description": "Attack drone equipped with an incendiary weapon module.",
+				"Cost": [
+					{ "Item": "Drone Parts" },
+					{ "Item": "Flamethrower" }
+				]
 			}
 		]
 	}

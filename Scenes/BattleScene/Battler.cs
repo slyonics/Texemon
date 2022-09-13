@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Texemon.SceneObjects.Particles;
 using Texemon.SceneObjects.Widgets;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.BattleScene
 {
@@ -142,6 +143,12 @@ namespace Texemon.Scenes.BattleScene
             ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString())));
 
             if (Dead) battleScene.InitiativeList.Remove(this);
+        }
+
+        public virtual void Repair(int healing)
+        {
+            if (stats.Class.Value != ClassType.Android && stats.Class.Value != ClassType.Drone) return;
+            Heal(healing);
         }
 
         public virtual void Heal(int healing)

@@ -21,12 +21,10 @@
 		"Class": "Android",
 		"Sprite": "Android",
 		"InitialEquipment": [
-			"Longsword",
-			"Revolver"
+			"Blaster",
+			"Repair Kit"
 		],
-		"InitialAbilities": [
-			"Flame"
-		],
+		"InitialAbilities": [],
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Android" },
@@ -34,51 +32,60 @@
 		}
 	},
 	{
-		"Name": "SupportDrone",
+		"Name": "RepairDrone",
 		"Class": "Drone",
-		"Sprite": "SupportDrone",
+		"Sprite": "RepairDrone",
 		"FlightHeight": "4",
-		"InitialEquipment": [
-			"Longsword"
-		],
+		"InitialEquipment": [],
 		"InitialAbilities": [
-			"Flame"
+			"Repair"
 		],
 		"Actions": [],
 		"BattlerModel": {
-			"Name": { "Value": "Droney" },
+			"Name": { "Value": "Sana" },
 			"MaxHealth": { "Value": 20 }
 		}
 	},
 	{
-		"Name": "FlameDrone",
+		"Name": "FlamethrowerDrone",
 		"Class": "Drone",
-		"Sprite": "FlameDrone",
-		"InitialEquipment": [
-			"Longsword"
-		],
+		"Sprite": "FlamethrowerDrone",
+		"InitialEquipment": [],
 		"InitialAbilities": [
-			"Flame"
+			"Flamethrower"
 		],
 		"Actions": [],
 		"BattlerModel": {
-			"Name": { "Value": "Droney" },
+			"Name": { "Value": "Ignis" },
+			"MaxHealth": { "Value": 20 }
+		}
+	},
+	{
+		"Name": "DeflectorDrone",
+		"Class": "Drone",
+		"Sprite": "DeflectorDrone",
+		"FlightHeight": "4",
+		"InitialEquipment": [],
+		"InitialAbilities": [
+			"Deflector"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Aegida" },
 			"MaxHealth": { "Value": 30 }
 		}
 	},
 	{
-		"Name": "ElectricDrone",
+		"Name": "TaserDrone",
 		"Class": "Drone",
-		"Sprite": "ElectricDrone",
-		"InitialEquipment": [
-			"Longsword"
-		],
+		"Sprite": "TaserDrone",
+		"InitialEquipment": [],
 		"InitialAbilities": [
-			"Flame"
+			"Taser"
 		],
 		"Actions": [],
 		"BattlerModel": {
-			"Name": { "Value": "Droney" },
+			"Name": { "Value": "Fulmen" },
 			"MaxHealth": { "Value": 30 }
 		}
 	}

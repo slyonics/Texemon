@@ -44,6 +44,7 @@ namespace Texemon.Main
         private static Scene pendingScene;
         public static Scene CurrentScene { get; private set; }
         private static List<Scene> sceneStack = new List<Scene>();
+        public static List<Scene> SceneStack { get => sceneStack; }
 
         private static CrossPlatformGame crossPlatformGame;
 

@@ -20,7 +20,67 @@
 		]
 	},
 	{
-		"Name": "Revolver",
+		"Name": "Blaster",
+		"Animation": "Guarding",
+		"Description": [
+			"- 10-20 damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Gun",
+		"Charges": -1,
+		"ItemType": "Weapon",
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Slash",
+			"Effect Gunshot $targetCenterX $targetCenterY 4",
+			"Flash 255 27 0",
+			"Damage $random(10,20)"
+		]
+	},
+	{
+		"Name": "Deflector",
+		"Animation": "Guarding",
+		"Description": [
+			"- 10-20 damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Shield",
+		"Charges": -1,
+		"ItemType": "Weapon",
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Slash",
+			"Effect Gunshot $targetCenterX $targetCenterY 4",
+			"Flash 255 27 0",
+			"Damage $random(10,20)"
+		]
+	},
+	{
+		"Name": "Taser",
+		"Animation": "Guarding",
+		"Description": [
+			"- 10-20 damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Gun",
+		"Charges": -1,
+		"ItemType": "Weapon",
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Slash",
+			"Effect Gunshot $targetCenterX $targetCenterY 4",
+			"Flash 255 27 0",
+			"Damage $random(10,20)"
+		]
+	},
+	{
+		"Name": "Flamethrower",
 		"Animation": "Guarding",
 		"Description": [
 			"- 10-20 damage",
@@ -43,9 +103,10 @@
 		"Name": "Repair Kit",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage",
-			"- Physical",
-			"- VS 1 enemy"
+			"- Restore 300HP",
+			"- Revive from 0HP",
+			"- Machines only",
+			"- For one ally"
 		],
 		"Icon": "Armor",
 		"Charges": 4,
