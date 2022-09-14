@@ -82,6 +82,15 @@ namespace Texemon.Scenes.MapScene
                         }
                         break;
 
+                    case "Chests":
+                        foreach (TiledObject tiledObject in layer.Item1.objects)
+                        {
+                            Chest chest = new Chest(this, Tilemap, tiledObject, tiledObject.properties.First(x => x.name == "Sprite").value);
+                            NPCs.Add(chest);
+                            AddEntity(chest);
+                        }
+                        break;
+
                     case "Enemies":
                         foreach (TiledObject tiledObject in layer.Item1.objects)
                         {

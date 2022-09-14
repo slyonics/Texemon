@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Texemon.Models;
 using Texemon.SceneObjects.Controllers;
 using Texemon.SceneObjects.Maps;
+using Texemon.Scenes.ConversationScene;
 
 namespace Texemon.Scenes.MapScene
 {
@@ -32,6 +33,7 @@ namespace Texemon.Scenes.MapScene
                 case "Conversation": Conversation(tokens, scriptParser); break;
                 case "Encounter": Encounter(tokens, scriptParser); break;
                 case "Shop": Shop(tokens); break;
+                case "GiveItem": GiveItem(tokens); break;
                 default: return false;
             }
 
@@ -79,6 +81,24 @@ namespace Texemon.Scenes.MapScene
             ShopScene.ShopScene shopScene = new ShopScene.ShopScene(tokens[1]);
             shopScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
             CrossPlatformGame.StackScene(shopScene);
+        }
+
+        public void GiveItem(string[] tokens)
+        {
+            StatusScene.ItemRecord item = new StatusScene.ItemRecord(StatusScene.StatusScene.ITEMS.First(x => x.Name == string.Join(' ', tokens.Skip(1))));
+            GameProfile.Inventory.Add(item);
+
+            ConversationRecord conversationData = new ConversationRecord()
+            {
+                DialogueRecords = new DialogueRecord[]
+                {
+                    new DialogueRecord() { Text = "Found @" + item.Icon + " " + item.Name + "!"}
+                }
+            };
+
+            ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene(conversationData);
+            conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
+            CrossPlatformGame.StackScene(conversationScene);
         }
     }
 }

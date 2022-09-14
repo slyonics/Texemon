@@ -36,6 +36,8 @@ namespace Texemon.Scenes.ShopScene
             {
                 HeroRecord heroRecord = StatusScene.StatusScene.HEROES.First(x => x.Name.ToString() == voucherRecord.Name.Replace(" ", ""));
 
+                if (GameProfile.GetSaveData<bool>(heroRecord.Name + "Recruited")) continue;
+
                 voucherRecord.Sprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + heroRecord.Sprite)], HERO_ANIMATIONS);
 
                 AvailableEntries.Add(voucherRecord);
@@ -46,6 +48,18 @@ namespace Texemon.Scenes.ShopScene
             LoadView(GameView.ShopScene_ConstructView);
 
             GetWidget<CrawlText>("Description").Text = shopRecord.Intro;
+
+            foreach (Button button in GetWidget<DataGrid>("EntryList").ChildList)
+            {
+                /*
+                if ((button.ChildList[1] as Label).Text == "Repair Drone")
+                {
+                    (button.ChildList[0] as Image).Sprite.SpriteColor = new Color(128, 128, 128, 255);
+                    (button.ChildList[0] as Image).Sprite.AnimationSpeed = 0.0f;
+                    button.Enabled = false;
+                }
+                */
+            }
 
             /*
             if (!Input.MOUSE_MODE)
@@ -78,10 +92,16 @@ namespace Texemon.Scenes.ShopScene
                     if (heroNameViewModel.Confirmed != null)
                     {
                         ReadyToProceed.Value = false;
+                        slot = -1;
+
+                        AvailableEntries.ModelList = AvailableEntries.ModelList.FindAll(x => x.Value.Name.Replace(" ", "") != heroNameViewModel.heroRecord.Name.ToString());
+
                         GetWidget<CrawlText>("Description").Text = heroNameViewModel.Confirmed + " was added to the party.";
-                        Button button = (GetWidget<DataGrid>("EntryList").ChildList[slot] as Button);
+                        /*Button button = (GetWidget<DataGrid>("EntryList").ChildList[slot] as Button);
+                        (button.ChildList[0] as Image).Sprite.SpriteColor = new Color(128, 128, 128, 255);
+                        (button.ChildList[0] as Image).Sprite.AnimationSpeed = 0.0f;
                         button.UnSelect();
-                        button.Enabled = false;
+                        button.Enabled = false;*/
                     }
                     heroNameViewModel = null;
                 }
@@ -90,6 +110,8 @@ namespace Texemon.Scenes.ShopScene
 
         private void CursorUp()
         {
+            if (AvailableEntries.Count() == 0) return;
+
             Audio.PlaySound(GameSound.menu_select);
 
             if (slot == -1) slot = 0;
@@ -102,6 +124,8 @@ namespace Texemon.Scenes.ShopScene
 
         private void CursorDown()
         {
+            if (AvailableEntries.Count() == 0) return;
+
             Audio.PlaySound(GameSound.menu_select);
 
             if (slot == -1) slot = 0;
@@ -144,7 +168,7 @@ namespace Texemon.Scenes.ShopScene
             ReadyToProceed.Value = true;
 
             var cost = new List<ModelProperty<CostRecord>>();
-            foreach (CostRecord costRecord in record.Cost) cost.Add(new ModelProperty<CostRecord>(new CostRecord() { Item = costRecord.Item }));
+            foreach (CostRecord costRecord in record.Cost) cost.Add(new ModelProperty<CostRecord>(new CostRecord() { Item = costRecord.Item, Icon = costRecord.Icon }));
             Cost.ModelList = cost;
 
             /*

@@ -16,7 +16,7 @@ namespace Texemon.SceneObjects.Widgets
         private Texture2D icon;
         private string Icon { set { icon = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Widgets_Icons_" + value)]; } }
 
-        private AnimatedSprite Sprite { get; set; }
+        public AnimatedSprite Sprite { get; set; }
 
         private Texture2D picture;
         private Texture2D Picture { get => picture; set { picture = value; } }

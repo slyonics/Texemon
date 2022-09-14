@@ -15,7 +15,7 @@ namespace Texemon.Scenes.ShopScene
     {
         Textbox namingBox;
         VoucherRecord voucherRecord;
-        HeroRecord heroRecord;
+        public HeroRecord heroRecord;
 
         int confirmCooldown = 100;
 
@@ -61,6 +61,7 @@ namespace Texemon.Scenes.ShopScene
             heroModel.Name.Value = namingBox.Text;
             // TODO overflow party to backbench
             GameProfile.PlayerProfile.Party.Add(heroModel);
+            GameProfile.SetSaveData<bool>(heroRecord.Name + "Recruited", true);
 
             var mapScene = CrossPlatformGame.SceneStack.First(x => x is MapScene.MapScene) as MapScene.MapScene;
             mapScene.AddPartyMember(heroModel);

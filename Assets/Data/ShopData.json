@@ -9,32 +9,59 @@
 				"Description": "Support drone capable of repairing mechanical characters.",
 				"Cost": 
 				[
-					{ "Item": "Drone Parts" },
-					{ "Item": "Repair Kit" }
+					{
+						"Item": "Drone Parts",
+						"Icon": "Armor"
+					},
+					{
+						"Item": "Repair Kit",
+						"Icon": "Heal"
+					}
 				]
 			},
 			{
 				"Name": "Deflector Drone",
 				"Description": "Support drone capable of protecting the party from enemy attacks.",
-				"Cost": [
-					{ "Item": "Drone Parts" },
-					{ "Item": "Deflector" }
+				"Cost": 
+				[
+					{
+						"Item": "Drone Parts",
+						"Icon": "Armor"
+					},
+					{
+						"Item": "Deflector",
+						"Icon": "Shield"
+					}
 				]
 			},
 			{
 				"Name": "Taser Drone",
 				"Description": "Attack drone equipped with an electrical weapon module.",
-				"Cost": [
-					{ "Item": "Drone Parts" },
-					{ "Item": "Taser" }
+				"Cost": 
+				[
+					{
+						"Item": "Drone Parts",
+						"Icon": "Armor"
+					},
+					{
+						"Item": "Taser",
+						"Icon": "Gun"
+					}
 				]
 			},
 			{
 				"Name": "Blowtorch Drone",
 				"Description": "Attack drone equipped with an incendiary weapon module.",
-				"Cost": [
-					{ "Item": "Drone Parts" },
-					{ "Item": "Blowtorch" }
+				"Cost": 
+				[
+					{
+						"Item": "Drone Parts",
+						"Icon": "Armor"
+					},
+					{
+						"Item": "Blowtorch",
+						"Icon": "Gun"
+					}
 				]
 			}
 		]

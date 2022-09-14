@@ -73,7 +73,7 @@ namespace Texemon.Scenes.MapScene
             Idle();
         }
 
-        public bool Activate(Hero activator)
+        public virtual bool Activate(Hero activator)
         {
             if (interactionScript == null) return false;
 
@@ -89,9 +89,9 @@ namespace Texemon.Scenes.MapScene
             return true;
         }
 
-        public string Label { get; private set; } = "NPC";
-        public string[] Behavior { get; private set; } = null;
+        public string Label { get; protected set; } = "NPC";
+        public string[] Behavior { get; protected set; } = null;
         public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height); }
-        public bool Interactive { get => interactionScript != null; }
+        public virtual bool Interactive { get => interactionScript != null; }
     }
 }

@@ -17,6 +17,7 @@ namespace Texemon.SceneObjects.Widgets
             public int offset;
             public Color color = Color.White;
             public StringBuilder text = new StringBuilder();
+            public Texture2D icon = null;
         }
 
         private const int TEXT_QUEUE_COOLDOWN = 10;
@@ -95,7 +96,11 @@ namespace Texemon.SceneObjects.Widgets
             {
                 foreach (TextElement textElement in textLines)
                 {
-                    Main.Text.DrawText(spriteBatch, base.Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), Font, textElement.text.ToString(), textElement.color, textElement.line);
+                    if (textElement.icon != null)
+                    {
+                        spriteBatch.Draw(textElement.icon, base.Position + new Vector2(currentWindow.X + textElement.offset - 4, currentWindow.Y + 3), null, textElement.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.05f);
+                    }
+                    else Main.Text.DrawText(spriteBatch, base.Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), Font, textElement.text.ToString(), textElement.color, textElement.line);
                 }
             }
         }
@@ -169,8 +174,14 @@ namespace Texemon.SceneObjects.Widgets
                 textQueue.Remove(queueElement);
                 queueElement = textQueue.FirstOrDefault();
 
-                textElement = new TextElement() { line = queueElement.line, color = queueElement.color, offset = queueElement.offset };
+                textElement = new TextElement() { icon = queueElement.icon, line = queueElement.line, color = queueElement.color, offset = queueElement.offset };
                 textLines.Add(textElement);
+
+                if (queueElement.icon != null)
+                {
+                    textElement = new TextElement() { line = queueElement.line, color = queueElement.color, offset = queueElement.offset + 8 };
+                    textLines.Add(textElement);
+                }
             }
 
             if (queueElement.text.Length > 0)
@@ -195,6 +206,13 @@ namespace Texemon.SceneObjects.Widgets
                 {
                     currentColor = Graphics.ParseHexcode(textElement.text.ToString());
                     textLines.Add(new TextElement() { line = currentLine, color = currentColor, offset = currentLength });
+                    continue;
+                }
+                else if (textElement.text.Length > 0 && textElement.text[0] == '@')
+                {
+                    string iconSpriteName = "Widgets_Icons_" + textElement.text.ToString().Substring(1);
+                    GameSprite gameSprite = (GameSprite)Enum.Parse(typeof(GameSprite), iconSpriteName);
+                    textLines.Add(new TextElement() { line = currentLine, offset = currentLength + 4, color = currentColor, icon = AssetCache.SPRITES[gameSprite] });
                     continue;
                 }
                 else if (textElement.text.ToString() == "[n]")

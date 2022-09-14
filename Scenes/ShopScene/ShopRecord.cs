@@ -10,6 +10,7 @@ namespace Texemon.Scenes.ShopScene
     {
         public int Money { get; set; }
         public string Item { get; set; }
+        public string Icon { get; set; }
 
     }
 

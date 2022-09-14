@@ -22,7 +22,7 @@
 		<Panel Alignment="Vertical" Bounds="0,0,165,30" InnerMargin="8,3,8,6">
 			<DataGrid Items="Bind Cost" Alignment="Stretch">
 				<Panel Bounds="0,0,165,10" Alignment="Vertical">
-					<Image Icon="Sword" Alignment="BottomLeft" Bounds="10,-6,8,8"/>
+					<Image Icon="Ref DataGrid.Icon" Alignment="BottomLeft" Bounds="10,-6,8,8"/>
 					<Label Font="Dialogue" Text="Ref DataGrid.Item" TextAlignment="Left" Alignment="Left" Bounds="16,0,72,10"/>
 					<Label Font="Dialogue" Text="1" Alignment="Left" Bounds="0,-8,35,10"/>
 					<Label Font="Dialogue" Text="/" Alignment="Left" Bounds="0,-8,5,10"/>
