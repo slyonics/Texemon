@@ -100,7 +100,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
 
-            description.Text = "A revolutionary android prototype with the capacity for magic is salvaged from a doomed world and may hold the potential to saving it. Seeking their missing components, the android embarks on a journey to the laboratory where they were built.";
+            description.Text = "A revolutionary android prototype with the capacity for magic is salvaged from a doomed world and may hold the potential to saving it. Seeking their missing components, the android embarks on a journey to the laboratory where they were designed.";
         
         }
 

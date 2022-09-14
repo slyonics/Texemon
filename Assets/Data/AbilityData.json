@@ -50,6 +50,7 @@
 		"Targetting": "SingleAlly",
 		"Script": [
 			"Animate Attack",
+			"Sound Heal",
 			"Effect GreenHeal $targetCenterX $targetBottom 6",
 			"Flash 27 210 140",
 			"Heal 30"
@@ -69,6 +70,7 @@
 		"Targetting": "SingleAlly",
 		"Script": [
 			"Animate Attack",
+			"Sound Heal",
 			"Effect BlueHeal $targetCenterX $targetBottom 6",
 			"Flash 27 140 210",
 			"Repair 300"
@@ -105,6 +107,7 @@
 		"Targetting": "SingleEnemy",
 		"Script": [
 			"Animate Attack",
+			"Sound Thunder",
 			"Effect Shock $targetCenterX $targetCenterY 3",
 			"Flash 251 206 177",
 			"Damage $random(10,20) Electric"

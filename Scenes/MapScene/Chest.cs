@@ -93,6 +93,8 @@ namespace Texemon.Scenes.MapScene
 
             Opened = true;
 
+            Audio.PlaySound(GameSound.Chest);
+
             return true;
         }
 

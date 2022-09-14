@@ -24,9 +24,9 @@
 				<Panel Bounds="0,0,165,10" Alignment="Vertical">
 					<Image Icon="Ref DataGrid.Icon" Alignment="BottomLeft" Bounds="10,-6,8,8"/>
 					<Label Font="Dialogue" Text="Ref DataGrid.Item" TextAlignment="Left" Alignment="Left" Bounds="16,0,72,10"/>
-					<Label Font="Dialogue" Text="1" Alignment="Left" Bounds="0,-8,35,10"/>
+					<Label Font="Dialogue" Text="Ref DataGrid.Have" Alignment="Left" Bounds="0,-8,35,10" Color="Ref DataGrid.CostColor"/>
 					<Label Font="Dialogue" Text="/" Alignment="Left" Bounds="0,-8,5,10"/>
-					<Label Font="Dialogue" Text="1" Alignment="Left" Bounds="0,-8,35,10"/>
+					<Label Font="Dialogue" Text="Ref DataGrid.Need" Alignment="Left" Bounds="0,-8,35,10"/>
 				</Panel>
 			</DataGrid>
 		</Panel>
@@ -34,7 +34,7 @@
 
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,30,150,66" InnerMargin="8,3,8,6">
 		<CrawlText Font="Bind PlayerProfile.Font" Name="Description" Bounds="0,0,134,40"/>
-		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,90,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Visible="Bind ReadyToProceed">
+		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,90,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Enabled="Bind IsAffordable" Visible="Bind ReadyToProceed">
 			<Label Text="Construct" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 		</Button>
 	</Panel>

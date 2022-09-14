@@ -2,7 +2,7 @@
 <View>
 
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind Window" InnerMargin="8,4,8,8" TransitionIn="Expand" TransitionOut="Shrink">
-		<CrawlText Name="ConversationText" Text="Bind Dialogue" Font="Bind ConversationFont" Alignment="Stretch" Color="#D8D8D8FF"/>
+		<CrawlText Name="ConversationText" Text="Bind Dialogue" Font="Bind ConversationFont" Alignment="Stretch" Color="#D8D8D8FF" VoiceSound="Blip"/>
 		<Textplate Name="SpeakerPlate" Style="Bind PlayerProfile.WindowStyle" Alignment="Left" Bounds="8,-19,-1,-1" InnerMargin="9,4,7,4" Font="Bind ConversationFont" Text="Bind Speaker" Color="#E0BFA2FF"/>
 		<Image Sprite="Enter,0,0,12,12,2,1200,-1" Alignment="BottomRight" Bounds="7,7,12,12" Visible="Bind ReadyToProceed"/>
 	</Panel>

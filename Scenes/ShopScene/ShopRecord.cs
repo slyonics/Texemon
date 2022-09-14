@@ -12,6 +12,9 @@ namespace Texemon.Scenes.ShopScene
         public string Item { get; set; }
         public string Icon { get; set; }
 
+        public Color CostColor { get; set; }
+        public int Have { get; set; }
+        public int Need { get; set; }
     }
 
     public class VoucherRecord

@@ -33,7 +33,7 @@
 		"Targetting": "SingleEnemy",
 		"Script": [
 			"Animate Attack",
-			"Sound Slash",
+			"Sound Laser",
 			"Effect Gunshot $targetCenterX $targetCenterY 4",
 			"Flash 255 27 0",
 			"Damage $random(10,20)"
@@ -67,16 +67,16 @@
 			"- Physical",
 			"- VS 1 enemy"
 		],
-		"Icon": "Gun",
+		"Icon": "Lightning",
 		"Charges": -1,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
 		"Script": [
 			"Animate Attack",
-			"Sound Slash",
-			"Effect Gunshot $targetCenterX $targetCenterY 4",
-			"Flash 255 27 0",
-			"Damage $random(10,20)"
+			"Sound Thunder",
+			"Effect Shock $targetCenterX $targetCenterY 3",
+			"Flash 251 206 177",
+			"Damage $random(10,20) Electric"
 		]
 	},
 	{
@@ -87,7 +87,7 @@
 			"- Physical",
 			"- VS 1 enemy"
 		],
-		"Icon": "Gun",
+		"Icon": "Fire",
 		"Charges": -1,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
@@ -108,19 +108,35 @@
 			"- Machines only",
 			"- For one ally"
 		],
-		"Icon": "Armor",
+		"Icon": "Heal",
 		"Charges": 4,
+		"ItemType": "Armor",
+		"Targetting": "SingleAlly",
+		"Script": [
+			"Animate Attack",
+			"Sound Heal",
+			"Effect BlueHeal $targetCenterX $targetBottom 6",
+			"Flash 27 140 210",
+			"Repair 300"
+		]
+	},
+	{
+		"Name": "Spare Parts",
+		"Animation": "Guarding",
+		"Description": [
+			"- 10-20 damage"
+		],
+		"Icon": "Chest",
+		"Charges": -1,
 		"ItemType": "Armor"
 	},
 	{
-		"Name": "Drone Parts",
+		"Name": "Advanced Parts",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage",
-			"- Physical",
-			"- VS 1 enemy"
+			"- 10-20 damage"
 		],
-		"Icon": "Armor",
+		"Icon": "Chest",
 		"Charges": -1,
 		"ItemType": "Armor"
 	}

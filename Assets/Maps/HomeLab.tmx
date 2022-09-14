@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="10">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="10">
  <tileset firstgid="1" source="Tilesets/ColorTileA4.tsx"/>
  <tileset firstgid="1849" source="Tilesets/ColorTileA5.tsx"/>
  <tileset firstgid="1977" source="Tilesets/ColorTileB.tsx"/>
@@ -113,13 +113,13 @@
  <objectgroup id="18" name="Chests">
   <object id="8" name="MyChest" gid="2126" x="32" y="112" width="16" height="16">
    <properties>
-    <property name="Item" value="Drone Parts"/>
+    <property name="Item" value="Advanced Parts"/>
     <property name="Sprite" value="FutureChest"/>
    </properties>
   </object>
   <object id="9" name="MyOtherChest" gid="2126" x="128" y="112" width="16" height="16">
    <properties>
-    <property name="Item" value="Blowtorch"/>
+    <property name="Item" value="Repair Kit"/>
     <property name="Sprite" value="FutureChest"/>
    </properties>
   </object>

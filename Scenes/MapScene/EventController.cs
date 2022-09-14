@@ -99,6 +99,8 @@ namespace Texemon.Scenes.MapScene
             ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene(conversationData);
             conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
             CrossPlatformGame.StackScene(conversationScene);
+
+            Audio.PlaySound(GameSound.GetItem);
         }
     }
 }

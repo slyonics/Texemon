@@ -63,10 +63,18 @@ namespace Texemon.Scenes.ShopScene
             GameProfile.PlayerProfile.Party.Add(heroModel);
             GameProfile.SetSaveData<bool>(heroRecord.Name + "Recruited", true);
 
+            Audio.PlaySound(GameSound.JoinParty);
+
             var mapScene = CrossPlatformGame.SceneStack.First(x => x is MapScene.MapScene) as MapScene.MapScene;
             mapScene.AddPartyMember(heroModel);
 
             Confirmed = namingBox.Text;
+
+
+            foreach (CostRecord costRecord in voucherRecord.Cost)
+            {
+                GameProfile.Inventory.Remove(GameProfile.Inventory.First(x => x.Value.Name == costRecord.Item));
+            }
         }
 
         public void Cancel()

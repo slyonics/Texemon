@@ -167,17 +167,28 @@ namespace Texemon.Scenes.ShopScene
             GetWidget<CrawlText>("Description").Text = record.Description;
             ReadyToProceed.Value = true;
 
+            bool affordable = true;
             var cost = new List<ModelProperty<CostRecord>>();
-            foreach (CostRecord costRecord in record.Cost) cost.Add(new ModelProperty<CostRecord>(new CostRecord() { Item = costRecord.Item, Icon = costRecord.Icon }));
+            foreach (CostRecord costRecord in record.Cost)
+            {
+                Color color = Color.IndianRed;
+                int have = GameProfile.Inventory.Count(x => x.Value.Name == costRecord.Item);
+                if (have >= 1) color = Color.White;
+                else affordable = false;
+                cost.Add(new ModelProperty<CostRecord>(new CostRecord() { Item = costRecord.Item, Icon = costRecord.Icon, CostColor = color, Have = have, Need = 1 }));
+            }
             Cost.ModelList = cost;
 
-            /*
-            Description1.Value = record.Description.ElementAtOrDefault(0);
-            Description2.Value = record.Description.ElementAtOrDefault(1);
-            Description3.Value = record.Description.ElementAtOrDefault(2);
-            Description4.Value = record.Description.ElementAtOrDefault(3);
-            Description5.Value = record.Description.ElementAtOrDefault(4);
-            */
+            if (!affordable)
+            {
+                CostColor.Value = Color.IndianRed;
+                IsAffordable.Value = false;
+            }
+            else
+            {
+                CostColor.Value = Color.White;
+                IsAffordable.Value = true;
+            }
         }
 
         public void Proceed()
@@ -196,11 +207,7 @@ namespace Texemon.Scenes.ShopScene
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
         public ModelProperty<bool> IsAffordable { get; set; } = new ModelProperty<bool>(true);
+        public ModelProperty<Color> CostColor { get; set; } = new ModelProperty<Color>(Color.White);
 
-        public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
-        public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");
-        public ModelProperty<string> Description3 { get; set; } = new ModelProperty<string>("");
-        public ModelProperty<string> Description4 { get; set; } = new ModelProperty<string>("");
-        public ModelProperty<string> Description5 { get; set; } = new ModelProperty<string>("");
     }
 }

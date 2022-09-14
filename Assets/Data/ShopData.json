@@ -10,8 +10,8 @@
 				"Cost": 
 				[
 					{
-						"Item": "Drone Parts",
-						"Icon": "Armor"
+						"Item": "Advanced Parts",
+						"Icon": "Chest"
 					},
 					{
 						"Item": "Repair Kit",
@@ -25,8 +25,8 @@
 				"Cost": 
 				[
 					{
-						"Item": "Drone Parts",
-						"Icon": "Armor"
+						"Item": "Advanced Parts",
+						"Icon": "Chest"
 					},
 					{
 						"Item": "Deflector",
@@ -40,8 +40,8 @@
 				"Cost": 
 				[
 					{
-						"Item": "Drone Parts",
-						"Icon": "Armor"
+						"Item": "Spare Parts",
+						"Icon": "Chest"
 					},
 					{
 						"Item": "Taser",
@@ -55,8 +55,8 @@
 				"Cost": 
 				[
 					{
-						"Item": "Drone Parts",
-						"Icon": "Armor"
+						"Item": "Spare Parts",
+						"Icon": "Chest"
 					},
 					{
 						"Item": "Blowtorch",
