@@ -13,7 +13,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Inventor" },
-			"MaxHealth": { "Value": 200 }
+			"MaxHealth": { "Value": 200 },
+			"Strength": { "Value": 5 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 8 },
+			"Mana": { "Value": 3 }
 		}
 	},
 	{
@@ -28,7 +32,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Android" },
-			"MaxHealth": { "Value": 50 }
+			"MaxHealth": { "Value": 50 },
+			"Strength": { "Value": 3 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 3 },
+			"Mana": { "Value": 3 }
 		}
 	},
 	{
@@ -43,7 +51,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Sana" },
-			"MaxHealth": { "Value": 20 }
+			"MaxHealth": { "Value": 20 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 2 },
+			"Agility": { "Value": 5 },
+			"Mana": { "Value": 0 }
 		}
 	},
 	{
@@ -57,7 +69,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Ignis" },
-			"MaxHealth": { "Value": 20 }
+			"MaxHealth": { "Value": 20 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 2 },
+			"Agility": { "Value": 5 },
+			"Mana": { "Value": 0 }
 		}
 	},
 	{
@@ -72,7 +88,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Aegida" },
-			"MaxHealth": { "Value": 30 }
+			"MaxHealth": { "Value": 30 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 5 },
+			"Agility": { "Value": 2 },
+			"Mana": { "Value": 0 }
 		}
 	},
 	{
@@ -86,7 +106,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Fulmen" },
-			"MaxHealth": { "Value": 30 }
+			"MaxHealth": { "Value": 30 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 5 },
+			"Agility": { "Value": 2 },
+			"Mana": { "Value": 0 }
 		}
 	}
 ]

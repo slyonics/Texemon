@@ -4,6 +4,10 @@
 		"Sprite": "Robot",
 		"ShadowOffset": 0,
 		"MaxHealth": 30,
+		"Strength": 5,
+		"Defense": 1,
+		"Agility": 3,
+		"Mana": 0,
 		"Attacks": [
 			{
 				"Script": [
@@ -18,6 +22,10 @@
 		"Sprite": "Slime",
 		"ShadowOffset": 0,
 		"MaxHealth": 30,
+		"Strength": 3,
+		"Defense": 4,
+		"Agility": 1,
+		"Mana": 4,
 		"Attacks": [
 			{
 				"Script": [

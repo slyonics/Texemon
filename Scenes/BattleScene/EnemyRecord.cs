@@ -21,6 +21,10 @@ namespace Texemon.Scenes.BattleScene
         public string Sprite { get; set; }
         public int ShadowOffset { get; set; }
         public int MaxHealth { get; set; }
+        public int Strength { get; set; }
+        public int Defense { get; set; }
+        public int Agility { get; set; }
+        public int Mana { get; set; }
         public AttackData[] Attacks { get; set; }
     }
 }

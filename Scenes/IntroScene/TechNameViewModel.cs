@@ -60,6 +60,7 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.SetSaveData<bool>("NewTechGame", true);
 
             var hero = new HeroModel(HeroType.TechHero);
+            hero.Name.Value = namingBox.Text;
             GameProfile.PlayerProfile.Party.Add(hero);
 
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);

@@ -21,6 +21,10 @@ namespace Texemon.Scenes.BattleScene
             Name.Value = clone.Name.Value;
             MaxHealth.Value = clone.MaxHealth.Value;
             Health.Value = MaxHealth.Value;
+            Strength.Value = clone.Strength.Value;
+            Defense.Value = clone.Defense.Value;
+            Agility.Value = clone.Agility.Value;
+            Mana.Value = clone.Mana.Value;
         }
 
         public BattlerModel(EnemyRecord enemyRecord)
@@ -28,11 +32,19 @@ namespace Texemon.Scenes.BattleScene
             Name.Value = enemyRecord.Name;
             MaxHealth.Value = enemyRecord.MaxHealth;
             Health.Value = MaxHealth.Value;
+            Strength.Value = enemyRecord.Strength;
+            Defense.Value = enemyRecord.Defense;
+            Agility.Value = enemyRecord.Agility;
+            Mana.Value = enemyRecord.Mana;
         }
 
         public ModelProperty<string> Name { get; set; } = new ModelProperty<string>("Enemy");
         public ModelProperty<ClassType> Class { get; set; } = new ModelProperty<ClassType>(ClassType.Monster);
         public ModelProperty<int> Health { get; set; } = new ModelProperty<int>(50);
-        public ModelProperty<int> MaxHealth { get; set; } = new ModelProperty<int>(50);        
+        public ModelProperty<int> MaxHealth { get; set; } = new ModelProperty<int>(50);
+        public ModelProperty<int> Strength { get; set; } = new ModelProperty<int>(3);
+        public ModelProperty<int> Defense { get; set; } = new ModelProperty<int>(3);
+        public ModelProperty<int> Agility { get; set; } = new ModelProperty<int>(3);
+        public ModelProperty<int> Mana { get; set; } = new ModelProperty<int>(3);
     }
 }
