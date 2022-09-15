@@ -63,7 +63,9 @@ namespace Texemon.Scenes.ShopScene
             GameProfile.PlayerProfile.Party.Add(heroModel);
             GameProfile.SetSaveData<bool>(heroRecord.Name + "Recruited", true);
 
+            Audio.PauseMusic(true);
             Audio.PlaySound(GameSound.JoinParty);
+            Task.Delay(1500).ContinueWith(t => Audio.PauseMusic(false));
 
             var mapScene = CrossPlatformGame.SceneStack.First(x => x is MapScene.MapScene) as MapScene.MapScene;
             mapScene.AddPartyMember(heroModel);

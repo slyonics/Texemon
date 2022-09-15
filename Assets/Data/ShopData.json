@@ -45,7 +45,7 @@
 					},
 					{
 						"Item": "Taser",
-						"Icon": "Gun"
+						"Icon": "Lightning"
 					}
 				]
 			},
@@ -60,7 +60,7 @@
 					},
 					{
 						"Item": "Blowtorch",
-						"Icon": "Gun"
+						"Icon": "Fire"
 					}
 				]
 			}

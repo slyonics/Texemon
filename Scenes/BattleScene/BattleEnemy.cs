@@ -144,7 +144,11 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Damage(damage);
 
-            if (Dead) deathTimeLeft = DEATH_DURATION;
+            if (Dead)
+            {
+                deathTimeLeft = DEATH_DURATION;
+                Audio.PlaySound(GameSound.EnemyDeath);
+            }
         }
 
         public override void Animate(string animationName)

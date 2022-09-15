@@ -81,7 +81,8 @@ namespace Texemon.Scenes.ShopScene
             {
                 if (input.CommandPressed(Command.Up)) CursorUp();
                 else if (input.CommandPressed(Command.Down)) CursorDown();
-                else if (input.CommandPressed(Command.Confirm)) CursorSelect();
+                else if (input.CommandPressed(Command.Confirm)) StartCursorSelect();
+                else if (input.CommandReleased(Command.Confirm)) EndCursorSelect();
                 else if (input.CommandPressed(Command.Cancel)) Terminate();
             }
             else
@@ -136,16 +137,20 @@ namespace Texemon.Scenes.ShopScene
             SelectEntry(AvailableEntries.ElementAt(slot));
         }
 
-        private void CursorSelect()
+        private void StartCursorSelect()
         {
-            if (slot == -1) return;
+            if (!ReadyToProceed.Value || !IsAffordable.Value) return;
 
             Audio.PlaySound(GameSound.menu_select);
+            GetWidget<Button>("OK").RadioSelect();
+        }
 
-            CommandRecord record = (GetWidget<DataGrid>("EntryList").Items.ElementAt(slot) as IModelProperty).GetValue() as CommandRecord;
+        private void EndCursorSelect()
+        {
+            if (!ReadyToProceed.Value || !IsAffordable.Value) return;
 
-            //confirmViewModel = new ConfirmViewModel(battleScene, record);
-            //shopScene.AddView(confirmViewModel);
+            GetWidget<Button>("OK").UnSelect();
+            Proceed();
         }
 
         public void SelectEntry(object parameter)
@@ -178,17 +183,16 @@ namespace Texemon.Scenes.ShopScene
                 cost.Add(new ModelProperty<CostRecord>(new CostRecord() { Item = costRecord.Item, Icon = costRecord.Icon, CostColor = color, Have = have, Need = 1 }));
             }
             Cost.ModelList = cost;
+            IsAffordable.Value = affordable;
 
-            if (!affordable)
+            StatusScene.HeroRecord heroRecord = StatusScene.StatusScene.HEROES.First(x => x.Name.ToString() == record.Name.Replace(" ", ""));
+            List<ModelProperty<AbilityRecord>> abilities = new List<ModelProperty<AbilityRecord>>();
+            foreach (string abilityName in heroRecord.InitialAbilities)
             {
-                CostColor.Value = Color.IndianRed;
-                IsAffordable.Value = false;
+                ModelProperty<AbilityRecord> property = new ModelProperty<AbilityRecord>(StatusScene.StatusScene.ABILITIES.First(x => x.Name == abilityName));
+                abilities.Add(property);
             }
-            else
-            {
-                CostColor.Value = Color.White;
-                IsAffordable.Value = true;
-            }
+            Abilities.ModelList = abilities;
         }
 
         public void Proceed()
@@ -204,10 +208,9 @@ namespace Texemon.Scenes.ShopScene
 
         public ModelCollection<VoucherRecord> AvailableEntries { get; set; } = new ModelCollection<VoucherRecord>();
         public ModelCollection<CostRecord> Cost { get; set; } = new ModelCollection<CostRecord>();
+        public ModelCollection<AbilityRecord> Abilities { get; set; } = new ModelCollection<AbilityRecord>();
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
         public ModelProperty<bool> IsAffordable { get; set; } = new ModelProperty<bool>(true);
-        public ModelProperty<Color> CostColor { get; set; } = new ModelProperty<Color>(Color.White);
-
     }
 }

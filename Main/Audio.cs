@@ -100,6 +100,11 @@ namespace Texemon.Main
             PlayMusic((GameMusic)Enum.Parse(typeof(GameMusic), scriptTokens[1]));
         }
 
+        public static void PauseMusic(bool pause)
+        {
+            fmodChannel.setPaused(pause);
+        }
+
         public static void StopMusic()
         {
             bool isPlaying = false;

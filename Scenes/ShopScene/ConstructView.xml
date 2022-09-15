@@ -30,6 +30,30 @@
 				</Panel>
 			</DataGrid>
 		</Panel>
+		<Panel Alignment="Vertical" Bounds="0,0,165,18" InnerMargin="8,3,8,6">
+			<Label Text="Stats" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="0,0,50,10"/>
+			<Label Text="Abilities" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="0,0,99,10"/>
+		</Panel>
+		<Panel Alignment="Vertical" Bounds="0,0,165,40" InnerMargin="8,3,8,6">
+			<Panel Bounds="0,0,8,40" Alignment="Cascading">
+				<Image Icon="Sword" Bounds="12,-1,10,10"/>
+				<Image Icon="Shield" Bounds="12,9,10,10"/>
+				<Image Icon="Gun" Bounds="12,19,10,10"/>
+				<Image Icon="Staff" Bounds="12,29,10,10"/>
+			</Panel>
+			<Panel Bounds="0,0,42,40" Alignment="Cascading">
+				<Label Text="3" TextAlignment="Left" Bounds="16,10,20,10"/>
+				<Label Text="5" TextAlignment="Left" Bounds="16,20,20,10"/>
+				<Label Text="2" TextAlignment="Left" Bounds="16,30,20,10"/>
+				<Label Text="0" TextAlignment="Left" Bounds="16,40,20,10"/>
+			</Panel>
+			<DataGrid Items="Bind Abilities" Bounds="0,0,99,40" Alignment="Cascading">
+				<Panel Bounds="0,0,99,10" Alignment="Vertical" InnerMargin="8,0,8,0">
+					<Image Icon="Ref DataGrid.Icon" Bounds="0,-1,10,10" Alignment="Left"/>
+					<Label Text="Ref DataGrid.Name" Bounds="1,10,89,10" TextAlignment="Left" Alignment="Left"/>
+				</Panel>
+			</DataGrid>
+		</Panel>
 	</Panel>
 
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,30,150,66" InnerMargin="8,3,8,6">
