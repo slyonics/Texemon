@@ -7,5 +7,24 @@
 		],
 		"Script": [],
 		"Intro": "Two sentinels appear and move into attack formation!"
+	},
+	{
+		"Name": "Rattlesnake",
+		"Enemies": [
+			"Rattlesnake"
+		],
+		"Script": [],
+		"Intro": "A rattlesnake is alarmed by your presence and lunges at you!!"
+	},
+	{
+		"Name": "ScorpionNest",
+		"Enemies": [
+			"Scorpion",
+			"Scorpion",
+			"Scorpion",
+			"Scorpion"
+		],
+		"Script": [],
+		"Intro": "A nest of angry scorpions swarm around you!"
 	}
 ]

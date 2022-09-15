@@ -34,5 +34,41 @@
 				"Weight": 100
 			}
 		]
+	},
+	{
+		"Name": "Rattlesnake",
+		"Sprite": "Snake",
+		"ShadowOffset": 0,
+		"MaxHealth": 10,
+		"Strength": 2,
+		"Defense": 1,
+		"Agility": 8,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Scorpion",
+		"Sprite": "Scorpion",
+		"ShadowOffset": 0,
+		"MaxHealth": 10,
+		"Strength": 2,
+		"Defense": 4,
+		"Agility": 4,
+		"Mana": 1,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
 	}
 ]

@@ -124,6 +124,7 @@ namespace Texemon.Main
         Actors_Inventor,
         Actors_RepairDrone,
         Actors_Sentinel,
+        Actors_Snake,
         Actors_TaserDrone,
         Background_Blank,
         Background_Splash,
