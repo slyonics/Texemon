@@ -28,6 +28,7 @@ namespace Texemon.Scenes.BattleScene
 
             string[] enemyTokens = encounterRecord.Enemies;
             int totalEnemyWidth = 0;
+            int enemyMargin = 0;
             foreach (string enemyName in enemyTokens)
             {
                 EnemyRecord enemyRecord = BattleScene.ENEMIES.First(x => x.Name == enemyName);
@@ -35,9 +36,16 @@ namespace Texemon.Scenes.BattleScene
                 totalEnemyWidth += enemySprite.Width;
                 InitialEnemies.Add(enemyRecord);
             }
-            enemyWidth = totalEnemyWidth;
+
+            if (encounterRecord.Width > 0)
+            {
+                enemyWidth = encounterRecord.Width;
+                enemyMargin = (encounterRecord.Width - totalEnemyWidth) / 2;
+            }
+            else enemyWidth = totalEnemyWidth;
             enemyHeight = 112;
             EnemyWindow.Value = new Rectangle(-enemyWidth / 2 - 4, -110, enemyWidth + 8, enemyHeight + 6);
+            EnemyMargin.Value = new Rectangle(enemyMargin, 0, enemyMargin, 0);
 
             BackgroundRender.Value = iScene.backgroundRender;
 
@@ -88,6 +96,7 @@ namespace Texemon.Scenes.BattleScene
         public List<EnemyRecord> InitialEnemies { get; set; } = new List<EnemyRecord>();
 
         public ModelProperty<Rectangle> EnemyWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
+        public ModelProperty<Rectangle> EnemyMargin { get; set; } = new ModelProperty<Rectangle>(new Rectangle());
         public ModelProperty<Rectangle> PlayerWindow { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-150, 30, 130, (4) * 20 + 3));
         public ModelProperty<RenderTarget2D> BackgroundRender { get; set; } = new ModelProperty<RenderTarget2D>(null);
 
