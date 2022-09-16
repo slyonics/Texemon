@@ -194,9 +194,9 @@
     <property name="Sprite" value="FutureChest"/>
    </properties>
   </object>
-  <object id="4" name="JunkTaserChest" gid="1718" x="436" y="423" width="16" height="16">
+  <object id="4" name="JunkArcWelderChest" gid="1718" x="436" y="423" width="16" height="16">
    <properties>
-    <property name="Item" value="Taser"/>
+    <property name="Item" value="Arc Welder"/>
     <property name="Sprite" value="FutureChest"/>
    </properties>
   </object>

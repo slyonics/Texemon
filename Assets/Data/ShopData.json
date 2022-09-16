@@ -35,16 +35,15 @@
 				]
 			},
 			{
-				"Name": "Taser Drone",
+				"Name": "Arc Welder Drone",
 				"Description": "Attack drone equipped with an electrical weapon module.",
-				"Cost": 
-				[
+				"Cost": [
 					{
 						"Item": "Spare Parts",
 						"Icon": "Chest"
 					},
 					{
-						"Item": "Taser",
+						"Item": "Arc Welder",
 						"Icon": "Lightning"
 					}
 				]

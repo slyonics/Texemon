@@ -96,12 +96,12 @@
 		}
 	},
 	{
-		"Name": "TaserDrone",
+		"Name": "ArcWelderDrone",
 		"Class": "Drone",
-		"Sprite": "TaserDrone",
+		"Sprite": "ArcWelderDrone",
 		"InitialEquipment": [],
 		"InitialAbilities": [
-			"Taser"
+			"Arc Welder"
 		],
 		"Actions": [],
 		"BattlerModel": {

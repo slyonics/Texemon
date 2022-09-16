@@ -13,7 +13,7 @@ namespace Texemon.Scenes.StatusScene
         RepairDrone,
         DeflectorDrone,
         BlowtorchDrone,
-        TaserDrone
+        ArcWelderDrone
     }
 
     public class HeroRecord
