@@ -68,6 +68,8 @@
 		"Icon": "Heal",
 		"Charges": 8,
 		"Targetting": "SingleAlly",
+		"TargetDead": true,
+		"TargetMechanical": true,
 		"Script": [
 			"Animate Attack",
 			"Sound Heal",

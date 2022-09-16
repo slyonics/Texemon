@@ -50,7 +50,7 @@ namespace Texemon.Scenes.BattleScene
                 Texture2D enemySprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + enemyData.Sprite)];
                 totalEnemyWidth += enemySprite.Width;
             }
-            BuildBackground(AssetCache.SPRITES[GameSprite.Background_Trees], totalEnemyWidth);
+            BuildBackground(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + encounterRecord.Background)], totalEnemyWidth);
 
             battleViewModel = AddView(new BattleViewModel(this, ENCOUNTERS.First(x => x.Name == encounterName)));
         }
@@ -71,6 +71,11 @@ namespace Texemon.Scenes.BattleScene
         public override void EndScene()
         {
             Audio.PlayMusic(mapMusic);
+
+            foreach (ModelProperty<StatusScene.HeroModel> heroModel in GameProfile.PlayerProfile.Party)
+            {
+                heroModel.Value.Health.Value = heroModel.Value.MaxHealth.Value;
+            }
 
             base.EndScene();
         }

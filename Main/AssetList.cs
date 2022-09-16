@@ -127,6 +127,7 @@ namespace Texemon.Main
         Actors_Snake,
         Actors_TaserDrone,
         Background_Blank,
+        Background_Desert,
         Background_Splash,
         Background_Title,
         Background_Trees,

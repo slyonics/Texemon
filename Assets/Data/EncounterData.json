@@ -10,7 +10,8 @@
 	},
 	{
 		"Name": "Rattlesnake",
-		"Width": 80,
+		"Background": "Desert",
+		"Width": 96,
 		"Enemies": [
 			"Rattlesnake"
 		],
@@ -19,6 +20,7 @@
 	},
 	{
 		"Name": "ScorpionNest",
+		"Background": "Desert",
 		"Enemies": [
 			"Scorpion",
 			"Scorpion",

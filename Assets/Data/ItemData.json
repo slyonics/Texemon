@@ -60,7 +60,7 @@
 		]
 	},
 	{
-		"Name": "Taser",
+		"Name": "Arc Welder",
 		"Animation": "Guarding",
 		"Description": [
 			"- 10-20 damage",
@@ -112,6 +112,8 @@
 		"Charges": 4,
 		"ItemType": "Armor",
 		"Targetting": "SingleAlly",
+		"TargetDead": true,
+		"TargetMechanical": true,
 		"Script": [
 			"Animate Attack",
 			"Sound Heal",

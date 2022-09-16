@@ -34,6 +34,9 @@ namespace Texemon.Scenes.StatusScene
             ChargesLeft = clone.ChargesLeft;
             Charges = clone.Charges;
             Targetting = clone.Targetting;
+            TargetDead = clone.TargetDead;
+            TargetMechanical = clone.TargetMechanical;
+            TargetOrganic = clone.TargetOrganic;
             if (clone.Script != null) Script = (string[])clone.Script.Clone();
         }
 
@@ -45,6 +48,9 @@ namespace Texemon.Scenes.StatusScene
         public int Charges { get; set; } = -1;
         public bool ShowCharges { get => Charges >= 0; }
         public TargetType Targetting { get; set; }
+        public bool TargetDead { get; set; } // true if this can target dead allies
+        public bool TargetMechanical { get; set; } // true if this only targets robots
+        public bool TargetOrganic { get; set; } // true if this only targets non-robots
         public string[] Script { get; set; }
     }
 }
