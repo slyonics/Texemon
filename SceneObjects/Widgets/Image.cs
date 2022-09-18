@@ -16,6 +16,15 @@ namespace Texemon.SceneObjects.Widgets
         private Texture2D icon;
         private string Icon { set { icon = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Widgets_Icons_" + value)]; } }
 
+        private GameSprite gameSprite;
+        public GameSprite GameSprite { get => gameSprite;
+        set
+            {
+                gameSprite = value;
+                ParseAttribute("Sprite", gameSprite.ToString());
+            }
+        }
+
         public AnimatedSprite Sprite { get; set; }
 
         private Texture2D picture;

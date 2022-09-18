@@ -168,6 +168,14 @@ namespace Texemon.Scenes.MapScene
 
         public override void Update(GameTime gameTime)
         {
+            if (Input.CurrentInput.CommandPressed(Command.Cancel))
+            {
+                StatusScene.StatusScene statusScene = new StatusScene.StatusScene();
+                CrossPlatformGame.StackScene(statusScene);
+
+                return;
+            }
+
             base.Update(gameTime);
 
             Camera.Center(PartyLeader.Center);

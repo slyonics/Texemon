@@ -71,9 +71,9 @@ namespace Texemon.Scenes.MapScene
 
         public static void Encounter(string[] tokens, ScriptParser scriptParser)
         {
-            BattleScene.BattleScene matchScene = new BattleScene.BattleScene(tokens[1]);
-            matchScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
-            CrossPlatformGame.StackScene(matchScene);
+            BattleScene.BattleScene battleScene = new BattleScene.BattleScene(tokens[1]);
+            battleScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
+            CrossPlatformGame.StackScene(battleScene);
         }
 
         public void Shop(string[] tokens)

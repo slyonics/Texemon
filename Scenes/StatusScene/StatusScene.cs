@@ -13,12 +13,12 @@ namespace Texemon.Scenes.StatusScene
         public static List<ItemRecord> ITEMS { get; private set; }
         public static List<AbilityRecord> ABILITIES { get; private set; }
 
-
+        public StatusViewModel StatusViewModel { get; private set; }
 
         public StatusScene()
             : base()
         {
-
+            StatusViewModel = AddView(new StatusViewModel(this));
         }
 
         public static void Initialize()
@@ -27,6 +27,13 @@ namespace Texemon.Scenes.StatusScene
             CLASSES = AssetCache.LoadRecords<ClassRecord>("ClassData");
             ITEMS = AssetCache.LoadRecords<ItemRecord>("ItemData");
             ABILITIES = AssetCache.LoadRecords<AbilityRecord>("AbilityData");
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+
         }
     }
 }
