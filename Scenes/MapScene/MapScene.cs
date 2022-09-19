@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Texemon.Models;
 using Texemon.SceneObjects.Maps;
 using Texemon.Scenes.StatusScene;
 using TiledCS;
@@ -121,6 +121,26 @@ namespace Texemon.Scenes.MapScene
 
                 i++;
             }
+
+            SaveMapPosition();
+        }
+
+        public MapScene(string mapName, Vector2 leaderPosition)
+            : this(mapName)
+        {
+            PartyLeader.Position = leaderPosition;
+            PartyLeader.Orientation = Orientation.Down;
+            PartyLeader.Idle();
+
+            int i = 1;
+            foreach (Hero hero in Party.Skip(1))
+            {
+                hero.CenterOn(new Vector2(PartyLeader.SpriteBounds.Left + i * 6, PartyLeader.SpriteBounds.Bottom - 12 + (i % 2) * 6));
+                hero.Orientation = Orientation.Down;
+                hero.Idle();
+
+                i++;
+            }
         }
 
         public MapScene(string mapName, string sourceMapName)
@@ -151,6 +171,14 @@ namespace Texemon.Scenes.MapScene
 
                 i++;
             }
+
+            SaveMapPosition();
+        }
+
+        public void SaveMapPosition()
+        {
+            GameProfile.SetSaveData<string>("LastMapName", Tilemap.Name);
+            GameProfile.SetSaveData<Vector2>("LastPosition", PartyLeader.Position);
         }
 
         public void AddPartyMember(HeroModel heroModel)

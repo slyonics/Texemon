@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-  <Panel Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-400,-250,800,500" InnerMargin="30,30,30,30" TransitionIn="Expand">
+  <Panel Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-160,-120,320,240" InnerMargin="8,8,8,8" TransitionIn="Expand">
 
-    <Panel Bounds="0,0,740,360">
-      <Label Text="Bryce Sheehan (Moxy)" Alignment="Vertical" Font="PersonifiedUXRegular" Color="#C7895BFF"/>
-      <Label Text="Sprite Artist, Sound Effects, Designer" Alignment="Vertical" Font="Tooltip" Color="#E0BFA2FF"/>
+    <Panel Bounds="0,0,304,224">
+      <Label Text="Bryce Sheehan (Moxy)" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+      <Label Text="Sprite Artist, Sound Effects, Designer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
 		
 		<LineBreak/>
 		<LineBreak/>
 		
-      <Label Text="Noyemi K" Alignment="Vertical" Font="PersonifiedUXRegular" Color="#C7895BFF"/>
-      <Label Text="Chiptune Composer, Texture Artist, Designer" Alignment="Vertical" Font="Tooltip" Color="#E0BFA2FF"/>
-		<Label Text="Noyemi@delmunsoft.com" Alignment="Vertical" Font="Tooltip" Color="#E0BFA2FF"/>
+      <Label Text="Noyemi K" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+      <Label Text="Chiptune Composer, Texture Artist, Designer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
+		<Label Text="Noyemi@delmunsoft.com" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
 		
 		<LineBreak/>
 		<LineBreak/>
 		
-      <Label Text="Johnny Garza (Slyonics)" Alignment="Vertical" Font="PersonifiedUXRegular" Color="#C7895BFF"/>
-      <Label Text="Programmer, Designer, Writer" Alignment="Vertical" Font="Tooltip" Color="#E0BFA2FF"/>
-      <Label Text="johnnygarza@gmx.com" Alignment="Vertical" Font="Tooltip" Color="#E0BFA2FF"/>
+      <Label Text="Johnny Garza (Slyonics)" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+      <Label Text="Programmer, Designer, Writer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
+      <Label Text="johnnygarza@gmx.com" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
     </Panel>
 
-    <Button Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="0, -50, 540, 69" Alignment="ReverseVertical" Tooltip ="Return to the title screen" Action="Back" InnerMargin="0,8,0,0">
-      <Label Text="Back to Title Menu" Alignment="Center" Color="#E0BFA2FF" Font="PersonifiedUXRegular"/>
+    <Button Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="0, -50, 80, 69" Alignment="ReverseVertical" Tooltip ="Return to the title screen" Action="Back" InnerMargin="0,8,0,0">
+      <Label Text="Back" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
     </Button>
   </Panel>
   
