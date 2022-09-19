@@ -2,19 +2,19 @@
 <View>
 	
   <Panel Anchor="$CenterX,$CenterY" Bounds="-60,0,120,100">
-	<Button Style="Panel" PushedStyle="GamePanelSelected" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Begin a new game" Action="NewGame" InnerMargin="8,8,8,8">
+	<Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Begin a new game" Action="NewGame" InnerMargin="8,8,8,8">
 		<Label Text="New Game" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
 	</Button>
-	<Button Name="LoadButton" PushedStyle="GamePanelSelected" Style="Panel" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Resume previous game" Action="Continue" EnableBinding="SaveAvailable" InnerMargin="8,8,8,8">
+	<Button Name="LoadButton" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Resume previous game" Action="Continue" EnableBinding="SaveAvailable" InnerMargin="8,8,8,8">
 		<Label Text="Continue" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
 	</Button>
-    <Button Style="Panel" PushedStyle="GamePanelSelected" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Audio and video settings" Action="SettingsMenu" InnerMargin="8,8,8,8">
+    <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Audio and video settings" Action="SettingsMenu" InnerMargin="8,8,8,8">
       <Label Text="Settings" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
     </Button>
-    <Button Style="Panel" PushedStyle="GamePanelSelected" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="About the creators" Action="Credits" InnerMargin="8,8,8,8">
+    <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="About the creators" Action="Credits" InnerMargin="8,8,8,8">
       <Label Text="Credits" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
     </Button>
-    <Button Style="Panel" PushedStyle="GamePanelSelected" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Exit to desktop" Action="Exit" InnerMargin="8,8,8,8">
+    <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Exit to desktop" Action="Exit" InnerMargin="8,8,8,8">
       <Label Text="Exit" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
     </Button>
   </Panel>

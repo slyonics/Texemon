@@ -1,24 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-155,-110,140,220" InnerMargin="0,0,0,6" TransitionIn="Expand">
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-140,-110,80,220" InnerMargin="0,0,0,6" TransitionIn="Expand" TransitionOut="Shrink">
 		<Button Name="Back" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,60,20" Alignment="ReverseVertical" Action="Back" InnerMargin="8,8,8,8">
 			<Label Text="Back" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 		</Button>
-		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,140,24" InnerMargin="8,3,8,3" Alignment="Vertical" Action="SelectItems">
-			<Label Font="Bind PlayerProfile.Font" Text="Items" Alignment="Left" TextAlignment="Left" Bounds="20,12,53,8"/>
+		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,80,22" InnerMargin="8,4,8,3" Alignment="Vertical" Action="SelectItems">
+			<Label Font="Bind PlayerProfile.Font" Text="Items" Alignment="Vertical"/>
 		</Button>
-		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,140,24" InnerMargin="8,3,8,3" Alignment="Vertical" Action="SelectItems">
-			<Label Font="Bind PlayerProfile.Font" Text="Items" Alignment="Left" TextAlignment="Left" Bounds="20,12,53,8"/>
+		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,80,22" InnerMargin="8,4,8,3" Alignment="Vertical" Action="SelectEquipment">
+			<Label Font="Bind PlayerProfile.Font" Text="Equipment" Alignment="Vertical" />
+		</Button>
+		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,80,22" InnerMargin="8,4,8,3" Alignment="Vertical" Action="SelectAbilities">
+			<Label Font="Bind PlayerProfile.Font" Text="Abilities" Alignment="Vertical" />
+		</Button>
+		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,80,22" InnerMargin="8,4,8,3" Alignment="Vertical" Action="SelectParty">
+			<Label Font="Bind PlayerProfile.Font" Text="Party" Alignment="Vertical"/>
+		</Button>
+		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,80,22" InnerMargin="8,4,8,3" Alignment="Vertical" Action="SelectStatus">
+			<Label Font="Bind PlayerProfile.Font" Text="Status" Alignment="Vertical"/>
+		</Button>
+		<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,80,22" InnerMargin="8,4,8,3" Alignment="Vertical" Action="SelectQuit">
+			<Label Font="Bind PlayerProfile.Font" Text="Save &amp; Quit" Alignment="Vertical"/>
 		</Button>
 	</Panel>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="20,-104,120,83">
-		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Alignment="Stretch">
-			<Panel Alignment="Vertical" Bounds="0,0,102,20">
-				<Image GameSprite="Bind DataGrid.Sprite" Alignment="BottomLeft"/>
-				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Color="Bind DataGrid.NameColor" Alignment="Cascading" TextAlignment="Left" Bounds="10,0,0,20"/>
-				<Label Text="Bind DataGrid.Health" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Right" Bounds="90,-3,0,20"/>
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,-104,160,96" TransitionIn="Expand" TransitionOut="Shrink">
+		<DataGrid Items="Bind PlayerSprites" Scrolling="False" Bounds="0,0,30,96" Alignment="Cascading">
+			<Panel Alignment="Vertical" Bounds="0,0,30,24">
+				<Image Sprite="Bind DataGrid" Alignment="BottomLeft" Bounds="24,30,30,20"/>
+			</Panel>
+		</DataGrid>
+		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Bounds="0,0,130,96" Alignment="Cascading">
+			<Panel Alignment="Vertical" Bounds="0,0,102,24">
+				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Color="Bind DataGrid.NameColor" Alignment="Cascading" TextAlignment="Left" Bounds="0,12,0,20"/>
+				<Label Text="HP:" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="80,12,0,20"/>
+				<Label Text="Bind DataGrid.Health" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="0,12,0,20"/>
 			</Panel>
 		</DataGrid>
 	</Panel>

@@ -13,12 +13,18 @@ namespace Texemon.Scenes.StatusScene
 {
     public class StatusViewModel : ViewModel
     {
+        public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
+        {
+            { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
+        };
+
         StatusScene statusScene;
 
         public ModelCollection<Type> AvailableMenus { get; private set; } = new ModelCollection<Type>();
-
         public ModelProperty<Type> HighlightedMenu { get; private set; }
         public ModelProperty<Type> ActiveMenu { get; private set; }
+
+        public ModelCollection<AnimatedSprite> PlayerSprites { get; private set; } = new ModelCollection<AnimatedSprite>();
 
         public StatusViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
@@ -26,7 +32,12 @@ namespace Texemon.Scenes.StatusScene
             statusScene = iScene;
 
             //AvailableMenus.Add(new ItemViewModel(statusScene));
-
+            foreach (ModelProperty<HeroModel> heroModelProperty in GameProfile.PlayerProfile.Party)
+            {
+                Texture2D sprite = AssetCache.SPRITES[heroModelProperty.Value.Sprite.Value];
+                AnimatedSprite animatedSprite = new AnimatedSprite(sprite, HERO_ANIMATIONS);
+                PlayerSprites.Add(animatedSprite);
+            }
 
             LoadView(GameView.StatusScene_StatusView);
         }
@@ -54,6 +65,17 @@ namespace Texemon.Scenes.StatusScene
             base.Terminate();
 
             statusScene.EndScene();
+        }
+
+        public void SelectQuit()
+        {
+            GameProfile.SaveState();
+            CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+        }
+
+        public void Back()
+        {
+            Close();
         }
     }
 }

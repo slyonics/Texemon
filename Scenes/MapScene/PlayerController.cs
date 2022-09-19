@@ -41,8 +41,19 @@ namespace Texemon.Scenes.MapScene
         public override void PreUpdate(GameTime gameTime)
         {
             InputFrame inputFrame = Input.CurrentInput;
-            Vector2 movement = Vector2.Zero;
 
+            if (Input.CurrentInput.CommandPressed(Command.Cancel))
+            {
+                Controller suspendController = mapScene.AddController(new Controller(PriorityLevel.MenuLevel));
+
+                StatusScene.StatusScene statusScene = new StatusScene.StatusScene();
+                statusScene.OnTerminated += new TerminationFollowup(suspendController.Terminate);
+                CrossPlatformGame.StackScene(statusScene);
+
+                return;
+            }
+
+            Vector2 movement = Vector2.Zero;
             if (Input.LeftMouseState == Microsoft.Xna.Framework.Input.ButtonState.Pressed &&
                 Input.MousePosition.X >= 0 && Input.MousePosition.Y >= 0 && Input.MousePosition.X < CrossPlatformGame.ScreenWidth && Input.MousePosition.Y < CrossPlatformGame.ScreenHeight)
             {

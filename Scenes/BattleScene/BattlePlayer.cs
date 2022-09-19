@@ -47,10 +47,10 @@ namespace Texemon.Scenes.BattleScene
 
         private HeroModel heroModel;
         public HeroModel HeroModel { get => heroModel; set { heroModel = value; if (HeroModel.FlightHeight.Value > 1)
-                {
-                    shadowSprite = new AnimatedSprite(AssetCache.SPRITES[HeroModel.ShadowSprite.Value], HERO_ANIMATIONS);
-                }
-            } }
+            {
+                shadowSprite = new AnimatedSprite(AssetCache.SPRITES[HeroModel.ShadowSprite.Value], HERO_ANIMATIONS);
+            }
+        } }
 
         public BattlePlayer(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)

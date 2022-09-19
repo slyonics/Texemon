@@ -29,6 +29,11 @@ namespace Texemon.Scenes.StatusScene
             ABILITIES = AssetCache.LoadRecords<AbilityRecord>("AbilityData");
         }
 
+        public override void BeginScene()
+        {
+            sceneStarted = true;
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

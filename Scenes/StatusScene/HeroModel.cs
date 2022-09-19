@@ -9,7 +9,7 @@ using Texemon.Scenes.BattleScene;
 
 namespace Texemon.Scenes.StatusScene
 {
-
+    [Serializable]
     public class HeroModel : BattlerModel
     {
         public HeroModel(HeroType heroType)
@@ -85,8 +85,12 @@ namespace Texemon.Scenes.StatusScene
         public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_Base);
         public ModelProperty<GameSprite> ShadowSprite { get; set; } = new ModelProperty<GameSprite>();
         public ModelProperty<int> FlightHeight { get; set; } = new ModelProperty<int>(0);
+
+        [field: NonSerialized]
         public ModelProperty<Color> NameColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+        [field: NonSerialized]
         public ModelProperty<Color> HealthColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+
         public ModelProperty<int> LastCategory { get; private set; } = new ModelProperty<int>(0);
         public ModelProperty<int> LastSlot { get; private set; } = new ModelProperty<int>(0);
         public ModelCollection<CommandRecord> Equipment { get; set; } = new ModelCollection<CommandRecord>();

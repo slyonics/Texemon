@@ -56,7 +56,7 @@
 		</Panel>
 	</Panel>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,30,150,66" InnerMargin="8,3,8,6">
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,30,150,66" InnerMargin="8,3,8,6" TransitionIn="Expand">
 		<CrawlText Font="Bind PlayerProfile.Font" Name="Description" Bounds="0,0,134,40"/>
 		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,90,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Enabled="Bind IsAffordable" Visible="Bind ReadyToProceed">
 			<Label Text="Construct" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>

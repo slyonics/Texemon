@@ -9,6 +9,7 @@ using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.BattleScene
 {
+    [Serializable]
     public class BattlerModel
     {
         public BattlerModel()

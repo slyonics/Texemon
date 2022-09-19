@@ -18,7 +18,7 @@ namespace Texemon.SceneObjects
 
     public delegate void TerminationFollowup();
 
-    public abstract class Controller
+    public class Controller
     {
         private PriorityLevel priorityLevel;
 
