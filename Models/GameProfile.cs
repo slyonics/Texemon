@@ -107,7 +107,7 @@ namespace Texemon.Models
             foreach (string saveFile in Directory.GetFiles(savePath).Where(x => Path.GetExtension(x) == ".sav"))
             {
                 Dictionary<string, object> saveData;
-                FileInfo fileInfo = new FileInfo(savePath);
+                FileInfo fileInfo = new FileInfo(saveFile);
                 using (FileStream fileStream = fileInfo.OpenRead())
                 {
                     saveData = (Dictionary<string, object>)binaryFormatter.Deserialize(fileStream);

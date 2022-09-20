@@ -178,7 +178,8 @@ namespace Texemon.Scenes.MapScene
         public void SaveMapPosition()
         {
             GameProfile.SetSaveData<string>("LastMapName", Tilemap.Name);
-            GameProfile.SetSaveData<Vector2>("LastPosition", PartyLeader.Position);
+            GameProfile.SetSaveData<int>("LastPositionX", (int)PartyLeader.Position.X);
+            GameProfile.SetSaveData<int>("LastPositionY", (int)PartyLeader.Position.Y);
             GameProfile.SetSaveData<string>("PlayerLocation", Tilemap.MapData.Properties.First(x => x.name == "LocationName").value);
         }
 
