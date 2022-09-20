@@ -179,6 +179,7 @@ namespace Texemon.Scenes.MapScene
         {
             GameProfile.SetSaveData<string>("LastMapName", Tilemap.Name);
             GameProfile.SetSaveData<Vector2>("LastPosition", PartyLeader.Position);
+            GameProfile.SetSaveData<string>("PlayerLocation", Tilemap.MapData.Properties.First(x => x.name == "LocationName").value);
         }
 
         public void AddPartyMember(HeroModel heroModel)

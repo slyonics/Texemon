@@ -10,13 +10,35 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.TitleScene
 {
+    public class SaveModel
+    {
+        public ModelProperty<StatusScene.HeroModel> PartyLeader;
+        public ModelProperty<string> PlayerLocation;
+        public ModelProperty<string> WindowStyle;
+    }
+
     public class TitleViewModel : ViewModel
     {
         private SettingsViewModel settingsViewModel;
 
+        public ModelCollection<SaveModel> AvailableSaves = new ModelCollection<SaveModel>();
+
         public TitleViewModel(Scene iScene, GameView viewName)
-            : base(iScene, PriorityLevel.GameLevel, viewName)
+            : base(iScene, PriorityLevel.GameLevel)
         {
+            var saves = GameProfile.GetAllSaveData();
+            foreach (var save in saves)
+            {
+                AvailableSaves.Add(new SaveModel()
+                {
+                    PartyLeader = new ModelProperty<StatusScene.HeroModel>((StatusScene.HeroModel)save["PartyLeader"]),
+                    PlayerLocation = new ModelProperty<string>((string)save["PlayerLocation"]),
+                    WindowStyle = new ModelProperty<string>((string)save["WindowStyle"])
+                });
+            }
+
+            LoadView(GameView.TitleScene_TitleView);
+
             GetWidget<Button>("LoadButton").Enabled = (GameProfile.SaveList.Count > 0);
         }
 
@@ -61,7 +83,7 @@ namespace Texemon.Scenes.TitleScene
         public void Exit()
         {
             Settings.SaveSettings();
-
+            GameProfile.SetSaveData<StatusScene.HeroModel>("PartyLeader", GameProfile.PlayerProfile.Party.First().Value);
             CrossPlatformGame.GameInstance.Exit();
         }
 

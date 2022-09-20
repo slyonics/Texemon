@@ -97,6 +97,28 @@ namespace Texemon.Models
             File.Delete(CrossPlatformGame.SETTINGS_DIRECTORY + SAVE_FOLDER + "\\" + slot + ".sav");
         }
 
+        public static List<Dictionary<string, object>> GetAllSaveData()
+        {
+            List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
+
+            string savePath = CrossPlatformGame.SETTINGS_DIRECTORY + SAVE_FOLDER;
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+            foreach (string saveFile in Directory.GetFiles(savePath).Where(x => Path.GetExtension(x) == ".sav"))
+            {
+                Dictionary<string, object> saveData;
+                FileInfo fileInfo = new FileInfo(savePath);
+                using (FileStream fileStream = fileInfo.OpenRead())
+                {
+                    saveData = (Dictionary<string, object>)binaryFormatter.Deserialize(fileStream);
+                }
+
+                results.Add(saveData);
+            }
+
+            return results;
+        }
+
         public static void SetSaveData<T>(string name, T value)
         {
             if (saveData.ContainsKey(name)) saveData[name] = value;

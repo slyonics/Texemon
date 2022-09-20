@@ -63,6 +63,9 @@ namespace Texemon.Scenes.IntroScene
             hero.Name.Value = namingBox.Text;
             GameProfile.PlayerProfile.Party.Add(hero);
 
+            GameProfile.SetSaveData<HeroModel>("PartyLeader", hero);
+            GameProfile.SetSaveData<string>("WindowStyle", GameProfile.PlayerProfile.WindowStyle.Value);
+
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
         }
 
