@@ -33,9 +33,9 @@
 		</DataGrid>
 		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Bounds="0,0,130,96" Alignment="Cascading">
 			<Panel Alignment="Vertical" Bounds="0,0,102,24">
-				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Color="Bind DataGrid.NameColor" Alignment="Cascading" TextAlignment="Left" Bounds="0,12,0,20"/>
+				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Cascading" TextAlignment="Left" Bounds="0,12,0,20"/>
 				<Label Text="HP:" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="80,12,0,20"/>
-				<Label Text="Bind DataGrid.Health" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="0,12,0,20"/>
+				<Label Text="Bind DataGrid.Health" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="0,12,0,20"/>
 			</Panel>
 		</DataGrid>
 	</Panel>

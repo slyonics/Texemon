@@ -12,20 +12,22 @@ namespace Texemon.Scenes.TitleScene
 {
     public class SaveModel
     {
-        public ModelProperty<StatusScene.HeroModel> PartyLeader;
-        public ModelProperty<string> PlayerLocation;
-        public ModelProperty<string> WindowStyle;
+        public ModelProperty<StatusScene.HeroModel> PartyLeader { get; set; }
+        public ModelProperty<string> PlayerLocation { get; set; }
+        public ModelProperty<string> WindowStyle { get; set; }
+        public ModelProperty<int> SaveSlot { get; set; }
     }
 
     public class TitleViewModel : ViewModel
     {
         private SettingsViewModel settingsViewModel;
 
-        public ModelCollection<SaveModel> AvailableSaves = new ModelCollection<SaveModel>();
+        public ModelCollection<SaveModel> AvailableSaves { get; set; } = new ModelCollection<SaveModel>();
 
         public TitleViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel)
         {
+            int i = 0;
             var saves = GameProfile.GetAllSaveData();
             foreach (var save in saves)
             {
@@ -33,40 +35,29 @@ namespace Texemon.Scenes.TitleScene
                 {
                     PartyLeader = new ModelProperty<StatusScene.HeroModel>((StatusScene.HeroModel)save["PartyLeader"]),
                     PlayerLocation = new ModelProperty<string>((string)save["PlayerLocation"]),
-                    WindowStyle = new ModelProperty<string>((string)save["WindowStyle"])
+                    WindowStyle = new ModelProperty<string>((string)save["WindowStyle"]),
+                    SaveSlot = new ModelProperty<int>(i)
                 });
+
+                i++;
             }
 
             LoadView(GameView.TitleScene_TitleView);
-
-            GetWidget<Button>("LoadButton").Enabled = (GameProfile.SaveList.Count > 0);
         }
 
         public void NewGame()
         {
-            GameProfile.NewState();
-
-            /*
-            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "SchoolOrigin");
-            */
-
-            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "City");
+            CrossPlatformGame.Transition(typeof(IntroScene.IntroScene));
         }
 
-        public void Continue()
+        public void Continue(object saveSlot)
         {
-            GameProfile.LoadState("Save0.sav");
+            GameProfile.LoadState("Save" + saveSlot.ToString() + ".sav");
 
-            /*
-            string mapName = GameProfile.GetSaveData<string>("LastMap");
-            int roomX = GameProfile.GetSaveData<int>("LastRoomX");
-            int roomY = GameProfile.GetSaveData<int>("LastRoomY");
-            MapScene.MapScene.Direction direction = GameProfile.GetSaveData<MapScene.MapScene.Direction>("LastDirection");
+            string mapName = GameProfile.GetSaveData<string>("LastMapName");
+            Vector2 mapPosition = new Vector2(GameProfile.GetSaveData<int>("LastPositionX"), GameProfile.GetSaveData<int>("LastPositionY"));
 
-            if (GameProfile.GetSaveData<int>("RandomBattle") < 2) GameProfile.SetSaveData<int>("RandomBattle", 2);
-
-            CrossPlatformGame.Transition(typeof(MapScene.MapScene), mapName, roomX, roomY, direction);
-            */
+            CrossPlatformGame.Transition(typeof(MapScene.MapScene), mapName, mapPosition);
         }
 
         public void SettingsMenu()
@@ -83,7 +74,7 @@ namespace Texemon.Scenes.TitleScene
         public void Exit()
         {
             Settings.SaveSettings();
-            GameProfile.SetSaveData<StatusScene.HeroModel>("PartyLeader", GameProfile.PlayerProfile.Party.First().Value);
+            
             CrossPlatformGame.GameInstance.Exit();
         }
 

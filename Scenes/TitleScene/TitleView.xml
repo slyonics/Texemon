@@ -1,28 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 	
-  <Panel Anchor="$CenterX,$CenterY" Bounds="-60,-100,120,100">
-	  <Panel Anchor="$CenterX,$CenterY" Bounds="-60,-100,120,100">
-		  <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Begin a new game" Action="NewGame" InnerMargin="8,8,8,8">
-			  <Label Text="New Game" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
-		  </Button>
-		  <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Audio and video settings" Action="SettingsMenu" InnerMargin="8,8,8,8">
-			  <Label Text="Settings" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
-		  </Button>
-		  <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="About the creators" Action="Credits" InnerMargin="8,8,8,8">
-			  <Label Text="Credits" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
-		  </Button>
-		  <Button Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,120,20" Alignment="Cascading" Tooltip ="Exit to desktop" Action="Exit" InnerMargin="8,8,8,8">
-			  <Label Text="Exit" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
-		  </Button>
-	  </Panel>
-	  <Panel Anchor="$CenterX,$CenterY" Bounds="-60,-100,120,100">
-		  <DataGrid>
-			  <Button>
-				  
-			  </Button>
-		  </DataGrid>
-	  </Panel>
-  </Panel>
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-90,-100,180,20">		  
+		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Cascading" Action="SettingsMenu" InnerMargin="8,1,8,4">
+			<Label Text="Settings" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
+		</Button>
+		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Cascading" Action="Credits" InnerMargin="8,1,8,4">
+			<Label Text="Credits" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
+		</Button>
+		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Cascading" Action="Exit" InnerMargin="8,1,8,4">
+			<Label Text="Exit" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
+		</Button>
+	</Panel>
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,100">
+		<DataGrid Items="Bind AvailableSaves" Alignment="Stretch">
+			<Button Style="Bind DataGrid.WindowStyle" Alignment="Center" Bounds="0,0,120,20" Action="Continue" ActionParameter="Ref DataGrid.SaveSlot">
+				<Label Text="Bind DataGrid.PartyLeader.Name" Font="Dialogue"/>
+			</Button>
+		</DataGrid>
+	</Panel>
+	<Button Style="TechWindow" PushedStyle="TechSelected" Anchor="$CenterX,$CenterY" Bounds="-35,80,70,20" Action="NewGame" InnerMargin="8,1,8,4">
+		<Label Text="New Game" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
+	</Button>
   
 </View>

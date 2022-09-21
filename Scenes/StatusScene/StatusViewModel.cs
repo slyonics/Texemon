@@ -70,6 +70,7 @@ namespace Texemon.Scenes.StatusScene
         public void SelectQuit()
         {
             ((MapScene.MapScene)CrossPlatformGame.SceneStack.First(x => x is MapScene.MapScene)).SaveMapPosition();
+            GameProfile.SetSaveData<HeroModel>("PartyLeader", GameProfile.PlayerProfile.Party.First().Value);
             GameProfile.SaveState();
             CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
         }

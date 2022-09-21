@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-  <Panel Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-160,-120,320,240" InnerMargin="8,8,8,8" TransitionIn="Expand">
+  <Panel Style="TechWindow" Anchor="$CenterX,$CenterY" Bounds="-160,-120,320,240" InnerMargin="8,8,8,8" TransitionIn="Expand">
 
-    <Panel Bounds="0,0,304,224">
+    <Panel Bounds="0,0,304,200">
       <Label Text="Bryce Sheehan (Moxy)" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
       <Label Text="Sprite Artist, Sound Effects, Designer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
 		
@@ -22,7 +22,7 @@
       <Label Text="johnnygarza@gmx.com" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
     </Panel>
 
-    <Button Style="GamePanelOpaque" PushedStyle="GamePanelSelected" Bounds="0, -50, 80, 69" Alignment="ReverseVertical" Tooltip ="Return to the title screen" Action="Back" InnerMargin="0,8,0,0">
+    <Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0, -20, 60, 18" Alignment="ReverseVertical" Action="Back" InnerMargin="0,1,0,0">
       <Label Text="Back" Alignment="Center" Color="#E0BFA2FF" Font="Dialogue"/>
     </Button>
   </Panel>
