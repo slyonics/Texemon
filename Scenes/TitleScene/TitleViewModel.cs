@@ -15,11 +15,18 @@ namespace Texemon.Scenes.TitleScene
         public ModelProperty<StatusScene.HeroModel> PartyLeader { get; set; }
         public ModelProperty<string> PlayerLocation { get; set; }
         public ModelProperty<string> WindowStyle { get; set; }
+        public ModelProperty<string> WindowSelectedStyle { get; set; }
         public ModelProperty<int> SaveSlot { get; set; }
+        public ModelProperty<AnimatedSprite> AnimatedSprite { get; set; }
     }
 
     public class TitleViewModel : ViewModel
     {
+        public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
+        {
+            { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
+        };
+
         private SettingsViewModel settingsViewModel;
 
         public ModelCollection<SaveModel> AvailableSaves { get; set; } = new ModelCollection<SaveModel>();
@@ -31,12 +38,15 @@ namespace Texemon.Scenes.TitleScene
             var saves = GameProfile.GetAllSaveData();
             foreach (var save in saves)
             {
+                AnimatedSprite animatedSprite = new AnimatedSprite(AssetCache.SPRITES[((StatusScene.HeroModel)save["PartyLeader"]).Sprite.Value], HERO_ANIMATIONS);
                 AvailableSaves.Add(new SaveModel()
                 {
                     PartyLeader = new ModelProperty<StatusScene.HeroModel>((StatusScene.HeroModel)save["PartyLeader"]),
                     PlayerLocation = new ModelProperty<string>((string)save["PlayerLocation"]),
                     WindowStyle = new ModelProperty<string>((string)save["WindowStyle"]),
-                    SaveSlot = new ModelProperty<int>(i)
+                    WindowSelectedStyle = new ModelProperty<string>(((string)save["WindowStyle"]).Replace("Window", "Selected")),
+                    SaveSlot = new ModelProperty<int>(i),
+                    AnimatedSprite = new ModelProperty<AnimatedSprite>(animatedSprite)
                 });
 
                 i++;

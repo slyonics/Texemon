@@ -112,6 +112,9 @@ namespace Texemon.Scenes.MapScene
             PartyLeader.Orientation = orientation;
             PartyLeader.Idle();
 
+            PartyLeader.UpdateBounds();
+            Camera.Center(PartyLeader.Center);
+
             int i = 1;
             foreach (Hero hero in Party.Skip(1))
             {
@@ -131,6 +134,9 @@ namespace Texemon.Scenes.MapScene
             PartyLeader.Position = leaderPosition;
             PartyLeader.Orientation = Orientation.Down;
             PartyLeader.Idle();
+
+            PartyLeader.UpdateBounds();
+            Camera.Center(PartyLeader.Center);
 
             int i = 1;
             foreach (Hero hero in Party.Skip(1))
@@ -161,6 +167,9 @@ namespace Texemon.Scenes.MapScene
             PartyLeader.CenterOn(spawnPosition);
             PartyLeader.Orientation = orientation;
             PartyLeader.Idle();
+
+            PartyLeader.UpdateBounds();
+            Camera.Center(PartyLeader.Center);
 
             int i = 1;
             foreach (Hero hero in Party.Skip(1))

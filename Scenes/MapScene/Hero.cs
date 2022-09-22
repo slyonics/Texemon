@@ -21,7 +21,11 @@ namespace Texemon.Scenes.MapScene
             WalkDown,
             WalkLeft,
             WalkRight,
-            WalkUp
+            WalkUp,
+            RunDown,
+            RunLeft,
+            RunRight,
+            RunUp
         }
 
         public const int HERO_WIDTH = 24;
@@ -38,7 +42,11 @@ namespace Texemon.Scenes.MapScene
             { HeroAnimation.WalkDown.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
             { HeroAnimation.WalkLeft.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
             { HeroAnimation.WalkRight.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
-            { HeroAnimation.WalkUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 4, 240) }
+            { HeroAnimation.WalkUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
+            { HeroAnimation.RunDown.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 4, 120) },
+            { HeroAnimation.RunLeft.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 4, 120) },
+            { HeroAnimation.RunRight.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 4, 120) },
+            { HeroAnimation.RunUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 4, 120) }
         };
 
         private MapScene mapScene;

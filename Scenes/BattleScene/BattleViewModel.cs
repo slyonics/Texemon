@@ -49,6 +49,12 @@ namespace Texemon.Scenes.BattleScene
 
             BackgroundRender.Value = iScene.backgroundRender;
 
+            foreach (var model in GameProfile.PlayerProfile.Party)
+            {
+                model.Value.NameColor = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+                model.Value.HealthColor = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+            }
+
             LoadView(GameView.BattleScene_BattleView);
 
             EnemyPanel = GetWidget<Panel>("EnemyPanel");

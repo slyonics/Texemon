@@ -77,6 +77,7 @@ namespace Texemon.Main
         Battle,
         NewDestinations,
         Selection,
+        Title,
         Wilderness,
 
         None = -1

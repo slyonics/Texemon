@@ -21,7 +21,7 @@ namespace Texemon.Scenes.TitleScene
         {
             base.BeginScene();
 
-            //Audio.PlayMusic(GameMusic.SMP_TTL);
+            Audio.PlayMusic(GameMusic.Title);
         }
 
         public override void DrawBackground(SpriteBatch spriteBatch)

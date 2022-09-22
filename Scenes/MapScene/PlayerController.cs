@@ -21,6 +21,7 @@ namespace Texemon.Scenes.MapScene
     public class PlayerController : Controller
     {
         public const float WALKING_SPEED = 90.0f;
+        public const float RUN_SPEED = 180.0f;
 
         private MapScene mapScene;
 
@@ -75,7 +76,11 @@ namespace Texemon.Scenes.MapScene
             else
             {
                 movement.Normalize();
-                Player.Walk(movement, WALKING_SPEED);
+                if (inputFrame.CommandDown(Command.Run1) || inputFrame.CommandDown(Command.Run2))
+                {
+                    Player.Run(movement, RUN_SPEED);
+                }
+                else Player.Walk(movement, WALKING_SPEED);
             }
         }
 

@@ -1,13 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Texemon.Scenes.MapScene;
 
 namespace Texemon.SceneObjects.Maps
 {
@@ -357,6 +350,15 @@ namespace Texemon.SceneObjects.Maps
             Reorient(movement);
 
             animatedSprite.PlayAnimation("Walk" + orientation.ToString());
+        }
+
+        public virtual void Run(Vector2 movement, float runSpeed)
+        {
+            desiredVelocity = movement * runSpeed;
+
+            Reorient(movement);
+
+            animatedSprite.PlayAnimation("Run" + orientation.ToString());
         }
 
         public virtual void Teleport(Vector2 destination)

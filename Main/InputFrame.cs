@@ -18,10 +18,8 @@ namespace Texemon.Main
         Cancel,
         Menu,
         Interact,
-        Technique1,
-        Technique2,
-        Technique3,
-        Technique4
+        Run1,
+        Run2
     }
 
     public enum PlayerNumber
@@ -55,7 +53,8 @@ namespace Texemon.Main
             { Command.Cancel, new List<Keys>() { Keys.Escape } },
             { Command.Menu, new List<Keys>() { Keys.Escape } },
             { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space } },
-            //{ Command.Speedup, new List<Keys>() { Keys.Space } }
+            { Command.Run1, new List<Keys>() { Keys.LeftShift } },
+            { Command.Run2, new List<Keys>() { Keys.RightShift } }
         };
 
         private static Dictionary<Command, List<Buttons>> MANDATORY_GAMEPAD_BINDINGS = new Dictionary<Command, List<Buttons>>()

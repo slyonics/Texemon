@@ -87,9 +87,9 @@ namespace Texemon.Scenes.StatusScene
         public ModelProperty<int> FlightHeight { get; set; } = new ModelProperty<int>(0);
 
         [field: NonSerialized]
-        public ModelProperty<Color> NameColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+        public ModelProperty<Color> NameColor { get; set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
         [field: NonSerialized]
-        public ModelProperty<Color> HealthColor { get; private set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+        public ModelProperty<Color> HealthColor { get; set; } = new ModelProperty<Color>(new Color(252, 252, 252, 255));
 
         public ModelProperty<int> LastCategory { get; private set; } = new ModelProperty<int>(0);
         public ModelProperty<int> LastSlot { get; private set; } = new ModelProperty<int>(0);
