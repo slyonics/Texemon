@@ -111,7 +111,11 @@ namespace Texemon.Scenes.MapScene
 
                 if (movement.Length() < 0.001f) movement = Vector2.Zero;
                 else movement.Normalize();
-                follower.Walk(movement, PlayerController.WALKING_SPEED);
+
+                if (Input.CurrentInput.CommandDown(Command.Run1) || Input.CurrentInput.CommandDown(Command.Run2))
+                    follower.Walk(movement, PlayerController.RUN_SPEED);
+                else
+                    follower.Walk(movement, PlayerController.WALKING_SPEED);
                 lastPosition = follower.Position;
             }
         }

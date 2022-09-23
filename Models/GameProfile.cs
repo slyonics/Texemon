@@ -34,8 +34,8 @@ namespace Texemon.Models
 
         public static void NewState()
         {
-            //saveSlot = -1;
-            saveSlot = 0;
+            saveSlot = -1;
+            //saveSlot = 0;
             saveData = new Dictionary<string, object>(DEFAULT_SAVE_VALUES);
             playerProfile = new PlayerProfile();
             inventory = new ModelCollection<ItemRecord>();
@@ -139,7 +139,7 @@ namespace Texemon.Models
             int slotStart = saveName.LastIndexOf(SAVE_FOLDER) + 6;
             int slotEnd = saveName.LastIndexOf('.');
 
-            return int.Parse(saveName.Substring(slotStart, slotEnd - slotStart));
+            return int.Parse(Path.GetFileNameWithoutExtension(saveName).Replace("Save", ""));
         }
 
         public static PlayerProfile PlayerProfile { get => playerProfile; }

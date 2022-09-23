@@ -247,5 +247,11 @@ namespace Texemon.Scenes.MapScene
         {
             base.DrawGame(spriteBatch, shader, matrix);
         }
+
+        public void HandleOffscreen()
+        {
+            var travelZone = EventTriggers.Where(x => x.TravelZone).OrderBy(x => Vector2.Distance(new Vector2(x.Bounds.Center.X, x.Bounds.Center.Y), PartyLeader.Position)).First();
+            travelZone.Activate(PartyLeader);
+        }
     }
 }

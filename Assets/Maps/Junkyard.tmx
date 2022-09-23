@@ -2,6 +2,7 @@
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="13">
  <properties>
   <property name="LocationName" value="Distant Scrapyard"/>
+  <property name="Music" value="Scrapyard"/>
  </properties>
  <tileset firstgid="1" source="Tilesets/ColorTileA2.tsx"/>
  <tileset firstgid="1569" source="Tilesets/ColorTileB.tsx"/>

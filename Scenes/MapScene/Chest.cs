@@ -50,7 +50,7 @@ namespace Texemon.Scenes.MapScene
         }
 
 
-        public static readonly Rectangle CHEST_BOUNDS = new Rectangle(-7, -8, 13, 6);
+        public static readonly Rectangle CHEST_BOUNDS = new Rectangle(-7, -10, 13, 8);
 
         private static readonly Dictionary<string, Animation> CHEST_ANIMATIONS = new Dictionary<string, Animation>()
         {

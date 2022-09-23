@@ -82,6 +82,8 @@ namespace Texemon.Scenes.MapScene
                 }
                 else Player.Walk(movement, WALKING_SPEED);
             }
+
+            if (!mapScene.Camera.View.Intersects(Player.Bounds) && !mapScene.Camera.View.Contains(Player.Bounds)) mapScene.HandleOffscreen();
         }
 
         public override void PostUpdate(GameTime gameTime)

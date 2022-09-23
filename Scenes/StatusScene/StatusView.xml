@@ -28,14 +28,24 @@
 	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,-104,160,96" TransitionIn="Expand" TransitionOut="Shrink">
 		<DataGrid Items="Bind PlayerSprites" Scrolling="False" Bounds="0,0,30,96" Alignment="Cascading">
 			<Panel Alignment="Vertical" Bounds="0,0,30,24">
-				<Image Sprite="Bind DataGrid" Alignment="BottomLeft" Bounds="24,30,30,20"/>
+				<Image Sprite="Bind DataGrid" Alignment="BottomLeft" Bounds="26,30,30,20"/>
 			</Panel>
 		</DataGrid>
-		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Bounds="0,0,130,96" Alignment="Cascading">
-			<Panel Alignment="Vertical" Bounds="0,0,102,24">
-				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Cascading" TextAlignment="Left" Bounds="0,12,0,20"/>
-				<Label Text="HP:" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="80,12,0,20"/>
-				<Label Text="Bind DataGrid.Health" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="0,12,0,20"/>
+		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Bounds="-6,0,130,120" Alignment="Cascading">
+			<Panel Alignment="Vertical" Bounds="0,0,130,30">
+				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Alignment="Cascading" TextAlignment="Left" Bounds="0,14,80,20"/>
+				<Panel>
+					<Image Icon="Heart" Alignment="Cascading" Bounds="-20,4,10,15"/>
+					<Label Text="Bind DataGrid.Health" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,13,30,20"/>
+					<Image Icon="Axe" Alignment="Cascading" Bounds="-20,4,10,10"/>
+					<Label Text="Bind DataGrid.Strength" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,13,20,10"/>
+					<Image Icon="Defend" Alignment="Cascading" Bounds="-20,4,10,10"/>
+					<Label Text="Bind DataGrid.Defense" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,13,20,10"/>
+					<Image Icon="Flee" Alignment="Cascading" Bounds="-20,4,10,10"/>
+					<Label Text="Bind DataGrid.Agility" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,13,20,10"/>
+					<Image Icon="Staff" Alignment="Cascading" Bounds="-20,4,10,10"/>
+					<Label Text="Bind DataGrid.Mana" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,13,20,10"/>
+				</Panel>
 			</Panel>
 		</DataGrid>
 	</Panel>

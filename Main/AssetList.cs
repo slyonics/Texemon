@@ -76,6 +76,7 @@ namespace Texemon.Main
     {
         Battle,
         NewDestinations,
+        Scrapyard,
         Selection,
         Title,
         Wilderness,
@@ -242,6 +243,7 @@ namespace Texemon.Main
         Widgets_Gauges_ui_healthBarInside,
         Widgets_Gauges_ui_thumbSlider,
         Widgets_Icons_Armor,
+        Widgets_Icons_Axe,
         Widgets_Icons_Blank,
         Widgets_Icons_Chest,
         Widgets_Icons_Defend,
@@ -250,6 +252,7 @@ namespace Texemon.Main
         Widgets_Icons_Flee,
         Widgets_Icons_Gun,
         Widgets_Icons_Heal,
+        Widgets_Icons_Heart,
         Widgets_Icons_Lightning,
         Widgets_Icons_Shield,
         Widgets_Icons_Staff,

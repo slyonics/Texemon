@@ -14,7 +14,7 @@
 	</Panel>
 	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,120">
 		<DataGrid Items="Bind AvailableSaves" Alignment="Stretch">
-			<Button Style="Bind DataGrid.WindowStyle" PushedStyle="Bind DataGrid.WindowSelectedStyle" Alignment="Center" Bounds="0,0,120,30" Action="Continue" ActionParameter="Ref DataGrid.SaveSlot">
+			<Button Style="Bind DataGrid.WindowStyle" PushedStyle="Bind DataGrid.WindowSelectedStyle" Alignment="Vertical" Bounds="0,0,120,30" Action="Continue" ActionParameter="Ref DataGrid.SaveSlot">
 				<Image Sprite="Bind DataGrid.AnimatedSprite" Alignment="Left" Bounds="10,32,28,20"/>
 				<Label Text="Bind DataGrid.PartyLeader.Name" Font="Pixel" Alignment="Cascading" TextAlignment="Left" Bounds="22,12,80,20"/>
 				<Label Text="Bind DataGrid.PlayerLocation" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="22,13,110,10"/>
