@@ -76,7 +76,7 @@ namespace Texemon.Scenes.MapScene
             else
             {
                 movement.Normalize();
-                if (inputFrame.CommandDown(Command.Run1) || inputFrame.CommandDown(Command.Run2))
+                if (inputFrame.CommandDown(Command.Run))
                 {
                     Player.Run(movement, RUN_SPEED);
                 }

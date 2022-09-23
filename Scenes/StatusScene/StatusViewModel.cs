@@ -20,6 +20,8 @@ namespace Texemon.Scenes.StatusScene
 
         StatusScene statusScene;
 
+        public ViewModel ChildViewModel { get; set; }
+
         public ModelCollection<Type> AvailableMenus { get; private set; } = new ModelCollection<Type>();
         public ModelProperty<Type> HighlightedMenu { get; private set; }
         public ModelProperty<Type> ActiveMenu { get; private set; }
@@ -46,7 +48,14 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
+            if (ChildViewModel != null)
+            {
 
+            }
+            else
+            {
+                if (Input.CurrentInput.CommandPressed(Command.Cancel)) Back();
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -54,10 +63,10 @@ namespace Texemon.Scenes.StatusScene
             base.Draw(spriteBatch);
         }
 
-        public void StartPlayerTurn(ModelProperty<Type> selectedViewModel)
+        public void SelectViewModel(ModelProperty<Type> selectedViewModel)
         {
             ActiveMenu.Value = selectedViewModel.Value;
-            statusScene.AddView((ViewModel)Activator.CreateInstance(selectedViewModel.Value));
+            ChildViewModel = statusScene.AddView((ViewModel)Activator.CreateInstance(selectedViewModel.Value));
         }
 
         public override void Terminate()
@@ -65,6 +74,11 @@ namespace Texemon.Scenes.StatusScene
             base.Terminate();
 
             statusScene.EndScene();
+        }
+
+        public void SelectItems()
+        {
+            
         }
 
         public void SelectQuit()
