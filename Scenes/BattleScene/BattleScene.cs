@@ -50,9 +50,13 @@ namespace Texemon.Scenes.BattleScene
                 Texture2D enemySprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Enemies_" + enemyData.Sprite)];
                 totalEnemyWidth += enemySprite.Width;
             }
-            BuildBackground(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + encounterRecord.Background)], totalEnemyWidth);
+            
 
             battleViewModel = AddView(new BattleViewModel(this, ENCOUNTERS.First(x => x.Name == encounterName)));
+
+
+            BuildBackground(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + encounterRecord.Background)], battleViewModel.EnemyWindow.Value.Width);
+            battleViewModel.BackgroundRender.Value = backgroundRender;
         }
 
         ~BattleScene()
