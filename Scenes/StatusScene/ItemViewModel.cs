@@ -18,7 +18,7 @@ namespace Texemon.Scenes.StatusScene
         public ModelCollection<ItemRecord> AvailableItems { get => GameProfile.Inventory; }
 
         public ItemViewModel(StatusScene iScene)
-            : base(iScene, PriorityLevel.CutsceneLevel)
+            : base(iScene, PriorityLevel.GameLevel)
         {
             statusScene = iScene;
 

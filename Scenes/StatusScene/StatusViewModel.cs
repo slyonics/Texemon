@@ -18,45 +18,41 @@ namespace Texemon.Scenes.StatusScene
             { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
         };
 
+        List<ViewModel> SubViews { get; set; } = new List<ViewModel>();
+
         StatusScene statusScene;
 
         public ViewModel ChildViewModel { get; set; }
-
-        public ModelCollection<AnimatedSprite> PlayerSprites { get; private set; } = new ModelCollection<AnimatedSprite>();
 
         public StatusViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
         {
             statusScene = iScene;
 
-            //AvailableMenus.Add(new ItemViewModel(statusScene));
-            foreach (ModelProperty<HeroModel> heroModelProperty in GameProfile.PlayerProfile.Party)
-            {
-                Texture2D sprite = AssetCache.SPRITES[heroModelProperty.Value.Sprite.Value];
-                AnimatedSprite animatedSprite = new AnimatedSprite(sprite, HERO_ANIMATIONS);
-                PlayerSprites.Add(animatedSprite);
-            }
-
+            SubViews.Add(new PartyViewModel(statusScene));
+            SubViews.Add(new ItemViewModel(statusScene));
+                        
             LoadView(GameView.StatusScene_StatusView);
+
+            GetWidget<Button>("PartyButton").RadioSelect();
+            SelectParty();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (ChildViewModel != null)
-            {
-                if (ChildViewModel.Terminated) ChildViewModel = null;
-            }
-            else
-            {
-                if (Input.CurrentInput.CommandPressed(Command.Cancel)) Back();
-            }
+            ChildViewModel?.Update(gameTime);
+            
+            if (Input.CurrentInput.CommandPressed(Command.Cancel)) Back();
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            ChildViewModel?.Draw(spriteBatch);
         }
 
         public override void Terminate()
@@ -66,9 +62,14 @@ namespace Texemon.Scenes.StatusScene
             statusScene.EndScene();
         }
 
+        public void SelectParty()
+        {
+            ChildViewModel = SubViews.First(x => x is PartyViewModel);
+        }
+
         public void SelectItems()
         {
-            ChildViewModel = statusScene.AddView(new ItemViewModel(statusScene));
+            ChildViewModel = SubViews.First(x => x is ItemViewModel);
         }
 
         public void SelectQuit()
