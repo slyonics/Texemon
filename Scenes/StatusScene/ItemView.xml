@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-40,-104,166,100">
+		<DataGrid Items="Bind AvailableItems" Bounds="0,4,166,90" Alignment="Cascading">
+			<Button Bounds="0,0,166,10" Alignment="Vertical">
+				<Image Icon="Ref DataGrid.Icon" Alignment="Left" Bounds="7,0,10,10"/>
+				<Label Text="Ref DataGrid.Name" Font="Dialogue" Alignment="Left" TextAlignment="Left" Bounds="1,9,53,10"/>
+				<Label Visible="Ref DataGrid.ShowCharges" Font="Dialogue" Text="Ref DataGrid.ChargesLeft" Alignment="Left" TextAlignment="Right" Bounds="0,9,14,8"/>
+			</Button>
+		</DataGrid>
+	</Panel>
+</View>

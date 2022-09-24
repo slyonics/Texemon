@@ -25,8 +25,12 @@ namespace Texemon.Scenes.StatusScene
         {
             HEROES = AssetCache.LoadRecords<HeroRecord>("HeroData");
             CLASSES = AssetCache.LoadRecords<ClassRecord>("ClassData");
+
             ITEMS = AssetCache.LoadRecords<ItemRecord>("ItemData");
+            foreach (ItemRecord itemRecord in ITEMS) itemRecord.ChargesLeft = itemRecord.Charges;
+
             ABILITIES = AssetCache.LoadRecords<AbilityRecord>("AbilityData");
+            foreach (AbilityRecord abilityRecord in ABILITIES) abilityRecord.ChargesLeft = abilityRecord.Charges;
         }
 
         public override void BeginScene()

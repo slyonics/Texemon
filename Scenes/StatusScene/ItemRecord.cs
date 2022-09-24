@@ -18,11 +18,11 @@ namespace Texemon.Scenes.StatusScene
     {
         public ItemRecord()
         {
-
+            
         }
 
         public ItemRecord(ItemRecord clone)
-            :base(clone)
+            : base(clone)
         {
             ItemType = clone.ItemType;
         }
