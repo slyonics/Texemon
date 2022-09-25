@@ -25,6 +25,7 @@ namespace Texemon.Scenes.StatusScene
         public ViewModel ChildViewModel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
+        public ModelCollection<CommandRecord> AbilitiesList { get; private set; } = new ModelCollection<CommandRecord>();
 
         public AbilitiesViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
@@ -96,6 +97,29 @@ namespace Texemon.Scenes.StatusScene
             else record = (HeroModel)parameter;
 
             slot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
+            AbilitiesList.ModelList = record.Abilities.ModelList;
         }
+
+        public void SelectItem(object parameter)
+        {
+            CommandRecord record;
+            if (parameter is IModelProperty)
+            {
+                record = (CommandRecord)((IModelProperty)parameter).GetValue();
+            }
+            else record = (CommandRecord)parameter;
+
+            Description1.Value = record.Description.ElementAtOrDefault(0);
+            Description2.Value = record.Description.ElementAtOrDefault(1);
+            Description3.Value = record.Description.ElementAtOrDefault(2);
+            Description4.Value = record.Description.ElementAtOrDefault(3);
+            Description5.Value = record.Description.ElementAtOrDefault(4);
+        }
+
+        public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description3 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description4 { get; set; } = new ModelProperty<string>("");
+        public ModelProperty<string> Description5 { get; set; } = new ModelProperty<string>("");
     }
 }

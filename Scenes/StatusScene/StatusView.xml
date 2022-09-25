@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-133,-102,266,22">
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-141,-102,282,22">
 		<Button Name="PartyButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,44,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectParty">
 			<Label Font="Bind PlayerProfile.Font" Text="Party" Alignment="Vertical"/>
 		</Button>

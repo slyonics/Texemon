@@ -26,6 +26,10 @@
 		"Sprite": "Android",
 		"InitialEquipment": [
 			"Blaster",
+			"Repair Kit",
+			"Repair Kit",
+			"Repair Kit",
+			"Repair Kit",
 			"Repair Kit"
 		],
 		"InitialAbilities": [],
