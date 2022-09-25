@@ -13,6 +13,8 @@ namespace Texemon.Main
         IntroScene_TechNameView,
         ShopScene_ConstructView,
         ShopScene_HeroNameView,
+        StatusScene_AbilitiesView,
+        StatusScene_EquipmentView,
         StatusScene_ItemView,
         StatusScene_PartyView,
         StatusScene_StatusView,

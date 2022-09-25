@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-133,-80,102,71" InnerMargin="2,2,2,6">
+		<DataGrid Name="PartyList" Items="Bind PartyMembers" Scrolling="False" Bounds="0,0,98,63" Alignment="Cascading" InnerMargin="2,1,0,2">
+			<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Alignment="Vertical" Bounds="0,0,94,16" Action="SelectParty" ActionParameter="Ref DataGrid.HeroModel">
+				<Image Sprite="Bind DataGrid.PlayerSprite" Alignment="Left" Bounds="9,23,30,16"/>
+				<Label Text="Bind DataGrid.HeroModel.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left" Bounds="-15,11,64,16"/>
+			</Button>
+		</DataGrid>
+	</Panel>
+</View>

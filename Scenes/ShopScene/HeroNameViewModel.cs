@@ -35,6 +35,11 @@ namespace Texemon.Scenes.ShopScene
 
             if (Input.CurrentInput.CommandPressed(Command.Cancel))
             {
+                GetWidget<Button>("Cancel").RadioSelect();
+            }
+            else if (Input.CurrentInput.CommandReleased(Command.Cancel))
+            {
+                GetWidget<Button>("Cancel").UnSelect();
                 Terminate();
             }
             else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0)

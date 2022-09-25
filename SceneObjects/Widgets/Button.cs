@@ -127,7 +127,7 @@ namespace Texemon.SceneObjects.Widgets
             buttonFrame?.SetSprite(PushedStyle);
             if (buttonFrame != null)
             {
-                buttonFrame.FrameDepth = ((Button)parent.ChildList.Last()).Depth + Widget.WIDGET_PEER_DEPTH_OFFSET;
+                buttonFrame.FrameDepth = ((Button)parent.ChildList.Last(x => x is Button)).Depth + Widget.WIDGET_PEER_DEPTH_OFFSET;
             }
 
             foreach (Widget child in ChildList) child.Depth = buttonFrame.FrameDepth + Widget.WIDGET_DEPTH_OFFSET;

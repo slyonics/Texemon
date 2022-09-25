@@ -83,11 +83,15 @@ namespace Texemon.Scenes.ShopScene
                 else if (input.CommandPressed(Command.Down)) CursorDown();
                 else if (input.CommandPressed(Command.Confirm)) StartCursorSelect();
                 else if (input.CommandReleased(Command.Confirm)) EndCursorSelect();
-                else if (input.CommandPressed(Command.Cancel)) Terminate();
+                else if (input.CommandPressed(Command.Cancel)) GetWidget<Button>("Back").RadioSelect();
+                else if (input.CommandReleased(Command.Cancel))
+                {
+                    GetWidget<Button>("Back").UnSelect();
+                    Terminate();
+                }
             }
             else
             {
-                if (input.CommandPressed(Command.Cancel)) heroNameViewModel.Terminate();
                 if (heroNameViewModel.Terminated)
                 {
                     if (heroNameViewModel.Confirmed != null)
@@ -98,11 +102,6 @@ namespace Texemon.Scenes.ShopScene
                         AvailableEntries.ModelList = AvailableEntries.ModelList.FindAll(x => x.Value.Name.Replace(" ", "") != heroNameViewModel.heroRecord.Name.ToString());
 
                         GetWidget<CrawlText>("Description").Text = heroNameViewModel.Confirmed + " was added to the party.";
-                        /*Button button = (GetWidget<DataGrid>("EntryList").ChildList[slot] as Button);
-                        (button.ChildList[0] as Image).Sprite.SpriteColor = new Color(128, 128, 128, 255);
-                        (button.ChildList[0] as Image).Sprite.AnimationSpeed = 0.0f;
-                        button.UnSelect();
-                        button.Enabled = false;*/
                     }
                     heroNameViewModel = null;
                 }

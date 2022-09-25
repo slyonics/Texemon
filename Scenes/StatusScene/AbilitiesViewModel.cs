@@ -11,13 +11,7 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.StatusScene
 {
-    public class PartyMemberModel
-    {
-        public ModelProperty<AnimatedSprite> PlayerSprite { get; set; }
-        public ModelProperty<HeroModel> HeroModel { get; set; }
-    }
-
-    public class PartyViewModel : ViewModel
+    public class AbilitiesViewModel : ViewModel
     {
         public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
@@ -26,11 +20,13 @@ namespace Texemon.Scenes.StatusScene
 
         StatusScene statusScene;
 
+        int slot = -1;
+
         public ViewModel ChildViewModel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
 
-        public PartyViewModel(StatusScene iScene)
+        public AbilitiesViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
         {
             statusScene = iScene;
@@ -47,7 +43,7 @@ namespace Texemon.Scenes.StatusScene
                 PartyMembers.Add(partyMember);
             }
 
-            LoadView(GameView.StatusScene_PartyView);
+            LoadView(GameView.StatusScene_AbilitiesView);
 
             Visible = false;
         }
@@ -56,7 +52,50 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
-            // if (Input.CurrentInput.CommandPressed(Command.Cancel)) Ter
+            if (Input.CurrentInput.CommandPressed(Command.Up)) CursorUp();
+            else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
+        }
+
+        private void CursorUp()
+        {
+            slot--;
+            if (slot < 0)
+            {
+                slot = 0;
+                return;
+            }
+
+            Audio.PlaySound(GameSound.Cursor);
+
+            SelectParty(PartyMembers[slot].HeroModel);
+            (GetWidget<DataGrid>("PartyList").ChildList[slot] as Button).RadioSelect();
+        }
+
+        private void CursorDown()
+        {
+            slot++;
+            if (slot >= GameProfile.PlayerProfile.Party.Count())
+            {
+                slot = GameProfile.PlayerProfile.Party.Count() - 1;
+                return;
+            }
+
+            Audio.PlaySound(GameSound.Cursor);
+
+            SelectParty(PartyMembers[slot].HeroModel);
+            (GetWidget<DataGrid>("PartyList").ChildList[slot] as Button).RadioSelect();
+        }
+
+        public void SelectParty(object parameter)
+        {
+            HeroModel record;
+            if (parameter is IModelProperty)
+            {
+                record = (HeroModel)((IModelProperty)parameter).GetValue();
+            }
+            else record = (HeroModel)parameter;
+
+            slot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
         }
     }
 }
