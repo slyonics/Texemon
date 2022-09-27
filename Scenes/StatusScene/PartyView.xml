@@ -12,7 +12,7 @@
 					<Label Text="Bind DataGrid.HeroModel.Strength" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
 					<Image Icon="Shield" Alignment="Cascading" Bounds="0,6,10,10"/>
 					<Label Text="Bind DataGrid.HeroModel.Defense" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
-					<Image Icon="Flee" Alignment="Cascading" Bounds="0,6,10,10"/>
+					<Image Icon="Gun" Alignment="Cascading" Bounds="0,6,10,10"/>
 					<Label Text="Bind DataGrid.HeroModel.Agility" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
 					<Image Icon="Staff" Alignment="Cascading" Bounds="0,6,10,10"/>
 					<Label Text="Bind DataGrid.HeroModel.Mana" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>

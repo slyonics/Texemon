@@ -20,7 +20,7 @@ namespace Texemon.Scenes.StatusScene
 
         StatusScene statusScene;
 
-        private int slot = -1;
+        private int partySlot = -1;
 
         public ViewModel ChildViewModel { get; set; }
 
@@ -53,38 +53,45 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
-            if (Input.CurrentInput.CommandPressed(Command.Up)) CursorUp();
-            else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
+            if (ShowDescription.Value)
+            {
+
+            }
+            else
+            {
+                if (Input.CurrentInput.CommandPressed(Command.Up)) PartyCursorUp();
+                else if (Input.CurrentInput.CommandPressed(Command.Down)) PartyCursorDown();
+            }
         }
 
-        private void CursorUp()
+        private void PartyCursorUp()
         {
-            slot--;
-            if (slot < 0)
+            partySlot--;
+            if (partySlot < 0)
             {
-                slot = 0;
+                partySlot = 0;
                 return;
             }
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectParty(PartyMembers[slot].HeroModel);
-            (GetWidget<DataGrid>("PartyList").ChildList[slot] as Button).RadioSelect();
+            SelectParty(PartyMembers[partySlot].HeroModel);
+            (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
         }
 
-        private void CursorDown()
+        private void PartyCursorDown()
         {
-            slot++;
-            if (slot >= GameProfile.PlayerProfile.Party.Count())
+            partySlot++;
+            if (partySlot >= GameProfile.PlayerProfile.Party.Count())
             {
-                slot = GameProfile.PlayerProfile.Party.Count() - 1;
+                partySlot = GameProfile.PlayerProfile.Party.Count() - 1;
                 return;
             }
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectParty(PartyMembers[slot].HeroModel);
-            (GetWidget<DataGrid>("PartyList").ChildList[slot] as Button).RadioSelect();
+            SelectParty(PartyMembers[partySlot].HeroModel);
+            (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
         }
 
         public void SelectParty(object parameter)
@@ -96,9 +103,11 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (HeroModel)parameter;
 
-            slot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
+            partySlot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
 
             EquipmentList.ModelList = record.Equipment.ModelList;
+
+            ShowEquipment.Value = true;
         }
 
         public void SelectItem(object parameter)
@@ -115,7 +124,12 @@ namespace Texemon.Scenes.StatusScene
             Description3.Value = record.Description.ElementAtOrDefault(2);
             Description4.Value = record.Description.ElementAtOrDefault(3);
             Description5.Value = record.Description.ElementAtOrDefault(4);
+
+            ShowDescription.Value = true;
         }
+
+        public ModelProperty<bool> ShowEquipment { get; set; } = new ModelProperty<bool>(false);
+        public ModelProperty<bool> ShowDescription { get; set; } = new ModelProperty<bool>(false);
 
         public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");

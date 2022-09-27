@@ -36,7 +36,7 @@
 		</Panel>
 		<Panel Alignment="Vertical" Bounds="0,0,165,40" InnerMargin="8,3,8,6">
 			<Panel Bounds="0,0,8,40" Alignment="Cascading">
-				<Image Icon="Sword" Bounds="12,-1,10,10"/>
+				<Image Icon="Axe" Bounds="12,-1,10,10"/>
 				<Image Icon="Shield" Bounds="12,9,10,10"/>
 				<Image Icon="Gun" Bounds="12,19,10,10"/>
 				<Image Icon="Staff" Bounds="12,29,10,10"/>

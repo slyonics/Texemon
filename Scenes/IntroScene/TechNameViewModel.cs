@@ -63,9 +63,11 @@ namespace Texemon.Scenes.IntroScene
             hero.Name.Value = namingBox.Text;
             GameProfile.PlayerProfile.Party.Add(hero);
 
+            /*
             GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.ArcWelderDrone));
             GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.ArcWelderDrone));
             GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.ArcWelderDrone));
+            */
 
             GameProfile.SetSaveData<HeroModel>("PartyLeader", hero);
             GameProfile.SetSaveData<string>("WindowStyle", GameProfile.PlayerProfile.WindowStyle.Value);
