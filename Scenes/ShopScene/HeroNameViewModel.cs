@@ -39,6 +39,7 @@ namespace Texemon.Scenes.ShopScene
             }
             else if (Input.CurrentInput.CommandReleased(Command.Cancel))
             {
+                Audio.PlaySound(GameSound.Back);
                 GetWidget<Button>("Cancel").UnSelect();
                 Terminate();
             }

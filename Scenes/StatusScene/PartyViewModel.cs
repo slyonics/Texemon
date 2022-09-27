@@ -17,7 +17,7 @@ namespace Texemon.Scenes.StatusScene
         public ModelProperty<HeroModel> HeroModel { get; set; }
     }
 
-    public class PartyViewModel : ViewModel
+    public class PartyViewModel : ViewModel, IStatusSubView
     {
         public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
@@ -27,6 +27,8 @@ namespace Texemon.Scenes.StatusScene
         StatusScene statusScene;
 
         public ViewModel ChildViewModel { get; set; }
+
+        public bool SuppressCancel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
 
@@ -58,5 +60,12 @@ namespace Texemon.Scenes.StatusScene
 
             // if (Input.CurrentInput.CommandPressed(Command.Cancel)) Ter
         }
+
+        public void ResetSlot()
+        {
+
+        }
+
+        public bool SuppressLeftRight { get => false; }
     }
 }

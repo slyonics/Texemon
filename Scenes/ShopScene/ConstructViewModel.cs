@@ -86,6 +86,7 @@ namespace Texemon.Scenes.ShopScene
                 else if (input.CommandPressed(Command.Cancel)) GetWidget<Button>("Back").RadioSelect();
                 else if (input.CommandReleased(Command.Cancel))
                 {
+                    Audio.PlaySound(GameSound.Back);
                     GetWidget<Button>("Back").UnSelect();
                     Terminate();
                 }

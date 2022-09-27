@@ -150,7 +150,11 @@ namespace Texemon.Scenes.BattleScene
             else if (input.CommandPressed(Main.Command.Left)) PreviousTarget();
             else if (input.CommandPressed(Main.Command.Right)) NextTarget();
             else if (input.CommandPressed(Main.Command.Confirm) && confirmCooldown <= 0) SelectCurrentTarget();
-            else if (input.CommandPressed(Main.Command.Cancel)) Terminate();
+            else if (input.CommandPressed(Main.Command.Cancel))
+            {
+                Audio.PlaySound(GameSound.Back);
+                Terminate();
+            }
 
             if (confirmCooldown > 0) confirmCooldown -= gameTime.ElapsedGameTime.Milliseconds;
         }

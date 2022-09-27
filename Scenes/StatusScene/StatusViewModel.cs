@@ -11,6 +11,16 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.StatusScene
 {
+    public interface IStatusSubView
+    {
+        void Update(GameTime gameTime);
+        void Draw(SpriteBatch spriteBatch);
+        void ResetSlot();
+        public bool Visible { get; set; }
+        public bool SuppressCancel { get; set; }
+        public bool SuppressLeftRight { get; }
+    }
+
     public class StatusViewModel : ViewModel
     {
         List<ViewModel> SubViews { get; set; } = new List<ViewModel>();
@@ -19,7 +29,7 @@ namespace Texemon.Scenes.StatusScene
 
         int slot = -1;
 
-        public ViewModel ChildViewModel { get; set; }
+        public IStatusSubView ChildViewModel { get; set; }
 
         public StatusViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
@@ -44,10 +54,17 @@ namespace Texemon.Scenes.StatusScene
             ChildViewModel?.Update(gameTime);
 
             InputFrame currentInput = Input.CurrentInput;
-            if (currentInput.CommandPressed(Command.Left)) CursorLeft();
-            else if (currentInput.CommandPressed(Command.Right)) CursorRight();
-            else if (currentInput.CommandPressed(Command.Cancel)) Back();
-            
+
+            if (ChildViewModel == null || !ChildViewModel.SuppressLeftRight)
+            {
+                if (currentInput.CommandPressed(Command.Left)) CursorLeft();
+                else if (currentInput.CommandPressed(Command.Right)) CursorRight();
+                else if (currentInput.CommandPressed(Command.Cancel) && (ChildViewModel == null || !ChildViewModel.SuppressCancel))
+                {
+                    Audio.PlaySound(GameSound.Back);
+                    Back();
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -99,9 +116,11 @@ namespace Texemon.Scenes.StatusScene
             if (ChildViewModel != null) ChildViewModel.Visible = false;
 
             slot = 0;
-            ChildViewModel = SubViews.First(x => x is PartyViewModel);
+            ChildViewModel = SubViews.First(x => x is PartyViewModel) as IStatusSubView;
 
             ChildViewModel.Visible = true;
+
+            ChildViewModel.ResetSlot();
         }
 
         public void SelectItems()
@@ -109,9 +128,11 @@ namespace Texemon.Scenes.StatusScene
             ChildViewModel.Visible = false;
 
             slot = 1;
-            ChildViewModel = SubViews.First(x => x is ItemViewModel);
+            ChildViewModel = SubViews.First(x => x is ItemViewModel) as IStatusSubView;
 
             ChildViewModel.Visible = true;
+
+            ChildViewModel.ResetSlot();
         }
 
         public void SelectEquipment()
@@ -119,9 +140,11 @@ namespace Texemon.Scenes.StatusScene
             ChildViewModel.Visible = false;
 
             slot = 2;
-            ChildViewModel = SubViews.First(x => x is EquipmentViewModel);
+            ChildViewModel = SubViews.First(x => x is EquipmentViewModel) as IStatusSubView;
 
             ChildViewModel.Visible = true;
+
+            ChildViewModel.ResetSlot();
         }
 
         public void SelectAbilities()
@@ -129,9 +152,11 @@ namespace Texemon.Scenes.StatusScene
             ChildViewModel.Visible = false;
 
             slot = 3;
-            ChildViewModel = SubViews.First(x => x is AbilitiesViewModel);
+            ChildViewModel = SubViews.First(x => x is AbilitiesViewModel) as IStatusSubView;
 
             ChildViewModel.Visible = true;
+
+            ChildViewModel.ResetSlot();
         }
 
         public void SelectQuit()

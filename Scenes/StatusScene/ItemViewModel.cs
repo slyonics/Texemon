@@ -11,13 +11,15 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.StatusScene
 {
-    public class ItemViewModel : ViewModel
+    public class ItemViewModel : ViewModel, IStatusSubView
     {
         StatusScene statusScene;
 
         private int slot = -1;
 
         public ModelCollection<ItemRecord> AvailableItems { get => GameProfile.Inventory; }
+
+        public bool SuppressCancel { get; set; }
 
         public ItemViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
@@ -92,6 +94,20 @@ namespace Texemon.Scenes.StatusScene
             Description4.Value = record.Description.ElementAtOrDefault(3);
             Description5.Value = record.Description.ElementAtOrDefault(4);
         }
+
+        public void ResetSlot()
+        {
+            if (slot >= 0) (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).UnSelect();
+            slot = -1;
+
+            Description1.Value = "";
+            Description2.Value = "";
+            Description3.Value = "";
+            Description4.Value = "";
+            Description5.Value = "";
+        }
+
+        public bool SuppressLeftRight { get => false; }
 
         public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");

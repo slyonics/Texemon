@@ -11,7 +11,7 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.StatusScene
 {
-    public class AbilitiesViewModel : ViewModel
+    public class AbilitiesViewModel : ViewModel, IStatusSubView
     {
         public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
@@ -20,9 +20,12 @@ namespace Texemon.Scenes.StatusScene
 
         StatusScene statusScene;
 
-        int slot = -1;
+        private int partySlot = -1;
+        private int abilitySlot = -1;
 
         public ViewModel ChildViewModel { get; set; }
+
+        public bool SuppressCancel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
         public ModelCollection<CommandRecord> AbilitiesList { get; private set; } = new ModelCollection<CommandRecord>();
@@ -53,38 +56,114 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
-            if (Input.CurrentInput.CommandPressed(Command.Up)) CursorUp();
-            else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
+            SuppressCancel = false;
+
+            if (ShowDescription.Value)
+            {
+                if (Input.CurrentInput.CommandPressed(Command.Up)) AbilityCursorUp();
+                else if (Input.CurrentInput.CommandPressed(Command.Down)) AbilityCursorDown();
+                else if (Input.CurrentInput.CommandPressed(Command.Cancel))
+                {
+                    Audio.PlaySound(GameSound.Back);
+                    (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).UnSelect();
+                    abilitySlot = -1;
+                    SuppressCancel = true;
+                    ShowDescription.Value = false;
+                }
+            }
+            else
+            {
+                if (Input.CurrentInput.CommandPressed(Command.Up)) PartyCursorUp();
+                else if (Input.CurrentInput.CommandPressed(Command.Down)) PartyCursorDown();
+                else if (Input.CurrentInput.CommandPressed(Command.Confirm))
+                {
+                    if (partySlot == -1)
+                    {
+                        Audio.PlaySound(GameSound.Cursor);
+                        partySlot = 0;
+                        AbilitiesList.ModelList = PartyMembers[partySlot].HeroModel.Value.Abilities.ModelList;
+                        ShowAbilities.Value = true;
+                        abilitySlot = -1;
+                        (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
+                    }
+                    else if (PartyMembers[partySlot].HeroModel.Value.Abilities.Count() > 0)
+                    {
+                        Audio.PlaySound(GameSound.Cursor);
+                        SelectParty(PartyMembers[partySlot].HeroModel);
+                    }
+                    else Audio.PlaySound(GameSound.Error);
+                }
+            }
         }
 
-        private void CursorUp()
+        private void PartyCursorUp()
         {
-            slot--;
-            if (slot < 0)
+            partySlot--;
+            if (partySlot < 0)
             {
-                slot = 0;
+                partySlot = 0;
                 return;
             }
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectParty(PartyMembers[slot].HeroModel);
-            (GetWidget<DataGrid>("PartyList").ChildList[slot] as Button).RadioSelect();
+            AbilitiesList.ModelList = PartyMembers[partySlot].HeroModel.Value.Abilities.ModelList;
+
+            ShowAbilities.Value = true;
+
+            abilitySlot = -1;
+
+            (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
         }
 
-        private void CursorDown()
+        private void PartyCursorDown()
         {
-            slot++;
-            if (slot >= GameProfile.PlayerProfile.Party.Count())
+            partySlot++;
+            if (partySlot >= GameProfile.PlayerProfile.Party.Count())
             {
-                slot = GameProfile.PlayerProfile.Party.Count() - 1;
+                partySlot = GameProfile.PlayerProfile.Party.Count() - 1;
                 return;
             }
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectParty(PartyMembers[slot].HeroModel);
-            (GetWidget<DataGrid>("PartyList").ChildList[slot] as Button).RadioSelect();
+            AbilitiesList.ModelList = PartyMembers[partySlot].HeroModel.Value.Abilities.ModelList;
+
+            ShowAbilities.Value = true;
+
+            abilitySlot = -1;
+
+            (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
+        }
+
+        private void AbilityCursorUp()
+        {
+            abilitySlot--;
+            if (abilitySlot < 0)
+            {
+                abilitySlot = 0;
+                return;
+            }
+
+            Audio.PlaySound(GameSound.Cursor);
+
+            SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities[abilitySlot]);
+            (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();
+        }
+
+        private void AbilityCursorDown()
+        {
+            abilitySlot++;
+            if (abilitySlot >= AbilitiesList.Count())
+            {
+                abilitySlot = AbilitiesList.Count() - 1;
+                return;
+            }
+
+            Audio.PlaySound(GameSound.Cursor);
+
+            SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities[abilitySlot]);
+            (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();
         }
 
         public void SelectParty(object parameter)
@@ -96,11 +175,22 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (HeroModel)parameter;
 
-            slot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
+            partySlot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
+
             AbilitiesList.ModelList = record.Abilities.ModelList;
+
+            ShowAbilities.Value = true;
+
+            if (Input.MOUSE_MODE) abilitySlot = -1;
+            else if (PartyMembers[partySlot].HeroModel.Value.Abilities.Count() > 0)
+            {
+                SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities.First());
+                (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();
+
+            }
         }
 
-        public void SelectItem(object parameter)
+        public void SelectAbility(object parameter)
         {
             CommandRecord record;
             if (parameter is IModelProperty)
@@ -109,12 +199,32 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (CommandRecord)parameter;
 
+            abilitySlot = AbilitiesList.ToList().FindIndex(x => x.Value == record);
+
             Description1.Value = record.Description.ElementAtOrDefault(0);
             Description2.Value = record.Description.ElementAtOrDefault(1);
             Description3.Value = record.Description.ElementAtOrDefault(2);
             Description4.Value = record.Description.ElementAtOrDefault(3);
             Description5.Value = record.Description.ElementAtOrDefault(4);
+
+            ShowDescription.Value = true;
         }
+
+        public void ResetSlot()
+        {
+            if (partySlot >= 0) (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).UnSelect();
+            partySlot = -1;
+            abilitySlot = -1;
+
+            AbilitiesList.ModelList = new List<ModelProperty<CommandRecord>>();
+            ShowDescription.Value = false;
+            ShowAbilities.Value = false;
+        }
+
+        public bool SuppressLeftRight { get => ShowDescription.Value; }
+
+        public ModelProperty<bool> ShowAbilities { get; set; } = new ModelProperty<bool>(false);
+        public ModelProperty<bool> ShowDescription { get; set; } = new ModelProperty<bool>(false);
 
         public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");

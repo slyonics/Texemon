@@ -9,7 +9,7 @@
 		</DataGrid>
 	</Panel>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-49,-80,90,69">
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-49,-80,90,69" Visible="Bind ShowAbilities">
 		<DataGrid Name="AbilitiesList" Items="Bind AbilitiesList" Scrolling="False" Alignment="Stretch" InnerMargin="2,4,2,5">
 			<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Bounds="0,0,82,10" Alignment="Vertical" InnerMargin="2,0,2,0" Action="SelectItem" ActionParameter="Ref DataGrid">
 				<Image Icon="Ref DataGrid.Icon" Alignment="Left" Bounds="1,1,8,8"/>
@@ -19,7 +19,7 @@
 		</DataGrid>
 	</Panel>
 
-	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="41,-80,100,68">
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="41,-80,100,68" Visible="Bind ShowDescription">
 		<Panel Bounds="0,-4,100,68" InnerMargin="0,11,0,5">
 			<Label Text="Bind Description1" Bounds="0,0,0,10" Alignment="Vertical" TextAlignment="Center"/>
 			<Label Text="Bind Description2" Bounds="0,0,0,10" Alignment="Vertical" TextAlignment="Center"/>

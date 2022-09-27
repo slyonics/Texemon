@@ -11,7 +11,7 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.StatusScene
 {
-    public class EquipmentViewModel : ViewModel
+    public class EquipmentViewModel : ViewModel, IStatusSubView
     {
         public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
@@ -21,8 +21,11 @@ namespace Texemon.Scenes.StatusScene
         StatusScene statusScene;
 
         private int partySlot = -1;
+        private int equipmentSlot = -1;
 
         public ViewModel ChildViewModel { get; set; }
+
+        public bool SuppressCancel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
         public ModelCollection<CommandRecord> EquipmentList { get; private set; } = new ModelCollection<CommandRecord>();
@@ -53,14 +56,43 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
+            SuppressCancel = false;
+
             if (ShowDescription.Value)
             {
-
+                if (Input.CurrentInput.CommandPressed(Command.Up)) EquipmentCursorUp();
+                else if (Input.CurrentInput.CommandPressed(Command.Down)) EquipmentCursorDown();
+                else if (Input.CurrentInput.CommandPressed(Command.Cancel))
+                {
+                    Audio.PlaySound(GameSound.Back);
+                    (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).UnSelect();
+                    equipmentSlot = -1;
+                    SuppressCancel = true;
+                    ShowDescription.Value = false;
+                }
             }
             else
             {
                 if (Input.CurrentInput.CommandPressed(Command.Up)) PartyCursorUp();
                 else if (Input.CurrentInput.CommandPressed(Command.Down)) PartyCursorDown();
+                else if (Input.CurrentInput.CommandPressed(Command.Confirm))
+                {
+                    if (partySlot == -1)
+                    {
+                        Audio.PlaySound(GameSound.Cursor);
+                        partySlot = 0;
+                        EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
+                        ShowEquipment.Value = true;
+                        equipmentSlot = -1;
+                        (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
+                    }
+                    else if (PartyMembers[partySlot].HeroModel.Value.Equipment.Count() > 0)
+                    {
+                        Audio.PlaySound(GameSound.Cursor);
+                        SelectParty(PartyMembers[partySlot].HeroModel);
+                    }
+                    else Audio.PlaySound(GameSound.Error);
+                }
             }
         }
 
@@ -75,7 +107,12 @@ namespace Texemon.Scenes.StatusScene
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectParty(PartyMembers[partySlot].HeroModel);
+            EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
+
+            ShowEquipment.Value = true;
+
+            equipmentSlot = -1;
+
             (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
         }
 
@@ -90,8 +127,43 @@ namespace Texemon.Scenes.StatusScene
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectParty(PartyMembers[partySlot].HeroModel);
+            EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
+
+            ShowEquipment.Value = true;
+
+            equipmentSlot = -1;
+
             (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
+        }
+
+        private void EquipmentCursorUp()
+        {
+            equipmentSlot--;
+            if (equipmentSlot < 0)
+            {
+                equipmentSlot = 0;
+                return;
+            }
+
+            Audio.PlaySound(GameSound.Cursor);
+
+            SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment[equipmentSlot]);
+            (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+        }
+
+        private void EquipmentCursorDown()
+        {
+            equipmentSlot++;
+            if (equipmentSlot >= EquipmentList.Count())
+            {
+                equipmentSlot = EquipmentList.Count() - 1;
+                return;
+            }
+
+            Audio.PlaySound(GameSound.Cursor);
+
+            SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment[equipmentSlot]);
+            (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
         }
 
         public void SelectParty(object parameter)
@@ -108,6 +180,14 @@ namespace Texemon.Scenes.StatusScene
             EquipmentList.ModelList = record.Equipment.ModelList;
 
             ShowEquipment.Value = true;
+
+            if (Input.MOUSE_MODE) equipmentSlot = -1;
+            else if (PartyMembers[partySlot].HeroModel.Value.Equipment.Count() > 0)
+            {
+                SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment.First());
+                (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+
+            }
         }
 
         public void SelectItem(object parameter)
@@ -119,6 +199,8 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (CommandRecord)parameter;
 
+            equipmentSlot = EquipmentList.ToList().FindIndex(x => x.Value == record);
+
             Description1.Value = record.Description.ElementAtOrDefault(0);
             Description2.Value = record.Description.ElementAtOrDefault(1);
             Description3.Value = record.Description.ElementAtOrDefault(2);
@@ -127,6 +209,19 @@ namespace Texemon.Scenes.StatusScene
 
             ShowDescription.Value = true;
         }
+
+        public void ResetSlot()
+        {
+            if (partySlot >= 0) (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).UnSelect();
+            partySlot = -1;
+            equipmentSlot = -1;
+
+            EquipmentList.ModelList = new List<ModelProperty<CommandRecord>>();
+            ShowDescription.Value = false;
+            ShowEquipment.Value = false;
+        }
+
+        public bool SuppressLeftRight { get => ShowDescription.Value; }
 
         public ModelProperty<bool> ShowEquipment { get; set; } = new ModelProperty<bool>(false);
         public ModelProperty<bool> ShowDescription { get; set; } = new ModelProperty<bool>(false);
