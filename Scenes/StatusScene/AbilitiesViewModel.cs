@@ -226,6 +226,11 @@ namespace Texemon.Scenes.StatusScene
             ShowAbilities.Value = false;
         }
 
+        public void MoveAway()
+        {
+
+        }
+
         public bool SuppressLeftRight { get => ShowDescription.Value; }
 
         public ModelProperty<bool> ShowAbilities { get; set; } = new ModelProperty<bool>(false);

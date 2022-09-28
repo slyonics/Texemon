@@ -48,10 +48,13 @@ namespace Texemon.Scenes.StatusScene
                 else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
                 else if (Input.CurrentInput.CommandPressed(Command.Confirm))
                 {
-                    Audio.PlaySound(GameSound.Cursor);
-                    slot = 0;
-                    (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
-                    SelectItem(AvailableItems.First());
+                    if (slot == -1)
+                    {
+                        Audio.PlaySound(GameSound.Cursor);
+                        slot = 0;
+                        (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
+                        SelectItem(AvailableItems.First());
+                    }
                 }
             }
         }
@@ -114,6 +117,11 @@ namespace Texemon.Scenes.StatusScene
             Description3.Value = "";
             Description4.Value = "";
             Description5.Value = "";
+        }
+
+        public void MoveAway()
+        {
+
         }
 
         public bool SuppressLeftRight { get => false; }

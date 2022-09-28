@@ -66,6 +66,11 @@ namespace Texemon.Scenes.StatusScene
 
         }
 
+        public void MoveAway()
+        {
+
+        }
+
         public bool SuppressLeftRight { get => false; }
     }
 }

@@ -19,25 +19,55 @@ namespace Texemon.Scenes.StatusScene
         };
 
         StatusScene statusScene;
+        EquipmentViewModel equipmentViewModel;
 
         private int equipmentSlot = -1;
         private int slot = 0;
 
-        public ModelCollection<ItemRecord> AvailableItems { get => GameProfile.Inventory; }
+        public ModelCollection<ItemRecord> AvailableItems { get; set; }
 
         public HeroModel HeroModel { get; private set; }
         public ModelProperty<AnimatedSprite> PlayerSprite { get; private set; }
-        public ModelCollection<CommandRecord> EquipmentList { get; private set; } = new ModelCollection<CommandRecord>();
+        public ModelCollection<CommandRecord> EquipmentList { get; private set; }
 
-        public SwapEquipViewModel(StatusScene iScene, HeroModel iHeroModel, AnimatedSprite iAnimatedSprite, int iEquipSlot)
-            : base(iScene, PriorityLevel.CutsceneLevel)
+        public SwapEquipViewModel(StatusScene iScene, EquipmentViewModel iEquipmentViewModel, HeroModel iHeroModel, AnimatedSprite iAnimatedSprite, ModelCollection<CommandRecord> iEquipList, int iEquipSlot)
+            : base(iScene, PriorityLevel.GameLevel)
         {
             statusScene = iScene;
+            equipmentViewModel = iEquipmentViewModel;
             HeroModel = iHeroModel;
             PlayerSprite = new ModelProperty<AnimatedSprite>(iAnimatedSprite);
             equipmentSlot = iEquipSlot;
 
-            EquipmentList.ModelList = HeroModel.Equipment.ModelList;
+            EquipmentList = iEquipList;
+
+            AvailableItems = new ModelCollection<ItemRecord>();
+            if (string.IsNullOrEmpty(EquipmentList[iEquipSlot].Name))
+            {
+                AvailableItems.Add(new ItemRecord()
+                {
+                    Icon = "Blank",
+                    Name = " - CANCEL - ",
+                    Charges = -1,
+                    ChargesLeft = -1,
+                    Description = new string[] { "", "", "Leave slot empty", "", "" }
+                });
+            }
+            else
+            {
+                AvailableItems.Add(new ItemRecord()
+                {
+                    Icon = "Blank",
+                    Name = " - REMOVE - ",
+                    Charges = -1,
+                    ChargesLeft = -1,
+                    Description = new string[] { "", "", "Unequip this slot", "", "" }
+                });
+            }
+
+            AvailableItems.ModelList.AddRange(GameProfile.Inventory.Where(x => x.Value.ItemType == ItemType.Weapon || x.Value.ItemType == ItemType.Consumable));
+
+            Description3.Value = AvailableItems.First().Value.Description[2];
 
             LoadView(GameView.StatusScene_SwapEquipView);
 
@@ -55,6 +85,7 @@ namespace Texemon.Scenes.StatusScene
             {
                 Audio.PlaySound(GameSound.Back);
                 Terminate();
+                equipmentViewModel.Visible = true;
             }
         }
 
@@ -97,18 +128,15 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (CommandRecord)parameter;
 
-            equipmentSlot = EquipmentList.ToList().FindIndex(x => x.Value == record);
+            slot = AvailableItems.ToList().FindIndex(x => x.Value == record);
 
             Description1.Value = record.Description.ElementAtOrDefault(0);
             Description2.Value = record.Description.ElementAtOrDefault(1);
             Description3.Value = record.Description.ElementAtOrDefault(2);
             Description4.Value = record.Description.ElementAtOrDefault(3);
             Description5.Value = record.Description.ElementAtOrDefault(4);
-
-            ShowDescription.Value = true;
         }
 
-        public ModelProperty<bool> ShowDescription { get; set; } = new ModelProperty<bool>(false);
 
         public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");

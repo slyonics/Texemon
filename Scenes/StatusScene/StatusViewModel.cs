@@ -15,6 +15,7 @@ namespace Texemon.Scenes.StatusScene
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
+        void MoveAway();
         void ResetSlot();
         public bool Visible { get; set; }
         public bool SuppressCancel { get; set; }
@@ -113,7 +114,11 @@ namespace Texemon.Scenes.StatusScene
 
         public void SelectParty()
         {
-            if (ChildViewModel != null) ChildViewModel.Visible = false;
+            if (ChildViewModel != null)
+            {
+                ChildViewModel.Visible = false;
+                ChildViewModel.MoveAway();
+            }
 
             slot = 0;
             ChildViewModel = SubViews.First(x => x is PartyViewModel) as IStatusSubView;
@@ -126,6 +131,7 @@ namespace Texemon.Scenes.StatusScene
         public void SelectItems()
         {
             ChildViewModel.Visible = false;
+            ChildViewModel.MoveAway();
 
             slot = 1;
             ChildViewModel = SubViews.First(x => x is ItemViewModel) as IStatusSubView;
@@ -138,6 +144,7 @@ namespace Texemon.Scenes.StatusScene
         public void SelectEquipment()
         {
             ChildViewModel.Visible = false;
+            ChildViewModel.MoveAway();
 
             slot = 2;
             ChildViewModel = SubViews.First(x => x is EquipmentViewModel) as IStatusSubView;
@@ -150,6 +157,7 @@ namespace Texemon.Scenes.StatusScene
         public void SelectAbilities()
         {
             ChildViewModel.Visible = false;
+            ChildViewModel.MoveAway();
 
             slot = 3;
             ChildViewModel = SubViews.First(x => x is AbilitiesViewModel) as IStatusSubView;

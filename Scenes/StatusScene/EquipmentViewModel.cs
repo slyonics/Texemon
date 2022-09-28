@@ -54,7 +54,15 @@ namespace Texemon.Scenes.StatusScene
 
         public override void Update(GameTime gameTime)
         {
-            if (statusScene.PriorityLevel > PriorityLevel.GameLevel) return;
+            if (ChildViewModel != null)
+            {
+                if (ChildViewModel.Terminated) ChildViewModel = null;
+                else
+                {
+                    SuppressCancel = true;
+                    return;
+                }
+            }
 
             base.Update(gameTime);
 
@@ -68,7 +76,8 @@ namespace Texemon.Scenes.StatusScene
                 {
                     Audio.PlaySound(GameSound.Back);
                     HeroModel heroModel = PartyMembers[partySlot].HeroModel.Value;
-                    statusScene.AddView(new SwapEquipViewModel(statusScene, heroModel, PartyMembers[partySlot].PlayerSprite.Value, equipmentSlot));
+                    ChildViewModel = statusScene.AddView(new SwapEquipViewModel(statusScene, this, heroModel, PartyMembers[partySlot].PlayerSprite.Value, EquipmentList, equipmentSlot));
+                    this.Visible = false;
                 }
                 else if (Input.CurrentInput.CommandPressed(Command.Cancel))
                 {
@@ -94,12 +103,11 @@ namespace Texemon.Scenes.StatusScene
                         equipmentSlot = -1;
                         (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
                     }
-                    else if (PartyMembers[partySlot].HeroModel.Value.Equipment.Count() > 0)
+                    else
                     {
                         Audio.PlaySound(GameSound.Cursor);
                         SelectParty(PartyMembers[partySlot].HeroModel);
                     }
-                    else Audio.PlaySound(GameSound.Error);
                 }
             }
         }
@@ -116,6 +124,7 @@ namespace Texemon.Scenes.StatusScene
             Audio.PlaySound(GameSound.Cursor);
 
             EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
+
 
             ShowEquipment.Value = true;
 
@@ -137,6 +146,7 @@ namespace Texemon.Scenes.StatusScene
 
             EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
 
+
             ShowEquipment.Value = true;
 
             equipmentSlot = -1;
@@ -155,7 +165,7 @@ namespace Texemon.Scenes.StatusScene
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment[equipmentSlot]);
+            SelectItem(EquipmentList[equipmentSlot]);
             (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
         }
 
@@ -170,7 +180,7 @@ namespace Texemon.Scenes.StatusScene
 
             Audio.PlaySound(GameSound.Cursor);
 
-            SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment[equipmentSlot]);
+            SelectItem(EquipmentList[equipmentSlot]);
             (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
         }
 
@@ -185,7 +195,19 @@ namespace Texemon.Scenes.StatusScene
 
             partySlot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
 
-            EquipmentList.ModelList = record.Equipment.ModelList;
+            var newEquipList = new List<ModelProperty<CommandRecord>>(record.Equipment.ModelList);
+            if (EquipmentList.ModelList.Count < 6)
+            {
+                newEquipList.Add(new ModelProperty<CommandRecord>(new CommandRecord()
+                {
+                    Icon = "Blank",
+                    Name = "",
+                    Charges = -1,
+                    ChargesLeft = -1,
+                    Description = new string[] { "", "", "Empty slot", "", "" }
+                }));
+            }
+            EquipmentList.ModelList = newEquipList;
 
             ShowEquipment.Value = true;
 
@@ -194,12 +216,20 @@ namespace Texemon.Scenes.StatusScene
                 equipmentSlot = -1;
                 ShowDescription.Value = false;
             }
-            else if (PartyMembers[partySlot].HeroModel.Value.Equipment.Count() > 0)
+            else
             {
                 Audio.PlaySound(GameSound.Cursor);
                 equipmentSlot = 0;
-                SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment.First());
+                var item = EquipmentList.First().Value;
                 (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+
+                Description1.Value = item.Description.ElementAtOrDefault(0);
+                Description2.Value = item.Description.ElementAtOrDefault(1);
+                Description3.Value = item.Description.ElementAtOrDefault(2);
+                Description4.Value = item.Description.ElementAtOrDefault(3);
+                Description5.Value = item.Description.ElementAtOrDefault(4);
+
+                ShowDescription.Value = true;
             }
         }
 
@@ -218,7 +248,8 @@ namespace Texemon.Scenes.StatusScene
             if (equipmentSlot == oldSlot && Input.MOUSE_MODE)
             {
                 HeroModel heroModel = PartyMembers[partySlot].HeroModel.Value;
-                statusScene.AddView(new SwapEquipViewModel(statusScene, heroModel, PartyMembers[partySlot].PlayerSprite.Value, equipmentSlot));
+                ChildViewModel = statusScene.AddView(new SwapEquipViewModel(statusScene, this, heroModel, PartyMembers[partySlot].PlayerSprite.Value, EquipmentList, equipmentSlot));
+                this.Visible = false;
             }
             else
             {
@@ -241,6 +272,12 @@ namespace Texemon.Scenes.StatusScene
             EquipmentList.ModelList = new List<ModelProperty<CommandRecord>>();
             ShowDescription.Value = false;
             ShowEquipment.Value = false;
+        }
+
+        public void MoveAway()
+        {
+            ChildViewModel?.Terminate();
+            ChildViewModel = null;
         }
 
         public bool SuppressLeftRight { get => ShowDescription.Value; }
