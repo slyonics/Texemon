@@ -18,6 +18,7 @@ namespace Texemon.Main
         StatusScene_ItemView,
         StatusScene_PartyView,
         StatusScene_StatusView,
+        StatusScene_SwapEquipView,
         TitleScene_SettingsView,
         TitleScene_TitleView,
 

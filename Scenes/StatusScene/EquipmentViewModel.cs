@@ -54,6 +54,8 @@ namespace Texemon.Scenes.StatusScene
 
         public override void Update(GameTime gameTime)
         {
+            if (statusScene.PriorityLevel > PriorityLevel.GameLevel) return;
+
             base.Update(gameTime);
 
             SuppressCancel = false;
@@ -62,6 +64,12 @@ namespace Texemon.Scenes.StatusScene
             {
                 if (Input.CurrentInput.CommandPressed(Command.Up)) EquipmentCursorUp();
                 else if (Input.CurrentInput.CommandPressed(Command.Down)) EquipmentCursorDown();
+                else if (Input.CurrentInput.CommandPressed(Command.Confirm))
+                {
+                    Audio.PlaySound(GameSound.Back);
+                    HeroModel heroModel = PartyMembers[partySlot].HeroModel.Value;
+                    statusScene.AddView(new SwapEquipViewModel(statusScene, heroModel, PartyMembers[partySlot].PlayerSprite.Value, equipmentSlot));
+                }
                 else if (Input.CurrentInput.CommandPressed(Command.Cancel))
                 {
                     Audio.PlaySound(GameSound.Back);
@@ -181,12 +189,17 @@ namespace Texemon.Scenes.StatusScene
 
             ShowEquipment.Value = true;
 
-            if (Input.MOUSE_MODE) equipmentSlot = -1;
+            if (Input.MOUSE_MODE)
+            {
+                equipmentSlot = -1;
+                ShowDescription.Value = false;
+            }
             else if (PartyMembers[partySlot].HeroModel.Value.Equipment.Count() > 0)
             {
+                Audio.PlaySound(GameSound.Cursor);
+                equipmentSlot = 0;
                 SelectItem(PartyMembers[partySlot].HeroModel.Value.Equipment.First());
                 (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
-
             }
         }
 
@@ -199,15 +212,24 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (CommandRecord)parameter;
 
+            int oldSlot = equipmentSlot;
             equipmentSlot = EquipmentList.ToList().FindIndex(x => x.Value == record);
 
-            Description1.Value = record.Description.ElementAtOrDefault(0);
-            Description2.Value = record.Description.ElementAtOrDefault(1);
-            Description3.Value = record.Description.ElementAtOrDefault(2);
-            Description4.Value = record.Description.ElementAtOrDefault(3);
-            Description5.Value = record.Description.ElementAtOrDefault(4);
+            if (equipmentSlot == oldSlot && Input.MOUSE_MODE)
+            {
+                HeroModel heroModel = PartyMembers[partySlot].HeroModel.Value;
+                statusScene.AddView(new SwapEquipViewModel(statusScene, heroModel, PartyMembers[partySlot].PlayerSprite.Value, equipmentSlot));
+            }
+            else
+            {
+                Description1.Value = record.Description.ElementAtOrDefault(0);
+                Description2.Value = record.Description.ElementAtOrDefault(1);
+                Description3.Value = record.Description.ElementAtOrDefault(2);
+                Description4.Value = record.Description.ElementAtOrDefault(3);
+                Description5.Value = record.Description.ElementAtOrDefault(4);
 
-            ShowDescription.Value = true;
+                ShowDescription.Value = true;
+            }
         }
 
         public void ResetSlot()

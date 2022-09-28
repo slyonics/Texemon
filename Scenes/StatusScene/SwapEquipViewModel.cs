@@ -11,48 +11,50 @@ using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.StatusScene
 {
-    public class ItemViewModel : ViewModel, IStatusSubView
+    public class SwapEquipViewModel : ViewModel
     {
+        public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
+        {
+            { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
+        };
+
         StatusScene statusScene;
 
-        private int slot = -1;
+        private int equipmentSlot = -1;
+        private int slot = 0;
 
         public ModelCollection<ItemRecord> AvailableItems { get => GameProfile.Inventory; }
 
-        public bool SuppressCancel { get; set; }
+        public HeroModel HeroModel { get; private set; }
+        public ModelProperty<AnimatedSprite> PlayerSprite { get; private set; }
+        public ModelCollection<CommandRecord> EquipmentList { get; private set; } = new ModelCollection<CommandRecord>();
 
-        public ItemViewModel(StatusScene iScene)
-            : base(iScene, PriorityLevel.GameLevel)
+        public SwapEquipViewModel(StatusScene iScene, HeroModel iHeroModel, AnimatedSprite iAnimatedSprite, int iEquipSlot)
+            : base(iScene, PriorityLevel.CutsceneLevel)
         {
             statusScene = iScene;
+            HeroModel = iHeroModel;
+            PlayerSprite = new ModelProperty<AnimatedSprite>(iAnimatedSprite);
+            equipmentSlot = iEquipSlot;
 
-            LoadView(GameView.StatusScene_ItemView);
+            EquipmentList.ModelList = HeroModel.Equipment.ModelList;
 
-            if (AvailableItems.Count() > 0)
-            {
-                slot = 0;
-                SelectItem(AvailableItems[slot]);
-                (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
-            }
+            LoadView(GameView.StatusScene_SwapEquipView);
 
-            Visible = false;
+            (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+            (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (AvailableItems.Count() > 0)
+            if (Input.CurrentInput.CommandPressed(Command.Up)) CursorUp();
+            else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
+            else if (Input.CurrentInput.CommandPressed(Command.Cancel))
             {
-                if (Input.CurrentInput.CommandPressed(Command.Up)) CursorUp();
-                else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
-                else if (Input.CurrentInput.CommandPressed(Command.Confirm))
-                {
-                    Audio.PlaySound(GameSound.Cursor);
-                    slot = 0;
-                    (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
-                    SelectItem(AvailableItems.First());
-                }
+                Audio.PlaySound(GameSound.Back);
+                Terminate();
             }
         }
 
@@ -64,7 +66,7 @@ namespace Texemon.Scenes.StatusScene
                 slot = 0;
                 return;
             }
-            
+
             Audio.PlaySound(GameSound.Cursor);
 
             SelectItem(AvailableItems[slot]);
@@ -79,7 +81,7 @@ namespace Texemon.Scenes.StatusScene
                 slot = AvailableItems.Count() - 1;
                 return;
             }
-            
+
             Audio.PlaySound(GameSound.Cursor);
 
             SelectItem(AvailableItems[slot]);
@@ -95,28 +97,18 @@ namespace Texemon.Scenes.StatusScene
             }
             else record = (CommandRecord)parameter;
 
-            slot = AvailableItems.ToList().FindIndex(x => x.Value == record);
+            equipmentSlot = EquipmentList.ToList().FindIndex(x => x.Value == record);
 
             Description1.Value = record.Description.ElementAtOrDefault(0);
             Description2.Value = record.Description.ElementAtOrDefault(1);
             Description3.Value = record.Description.ElementAtOrDefault(2);
             Description4.Value = record.Description.ElementAtOrDefault(3);
             Description5.Value = record.Description.ElementAtOrDefault(4);
+
+            ShowDescription.Value = true;
         }
 
-        public void ResetSlot()
-        {
-            if (slot >= 0) (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).UnSelect();
-            slot = -1;
-
-            Description1.Value = "";
-            Description2.Value = "";
-            Description3.Value = "";
-            Description4.Value = "";
-            Description5.Value = "";
-        }
-
-        public bool SuppressLeftRight { get => false; }
+        public ModelProperty<bool> ShowDescription { get; set; } = new ModelProperty<bool>(false);
 
         public ModelProperty<string> Description1 { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Description2 { get; set; } = new ModelProperty<string>("");

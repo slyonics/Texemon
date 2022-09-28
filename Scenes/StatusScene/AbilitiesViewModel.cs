@@ -181,12 +181,17 @@ namespace Texemon.Scenes.StatusScene
 
             ShowAbilities.Value = true;
 
-            if (Input.MOUSE_MODE) abilitySlot = -1;
+            if (Input.MOUSE_MODE)
+            {
+                abilitySlot = -1;
+                ShowDescription.Value = false;
+            }
             else if (PartyMembers[partySlot].HeroModel.Value.Abilities.Count() > 0)
             {
+                Audio.PlaySound(GameSound.Cursor);
+                abilitySlot = 0;
                 SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities.First());
                 (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();
-
             }
         }
 
