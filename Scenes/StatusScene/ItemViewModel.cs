@@ -112,6 +112,8 @@ namespace Texemon.Scenes.StatusScene
             if (slot >= 0) (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).UnSelect();
             slot = -1;
 
+            AvailableItems.ModelList = AvailableItems.ModelList;
+
             Description1.Value = "";
             Description2.Value = "";
             Description3.Value = "";

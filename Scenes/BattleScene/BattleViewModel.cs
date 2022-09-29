@@ -53,6 +53,7 @@ namespace Texemon.Scenes.BattleScene
             {
                 model.Value.NameColor = new ModelProperty<Color>(new Color(252, 252, 252, 255));
                 model.Value.HealthColor = new ModelProperty<Color>(new Color(252, 252, 252, 255));
+                model.Value.LastSlot.Value = 0;
             }
 
             LoadView(GameView.BattleScene_BattleView);

@@ -23,12 +23,12 @@ namespace Texemon.Scenes.StatusScene
         private int partySlot = -1;
         private int equipmentSlot = -1;
 
-        public ViewModel ChildViewModel { get; set; }
+        public SwapEquipViewModel ChildViewModel { get; set; }
 
         public bool SuppressCancel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
-        public ModelCollection<CommandRecord> EquipmentList { get; private set; } = new ModelCollection<CommandRecord>();
+        public ModelCollection<ItemRecord> EquipmentList { get; private set; } = new ModelCollection<ItemRecord>();
 
         public EquipmentViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
@@ -56,7 +56,22 @@ namespace Texemon.Scenes.StatusScene
         {
             if (ChildViewModel != null)
             {
-                if (ChildViewModel.Terminated) ChildViewModel = null;
+                if (ChildViewModel.Terminated)
+                {                    
+                    ChildViewModel = null;
+                    this.Visible = true;
+                                        
+                    if (Input.MOUSE_MODE)
+                    {
+                        equipmentSlot = -1;
+                        ShowDescription.Value = false;
+                    }
+                    else
+                    {
+                        (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+                        return;
+                    }
+                }
                 else
                 {
                     SuppressCancel = true;
@@ -97,7 +112,7 @@ namespace Texemon.Scenes.StatusScene
                     if (partySlot == -1)
                     {
                         Audio.PlaySound(GameSound.Cursor);
-                        SelectParty(PartyMembers[partySlot].HeroModel);
+                        SelectParty(PartyMembers[0].HeroModel);
                         equipmentSlot = -1;
                         (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
                     }
@@ -199,10 +214,10 @@ namespace Texemon.Scenes.StatusScene
 
             partySlot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
 
-            var newEquipList = new List<ModelProperty<CommandRecord>>(record.Equipment.ModelList);
+            var newEquipList = new List<ModelProperty<ItemRecord>>(record.Equipment.ModelList);
             while (newEquipList.Count < record.EquipmentSlots.Value)
             {
-                newEquipList.Add(new ModelProperty<CommandRecord>(new CommandRecord()
+                newEquipList.Add(new ModelProperty<ItemRecord>(new ItemRecord()
                 {
                     Icon = "Blank",
                     Name = "- Empty Slot -",
@@ -258,7 +273,7 @@ namespace Texemon.Scenes.StatusScene
             partySlot = -1;
             equipmentSlot = -1;
 
-            EquipmentList.ModelList = new List<ModelProperty<CommandRecord>>();
+            EquipmentList.ModelList = new List<ModelProperty<ItemRecord>>();
             ShowDescription.Value = false;
             ShowEquipment.Value = false;
         }

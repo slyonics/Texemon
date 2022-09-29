@@ -96,8 +96,8 @@ namespace Texemon.Scenes.StatusScene
         public ModelProperty<int> LastCategory { get; private set; } = new ModelProperty<int>(0);
         public ModelProperty<int> LastSlot { get; private set; } = new ModelProperty<int>(0);
         public ModelProperty<int> EquipmentSlots { get; private set; } = new ModelProperty<int>(6);
-        public ModelCollection<CommandRecord> Equipment { get; set; } = new ModelCollection<CommandRecord>();
-        public ModelCollection<CommandRecord> Abilities { get; set; } = new ModelCollection<CommandRecord>();
+        public ModelCollection<ItemRecord> Equipment { get; set; } = new ModelCollection<ItemRecord>();
+        public ModelCollection<AbilityRecord> Abilities { get; set; } = new ModelCollection<AbilityRecord>();
         public ModelCollection<CommandRecord> Actions { get; set; } = new ModelCollection<CommandRecord>();
     }
 }

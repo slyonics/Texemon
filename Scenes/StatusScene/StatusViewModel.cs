@@ -177,7 +177,7 @@ namespace Texemon.Scenes.StatusScene
 
         public void Back()
         {
-            Close();
+            Terminate();
         }
     }
 }

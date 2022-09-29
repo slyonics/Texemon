@@ -260,7 +260,9 @@ namespace Texemon.Scenes.BattleScene
             targetViewModel?.Terminate();
             targetViewModel = null;
 
-            AvailableCommands.ModelList = ActivePlayer.HeroModel.Equipment.ModelList;
+            List<ModelProperty<CommandRecord>> commands = new List<ModelProperty<CommandRecord>>();
+            foreach (var command in ActivePlayer.HeroModel.Equipment.ModelList) commands.Add(new ModelProperty<CommandRecord>(command.Value as CommandRecord));
+            AvailableCommands.ModelList = commands;
             ActivePlayer.HeroModel.LastCategory.Value = category = 0;
 
             Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;
@@ -275,7 +277,9 @@ namespace Texemon.Scenes.BattleScene
 
             if (Input.MOUSE_MODE) slot = -1;
 
-            AvailableCommands.ModelList = ActivePlayer.HeroModel.Abilities.ModelList;
+            List<ModelProperty<CommandRecord>> commands = new List<ModelProperty<CommandRecord>>();
+            foreach (var command in ActivePlayer.HeroModel.Abilities.ModelList) commands.Add(new ModelProperty<CommandRecord>(command.Value as CommandRecord));
+            AvailableCommands.ModelList = commands;
             ActivePlayer.HeroModel.LastCategory.Value = category = 1;
 
             Description1.Value = Description2.Value = Description3.Value = Description4.Value = Description5.Value = null;

@@ -28,7 +28,7 @@ namespace Texemon.Scenes.StatusScene
         public bool SuppressCancel { get; set; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
-        public ModelCollection<CommandRecord> AbilitiesList { get; private set; } = new ModelCollection<CommandRecord>();
+        public ModelCollection<AbilityRecord> AbilitiesList { get; private set; } = new ModelCollection<AbilityRecord>();
 
         public AbilitiesViewModel(StatusScene iScene)
             : base(iScene, PriorityLevel.GameLevel)
@@ -221,7 +221,7 @@ namespace Texemon.Scenes.StatusScene
             partySlot = -1;
             abilitySlot = -1;
 
-            AbilitiesList.ModelList = new List<ModelProperty<CommandRecord>>();
+            AbilitiesList.ModelList = new List<ModelProperty<AbilityRecord>>();
             ShowDescription.Value = false;
             ShowAbilities.Value = false;
         }
