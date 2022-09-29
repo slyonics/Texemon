@@ -86,7 +86,7 @@ namespace Texemon.Scenes.StatusScene
         {
             slot--;
             if (slot < 0) slot = 0;
-            else Audio.PlaySound(GameSound.Cursor);
+            else Audio.PlaySound(GameSound.menu_select);
 
             switch (slot)
             {
@@ -101,7 +101,7 @@ namespace Texemon.Scenes.StatusScene
         {
             slot++;
             if (slot > 3) slot = 3;
-            else Audio.PlaySound(GameSound.Cursor);
+            else Audio.PlaySound(GameSound.menu_select);
 
             switch (slot)
             {

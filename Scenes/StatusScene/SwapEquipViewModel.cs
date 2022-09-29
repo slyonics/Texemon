@@ -116,7 +116,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(AvailableItems[slot]);
             (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
@@ -131,7 +131,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(AvailableItems[slot]);
             (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();

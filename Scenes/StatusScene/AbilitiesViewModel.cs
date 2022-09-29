@@ -105,7 +105,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             AbilitiesList.ModelList = PartyMembers[partySlot].HeroModel.Value.Abilities.ModelList;
 
@@ -125,7 +125,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             AbilitiesList.ModelList = PartyMembers[partySlot].HeroModel.Value.Abilities.ModelList;
 
@@ -145,7 +145,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities[abilitySlot]);
             (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();
@@ -160,7 +160,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities[abilitySlot]);
             (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();
@@ -188,7 +188,7 @@ namespace Texemon.Scenes.StatusScene
             }
             else if (PartyMembers[partySlot].HeroModel.Value.Abilities.Count() > 0)
             {
-                Audio.PlaySound(GameSound.Cursor);
+                Audio.PlaySound(GameSound.menu_select);
                 abilitySlot = 0;
                 SelectAbility(PartyMembers[partySlot].HeroModel.Value.Abilities.First());
                 (GetWidget<DataGrid>("AbilitiesList").ChildList[abilitySlot] as Button).RadioSelect();

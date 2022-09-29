@@ -50,7 +50,7 @@ namespace Texemon.Scenes.StatusScene
                 {
                     if (slot == -1)
                     {
-                        Audio.PlaySound(GameSound.Cursor);
+                        Audio.PlaySound(GameSound.menu_select);
                         slot = 0;
                         (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
                         SelectItem(AvailableItems.First());
@@ -68,7 +68,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
             
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(AvailableItems[slot]);
             (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
@@ -83,7 +83,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
             
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(AvailableItems[slot]);
             (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();

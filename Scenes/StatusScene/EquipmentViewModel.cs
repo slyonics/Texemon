@@ -103,7 +103,7 @@ namespace Texemon.Scenes.StatusScene
                 else if (Input.CurrentInput.CommandPressed(Command.Down)) EquipmentCursorDown();
                 else if (Input.CurrentInput.CommandPressed(Command.Confirm))
                 {
-                    Audio.PlaySound(GameSound.Back);
+                    Audio.PlaySound(GameSound.Cursor);
                     HeroModel heroModel = PartyMembers[partySlot].HeroModel.Value;
                     ChildViewModel = statusScene.AddView(new SwapEquipViewModel(statusScene, this, heroModel, PartyMembers[partySlot].PlayerSprite.Value, EquipmentList, equipmentSlot));
                     this.Visible = false;
@@ -160,7 +160,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectParty(PartyMembers[partySlot].HeroModel);
 
@@ -178,7 +178,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectParty(PartyMembers[partySlot].HeroModel);
 
@@ -196,7 +196,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(EquipmentList[equipmentSlot]);
             (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
@@ -211,7 +211,7 @@ namespace Texemon.Scenes.StatusScene
                 return;
             }
 
-            Audio.PlaySound(GameSound.Cursor);
+            Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(EquipmentList[equipmentSlot]);
             (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
