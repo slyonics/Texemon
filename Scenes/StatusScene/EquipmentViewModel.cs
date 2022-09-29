@@ -60,6 +60,20 @@ namespace Texemon.Scenes.StatusScene
                 {                    
                     ChildViewModel = null;
                     this.Visible = true;
+
+                    var newEquipList = new List<ModelProperty<ItemRecord>>(PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList);
+                    while (newEquipList.Count < PartyMembers[partySlot].HeroModel.Value.EquipmentSlots.Value)
+                    {
+                        newEquipList.Add(new ModelProperty<ItemRecord>(new ItemRecord()
+                        {
+                            Icon = "Blank",
+                            Name = "- Empty Slot -",
+                            Charges = -1,
+                            ChargesLeft = -1,
+                            Description = new string[] { "", "Select to equip", "a new item", "", "" }
+                        }));
+                    }
+                    EquipmentList.ModelList = newEquipList;
                                         
                     if (Input.MOUSE_MODE)
                     {

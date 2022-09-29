@@ -192,12 +192,13 @@ namespace Texemon.Scenes.StatusScene
             else
             {
                 var oldItem = EquipmentList.ElementAt(equipmentSlot).Value;
-                if (EquipmentList[equipmentSlot].Name != "- Empty Slot -") GameProfile.Inventory.Add(oldItem as ItemRecord);
+
+                bool isSwap = (EquipmentList[equipmentSlot].Name != "- Empty Slot -");                
+                if (isSwap) GameProfile.Inventory.Add(oldItem as ItemRecord);
 
                 EquipmentList.ElementAt(equipmentSlot).Value = AvailableItems[slot];                
                 GameProfile.Inventory.Remove(AvailableItems.ElementAt(slot));
 
-                equipmentViewModel.EquipmentList.ModelList = EquipmentList.ModelList;
                 HeroModel.Equipment.ModelList = EquipmentList.ModelList.Where(x => x.Value.Name != "- Empty Slot -").ToList();
             }
         }
