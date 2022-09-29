@@ -20,6 +20,8 @@ namespace Texemon.Scenes.StatusScene
 
             Class.Value = heroRecord.Class;
 
+            EquipmentSlots.Value = heroRecord.EquipmentSlots;
+
             Sprite.Value = (GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + heroRecord.Sprite);
             if (heroRecord.FlightHeight > 0)
             {
@@ -93,6 +95,7 @@ namespace Texemon.Scenes.StatusScene
 
         public ModelProperty<int> LastCategory { get; private set; } = new ModelProperty<int>(0);
         public ModelProperty<int> LastSlot { get; private set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> EquipmentSlots { get; private set; } = new ModelProperty<int>(6);
         public ModelCollection<CommandRecord> Equipment { get; set; } = new ModelCollection<CommandRecord>();
         public ModelCollection<CommandRecord> Abilities { get; set; } = new ModelCollection<CommandRecord>();
         public ModelCollection<CommandRecord> Actions { get; set; } = new ModelCollection<CommandRecord>();

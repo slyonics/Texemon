@@ -26,10 +26,6 @@
 		"Sprite": "Android",
 		"InitialEquipment": [
 			"Blaster",
-			"Repair Kit",
-			"Repair Kit",
-			"Repair Kit",
-			"Repair Kit",
 			"Repair Kit"
 		],
 		"InitialAbilities": [],
@@ -48,6 +44,7 @@
 		"Class": "Drone",
 		"Sprite": "RepairDrone",
 		"FlightHeight": "4",
+		"EquipmentSlots": 2,
 		"InitialEquipment": [],
 		"InitialAbilities": [
 			"Repair"
@@ -66,6 +63,7 @@
 		"Name": "BlowtorchDrone",
 		"Class": "Drone",
 		"Sprite": "BlowtorchDrone",
+		"EquipmentSlots": 2,
 		"InitialEquipment": [],
 		"InitialAbilities": [
 			"Blowtorch"
@@ -85,6 +83,7 @@
 		"Class": "Drone",
 		"Sprite": "DeflectorDrone",
 		"FlightHeight": "4",
+		"EquipmentSlots": 2,
 		"InitialEquipment": [],
 		"InitialAbilities": [
 			"Deflector"
@@ -103,6 +102,7 @@
 		"Name": "ArcWelderDrone",
 		"Class": "Drone",
 		"Sprite": "ArcWelderDrone",
+		"EquipmentSlots": 2,
 		"InitialEquipment": [],
 		"InitialAbilities": [
 			"Arc Welder"

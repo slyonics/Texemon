@@ -42,7 +42,7 @@ namespace Texemon.Scenes.StatusScene
             EquipmentList = iEquipList;
 
             AvailableItems = new ModelCollection<ItemRecord>();
-            if (string.IsNullOrEmpty(EquipmentList[iEquipSlot].Name))
+            if (EquipmentList[iEquipSlot].Name == "- Empty Slot -")
             {
                 AvailableItems.Add(new ItemRecord()
                 {

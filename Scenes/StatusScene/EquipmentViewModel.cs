@@ -97,9 +97,7 @@ namespace Texemon.Scenes.StatusScene
                     if (partySlot == -1)
                     {
                         Audio.PlaySound(GameSound.Cursor);
-                        partySlot = 0;
-                        EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
-                        ShowEquipment.Value = true;
+                        SelectParty(PartyMembers[partySlot].HeroModel);
                         equipmentSlot = -1;
                         (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).RadioSelect();
                     }
@@ -107,6 +105,18 @@ namespace Texemon.Scenes.StatusScene
                     {
                         Audio.PlaySound(GameSound.Cursor);
                         SelectParty(PartyMembers[partySlot].HeroModel);
+
+                        equipmentSlot = 0;
+                        var item = EquipmentList.First().Value;
+                        (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+
+                        Description1.Value = item.Description.ElementAtOrDefault(0);
+                        Description2.Value = item.Description.ElementAtOrDefault(1);
+                        Description3.Value = item.Description.ElementAtOrDefault(2);
+                        Description4.Value = item.Description.ElementAtOrDefault(3);
+                        Description5.Value = item.Description.ElementAtOrDefault(4);
+
+                        ShowDescription.Value = true;
                     }
                 }
             }
@@ -123,10 +133,7 @@ namespace Texemon.Scenes.StatusScene
 
             Audio.PlaySound(GameSound.Cursor);
 
-            EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
-
-
-            ShowEquipment.Value = true;
+            SelectParty(PartyMembers[partySlot].HeroModel);
 
             equipmentSlot = -1;
 
@@ -144,10 +151,7 @@ namespace Texemon.Scenes.StatusScene
 
             Audio.PlaySound(GameSound.Cursor);
 
-            EquipmentList.ModelList = PartyMembers[partySlot].HeroModel.Value.Equipment.ModelList;
-
-
-            ShowEquipment.Value = true;
+            SelectParty(PartyMembers[partySlot].HeroModel);
 
             equipmentSlot = -1;
 
@@ -196,15 +200,15 @@ namespace Texemon.Scenes.StatusScene
             partySlot = PartyMembers.ToList().FindIndex(x => x.Value.HeroModel.Value == record);
 
             var newEquipList = new List<ModelProperty<CommandRecord>>(record.Equipment.ModelList);
-            if (EquipmentList.ModelList.Count < 6)
+            while (newEquipList.Count < record.EquipmentSlots.Value)
             {
                 newEquipList.Add(new ModelProperty<CommandRecord>(new CommandRecord()
                 {
                     Icon = "Blank",
-                    Name = "",
+                    Name = "- Empty Slot -",
                     Charges = -1,
                     ChargesLeft = -1,
-                    Description = new string[] { "", "", "Empty slot", "", "" }
+                    Description = new string[] { "", "Select to equip", "a new item", "", "" }
                 }));
             }
             EquipmentList.ModelList = newEquipList;
@@ -215,21 +219,6 @@ namespace Texemon.Scenes.StatusScene
             {
                 equipmentSlot = -1;
                 ShowDescription.Value = false;
-            }
-            else
-            {
-                Audio.PlaySound(GameSound.Cursor);
-                equipmentSlot = 0;
-                var item = EquipmentList.First().Value;
-                (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
-
-                Description1.Value = item.Description.ElementAtOrDefault(0);
-                Description2.Value = item.Description.ElementAtOrDefault(1);
-                Description3.Value = item.Description.ElementAtOrDefault(2);
-                Description4.Value = item.Description.ElementAtOrDefault(3);
-                Description5.Value = item.Description.ElementAtOrDefault(4);
-
-                ShowDescription.Value = true;
             }
         }
 

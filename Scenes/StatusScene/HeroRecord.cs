@@ -22,6 +22,7 @@ namespace Texemon.Scenes.StatusScene
         public ClassType Class { get; set; }
         public string Sprite { get; set; }
         public int FlightHeight { get; set; }
+        public int EquipmentSlots { get; set; } = 6;
         public string[] InitialEquipment { get; set; }
         public string[] InitialAbilities { get; set; }
         public string[] Actions { get; set; }
