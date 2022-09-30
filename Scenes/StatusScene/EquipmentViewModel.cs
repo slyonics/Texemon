@@ -25,7 +25,7 @@ namespace Texemon.Scenes.StatusScene
 
         public SwapEquipViewModel ChildViewModel { get; set; }
 
-        public bool SuppressCancel { get; set; }
+        public bool SuppressCancel { get => SuppressLeftRight; }
 
         public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
         public ModelCollection<ItemRecord> EquipmentList { get; private set; } = new ModelCollection<ItemRecord>();
@@ -88,14 +88,14 @@ namespace Texemon.Scenes.StatusScene
                 }
                 else
                 {
-                    SuppressCancel = true;
+                    //SuppressCancel = true;
                     return;
                 }
             }
 
             base.Update(gameTime);
 
-            SuppressCancel = false;
+            //SuppressCancel = false;
 
             if (ShowDescription.Value)
             {
@@ -108,12 +108,12 @@ namespace Texemon.Scenes.StatusScene
                     ChildViewModel = statusScene.AddView(new SwapEquipViewModel(statusScene, this, heroModel, PartyMembers[partySlot].PlayerSprite.Value, EquipmentList, equipmentSlot));
                     this.Visible = false;
                 }
-                else if (Input.CurrentInput.CommandPressed(Command.Cancel))
+                else if (Input.CurrentInput.CommandPressed(Command.Cancel) || Input.CurrentInput.CommandPressed(Command.Left))
                 {
                     Audio.PlaySound(GameSound.Back);
                     (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).UnSelect();
                     equipmentSlot = -1;
-                    SuppressCancel = true;
+                    //SuppressCancel = true;
                     ShowDescription.Value = false;
                 }
             }
@@ -147,6 +147,30 @@ namespace Texemon.Scenes.StatusScene
 
                         ShowDescription.Value = true;
                     }
+                }
+                else if (Input.CurrentInput.CommandPressed(Command.Right) && partySlot != -1 && equipmentSlot == -1)
+                {
+                    Audio.PlaySound(GameSound.Cursor);
+                    SelectParty(PartyMembers[partySlot].HeroModel);
+
+                    equipmentSlot = 0;
+                    var item = EquipmentList.First().Value;
+                    (GetWidget<DataGrid>("EquipmentList").ChildList[equipmentSlot] as Button).RadioSelect();
+
+                    Description1.Value = item.Description.ElementAtOrDefault(0);
+                    Description2.Value = item.Description.ElementAtOrDefault(1);
+                    Description3.Value = item.Description.ElementAtOrDefault(2);
+                    Description4.Value = item.Description.ElementAtOrDefault(3);
+                    Description5.Value = item.Description.ElementAtOrDefault(4);
+
+                    ShowDescription.Value = true;
+                }
+                else if (Input.CurrentInput.CommandPressed(Command.Cancel) && partySlot != -1)
+                {
+                    Audio.PlaySound(GameSound.Back);
+
+                    (GetWidget<DataGrid>("PartyList").ChildList[partySlot] as Button).UnSelect();
+                    ResetSlot();
                 }
             }
         }
@@ -298,7 +322,7 @@ namespace Texemon.Scenes.StatusScene
             ChildViewModel = null;
         }
 
-        public bool SuppressLeftRight { get => ShowDescription.Value; }
+        public bool SuppressLeftRight { get => partySlot != -1; }
 
         public ModelProperty<bool> ShowEquipment { get; set; } = new ModelProperty<bool>(false);
         public ModelProperty<bool> ShowDescription { get; set; } = new ModelProperty<bool>(false);

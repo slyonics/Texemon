@@ -42,6 +42,13 @@ namespace Texemon.Scenes.BattleScene
             if (ActivePlayer.HeroModel.Equipment.Count() == 0) equipmentButton.Enabled = false;
             if (ActivePlayer.HeroModel.Abilities.Count() == 0) abilitiesButton.Enabled = false;
 
+            if (!equipmentButton.Enabled && ActivePlayer.HeroModel.LastCategory.Value == 0) ActivePlayer.HeroModel.LastCategory.Value = 1;
+            if (!abilitiesButton.Enabled && ActivePlayer.HeroModel.LastCategory.Value == 1)
+            {
+                if (equipmentButton.Enabled) ActivePlayer.HeroModel.LastCategory.Value = 0;
+                else ActivePlayer.HeroModel.LastCategory.Value = 2;
+            }
+
             int lastCategory = ActivePlayer.HeroModel.LastCategory.Value;
             switch (lastCategory)
             {
@@ -64,6 +71,7 @@ namespace Texemon.Scenes.BattleScene
             if (!Input.MOUSE_MODE)
             {
                 slot = ActivePlayer.HeroModel.LastSlot.Value;
+                if (slot >= GetWidget<DataGrid>("CommandList").ChildList.Count) slot = 0;
                 (GetWidget<DataGrid>("CommandList").ChildList[slot] as Button).RadioSelect();
                 SelectCommand(AvailableCommands.ElementAt(slot));
                 ActivePlayer.HeroModel.LastSlot.Value = slot;

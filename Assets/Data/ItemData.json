@@ -120,7 +120,6 @@
 		"Charges": 4,
 		"ItemType": "Consumable",
 		"Targetting": "SingleAlly",
-		"RobotHealth": 25,
 		"TargetDead": true,
 		"TargetMechanical": true,
 		"Script": [
@@ -135,7 +134,8 @@
 		"Name": "Spare Parts",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage"
+			"Used for crafting",
+			"basic drones"
 		],
 		"Icon": "Chest",
 		"Charges": -1,
@@ -145,7 +145,8 @@
 		"Name": "Advanced Parts",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage"
+			"Used for crafting",
+			"advanced drones"
 		],
 		"Icon": "Chest",
 		"Charges": -1,

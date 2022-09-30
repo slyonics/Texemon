@@ -79,9 +79,6 @@ namespace Texemon.Scenes.StatusScene
             {
 
             }
-
-            if (Equipment.Count() == 0) LastCategory.Value = 1;
-            if (LastCategory.Value == 1 && Abilities.Count() == 0) LastCategory.Value = 2;
         }
 
         public ModelProperty<GameSprite> Sprite { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_Base);

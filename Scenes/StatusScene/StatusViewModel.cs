@@ -18,7 +18,7 @@ namespace Texemon.Scenes.StatusScene
         void MoveAway();
         void ResetSlot();
         public bool Visible { get; set; }
-        public bool SuppressCancel { get; set; }
+        public bool SuppressCancel { get; }
         public bool SuppressLeftRight { get; }
     }
 
@@ -52,15 +52,16 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
+            bool suppressCancel = ChildViewModel.SuppressCancel;
             ChildViewModel?.Update(gameTime);
+            suppressCancel |= ChildViewModel.SuppressCancel;
 
             InputFrame currentInput = Input.CurrentInput;
-
             if (ChildViewModel == null || !ChildViewModel.SuppressLeftRight)
             {
                 if (currentInput.CommandPressed(Command.Left)) CursorLeft();
                 else if (currentInput.CommandPressed(Command.Right)) CursorRight();
-                else if (currentInput.CommandPressed(Command.Cancel) && (ChildViewModel == null || !ChildViewModel.SuppressCancel))
+                else if (currentInput.CommandPressed(Command.Cancel) && (ChildViewModel == null || !suppressCancel))
                 {
                     Audio.PlaySound(GameSound.Back);
                     Back();

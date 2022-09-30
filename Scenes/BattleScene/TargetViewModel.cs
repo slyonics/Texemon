@@ -228,7 +228,14 @@ namespace Texemon.Scenes.BattleScene
 
         public void SelectTarget(object parameter)
         {
-            if (Command.ChargesLeft > 0) Command.ChargesLeft--;
+            if (Command.ChargesLeft > 0)
+            {
+                Command.ChargesLeft--;
+                if (Command.ChargesLeft == 0)
+                {
+                    Player.HeroModel.Equipment.ModelList.RemoveAll(x => x.Value.ChargesLeft == 0 && x.Value.ItemType == ItemType.Consumable);
+                }
+            }
 
             Terminate();
             Player.EndTurn();
