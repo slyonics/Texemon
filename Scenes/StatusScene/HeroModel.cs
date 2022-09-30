@@ -34,6 +34,21 @@ namespace Texemon.Scenes.StatusScene
                 ItemRecord item = StatusScene.ITEMS.First(x => x.Name == equipment);
                 item.ChargesLeft = item.Charges;
                 Equipment.Add(new ItemRecord(item));
+
+                Health.Value += item.BonusHealth;
+                Strength.Value += item.BonusStrength;
+                Defense.Value += item.BonusDefense;
+                Agility.Value += item.BonusAgility;
+                Mana.Value += item.BonusMana;
+
+                if (Class.Value == ClassType.Android || Class.Value == ClassType.Drone)
+                {
+                    Health.Value += item.RobotHealth;
+                    Strength.Value += item.RobotStrength;
+                    Defense.Value += item.RobotDefense;
+                    Agility.Value += item.RobotAgility;
+                    Mana.Value += item.RobotMana;
+                }
             }
 
             foreach (string equipment in heroRecord.InitialEquipment)
@@ -41,6 +56,21 @@ namespace Texemon.Scenes.StatusScene
                 ItemRecord item = StatusScene.ITEMS.First(x => x.Name == equipment);
                 item.ChargesLeft = item.Charges;
                 Equipment.Add(new ItemRecord(item));
+
+                Health.Value += item.BonusHealth;
+                Strength.Value += item.BonusStrength;
+                Defense.Value += item.BonusDefense;
+                Agility.Value += item.BonusAgility;
+                Mana.Value += item.BonusMana;
+
+                if (Class.Value == ClassType.Android || Class.Value == ClassType.Drone)
+                {
+                    Health.Value += item.RobotHealth;
+                    Strength.Value += item.RobotStrength;
+                    Defense.Value += item.RobotDefense;
+                    Agility.Value += item.RobotAgility;
+                    Mana.Value += item.RobotMana;
+                }
             }
 
             foreach (string ability in classRecord.InitialAbilities)

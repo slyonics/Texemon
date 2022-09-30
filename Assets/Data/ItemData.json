@@ -68,7 +68,7 @@
 		"Animation": "Guarding",
 		"Description": [
 			"- 10-20 damage",
-			"- Physical",
+			"- Electrical",
 			"- VS 1 enemy"
 		],
 		"Icon": "Lightning",
@@ -90,7 +90,7 @@
 		"Animation": "Guarding",
 		"Description": [
 			"- 10-20 damage",
-			"- Physical",
+			"- Incendiary",
 			"- VS 1 enemy"
 		],
 		"Icon": "Fire",

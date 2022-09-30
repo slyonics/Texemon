@@ -115,6 +115,8 @@ namespace Texemon.Scenes.StatusScene
 
         private void CursorUp()
         {
+            if (slot == -1) return;
+
             slot--;
             if (slot < 0)
             {

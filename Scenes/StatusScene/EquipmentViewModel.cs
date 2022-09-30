@@ -177,6 +177,8 @@ namespace Texemon.Scenes.StatusScene
 
         private void PartyCursorUp()
         {
+            if (partySlot == -1) return;
+
             partySlot--;
             if (partySlot < 0)
             {
@@ -213,6 +215,8 @@ namespace Texemon.Scenes.StatusScene
 
         private void EquipmentCursorUp()
         {
+            if (equipmentSlot == -1) return;
+
             equipmentSlot--;
             if (equipmentSlot < 0)
             {
