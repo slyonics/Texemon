@@ -40,7 +40,7 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.Draw(spriteBatch);
 
-            Color drawColor = (parent.Enabled) ? Color : new Color(120, 120, 120, 255);
+            Color drawColor = (parent.Enabled) ? Color : new Color(190, 190, 190, 255);
 
             switch (TextAlignment)
             {

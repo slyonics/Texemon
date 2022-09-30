@@ -245,10 +245,11 @@ namespace Texemon.Scenes.BattleScene
         private void CursorSelect()
         {
             if (slot == -1) return;
+            CommandRecord record = (GetWidget<DataGrid>("CommandList").Items.ElementAt(slot) as IModelProperty).GetValue() as CommandRecord;
+            if (!record.Usable) return;
 
             Audio.PlaySound(GameSound.menu_select);
 
-            CommandRecord record= (GetWidget<DataGrid>("CommandList").Items.ElementAt(slot) as IModelProperty).GetValue() as CommandRecord;
             targetViewModel = new TargetViewModel(battleScene, ActivePlayer, record);
             battleScene.AddView(targetViewModel);
         }

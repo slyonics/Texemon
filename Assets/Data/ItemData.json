@@ -11,6 +11,8 @@
 		"Charges": -1,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
+		"RobotHealth": 12,
+		"RobotStrength": 4,
 		"Script": [
 			"Animate Attack",
 			"Sound Slash",
@@ -31,6 +33,8 @@
 		"Charges": -1,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
+		"RobotHealth": 12,
+		"RobotAgility": 4,
 		"Script": [
 			"Animate Attack",
 			"Sound Laser",
@@ -71,6 +75,8 @@
 		"Charges": -1,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
+		"RobotHealth": 8,
+		"RobotAgility": 3,
 		"Script": [
 			"Animate Attack",
 			"Sound Thunder",
@@ -91,6 +97,8 @@
 		"Charges": -1,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
+		"RobotHealth": 8,
+		"RobotAgility": 3,
 		"Script": [
 			"Animate Attack",
 			"Sound Fireball",
@@ -112,6 +120,7 @@
 		"Charges": 4,
 		"ItemType": "Consumable",
 		"Targetting": "SingleAlly",
+		"RobotHealth": 25,
 		"TargetDead": true,
 		"TargetMechanical": true,
 		"Script": [

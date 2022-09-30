@@ -15,7 +15,7 @@
 		</Panel>
 		<Panel Style="Bind PlayerProfile.WindowStyle" Bounds="0,12,86,68" InnerMargin="8,9,8,3">
 			<DataGrid Name="CommandList" Items="Bind AvailableCommands" Alignment="Stretch">
-				<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Bounds="0,-1,78,10" Alignment="Vertical" Action="SelectCommand" ActionParameter="Ref DataGrid">
+				<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Bounds="0,-1,78,10" Alignment="Vertical" Action="SelectCommand" ActionParameter="Ref DataGrid" Enabled="Ref DataGrid.Usable">
 					<Image Icon="Ref DataGrid.Icon" Alignment="Left" Bounds="1,1,8,8"/>
 					<Label Text="Ref DataGrid.Name" Alignment="Left" TextAlignment="Left" Bounds="2,11,53,8"/>
 					<Label Visible="Ref DataGrid.ShowCharges" Text="Ref DataGrid.ChargesLeft" Alignment="Left" TextAlignment="Right" Bounds="0,11,14,8"/>

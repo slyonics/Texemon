@@ -6,24 +6,29 @@
 
 		<Panel Bounds="0,8,86,70" InnerMargin="4,3,2,8">
 			<Panel Bounds="0,0,86,10" Alignment="Vertical">
-				<Image Icon="Heart" Alignment="Cascading" Bounds="0,6,10,10"/>
-				<Label Text="Bind HeroModel.Health" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,40,10"/>
+				<Image Icon="Heart" Alignment="Cascading" Bounds="8,6,10,10"/>
+				<Label Text="Bind HeroModel.Health" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,24,10"/>
+				<Label Text="Bind DeltaHealth" Font="Dialogue" Alignment="Cascading" Color="Bind HealthColor" TextAlignment="Right" Bounds="0,15,24,10"/>
 			</Panel>
 			<Panel Bounds="0,0,86,10" Alignment="Vertical">
-				<Image Icon="Axe" Alignment="Cascading" Bounds="0,6,10,10"/>
-				<Label Text="Bind HeroModel.Strength" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+				<Image Icon="Axe" Alignment="Cascading" Bounds="8,6,10,10"/>
+				<Label Text="Bind HeroModel.Strength" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,24,10"/>
+				<Label Text="Bind DeltaStrength" Font="Dialogue" Alignment="Cascading" Color="Bind StrengthColor" TextAlignment="Right" Bounds="0,15,24,10"/>
 			</Panel>
 			<Panel Bounds="0,0,86,10" Alignment="Vertical">
-				<Image Icon="Shield" Alignment="Cascading" Bounds="0,6,10,10"/>
-				<Label Text="Bind HeroModel.Defense" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+				<Image Icon="Shield" Alignment="Cascading" Bounds="8,6,10,10"/>
+				<Label Text="Bind HeroModel.Defense" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,24,10"/>
+				<Label Text="Bind DeltaDefense" Font="Dialogue" Alignment="Cascading" Color="Bind DefenseColor" TextAlignment="Right" Bounds="0,15,24,10"/>
 			</Panel>
 			<Panel Bounds="0,0,86,10" Alignment="Vertical">
-				<Image Icon="Gun" Alignment="Cascading" Bounds="0,6,10,10"/>
-				<Label Text="Bind HeroModel.Agility" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+				<Image Icon="Gun" Alignment="Cascading" Bounds="8,6,10,10"/>
+				<Label Text="Bind HeroModel.Agility" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,24,10"/>
+				<Label Text="Bind DeltaAgility" Font="Dialogue" Alignment="Cascading" Color="Bind AgilityColor" TextAlignment="Right" Bounds="0,15,24,10"/>
 			</Panel>
 			<Panel Bounds="0,0,86,10" Alignment="Vertical">
-				<Image Icon="Staff" Alignment="Cascading" Bounds="0,6,10,10"/>
-				<Label Text="Bind HeroModel.Mana" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+				<Image Icon="Staff" Alignment="Cascading" Bounds="8,6,10,10"/>
+				<Label Text="Bind HeroModel.Mana" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,24,10"/>
+				<Label Text="Bind DeltaMana" Font="Dialogue" Alignment="Cascading" Color="Bind ManaColor" TextAlignment="Right" Bounds="0,15,24,10"/>
 			</Panel>
 		</Panel>
 	</Panel>

@@ -32,11 +32,11 @@
 		"Actions": [],
 		"BattlerModel": {
 			"Name": { "Value": "Android" },
-			"MaxHealth": { "Value": 888 },
-			"Strength": { "Value": 88 },
-			"Defense": { "Value": 88 },
-			"Agility": { "Value": 88 },
-			"Mana": { "Value": 88 }
+			"MaxHealth": { "Value": 50 },
+			"Strength": { "Value": 3 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 4 },
+			"Mana": { "Value": 3 }
 		}
 	},
 	{
