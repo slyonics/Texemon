@@ -38,12 +38,12 @@ namespace Texemon.Scenes.IntroScene
             {
                 Terminate();
             }
-            else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0)
+            else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0 && GetWidget<Button>("OK").Enabled)
             {
                 GetWidget<Button>("OK").RadioSelect();
                 namingBox.Active = false;
             }
-            else if (Input.CurrentInput.CommandReleased(Command.Confirm) && confirmCooldown <= 0)
+            else if (Input.CurrentInput.CommandReleased(Command.Confirm) && confirmCooldown <= 0 && GetWidget<Button>("OK").Enabled)
             {
                 Audio.PlaySound(GameSound.menu_select);
                 GetWidget<Button>("OK").UnSelect();
@@ -63,16 +63,16 @@ namespace Texemon.Scenes.IntroScene
             hero.Name.Value = namingBox.Text;
             GameProfile.PlayerProfile.Party.Add(hero);
 
-            /*
-            GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.ArcWelderDrone));
-            GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.ArcWelderDrone));
-            GameProfile.PlayerProfile.Party.Add(new HeroModel(HeroType.ArcWelderDrone));
-            */
-
             GameProfile.SetSaveData<HeroModel>("PartyLeader", hero);
             GameProfile.SetSaveData<string>("WindowStyle", GameProfile.PlayerProfile.WindowStyle.Value);
 
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
+        }
+
+        public void ValidateName(Textbox textbox)
+        {
+            if (string.IsNullOrEmpty(textbox.Text)) GetWidget<Button>("OK").Enabled = false;
+            else GetWidget<Button>("OK").Enabled = true;
         }
 
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);

@@ -43,12 +43,12 @@ namespace Texemon.Scenes.ShopScene
                 GetWidget<Button>("Cancel").UnSelect();
                 Terminate();
             }
-            else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0)
+            else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0 && GetWidget<Button>("OK").Enabled)
             {
                 GetWidget<Button>("OK").RadioSelect();
                 namingBox.Active = false;
             }
-            else if (Input.CurrentInput.CommandReleased(Command.Confirm) && confirmCooldown <= 0)
+            else if (Input.CurrentInput.CommandReleased(Command.Confirm) && confirmCooldown <= 0 && GetWidget<Button>("OK").Enabled)
             {
                 Audio.PlaySound(GameSound.menu_select);
                 GetWidget<Button>("OK").UnSelect();
@@ -89,6 +89,12 @@ namespace Texemon.Scenes.ShopScene
         {
             namingBox.Active = false;
             Terminate();
+        }
+
+        public void ValidateName(Textbox textbox)
+        {
+            if (string.IsNullOrEmpty(textbox.Text)) GetWidget<Button>("OK").Enabled = false;
+            else GetWidget<Button>("OK").Enabled = true;
         }
 
         public string Confirmed { get; set; } = null;

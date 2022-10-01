@@ -3,7 +3,7 @@
 
 	<Panel Anchor="$CenterX,$CenterY" Bounds="-75,-90,150,80" Style="Bind PlayerProfile.WindowStyle" InnerMargin="8,8,8,8">
 		<Label Text="Please name this android" Alignment="Vertical" Color="#F0D0B0FF" Font="Bind PlayerProfile.Font"/>
-		<Textbox Name="NamingBox" Text="Android" Style="Bind PlayerProfile.WindowStyle" ActiveStyle="Bind PlayerProfile.SelectedStyle" Active="True" Bounds="0,8,80,20" InnerMargin="8,3,8,3" Font="Bind PlayerProfile.Font" Alignment="Vertical"/>
+		<Textbox Name="NamingBox" Text="Android" Style="Bind PlayerProfile.WindowStyle" ActiveStyle="Bind PlayerProfile.SelectedStyle" Active="True" Bounds="0,8,80,20" InnerMargin="8,3,8,3" Font="Bind PlayerProfile.Font" Alignment="Vertical" Validator="ValidateName"/>
 
 		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,30,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8">
 			<Label Text="OK" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>

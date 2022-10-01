@@ -12,6 +12,8 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Textbox : Widget
     {
+        public MethodInfo Validator { get; set; }
+
         private string text;
         public string Text { get => text; set => text = value; }
 
@@ -63,12 +65,16 @@ namespace Texemon.SceneObjects.Widgets
                     }
 
                     blinkTime = 0;
+
+                    Validate();
                 }
                 else if (Input.CurrentInput.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Back) && Text.Length > 0)
                 {
                     Text = Text.Substring(0, Text.Length - 1);
 
                     blinkTime = 0;
+
+                    Validate();
                 }
                 else if (Input.CurrentInput.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
                 {
@@ -145,6 +151,13 @@ namespace Texemon.SceneObjects.Widgets
                 UpdateFrame();
             }
         }
+
+        public void Validate()
+        {
+            Textbox[] parameters = new Textbox[] { this };
+            Validator?.Invoke(GetParent<ViewModel>(), parameters);
+        }
+
         private string ActiveStyle { get => activeStyle;
             set {
                 activeStyle = value;

@@ -73,8 +73,8 @@
 			"Name": { "Value": "Ignis" },
 			"MaxHealth": { "Value": 20 },
 			"Strength": { "Value": 2 },
-			"Defense": { "Value": 2 },
-			"Agility": { "Value": 5 },
+			"Defense": { "Value": 4 },
+			"Agility": { "Value": 3 },
 			"Mana": { "Value": 0 }
 		}
 	},
@@ -93,8 +93,8 @@
 			"Name": { "Value": "Aegida" },
 			"MaxHealth": { "Value": 30 },
 			"Strength": { "Value": 2 },
-			"Defense": { "Value": 5 },
-			"Agility": { "Value": 2 },
+			"Defense": { "Value": 2 },
+			"Agility": { "Value": 5 },
 			"Mana": { "Value": 0 }
 		}
 	},
@@ -112,8 +112,8 @@
 			"Name": { "Value": "Fulmen" },
 			"MaxHealth": { "Value": 30 },
 			"Strength": { "Value": 2 },
-			"Defense": { "Value": 5 },
-			"Agility": { "Value": 2 },
+			"Defense": { "Value": 4 },
+			"Agility": { "Value": 3 },
 			"Mana": { "Value": 0 }
 		}
 	}
