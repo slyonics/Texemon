@@ -19,6 +19,7 @@ namespace Texemon.Main
         StatusScene_PartyView,
         StatusScene_StatusView,
         StatusScene_SwapEquipView,
+        StatusScene_SystemView,
         TitleScene_SettingsView,
         TitleScene_TitleView,
 
@@ -126,6 +127,7 @@ namespace Texemon.Main
         Actors_Android,
         Actors_ArcWelderDrone,
         Actors_Base,
+        Actors_Blank,
         Actors_BlowtorchDrone,
         Actors_DeflectorDrone,
         Actors_DroneShadow,

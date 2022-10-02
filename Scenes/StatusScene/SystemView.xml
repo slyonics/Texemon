@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-80,-80,160,162">
+		<DataGrid Name="Saves" Items="Bind AvailableSaves" Alignment="Vertical" Bounds="0,8,120,120">
+			<Button Radio="True" Style="Bind DataGrid.WindowStyle" PushedStyle="Bind DataGrid.WindowSelectedStyle" Alignment="Vertical" Bounds="0,0,120,30" Action="Save" ActionParameter="Ref DataGrid.SaveSlot">
+				<Image Sprite="Bind DataGrid.AnimatedSprite" Alignment="Left" Bounds="10,32,28,20"/>
+				<Label Text="Bind DataGrid.PartyLeader.Name" Font="Pixel" Alignment="Cascading" TextAlignment="Left" Bounds="22,12,80,20"/>
+				<Label Text="Bind DataGrid.PlayerLocation" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="22,13,110,10"/>
+			</Button>
+		</DataGrid>
+		<Button Name="Exit" Radio="True" Style="TechWindow" PushedStyle="TechSelected" Bounds="0,4,100,20" Alignment="Vertical" Action="Exit" InnerMargin="8,1,8,4">
+			<Label Text="Exit to Title" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
+		</Button>
+	</Panel>
+</View>

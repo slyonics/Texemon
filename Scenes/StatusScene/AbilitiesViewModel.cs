@@ -13,11 +13,6 @@ namespace Texemon.Scenes.StatusScene
 {
     public class AbilitiesViewModel : ViewModel, IStatusSubView
     {
-        public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
-        {
-            { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
-        };
-
         StatusScene statusScene;
 
         private int partySlot = -1;
@@ -27,25 +22,15 @@ namespace Texemon.Scenes.StatusScene
 
         public bool SuppressCancel { get; set; }
 
-        public ModelCollection<PartyMemberModel> PartyMembers { get; private set; } = new ModelCollection<PartyMemberModel>();
+        public ModelCollection<PartyMemberModel> PartyMembers { get; private set; }
         public ModelCollection<AbilityRecord> AbilitiesList { get; private set; } = new ModelCollection<AbilityRecord>();
 
-        public AbilitiesViewModel(StatusScene iScene)
+        public AbilitiesViewModel(StatusScene iScene, ModelCollection<PartyMemberModel> iPartyMembers)
             : base(iScene, PriorityLevel.GameLevel)
         {
             statusScene = iScene;
 
-            foreach (ModelProperty<HeroModel> heroModelProperty in GameProfile.PlayerProfile.Party)
-            {
-                Texture2D sprite = AssetCache.SPRITES[heroModelProperty.Value.Sprite.Value];
-                AnimatedSprite animatedSprite = new AnimatedSprite(sprite, HERO_ANIMATIONS);
-                PartyMemberModel partyMember = new PartyMemberModel()
-                {
-                    PlayerSprite = new ModelProperty<AnimatedSprite>(animatedSprite),
-                    HeroModel = new ModelProperty<HeroModel>(heroModelProperty.Value)
-                };
-                PartyMembers.Add(partyMember);
-            }
+            PartyMembers = iPartyMembers;
 
             LoadView(GameView.StatusScene_AbilitiesView);
 

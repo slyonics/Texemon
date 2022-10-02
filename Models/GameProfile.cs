@@ -28,7 +28,11 @@ namespace Texemon.Models
         };
 
         private static int saveSlot;
+        public static int SaveSlot { get => saveSlot; set => saveSlot = value; }
+
         private static Dictionary<string, object> saveData;
+        public static Dictionary<string, object> SaveData { get => saveData; }
+
         private static PlayerProfile playerProfile;
         private static ModelCollection<ItemRecord> inventory;
 
@@ -97,9 +101,9 @@ namespace Texemon.Models
             File.Delete(CrossPlatformGame.SETTINGS_DIRECTORY + SAVE_FOLDER + "\\" + slot + ".sav");
         }
 
-        public static List<Dictionary<string, object>> GetAllSaveData()
+        public static Dictionary<int, Dictionary<string, object>> GetAllSaveData()
         {
-            List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
+            Dictionary<int, Dictionary<string, object>> results = new Dictionary<int, Dictionary<string, object>>();
 
             string savePath = CrossPlatformGame.SETTINGS_DIRECTORY + SAVE_FOLDER;
             BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -113,7 +117,7 @@ namespace Texemon.Models
                     saveData = (Dictionary<string, object>)binaryFormatter.Deserialize(fileStream);
                 }
 
-                results.Add(saveData);
+                results.Add(int.Parse(Path.GetFileNameWithoutExtension(saveFile).Replace("Save", "")), saveData);
             }
 
             return results;

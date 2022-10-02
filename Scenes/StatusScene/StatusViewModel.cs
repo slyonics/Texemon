@@ -24,6 +24,11 @@ namespace Texemon.Scenes.StatusScene
 
     public class StatusViewModel : ViewModel
     {
+        public static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
+        {
+            { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
+        };
+
         List<ViewModel> SubViews { get; set; } = new List<ViewModel>();
 
         StatusScene statusScene;
@@ -37,10 +42,24 @@ namespace Texemon.Scenes.StatusScene
         {
             statusScene = iScene;
 
-            SubViews.Add(new PartyViewModel(statusScene));
+            ModelCollection<PartyMemberModel> partyMembers = new ModelCollection<PartyMemberModel>();
+            foreach (ModelProperty<HeroModel> heroModelProperty in GameProfile.PlayerProfile.Party)
+            {
+                Texture2D sprite = AssetCache.SPRITES[heroModelProperty.Value.Sprite.Value];
+                AnimatedSprite animatedSprite = new AnimatedSprite(sprite, HERO_ANIMATIONS);
+                PartyMemberModel partyMember = new PartyMemberModel()
+                {
+                    PlayerSprite = new ModelProperty<AnimatedSprite>(animatedSprite),
+                    HeroModel = new ModelProperty<HeroModel>(heroModelProperty.Value)
+                };
+                partyMembers.Add(partyMember);
+            }
+
+            SubViews.Add(new PartyViewModel(statusScene, partyMembers));
             SubViews.Add(new ItemViewModel(statusScene));
-            SubViews.Add(new EquipmentViewModel(statusScene));
-            SubViews.Add(new AbilitiesViewModel(statusScene));
+            SubViews.Add(new EquipmentViewModel(statusScene, partyMembers));
+            SubViews.Add(new AbilitiesViewModel(statusScene, partyMembers));
+            SubViews.Add(new SystemViewModel(statusScene));
 
             LoadView(GameView.StatusScene_StatusView);
 
@@ -86,30 +105,38 @@ namespace Texemon.Scenes.StatusScene
         private void CursorLeft()
         {
             slot--;
-            if (slot < 0) slot = 0;
+            if (slot < 0)
+            {
+                slot = 0;
+                return;
+            }
             else Audio.PlaySound(GameSound.menu_select);
 
-            switch (slot)
-            {
-                case 0: GetWidget<Button>("PartyButton").RadioSelect(); SelectParty(); break;
-                case 1: GetWidget<Button>("ItemsButton").RadioSelect(); SelectItems(); break;
-                case 2: GetWidget<Button>("EquipmentButton").RadioSelect(); SelectEquipment(); break;
-                case 3: GetWidget<Button>("AbilitiesButton").RadioSelect(); SelectAbilities(); break;
-            }
+            PresentSubmenu(slot);
         }
 
         private void CursorRight()
         {
             slot++;
-            if (slot > 3) slot = 3;
+            if (slot > 4)
+            {
+                slot = 4;
+                return;
+            }
             else Audio.PlaySound(GameSound.menu_select);
 
+            PresentSubmenu(slot);
+        }
+
+        private void PresentSubmenu(int slot)
+        {
             switch (slot)
             {
                 case 0: GetWidget<Button>("PartyButton").RadioSelect(); SelectParty(); break;
                 case 1: GetWidget<Button>("ItemsButton").RadioSelect(); SelectItems(); break;
                 case 2: GetWidget<Button>("EquipmentButton").RadioSelect(); SelectEquipment(); break;
                 case 3: GetWidget<Button>("AbilitiesButton").RadioSelect(); SelectAbilities(); break;
+                case 4: GetWidget<Button>("SystemButton").RadioSelect(); SelectSystem(); break;
             }
         }
 
@@ -168,12 +195,17 @@ namespace Texemon.Scenes.StatusScene
             ChildViewModel.ResetSlot();
         }
 
-        public void SelectQuit()
+        public void SelectSystem()
         {
-            ((MapScene.MapScene)CrossPlatformGame.SceneStack.First(x => x is MapScene.MapScene)).SaveMapPosition();
-            GameProfile.SetSaveData<HeroModel>("PartyLeader", GameProfile.PlayerProfile.Party.First().Value);
-            GameProfile.SaveState();
-            CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            ChildViewModel.Visible = false;
+            ChildViewModel.MoveAway();
+
+            slot = 4;
+            ChildViewModel = SubViews.First(x => x is SystemViewModel) as IStatusSubView;
+
+            ChildViewModel.Visible = true;
+
+            ChildViewModel.ResetSlot();
         }
 
         public void Back()

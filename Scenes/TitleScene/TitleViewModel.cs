@@ -34,10 +34,10 @@ namespace Texemon.Scenes.TitleScene
         public TitleViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel)
         {
-            int i = 0;
             var saves = GameProfile.GetAllSaveData();
-            foreach (var save in saves)
+            foreach (var saveEntry in saves)
             {
+                var save = saveEntry.Value;
                 AnimatedSprite animatedSprite = new AnimatedSprite(AssetCache.SPRITES[((StatusScene.HeroModel)save["PartyLeader"]).Sprite.Value], HERO_ANIMATIONS);
                 AvailableSaves.Add(new SaveModel()
                 {
@@ -45,11 +45,9 @@ namespace Texemon.Scenes.TitleScene
                     PlayerLocation = new ModelProperty<string>((string)save["PlayerLocation"]),
                     WindowStyle = new ModelProperty<string>((string)save["WindowStyle"]),
                     WindowSelectedStyle = new ModelProperty<string>(((string)save["WindowStyle"]).Replace("Window", "Selected")),
-                    SaveSlot = new ModelProperty<int>(i),
+                    SaveSlot = new ModelProperty<int>(saveEntry.Key),
                     AnimatedSprite = new ModelProperty<AnimatedSprite>(animatedSprite)
                 });
-
-                i++;
             }
 
             LoadView(GameView.TitleScene_TitleView);

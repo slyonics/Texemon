@@ -14,8 +14,8 @@
 		<Button Name="AbilitiesButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,52,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectAbilities">
 			<Label Font="Bind PlayerProfile.Font" Text="Abilities" Alignment="Vertical" />
 		</Button>
-		<Button Name="SystemButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,66,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectQuit">
-			<Label Font="Bind PlayerProfile.Font" Text="Save/Quit" Alignment="Vertical"/>
+		<Button Name="SystemButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,82,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectSystem">
+			<Label Font="Bind PlayerProfile.Font" Text="Save &amp; Quit" Alignment="Vertical"/>
 		</Button>
 	</Panel>
 	
