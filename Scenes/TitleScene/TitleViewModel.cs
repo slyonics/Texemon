@@ -16,6 +16,7 @@ namespace Texemon.Scenes.TitleScene
         public ModelProperty<string> PlayerLocation { get; set; }
         public ModelProperty<string> WindowStyle { get; set; }
         public ModelProperty<string> WindowSelectedStyle { get; set; }
+        public ModelProperty<GameFont> Font { get; set; }
         public ModelProperty<int> SaveSlot { get; set; }
         public ModelProperty<AnimatedSprite> AnimatedSprite { get; set; }
     }
@@ -45,6 +46,7 @@ namespace Texemon.Scenes.TitleScene
                     PlayerLocation = new ModelProperty<string>((string)save["PlayerLocation"]),
                     WindowStyle = new ModelProperty<string>((string)save["WindowStyle"]),
                     WindowSelectedStyle = new ModelProperty<string>(((string)save["WindowStyle"]).Replace("Window", "Selected")),
+                    Font = new ModelProperty<GameFont>((GameFont)save["Font"]),
                     SaveSlot = new ModelProperty<int>(saveEntry.Key),
                     AnimatedSprite = new ModelProperty<AnimatedSprite>(animatedSprite)
                 });

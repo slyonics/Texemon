@@ -13,21 +13,17 @@ namespace Texemon.Scenes.IntroScene
 {
     public class TechNameViewModel : ViewModel
     {
-        enum Selection
-        {
-            None,
-            Magic,
-            Technology
-        }
-
         Textbox namingBox;
 
         int confirmCooldown = 100;
 
-        public TechNameViewModel(Scene iScene, GameView viewName)
+        SelectionViewModel.Selection selection;
+
+        public TechNameViewModel(Scene iScene, GameView viewName, SelectionViewModel.Selection iSelection)
             : base(iScene, PriorityLevel.MenuLevel, viewName)
         {
             namingBox = GetWidget<Textbox>("NamingBox");
+            selection = iSelection;
         }
 
         public override void Update(GameTime gameTime)
@@ -57,16 +53,34 @@ namespace Texemon.Scenes.IntroScene
         {
             namingBox.Active = false;
 
-            GameProfile.SetSaveData<bool>("NewTechGame", true);
+            if (selection == SelectionViewModel.Selection.Technology)
+            {
+                GameProfile.SetSaveData<bool>("NewTechGame", true);
 
-            var hero = new HeroModel(HeroType.TechHero);
-            hero.Name.Value = namingBox.Text;
-            GameProfile.PlayerProfile.Party.Add(hero);
+                var hero = new HeroModel(HeroType.TechHero);
+                hero.Name.Value = namingBox.Text;
+                GameProfile.PlayerProfile.Party.Add(hero);
 
-            GameProfile.SetSaveData<HeroModel>("PartyLeader", hero);
-            GameProfile.SetSaveData<string>("WindowStyle", GameProfile.PlayerProfile.WindowStyle.Value);
+                GameProfile.SetSaveData<HeroModel>("PartyLeader", hero);
+                GameProfile.SetSaveData<string>("WindowStyle", GameProfile.PlayerProfile.WindowStyle.Value);
+                GameProfile.SetSaveData<GameFont>("Font", GameProfile.PlayerProfile.Font.Value);
 
-            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
+                CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
+            }
+            else
+            {
+                GameProfile.SetSaveData<bool>("NewMagicGame", true);
+
+                var hero = new HeroModel(HeroType.TechnoMage);
+                hero.Name.Value = namingBox.Text;
+                GameProfile.PlayerProfile.Party.Add(hero);
+
+                GameProfile.SetSaveData<HeroModel>("PartyLeader", hero);
+                GameProfile.SetSaveData<string>("WindowStyle", GameProfile.PlayerProfile.WindowStyle.Value);
+                GameProfile.SetSaveData<GameFont>("Font", GameProfile.PlayerProfile.Font.Value);
+
+                CrossPlatformGame.Transition(typeof(MapScene.MapScene), "MageConvention", 14, 9, SceneObjects.Maps.Orientation.Up);
+            }
         }
 
         public void ValidateName(Textbox textbox)

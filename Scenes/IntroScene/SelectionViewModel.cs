@@ -13,7 +13,7 @@ namespace Texemon.Scenes.IntroScene
 {
     public class SelectionViewModel : ViewModel
     {
-        enum Selection
+        public enum Selection
         {
             None,
             Magic,
@@ -109,12 +109,12 @@ namespace Texemon.Scenes.IntroScene
             switch (selection)
             {
                 case Selection.Magic:
-                    
-                    CrossPlatformGame.Transition(typeof(MapScene.MapScene), "Test");
+                    techNameViewModel = parentScene.AddView(new TechNameViewModel(parentScene, GameView.IntroScene_TechNameView, Selection.Magic));
+                    ReadyToProceed.Value = false;                    
                     break;
 
                 case Selection.Technology:
-                    techNameViewModel = parentScene.AddView(new TechNameViewModel(parentScene, GameView.IntroScene_TechNameView));
+                    techNameViewModel = parentScene.AddView(new TechNameViewModel(parentScene, GameView.IntroScene_TechNameView, Selection.Technology));
                     ReadyToProceed.Value = false;
                     break;
             }

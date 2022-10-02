@@ -41,6 +41,7 @@ namespace Texemon.Scenes.StatusScene
                         PlayerLocation = new ModelProperty<string>((string)save["PlayerLocation"]),
                         WindowStyle = new ModelProperty<string>((string)save["WindowStyle"]),
                         WindowSelectedStyle = new ModelProperty<string>(((string)save["WindowStyle"]).Replace("Window", "Selected")),
+                        Font = new ModelProperty<GameFont>((GameFont)save["Font"]),
                         SaveSlot = new ModelProperty<int>(i),
                         AnimatedSprite = new ModelProperty<AnimatedSprite>(animatedSprite)
                     });
@@ -56,6 +57,7 @@ namespace Texemon.Scenes.StatusScene
                         PlayerLocation = new ModelProperty<string>(""),
                         WindowStyle = new ModelProperty<string>(GameProfile.PlayerProfile.WindowStyle.Value),
                         WindowSelectedStyle = new ModelProperty<string>(GameProfile.PlayerProfile.SelectedStyle.Value),
+                        Font = new ModelProperty<GameFont>(GameProfile.PlayerProfile.Font.Value),
                         SaveSlot = new ModelProperty<int>(i),
                         AnimatedSprite = new ModelProperty<AnimatedSprite>(animatedSprite)
                     });
@@ -150,6 +152,7 @@ namespace Texemon.Scenes.StatusScene
             AvailableSaves[saveSlot].PlayerLocation.Value = (string)save["PlayerLocation"];
             AvailableSaves[saveSlot].WindowStyle.Value = (string)save["WindowStyle"];
             AvailableSaves[saveSlot].WindowSelectedStyle.Value = ((string)save["WindowStyle"]).Replace("Window", "Selected");
+            AvailableSaves[saveSlot].Font.Value = (GameFont)save["Font"];
             AvailableSaves[saveSlot].AnimatedSprite.Value = animatedSprite;
         }
 

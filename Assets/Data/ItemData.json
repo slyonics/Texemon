@@ -134,6 +134,7 @@
 		"Name": "Spare Parts",
 		"Animation": "Guarding",
 		"Description": [
+			"",
 			"Used for crafting",
 			"basic drones"
 		],
@@ -145,6 +146,7 @@
 		"Name": "Advanced Parts",
 		"Animation": "Guarding",
 		"Description": [
+			"",
 			"Used for crafting",
 			"advanced drones"
 		],
