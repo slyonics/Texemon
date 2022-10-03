@@ -40,7 +40,6 @@ namespace Texemon.Scenes.StatusScene
                 Defense.Value += item.BonusDefense;
                 Agility.Value += item.BonusAgility;
                 Mana.Value += item.BonusMana;
-
                 if (Class.Value == ClassType.Android || Class.Value == ClassType.Drone)
                 {
                     Health.Value += item.RobotHealth;
@@ -49,6 +48,7 @@ namespace Texemon.Scenes.StatusScene
                     Agility.Value += item.RobotAgility;
                     Mana.Value += item.RobotMana;
                 }
+                MaxHealth.Value = Health.Value;
             }
 
             foreach (string equipment in heroRecord.InitialEquipment)
@@ -62,7 +62,6 @@ namespace Texemon.Scenes.StatusScene
                 Defense.Value += item.BonusDefense;
                 Agility.Value += item.BonusAgility;
                 Mana.Value += item.BonusMana;
-
                 if (Class.Value == ClassType.Android || Class.Value == ClassType.Drone)
                 {
                     Health.Value += item.RobotHealth;
@@ -71,6 +70,7 @@ namespace Texemon.Scenes.StatusScene
                     Agility.Value += item.RobotAgility;
                     Mana.Value += item.RobotMana;
                 }
+                MaxHealth.Value = Health.Value;
             }
 
             foreach (string ability in classRecord.InitialAbilities)

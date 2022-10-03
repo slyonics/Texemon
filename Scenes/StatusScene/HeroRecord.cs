@@ -17,6 +17,15 @@ namespace Texemon.Scenes.StatusScene
         TechnoMage
     }
 
+    public enum ElementType
+    {
+        Physical,
+        Fire,
+        Electric,
+        Nuclear,
+        Poison
+    }
+
     public class HeroRecord
     {
         public HeroType Name { get; set; }

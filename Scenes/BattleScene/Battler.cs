@@ -145,6 +145,11 @@ namespace Texemon.Scenes.BattleScene
             if (Dead) battleScene.InitiativeList.Remove(this);
         }
 
+        public virtual void Miss()
+        {
+            ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, "miss")));
+        }
+
         public virtual void Repair(int healing)
         {
             if (stats.Class.Value != ClassType.Android && stats.Class.Value != ClassType.Drone) return;

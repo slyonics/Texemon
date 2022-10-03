@@ -39,6 +39,7 @@
 			"Animate Attack",
 			"Sound Laser",
 			"Effect Gunshot $targetCenterX $targetCenterY 4",
+			"OnHit 50 Physical",
 			"Flash 255 27 0",
 			"Damage $random(10,20)"
 		]

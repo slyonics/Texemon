@@ -62,6 +62,7 @@ namespace Texemon.Scenes.BattleScene
                 case "Flee": Flee(tokens); break;
                 case "Defend": StackDialogue("You defend..."); break;
                 case "Delay": StackDialogue("You delay..."); break;
+                case "OnHit": if (!CalculateHit(tokens)) scriptParser.EndScript(); break;
                 default: return false;
             }
 
@@ -90,6 +91,22 @@ namespace Texemon.Scenes.BattleScene
 
             battleScene.AddParticle(animationParticle);
             attacker.ParticleList.Add(animationParticle);
+        }
+
+        private bool CalculateHit(string[] tokens)
+        {
+            int accuracy = int.Parse(tokens[1]);
+            if (Rng.RandomInt(1, 100) <= accuracy)
+            {
+                return true;
+            }
+            else
+            {
+                Audio.PlaySound(GameSound.clear);
+                target.Miss();
+
+                return false;
+            }
         }
 
         private void Attack(string[] tokens)

@@ -294,6 +294,7 @@ namespace Texemon.Main
         HomeLab,
         Junkyard,
         MageConvention,
+        MagicHomeworld,
         TechHomeworld,
         Test,
         Tilesets_ColorTileA1,

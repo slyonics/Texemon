@@ -25,6 +25,7 @@ namespace Texemon.Scenes.BattleScene
         public int Defense { get; set; }
         public int Agility { get; set; }
         public int Mana { get; set; }
+        public List<int> Evade { get; set; }
         public AttackData[] Attacks { get; set; }
     }
 }

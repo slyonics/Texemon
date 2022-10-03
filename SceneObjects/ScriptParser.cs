@@ -137,6 +137,11 @@ namespace Texemon.SceneObjects
             }
         }
 
+        public void EndScript()
+        {
+            scriptCommands.Clear();
+        }
+
         private string ParseParameter(string parameter)
         {
             if (parameter[0] == '!')

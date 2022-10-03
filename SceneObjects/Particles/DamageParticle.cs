@@ -71,7 +71,11 @@ namespace Texemon.SceneObjects.Particles
                 nextDigitTimer -= gameTime.ElapsedGameTime.Milliseconds;
                 if (nextDigitTimer <= 0 && digitsRemaining.Length > 0)
                 {
-                    DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(DIGIT_WIDTH, 0), digitsRemaining, color);
+                    int digitWidth;
+                    if (digitIndex > DIGIT_SOURCES.Length) digitWidth = 4;
+                    else digitWidth = DIGIT_WIDTH;
+
+                    DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(digitWidth, 0), digitsRemaining, color);
                     parentScene.AddParticle(nextParticle);
                 }
             }
@@ -84,7 +88,11 @@ namespace Texemon.SceneObjects.Particles
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
+            if (digitIndex > DIGIT_SOURCES.Length)
+            {
+                Text.DrawCenteredText(spriteBatch, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), GameFont.Dialogue, "" + (char)(digitIndex + '0'), Color.IndianRed, 0.1f);
+            }
+            else spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
         }
 
         private void StartDecay()
