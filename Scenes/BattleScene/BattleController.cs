@@ -131,10 +131,11 @@ namespace Texemon.Scenes.BattleScene
                 }
             }
 
-            int defense = (tokens[3] == "Physical") ? target.Stats.Defense.Value : target.Stats.Mana.Value; 
             int multiplier = int.Parse(tokens[2]);
             string element = tokens[3];
-            damage = (int)((stat * multiplier + Rng.RandomInt(0, stat)) / 5.0f * (200 - defense) / 40.0f);
+            if (element == "Physical") damage = stat * multiplier + Rng.RandomInt(0, stat) - target.Stats.Defense.Value * 5;
+            else damage = (int)(((200 - target.Stats.Mana.Value) * stat * multiplier + Rng.RandomInt(0, stat)) / 20.0f);
+            if (damage < 1) damage = 1;
 
             dealDamage:
 
@@ -151,7 +152,7 @@ namespace Texemon.Scenes.BattleScene
             List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
-            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage Strength 3 Physical");
+            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage Strength 5 Physical");
         }
 
         private void Flee(string[] tokens)
