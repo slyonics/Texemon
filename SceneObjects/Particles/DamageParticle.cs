@@ -24,6 +24,7 @@ namespace Texemon.SceneObjects.Particles
         private string digitsRemaining;
 
         private int digitIndex;
+        private char nonDigit;
         private int decayTimer;
         private int nextDigitTimer;
 
@@ -35,6 +36,7 @@ namespace Texemon.SceneObjects.Particles
             DIGIT_SOURCES = new Rectangle[10];
             for (int i = 0; i < DIGIT_SOURCES.Length; i++) DIGIT_SOURCES[i] = new Rectangle(i * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT);
             digitIndex = digits.First() - '0';
+            if (digitIndex > DIGIT_SOURCES.Length) nonDigit = digits.First();
 
             initialPosition = iPosition;
             digitsRemaining = digits.Substring(1, digits.Length - 1);
@@ -50,6 +52,7 @@ namespace Texemon.SceneObjects.Particles
             DIGIT_SOURCES = new Rectangle[10];
             for (int i = 0; i < DIGIT_SOURCES.Length; i++) DIGIT_SOURCES[i] = new Rectangle(i * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT);
             digitIndex = digits.First() - '0';
+            if (digitIndex > DIGIT_SOURCES.Length) nonDigit = digits.First();
 
             initialPosition = iPosition;
             digitsRemaining = digits.Substring(1, digits.Length - 1);
@@ -72,7 +75,7 @@ namespace Texemon.SceneObjects.Particles
                 if (nextDigitTimer <= 0 && digitsRemaining.Length > 0)
                 {
                     int digitWidth;
-                    if (digitIndex > DIGIT_SOURCES.Length) digitWidth = 4;
+                    if (digitIndex > DIGIT_SOURCES.Length) digitWidth = Text.GetStringLength(GameFont.Battle, "" + nonDigit);
                     else digitWidth = DIGIT_WIDTH;
 
                     DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(digitWidth, 0), digitsRemaining, color);
@@ -90,7 +93,7 @@ namespace Texemon.SceneObjects.Particles
         {
             if (digitIndex > DIGIT_SOURCES.Length)
             {
-                Text.DrawCenteredText(spriteBatch, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), GameFont.Dialogue, "" + (char)(digitIndex + '0'), Color.IndianRed, 0.1f);
+                Text.DrawText(spriteBatch, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), GameFont.Battle, "" + nonDigit, Color.Black, 0.1f);
             }
             else spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
         }

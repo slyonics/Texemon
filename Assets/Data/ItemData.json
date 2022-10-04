@@ -42,7 +42,7 @@
 			"Animate Attack",
 			"Sound Laser",
 			"Effect Gunshot $targetCenterX $targetCenterY 4",
-			"OnHit 50 Physical",
+			"OnHit 20 Physical",
 			"Flash 255 27 0",
 			"Damage 70 Physical"
 		]
