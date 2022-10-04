@@ -3,7 +3,8 @@
 		"Name": "Longsword",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage",
+			"- Uses strength",
+			"- 7x damage",
 			"- Physical",
 			"- VS 1 enemy"
 		],
@@ -14,18 +15,19 @@
 		"RobotHealth": 12,
 		"RobotStrength": 4,
 		"Script": [
+			"Exercise Strength",
 			"Animate Attack",
 			"Sound Slash",
 			"Effect Slash $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage $random(10,20)"
+			"Damage Strength 7 Physical"
 		]
 	},
 	{
 		"Name": "Blaster",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage",
+			"- 70 damage",
 			"- Physical",
 			"- VS 1 enemy"
 		],
@@ -36,12 +38,13 @@
 		"RobotHealth": 12,
 		"RobotAgility": 4,
 		"Script": [
+			"Exercise Agility",
 			"Animate Attack",
 			"Sound Laser",
 			"Effect Gunshot $targetCenterX $targetCenterY 4",
 			"OnHit 50 Physical",
 			"Flash 255 27 0",
-			"Damage $random(10,20)"
+			"Damage 70 Physical"
 		]
 	},
 	{
@@ -68,7 +71,7 @@
 		"Name": "Arc Welder",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage",
+			"- 30-80 damage",
 			"- Electrical",
 			"- VS 1 enemy"
 		],
@@ -83,14 +86,14 @@
 			"Sound Thunder",
 			"Effect Shock $targetCenterX $targetCenterY 3",
 			"Flash 251 206 177",
-			"Damage $random(10,20) Electric"
+			"Damage 30 80 Electric"
 		]
 	},
 	{
 		"Name": "Blowtorch",
 		"Animation": "Guarding",
 		"Description": [
-			"- 10-20 damage",
+			"- 30-80 damage",
 			"- Incendiary",
 			"- VS 1 enemy"
 		],
@@ -105,7 +108,7 @@
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage $random(10,20) Fire"
+			"Damage 30 80 Fire"
 		]
 	},
 	{

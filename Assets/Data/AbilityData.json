@@ -11,11 +11,12 @@
 		"Charges": 15,
 		"Targetting": "AllEnemy",
 		"Script": [
+			"Exercise Mana",
 			"Animate Attack",
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage 999"
+			"Damage Mana 10 Fire"
 		]
 	},
 	{
@@ -26,15 +27,16 @@
 			"- Electric",
 			"- VS all enemies"
 		],
-		"Icon": "Fire",
+		"Icon": "Lightning",
 		"Charges": 15,
 		"Targetting": "AllEnemy",
 		"Script": [
+			"Exercise Mana",
 			"Animate Attack",
-			"Sound Fireball",
-			"Effect Flame $targetCenterX $targetCenterY 3",
-			"Flash 255 27 0",
-			"Damage 999"
+			"Sound Thunder",
+			"Effect Shock $targetCenterX $targetCenterY 3",
+			"Flash 251 206 177",
+			"Damage $random(10,20) Electric"
 		]
 	},
 	{
@@ -49,6 +51,7 @@
 		"Charges": 15,
 		"Targetting": "SingleAlly",
 		"Script": [
+			"Exercise Mana",
 			"Animate Attack",
 			"Sound Heal",
 			"Effect GreenHeal $targetCenterX $targetBottom 6",
@@ -100,7 +103,7 @@
 		"Name": "Arc Welder",
 		"Animation": "Chanting",
 		"Description": [
-			"- 10-20 damage",
+			"- 30-80 damage",
 			"- Electrical",
 			"- VS 1 enemy"
 		],
@@ -112,14 +115,14 @@
 			"Sound Thunder",
 			"Effect Shock $targetCenterX $targetCenterY 3",
 			"Flash 251 206 177",
-			"Damage $random(10,20) Electric"
+			"Damage 30 80 Electric"
 		]
 	},
 	{
 		"Name": "Blowtorch",
 		"Animation": "Chanting",
 		"Description": [
-			"- 10-20 damage",
+			"- 30-80 damage",
 			"- Incendiary",
 			"- VS 1 enemy"
 		],
@@ -131,7 +134,7 @@
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage $random(10,20) Fire"
+			"Damage 30 80 Fire"
 		]
 	}
 ]

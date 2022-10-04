@@ -53,7 +53,8 @@ namespace Texemon.Scenes.BattleScene
             {
                 case "Animate": attacker.Animate(tokens[1]); break;
                 case "Effect": Effect(tokens); break;
-                case "Damage": target.Damage(int.Parse(tokens[1])); break;
+                case "Exercise": Exercise(tokens); break;
+                case "Damage": CalculateDamage(tokens); break;
                 case "Heal": target.Heal(int.Parse(tokens[1])); break;
                 case "Repair": target.Repair(int.Parse(tokens[1])); break;
                 case "Flash": target.FlashColor(new Color(byte.Parse(tokens[1]), byte.Parse(tokens[2]), byte.Parse(tokens[3]))); break;
@@ -109,12 +110,48 @@ namespace Texemon.Scenes.BattleScene
             }
         }
 
+        private void CalculateDamage(string[] tokens)
+        {
+            string statName = tokens[1];
+            string element = tokens[3];
+
+            int damage = 0;
+            int stat = 0;
+            switch (statName)
+            {
+                case "Strength": stat = attacker.Stats.Strength.Value; break;
+                case "Agility": stat = attacker.Stats.Agility.Value; break;
+                case "Mana": stat = attacker.Stats.Mana.Value; break;
+
+                default:
+                {
+                    if (tokens.Length == 3) damage = int.Parse(tokens[1]);
+                    else damage = Rng.RandomInt(int.Parse(tokens[1]), int.Parse(tokens[2]));
+                    damage += Rng.RandomInt(0, 9);
+                    goto dealDamage;
+                }
+            }
+
+            int defense = (tokens[3] == "Physical") ? target.Stats.Defense.Value : target.Stats.Mana.Value; 
+            int multiplier = int.Parse(tokens[2]);
+            damage = (int)((stat * multiplier + Rng.RandomInt(0, stat)) / 5.0f * (200 - defense) / 40.0f);
+
+            dealDamage:
+
+            target.Damage(damage);
+        }
+
+        private void Exercise(string[] tokens)
+        {
+
+        }
+
         private void Attack(string[] tokens)
         {
             List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
-            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage 5");
+            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage Strength 3 Physical");
         }
 
         private void Flee(string[] tokens)
