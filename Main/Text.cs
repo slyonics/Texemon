@@ -12,7 +12,8 @@ namespace Texemon.Main
         Tooltip,
         Dialogue,
         Pixel,
-        SandyForest
+        SandyForest,
+        Battle
     }
 
     public static class Text
@@ -33,6 +34,7 @@ namespace Texemon.Main
             { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 10 } },
             { GameFont.Pixel, new GameFontData() { fontFile = "PixelSquared", fontSize = 14, fontHeight = 10, heightOffset = -3 } },
             { GameFont.SandyForest, new GameFontData() { fontFile = "SandyForest", fontSize = 14, fontHeight = 10, heightOffset = -2 } },
+        { GameFont.Battle, new GameFontData() { fontFile = "Irisdot-H21", fontSize = 36, fontHeight = 32, heightOffset = 0 } }
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();
