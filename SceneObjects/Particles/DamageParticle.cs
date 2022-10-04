@@ -93,7 +93,7 @@ namespace Texemon.SceneObjects.Particles
         {
             if (digitIndex > DIGIT_SOURCES.Length)
             {
-                Text.DrawText(spriteBatch, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), GameFont.Battle, "" + nonDigit, Color.Black, 0.1f);
+                Text.DrawText(spriteBatch, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT + 16), GameFont.Battle, "" + nonDigit, Color.IndianRed, 0.1f);
             }
             else spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
         }

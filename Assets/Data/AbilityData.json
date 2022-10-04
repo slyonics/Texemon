@@ -3,7 +3,8 @@
 		"Name": "Flame",
 		"Animation": "Chanting",
 		"Description": [
-			"- 999 damage",
+			"- Uses MANA",
+			"- 10x damage",
 			"- Incendiary",
 			"- VS all enemies"
 		],
@@ -23,7 +24,8 @@
 		"Name": "Thunder",
 		"Animation": "Chanting",
 		"Description": [
-			"- 10x Mana damage",
+			"- Uses MANA",
+			"- 10x damage",
 			"- Electric",
 			"- VS all enemies"
 		],
@@ -36,7 +38,7 @@
 			"Sound Thunder",
 			"Effect Shock $targetCenterX $targetCenterY 3",
 			"Flash 251 206 177",
-			"Damage $random(10,20) Electric"
+			"Damage Mana 10 Electric"
 		]
 	},
 	{

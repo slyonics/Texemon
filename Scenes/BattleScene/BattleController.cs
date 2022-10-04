@@ -113,7 +113,6 @@ namespace Texemon.Scenes.BattleScene
         private void CalculateDamage(string[] tokens)
         {
             string statName = tokens[1];
-            string element = tokens[3];
 
             int damage = 0;
             int stat = 0;
@@ -134,6 +133,7 @@ namespace Texemon.Scenes.BattleScene
 
             int defense = (tokens[3] == "Physical") ? target.Stats.Defense.Value : target.Stats.Mana.Value; 
             int multiplier = int.Parse(tokens[2]);
+            string element = tokens[3];
             damage = (int)((stat * multiplier + Rng.RandomInt(0, stat)) / 5.0f * (200 - defense) / 40.0f);
 
             dealDamage:

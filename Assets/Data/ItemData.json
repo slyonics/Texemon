@@ -3,7 +3,7 @@
 		"Name": "Longsword",
 		"Animation": "Guarding",
 		"Description": [
-			"- Uses strength",
+			"- Uses MIGHT",
 			"- 7x damage",
 			"- Physical",
 			"- VS 1 enemy"
@@ -27,7 +27,8 @@
 		"Name": "Blaster",
 		"Animation": "Guarding",
 		"Description": [
-			"- 70 damage",
+			"- Uses TECH",
+			"- 8x damage",
 			"- Physical",
 			"- VS 1 enemy"
 		],
@@ -44,7 +45,7 @@
 			"Effect Gunshot $targetCenterX $targetCenterY 4",
 			"OnHit 20 Physical",
 			"Flash 255 27 0",
-			"Damage 70 Physical"
+			"Damage Agility 8 Physical"
 		]
 	},
 	{
