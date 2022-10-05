@@ -23,8 +23,6 @@ namespace Texemon.SceneObjects.Widgets
         private const int TEXT_QUEUE_COOLDOWN = 10;
         private const int TALK_COOLDOWN = 180;
 
-        private ModelProperty<string> binding;
-
         private string text;
         public string Text { get=> text; set { text = value; AddLines(text); } }
         private List<TextElement> textQueue = new List<TextElement>();

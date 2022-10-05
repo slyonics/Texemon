@@ -43,6 +43,8 @@ namespace Texemon.Scenes.BattleScene
             { HeroAnimation.Dead.ToString(), new Animation(1, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) }
         };
 
+        private Dictionary<string, int> exercise = new Dictionary<string, int>();
+
         private AnimatedSprite shadowSprite;
 
         private HeroModel heroModel;
@@ -107,6 +109,30 @@ namespace Texemon.Scenes.BattleScene
             HeroModel.NameColor.Value = new Color(252, 252, 252, 255);
 
             battleScene.BattleViewModel.EndPlayerTurn(this);
+        }
+
+        public void Exercise(string stat)
+        {
+            if (exercise.ContainsKey(stat)) exercise[stat] = exercise[stat] + 1;
+            else exercise.Add(stat, 1);
+        }
+
+        public List<string> GrowAfterBattle()
+        {
+            List<string> reports = new List<string>();
+            foreach (var statUsage in exercise)
+            {
+                switch (statUsage.Key)
+                {
+                    case "Mana":
+                        Stats.Mana.Value = Stats.Mana.Value + statUsage.Value;
+                        reports.Add(Stats.Name.Value + " gained " + statUsage.Value + " point" +
+                            ((statUsage.Value > 1) ? "s of " : " of ") + "@Staff MANA!");
+                        break;
+                }
+            }
+
+            return reports;
         }
 
         public override void Damage(int damage)

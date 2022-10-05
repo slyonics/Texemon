@@ -134,12 +134,18 @@ namespace Texemon.Scenes.BattleScene
             {
                 if (EnemyList.Count == 0)
                 {
+                    List<ConversationScene.DialogueRecord> dialogueRecords = new List<ConversationScene.DialogueRecord>();
+                    dialogueRecords.Add(new ConversationScene.DialogueRecord() { Text = "Victory!" });
+                    foreach (BattlePlayer battlePlayer in PlayerList)
+                    {
+                        List<string> reports = battlePlayer.GrowAfterBattle();
+                        foreach (string report in reports) dialogueRecords.Add(new ConversationScene.DialogueRecord() { Text = report });
+                    }
                     var convoRecord = new ConversationScene.ConversationRecord()
                     {
-                        DialogueRecords = new ConversationScene.DialogueRecord[] {
-                            new ConversationScene.DialogueRecord() { Text = "Victory!" }
-                        }
+                        DialogueRecords = dialogueRecords.ToArray()
                     };
+
                     var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
                     convoScene.OnTerminated += new TerminationFollowup(battleViewModel.Close);
                     CrossPlatformGame.StackScene(convoScene);

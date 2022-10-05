@@ -147,7 +147,7 @@ namespace Texemon.Scenes.BattleScene
 
         public virtual void Miss()
         {
-            ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, "miss")));
+            ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, "MISS")));
         }
 
         public virtual void Repair(int healing)

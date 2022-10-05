@@ -53,7 +53,7 @@ namespace Texemon.Scenes.BattleScene
             {
                 case "Animate": attacker.Animate(tokens[1]); break;
                 case "Effect": Effect(tokens); break;
-                case "Exercise": Exercise(tokens); break;
+                case "Exercise": (attacker as BattlePlayer).Exercise(tokens[1]); break;
                 case "Damage": CalculateDamage(tokens); break;
                 case "Heal": target.Heal(int.Parse(tokens[1])); break;
                 case "Repair": target.Repair(int.Parse(tokens[1])); break;

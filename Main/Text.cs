@@ -34,7 +34,7 @@ namespace Texemon.Main
             { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 10 } },
             { GameFont.Pixel, new GameFontData() { fontFile = "PixelSquared", fontSize = 14, fontHeight = 10, heightOffset = -3 } },
             { GameFont.SandyForest, new GameFontData() { fontFile = "SandyForest", fontSize = 14, fontHeight = 10, heightOffset = -2 } },
-            { GameFont.Battle, new GameFontData() { fontFile = "KarenFat", fontSize = 22, fontHeight = 16, heightOffset = 0 } }
+            { GameFont.Battle, new GameFontData() { fontFile = "favourdot-h9-bold", fontSize = 18, fontHeight = 20, heightOffset = 0 } }
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();
