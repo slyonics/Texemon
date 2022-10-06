@@ -208,9 +208,16 @@ namespace Texemon.SceneObjects.Widgets
                 }
                 else if (textElement.text.Length > 0 && textElement.text[0] == '@')
                 {
+                    if (currentLength + 10 > windowWidth)
+                    {
+                        currentLine++;
+                        currentLength = 0;
+                    }
+
                     string iconSpriteName = "Widgets_Icons_" + textElement.text.ToString().Substring(1);
                     GameSprite gameSprite = (GameSprite)Enum.Parse(typeof(GameSprite), iconSpriteName);
                     textLines.Add(new TextElement() { line = currentLine, offset = currentLength + 4, color = currentColor, icon = AssetCache.SPRITES[gameSprite] });
+                    currentLength += 10 + Main.Text.GetStringLength(Font, " ");
                     continue;
                 }
                 else if (textElement.text.ToString() == "[n]")

@@ -134,7 +134,7 @@ namespace Texemon.Scenes.BattleScene
             int multiplier = int.Parse(tokens[2]);
             string element = tokens[3];
             if (element == "Physical") damage = stat * multiplier + Rng.RandomInt(0, stat) - target.Stats.Defense.Value * 5;
-            else damage = (int)(((200 - target.Stats.Mana.Value) * stat * multiplier + Rng.RandomInt(0, stat)) / 20.0f);
+            else damage = (int)((stat * multiplier + Rng.RandomInt(0, stat)) / 5.0f * (200 - target.Stats.Mana.Value) / 40.0f);
             if (damage < 1) damage = 1;
 
             dealDamage:
