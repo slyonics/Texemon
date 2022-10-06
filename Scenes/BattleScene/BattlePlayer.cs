@@ -122,12 +122,14 @@ namespace Texemon.Scenes.BattleScene
             List<string> reports = new List<string>();
             foreach (var statUsage in exercise)
             {
+
+
                 switch (statUsage.Key)
                 {
                     case "Mana":
                         Stats.Mana.Value = Stats.Mana.Value + statUsage.Value;
-                        reports.Add(Stats.Name.Value + " gained " + statUsage.Value + " point" +
-                            ((statUsage.Value > 1) ? "s of " : " of ") + "@Staff MANA!");
+                        reports.Add(Stats.Name.Value + "'s @Staff MANA increased by " + statUsage.Value +
+                            ((statUsage.Value > 1) ? " points!" : " point!"));
                         break;
                 }
             }
