@@ -207,5 +207,22 @@ namespace Texemon.Scenes.BattleScene
 
             timeleft = 1000;
         }
+
+        public static void IncreaseStat(string[] tokens)
+        {
+            int characterIndex = int.Parse(tokens[1]);
+            Scenes.StatusScene.HeroModel heroModel = Models.GameProfile.PlayerProfile.Party[characterIndex];
+            string stat = tokens[2];
+            int increaseAmount = int.Parse(tokens[3]);
+
+            switch (stat)
+            {
+                case "Health": heroModel.MaxHealth.Value = heroModel.MaxHealth.Value + increaseAmount; break;
+                case "Strength": heroModel.Strength.Value = heroModel.Strength.Value + increaseAmount; break;
+                case "Defense": heroModel.Defense.Value = heroModel.Defense.Value + increaseAmount; break;
+                case "Agility": heroModel.Agility.Value = heroModel.Agility.Value + increaseAmount; break;
+                case "Mana": heroModel.Mana.Value = heroModel.Mana.Value + increaseAmount; break;
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@
 			"Sentinel",
 			"Sentinel"
 		],
+		"Challenge": 3,
 		"Script": [],
 		"Intro": "Two sentinels appear and move into attack formation!"
 	},
@@ -15,6 +16,7 @@
 		"Enemies": [
 			"Rattlesnake"
 		],
+		"Challenge": 1,
 		"Script": [],
 		"Intro": "A rattlesnake is alarmed by your presence and lunges at you!!"
 	},
@@ -27,6 +29,7 @@
 			"Scorpion",
 			"Scorpion"
 		],
+		"Challenge": 3,
 		"Script": [],
 		"Intro": "A nest of angry scorpions swarm around you!"
 	}

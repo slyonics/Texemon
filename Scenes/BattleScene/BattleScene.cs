@@ -138,8 +138,8 @@ namespace Texemon.Scenes.BattleScene
                     dialogueRecords.Add(new ConversationScene.DialogueRecord() { Text = "Victory!" });
                     foreach (BattlePlayer battlePlayer in PlayerList)
                     {
-                        List<string> reports = battlePlayer.GrowAfterBattle();
-                        foreach (string report in reports) dialogueRecords.Add(new ConversationScene.DialogueRecord() { Text = report });
+                        List<ConversationScene.DialogueRecord> reports = battlePlayer.GrowAfterBattle(encounterRecord);
+                        foreach (ConversationScene.DialogueRecord report in reports) dialogueRecords.Add(report);
                     }
                     var convoRecord = new ConversationScene.ConversationRecord()
                     {

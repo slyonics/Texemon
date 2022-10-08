@@ -117,9 +117,20 @@ namespace Texemon.Scenes.BattleScene
             else exercise.Add(stat, 1);
         }
 
-        public List<string> GrowAfterBattle()
+        public List<ConversationScene.DialogueRecord> GrowAfterBattle(EncounterRecord encounterRecord)
         {
-            List<string> reports = new List<string>();
+            List<ConversationScene.DialogueRecord> reports = new List<ConversationScene.DialogueRecord>();
+
+            {
+                string report = Stats.Name.Value + "'s @Heart HEALTH increased by " + 15 + " points!";
+                ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
+                {
+                    Text = report,
+                    Script = new string[] { "IncreaseStat " + GetParent<DataGrid>().ChildList.IndexOf(GetParent<Panel>()) + " Health " + 15 }
+                };
+                reports.Add(dialogueRecord);
+            }
+
             foreach (var statUsage in exercise)
             {
 
@@ -127,9 +138,15 @@ namespace Texemon.Scenes.BattleScene
                 switch (statUsage.Key)
                 {
                     case "Mana":
-                        Stats.Mana.Value = Stats.Mana.Value + statUsage.Value;
-                        reports.Add(Stats.Name.Value + "'s @Staff MANA increased by " + statUsage.Value +
-                            ((statUsage.Value > 1) ? " points!" : " point!"));
+                        {
+                            string report = Stats.Name.Value + "'s @Staff MANA increased by " + statUsage.Value + ((statUsage.Value > 1) ? " points!" : " point!");
+                            ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
+                            {
+                                Text = report,
+                                Script = new string[] { "IncreaseStat " + GetParent<DataGrid>().ChildList.IndexOf(GetParent<Panel>()) + " Mana " + statUsage.Value }
+                            };
+                            reports.Add(dialogueRecord);
+                        }
                         break;
                 }
             }

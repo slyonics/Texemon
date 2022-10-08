@@ -44,6 +44,8 @@ namespace Texemon.Scenes.ConversationScene
                 case "ProceedText": conversationScene.ConversationViewModel.NextDialogue(); break;
                 case "Actor": Actor(tokens); break;
                 case "Animate": Animate(tokens); break;
+
+                case "IncreaseStat": BattleScene.BattleController.IncreaseStat(tokens); break;
                 default: return false;
             }
 
