@@ -158,6 +158,27 @@ namespace Texemon.Scenes.BattleScene
                     convoScene.OnTerminated += new TerminationFollowup(battleViewModel.Close);
                     CrossPlatformGame.StackScene(convoScene);
                 }
+                else if (PlayerList.All(x => x.Dead))
+                {
+                    string narration = (PlayerList.Count > 1) ?
+                        "Despite their best efforts, " + PlayerList[0].Stats.Name.Value + "'s party was wiped out..." :
+                        "Despite their best effort, " + PlayerList[0].Stats.Name.Value + " was defeated...";
+
+                    var convoRecord = new ConversationScene.ConversationRecord()
+                    {
+                        DialogueRecords = new ConversationScene.DialogueRecord[]
+                        {
+                            new ConversationScene.DialogueRecord() { Text = narration }
+                        }
+                    };
+
+                    var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
+                    convoScene.OnTerminated += new TerminationFollowup(() =>
+                    {
+                        CrossPlatformGame.Transition(typeof(Scenes.MapScene.MapScene), "HomeLab");
+                    });
+                    CrossPlatformGame.StackScene(convoScene);
+                }
                 else ActivateNextBattler();
             }
         }
