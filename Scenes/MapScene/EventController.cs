@@ -106,23 +106,43 @@ namespace Texemon.Scenes.MapScene
 
         public void Inn(string[] tokens)
         {
+            ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene("Inn");
+            conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());            
+
             TransitionController transitionOutController = new TransitionController(TransitionDirection.Out, 600);
             SceneObjects.Shaders.ColorFade colorFadeOut = new SceneObjects.Shaders.ColorFade(Color.Black, transitionOutController.TransitionProgress);
             transitionOutController.UpdateTransition += new Action<float>(t => colorFadeOut.Amount = t);
             transitionOutController.FinishTransition += new Action<TransitionDirection>(t =>
             {
+                Audio.PauseMusic(true);
+                Audio.PlaySound(GameSound.Rest);
+                Task.Delay(1500).ContinueWith(t => Audio.PauseMusic(false));
+
                 transitionOutController.Terminate();
                 colorFadeOut.Terminate();
                 TransitionController transitionInController = new TransitionController(TransitionDirection.In, 600);
                 SceneObjects.Shaders.ColorFade colorFadeIn = new SceneObjects.Shaders.ColorFade(Color.Black, transitionInController.TransitionProgress);
                 transitionInController.UpdateTransition += new Action<float>(t => colorFadeIn.Amount = t);
-                transitionInController.FinishTransition += new Action<TransitionDirection>(t => colorFadeIn.Terminate());
+                transitionInController.FinishTransition += new Action<TransitionDirection>(t =>
+                {
+                    colorFadeIn.Terminate();                    
+                });
                 mapScene.AddController(transitionInController);
                 mapScene.SceneShader = colorFadeIn;
+
+                CrossPlatformGame.StackScene(conversationScene);
             });
 
             mapScene.AddController(transitionOutController);
             mapScene.SceneShader = colorFadeOut;
+
+            foreach (var partyMember in GameProfile.PlayerProfile.Party)
+            {
+                foreach (var ability in partyMember.Value.Abilities)
+                {
+                    ability.Value.ChargesLeft = ability.Value.Charges;
+                }
+            }
         }
     }
 }

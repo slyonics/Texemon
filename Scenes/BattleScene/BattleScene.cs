@@ -138,8 +138,16 @@ namespace Texemon.Scenes.BattleScene
                     dialogueRecords.Add(new ConversationScene.DialogueRecord() { Text = "Victory!" });
                     foreach (BattlePlayer battlePlayer in PlayerList)
                     {
-                        List<ConversationScene.DialogueRecord> reports = battlePlayer.GrowAfterBattle(encounterRecord);
-                        foreach (ConversationScene.DialogueRecord report in reports) dialogueRecords.Add(report);
+                        if (!battlePlayer.Dead)
+                        {
+                            List<ConversationScene.DialogueRecord> reports = battlePlayer.GrowAfterBattle(encounterRecord);
+                            foreach (ConversationScene.DialogueRecord report in reports) dialogueRecords.Add(report);
+                        }
+
+                        foreach (var equipment in battlePlayer.HeroModel.Equipment)
+                        {
+                            if (equipment.Value.ItemType != StatusScene.ItemType.Consumable) equipment.Value.ChargesLeft = equipment.Value.Charges;
+                        }
                     }
                     var convoRecord = new ConversationScene.ConversationRecord()
                     {

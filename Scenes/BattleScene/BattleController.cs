@@ -103,7 +103,7 @@ namespace Texemon.Scenes.BattleScene
             }
             else
             {
-                Audio.PlaySound(GameSound.clear);
+                Audio.PlaySound(GameSound.Miss);
                 target.Miss();
 
                 return false;

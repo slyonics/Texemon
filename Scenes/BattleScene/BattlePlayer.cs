@@ -154,10 +154,10 @@ namespace Texemon.Scenes.BattleScene
                             int points = 0;
                             for (int i = 0; i < amountGained; i++)
                             {
-                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).Strength.Value) points++;
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).StrengthGrowth.Value) points++;
                             }
                             if (points <= 0) continue;
-                            string report = Stats.Name.Value + "'s @Axe POWER increased by " + points + ((points > 1) ? "points!" : "point!");
+                            string report = Stats.Name.Value + "'s @Axe POWER increased by " + points + ((points > 1) ? " points!" : " point!");
                             ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
                             {
                                 Text = report,
@@ -173,10 +173,10 @@ namespace Texemon.Scenes.BattleScene
                             int points = 0;
                             for (int i = 0; i < amountGained; i++)
                             {
-                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).Agility.Value) points++;
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).AgilityGrowth.Value) points++;
                             }
                             if (points <= 0) continue;
-                            string report = Stats.Name.Value + "'s @Gun TECH increased by " + points + ((points > 1) ? "points!" : "point!");
+                            string report = Stats.Name.Value + "'s @Gun TECH increased by " + points + ((points > 1) ? " points!" : " point!");
                             ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
                             {
                                 Text = report,
@@ -195,7 +195,7 @@ namespace Texemon.Scenes.BattleScene
                                 if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).ManaGrowth.Value) points++;
                             }
                             if (points <= 0) continue;
-                            string report = Stats.Name.Value + "'s @Staff MANA increased by " + points + ((points > 1) ? "points!" : "point!");
+                            string report = Stats.Name.Value + "'s @Staff MANA increased by " + points + ((points > 1) ? " points!" : " point!");
                             ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
                             {
                                 Text = report,

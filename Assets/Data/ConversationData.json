@@ -8,6 +8,14 @@
 		]
 	},
 	{
+		"Name": "Inn",
+		"DialogueRecords": [
+			{
+				"Text": "All abilities restored to maximum charges!"
+			}
+		]
+	},
+	{
 		"Name": "IntroInventor",
 		"Bounds": "-120,-70,240,42",
 		"DialogueRecords": [
