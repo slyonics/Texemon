@@ -3,7 +3,7 @@
 		"Name": "Longsword",
 		"Animation": "Guarding",
 		"Description": [
-			"- Uses MIGHT",
+			"- Uses POWER",
 			"- 7x damage",
 			"- Physical",
 			"- VS 1 enemy"
@@ -128,6 +128,7 @@
 		"TargetDead": true,
 		"TargetMechanical": true,
 		"Script": [
+			"Exercise Agility",
 			"Animate Attack",
 			"Sound Heal",
 			"Effect BlueHeal $targetCenterX $targetBottom 6",

@@ -37,6 +37,12 @@ namespace Texemon.Scenes.MapScene
                     Script = new string[] { "ChangeMap " + objectData.name };
                     TravelZone = true;
                     break;
+
+                case "Interactive":
+                    Interactive = true;
+                    Label = objectData.properties.FirstOrDefault(x => x.name == "Label").value;
+                    Script = objectData.properties.FirstOrDefault(x => x.name == "Script").value.Split('\n');
+                    break;
             }
         }
 

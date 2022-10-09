@@ -22,6 +22,12 @@ namespace Texemon.Scenes.StatusScene
 
             EquipmentSlots.Value = heroRecord.EquipmentSlots;
 
+            HealthGrowth.Value = heroRecord.HealthGrowth;
+            StrengthGrowth.Value = heroRecord.StrengthGrowth;
+            DefenseGrowth.Value = heroRecord.DefenseGrowth;
+            AgilityGrowth.Value = heroRecord.AgilityGrowth;
+            ManaGrowth.Value = heroRecord.ManaGrowth;
+
             Sprite.Value = (GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + heroRecord.Sprite);
             if (heroRecord.FlightHeight > 0)
             {
@@ -126,5 +132,10 @@ namespace Texemon.Scenes.StatusScene
         public ModelCollection<ItemRecord> Equipment { get; set; } = new ModelCollection<ItemRecord>();
         public ModelCollection<AbilityRecord> Abilities { get; set; } = new ModelCollection<AbilityRecord>();
         public ModelCollection<CommandRecord> Actions { get; set; } = new ModelCollection<CommandRecord>();
+        public ModelProperty<double> HealthGrowth { get; set; } = new ModelProperty<double>(0);
+        public ModelProperty<double> StrengthGrowth { get; set; } = new ModelProperty<double>(0);
+        public ModelProperty<double> DefenseGrowth { get; set; } = new ModelProperty<double>(0);
+        public ModelProperty<double> AgilityGrowth { get; set; } = new ModelProperty<double>(0);
+        public ModelProperty<double> ManaGrowth { get; set; } = new ModelProperty<double>(0);
     }
 }

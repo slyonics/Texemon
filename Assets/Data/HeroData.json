@@ -3,6 +3,11 @@
 		"Name": "Inventor",
 		"Class": "Human",
 		"Sprite": "Inventor",
+		"HealthGrowth": 0.5,
+		"StrengthGrowth": 0.3,
+		"DefenseGrowth": 0.01,
+		"AgilityGrowth": 0.4,
+		"ManaGrowth": 0.2,
 		"InitialEquipment": [
 			"Longsword"
 		],
@@ -24,6 +29,11 @@
 		"Name": "TechnoMage",
 		"Class": "Human",
 		"Sprite": "Inventor",
+		"HealthGrowth": 0.5,
+		"StrengthGrowth": 0.3,
+		"DefenseGrowth": 0.01,
+		"AgilityGrowth": 0.1,
+		"ManaGrowth": 0.6,
 		"InitialEquipment": [
 			"Longsword"
 		],
@@ -45,6 +55,11 @@
 		"Name": "TechHero",
 		"Class": "Android",
 		"Sprite": "Android",
+		"HealthGrowth": 0.1,
+		"StrengthGrowth": 0.1,
+		"DefenseGrowth": 0.01,
+		"AgilityGrowth": 0.1,
+		"ManaGrowth": 0.1,
 		"InitialEquipment": [
 			"Blaster",
 			"Repair Kit"

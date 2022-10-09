@@ -189,7 +189,7 @@ namespace Texemon.Scenes.BattleScene
                 graphicsDevice.Clear(Color.Transparent);
             }
 
-            shader = (sceneShader == null) ? null : sceneShader.Effect;
+            shader = (SceneShader == null) ? null : SceneShader.Effect;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.Identity);
             spriteBatch.Draw(pixelRender, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
             spriteBatch.End();

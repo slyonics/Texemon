@@ -31,6 +31,11 @@ namespace Texemon.Scenes.StatusScene
         public HeroType Name { get; set; }
         public ClassType Class { get; set; }
         public string Sprite { get; set; }
+        public double HealthGrowth { get; set; }
+        public double StrengthGrowth { get; set; }
+        public double DefenseGrowth { get; set; }
+        public double AgilityGrowth { get; set; }
+        public double ManaGrowth { get; set; }
         public int FlightHeight { get; set; }
         public int EquipmentSlots { get; set; } = 6;
         public string[] InitialEquipment { get; set; }

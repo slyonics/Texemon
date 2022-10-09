@@ -121,29 +121,85 @@ namespace Texemon.Scenes.BattleScene
         {
             List<ConversationScene.DialogueRecord> reports = new List<ConversationScene.DialogueRecord>();
 
-            {
-                string report = Stats.Name.Value + "'s @Heart HEALTH increased by " + 15 + " points!";
-                ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
-                {
-                    Text = report,
-                    Script = new string[] { "IncreaseStat " + GetParent<DataGrid>().ChildList.IndexOf(GetParent<Panel>()) + " Health " + 15 }
-                };
-                reports.Add(dialogueRecord);
-            }
+            int characterIndex = GetParent<DataGrid>().ChildList.IndexOf(GetParent<Panel>());
 
             foreach (var statUsage in exercise)
             {
-
+                int amountGained = Math.Min(3, statUsage.Value);
 
                 switch (statUsage.Key)
                 {
-                    case "Mana":
+                    case "Health":
                         {
-                            string report = Stats.Name.Value + "'s @Staff MANA increased by " + statUsage.Value + ((statUsage.Value > 1) ? " points!" : " point!");
+                            double challengeBias = encounterRecord.Challenge - (int)(Stats.MaxHealth.Value / 100);
+                            int points = 0;
+                            for (int i = 0; i < amountGained; i++)
+                            {
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).HealthGrowth.Value) points += Rng.RandomInt(3, 8);
+                            }
+                            if (points <= 0) continue;
+                            string report = Stats.Name.Value + "'s @Heart HEALTH increased by " + points + " points!";
                             ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
                             {
                                 Text = report,
-                                Script = new string[] { "IncreaseStat " + GetParent<DataGrid>().ChildList.IndexOf(GetParent<Panel>()) + " Mana " + statUsage.Value }
+                                Script = new string[] { "IncreaseStat " + characterIndex + " " + statUsage.Key + " " + points }
+                            };
+                            reports.Add(dialogueRecord);
+                        }
+                        break;
+
+                    case "Strength":
+                        {
+                            double challengeBias = encounterRecord.Challenge - (int)(Stats.Strength.Value / 10);
+                            int points = 0;
+                            for (int i = 0; i < amountGained; i++)
+                            {
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).Strength.Value) points++;
+                            }
+                            if (points <= 0) continue;
+                            string report = Stats.Name.Value + "'s @Axe POWER increased by " + points + ((points > 1) ? "points!" : "point!");
+                            ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
+                            {
+                                Text = report,
+                                Script = new string[] { "IncreaseStat " + characterIndex + " " + statUsage.Key + " " + points }
+                            };
+                            reports.Add(dialogueRecord);
+                        }
+                        break;
+
+                    case "Agility":
+                        {
+                            double challengeBias = encounterRecord.Challenge - (int)(Stats.Agility.Value / 10);
+                            int points = 0;
+                            for (int i = 0; i < amountGained; i++)
+                            {
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).Agility.Value) points++;
+                            }
+                            if (points <= 0) continue;
+                            string report = Stats.Name.Value + "'s @Gun TECH increased by " + points + ((points > 1) ? "points!" : "point!");
+                            ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
+                            {
+                                Text = report,
+                                Script = new string[] { "IncreaseStat " + characterIndex + " " + statUsage.Key + " " + points }
+                            };
+                            reports.Add(dialogueRecord);
+                        }
+                        break;
+
+                    case "Mana":
+                        {
+                            double challengeBias = encounterRecord.Challenge - (int)(Stats.Mana.Value / 10);
+                            int points = 0;
+                            for (int i = 0; i < amountGained; i++)
+                            {
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).ManaGrowth.Value) points++;
+                            }
+                            if (points <= 0) continue;
+                            string report = Stats.Name.Value + "'s @Staff MANA increased by " + points + ((points > 1) ? "points!" : "point!");
+                            ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
+                            {
+                                Text = report,
+                                Script = new string[] { "IncreaseStat " + characterIndex + " " + statUsage.Key + " " + points }
                             };
                             reports.Add(dialogueRecord);
                         }
@@ -163,6 +219,8 @@ namespace Texemon.Scenes.BattleScene
             if (Stats.Health.Value > HeroModel.MaxHealth.Value / 4) HeroModel.HealthColor.Value = new Color(252, 252, 252, 255);
             else if (Stats.Health.Value > 0) HeroModel.HealthColor.Value = new Color(228, 0, 88, 255);
             else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
+
+            Exercise("Health");
         }
 
         public override void Heal(int healing)

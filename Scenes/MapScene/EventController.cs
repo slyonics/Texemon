@@ -34,6 +34,7 @@ namespace Texemon.Scenes.MapScene
                 case "Encounter": Encounter(tokens, scriptParser); break;
                 case "Shop": Shop(tokens); break;
                 case "GiveItem": GiveItem(tokens); break;
+                case "Inn": Inn(tokens); break;
                 default: return false;
             }
 
@@ -101,6 +102,27 @@ namespace Texemon.Scenes.MapScene
             CrossPlatformGame.StackScene(conversationScene);
 
             Audio.PlaySound(GameSound.GetItem);
+        }
+
+        public void Inn(string[] tokens)
+        {
+            TransitionController transitionOutController = new TransitionController(TransitionDirection.Out, 600);
+            SceneObjects.Shaders.ColorFade colorFadeOut = new SceneObjects.Shaders.ColorFade(Color.Black, transitionOutController.TransitionProgress);
+            transitionOutController.UpdateTransition += new Action<float>(t => colorFadeOut.Amount = t);
+            transitionOutController.FinishTransition += new Action<TransitionDirection>(t =>
+            {
+                transitionOutController.Terminate();
+                colorFadeOut.Terminate();
+                TransitionController transitionInController = new TransitionController(TransitionDirection.In, 600);
+                SceneObjects.Shaders.ColorFade colorFadeIn = new SceneObjects.Shaders.ColorFade(Color.Black, transitionInController.TransitionProgress);
+                transitionInController.UpdateTransition += new Action<float>(t => colorFadeIn.Amount = t);
+                transitionInController.FinishTransition += new Action<TransitionDirection>(t => colorFadeIn.Terminate());
+                mapScene.AddController(transitionInController);
+                mapScene.SceneShader = colorFadeIn;
+            });
+
+            mapScene.AddController(transitionOutController);
+            mapScene.SceneShader = colorFadeOut;
         }
     }
 }
