@@ -175,7 +175,8 @@ namespace Texemon.Scenes.BattleScene
                     var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
                     convoScene.OnTerminated += new TerminationFollowup(() =>
                     {
-                        CrossPlatformGame.Transition(typeof(Scenes.MapScene.MapScene), "HomeLab");
+                        CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
+                        battleViewModel.Close();
                     });
                     CrossPlatformGame.StackScene(convoScene);
                 }
