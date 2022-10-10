@@ -109,6 +109,7 @@ namespace Texemon.Scenes.BattleScene
         {
             base.Update(gameTime);
 
+            if (PriorityLevel == PriorityLevel.TransitionLevel) return;
             if (battleViewModel.Closed) return;
 
             int i = 0;
@@ -160,6 +161,8 @@ namespace Texemon.Scenes.BattleScene
                 }
                 else if (PlayerList.All(x => x.Dead))
                 {
+                    GameProfile.SetSaveData<bool>("Wipeout", true);
+
                     string narration = (PlayerList.Count > 1) ?
                         "Despite their best efforts, " + PlayerList[0].Stats.Name.Value + "'s party was wiped out..." :
                         "Despite their best effort, " + PlayerList[0].Stats.Name.Value + " was defeated...";
@@ -175,8 +178,10 @@ namespace Texemon.Scenes.BattleScene
                     var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
                     convoScene.OnTerminated += new TerminationFollowup(() =>
                     {
-                        CrossPlatformGame.Transition(typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
-                        battleViewModel.Close();
+                        GameProfile.PlayerProfile.Party.ModelList.Clear();
+                        GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
+                        for (int i = 1; i <= 10; i++) GameProfile.SetSaveData<bool>("JunkChest" + i + "Opened", false);
+                        CrossPlatformGame.Transition(this, typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
                     });
                     CrossPlatformGame.StackScene(convoScene);
                 }

@@ -203,10 +203,15 @@ namespace Texemon.Main
 
         public static void Transition(Type sceneType, params object[] args)
         {
+            Transition(CurrentScene, sceneType, args);
+        }
+
+        public static void Transition(Scene parentScene, Type sceneType, params object[] args)
+        {
             TransitionController transitionController = new TransitionController(TransitionDirection.Out, 600);
             ColorFade colorFade = new ColorFade(Color.Black, transitionController.TransitionProgress);
             transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = t);
-            CurrentScene.AddController(transitionController);
+            parentScene.AddController(transitionController);
             transitionShader = colorFade;
 
             Task.Run(() => Activator.CreateInstance(sceneType, args)).ContinueWith(t =>

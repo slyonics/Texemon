@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="14">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="15">
  <properties>
   <property name="LocationName" value="Distant Laboratory"/>
  </properties>
@@ -132,6 +132,13 @@ SetFlag NewTechGame False</property>
    <properties>
     <property name="Label" value="Rest"/>
     <property name="Script" value="Inn"/>
+   </properties>
+  </object>
+  <object id="14" name="Revive Sequence" type="Automatic" x="59" y="83" width="56" height="47">
+   <properties>
+    <property name="EnableIf" value="Wipeout"/>
+    <property name="Script">Conversation TechRevive
+SetFlag Wipeout False</property>
    </properties>
   </object>
  </objectgroup>
