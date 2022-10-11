@@ -137,7 +137,7 @@ SetFlag NewTechGame False</property>
   <object id="14" name="Revive Sequence" type="Automatic" x="59" y="83" width="56" height="47">
    <properties>
     <property name="EnableIf" value="Wipeout"/>
-    <property name="Script">Conversation TechRevive
+    <property name="Script">Conversation $ReviveConvo
 SetFlag Wipeout False</property>
    </properties>
   </object>

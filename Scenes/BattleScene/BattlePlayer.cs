@@ -131,7 +131,7 @@ namespace Texemon.Scenes.BattleScene
                 {
                     case "Health":
                         {
-                            double challengeBias = encounterRecord.Challenge - (int)(Stats.MaxHealth.Value / 100);
+                            double challengeBias = encounterRecord.Challenge - (Stats as HeroModel).NakedHealth.Value / 100;
                             int points = 0;
                             for (int i = 0; i < amountGained; i++)
                             {
@@ -150,7 +150,7 @@ namespace Texemon.Scenes.BattleScene
 
                     case "Strength":
                         {
-                            double challengeBias = encounterRecord.Challenge - (int)(Stats.Strength.Value / 10);
+                            double challengeBias = encounterRecord.Challenge - (Stats as HeroModel).NakedStrength.Value / 10;
                             int points = 0;
                             for (int i = 0; i < amountGained; i++)
                             {
@@ -167,9 +167,28 @@ namespace Texemon.Scenes.BattleScene
                         }
                         break;
 
+                    case "Defense":
+                        {
+                            double challengeBias = encounterRecord.Challenge - (Stats as HeroModel).NakedDefense.Value / 10;
+                            int points = 0;
+                            for (int i = 0; i < amountGained; i++)
+                            {
+                                if (Rng.RandomDouble(0, 1) < challengeBias * (Stats as HeroModel).DefenseGrowth.Value) points++;
+                            }
+                            if (points <= 0) continue;
+                            string report = Stats.Name.Value + "'s @Shield GRIT increased by " + points + ((points > 1) ? " points!" : " point!");
+                            ConversationScene.DialogueRecord dialogueRecord = new ConversationScene.DialogueRecord()
+                            {
+                                Text = report,
+                                Script = new string[] { "IncreaseStat " + characterIndex + " " + statUsage.Key + " " + points }
+                            };
+                            reports.Add(dialogueRecord);
+                        }
+                        break;
+
                     case "Agility":
                         {
-                            double challengeBias = encounterRecord.Challenge - (int)(Stats.Agility.Value / 10);
+                            double challengeBias = encounterRecord.Challenge - Math.Max((Stats as HeroModel).NakedAgility.Value, (Stats as HeroModel).NakedMana.Value) / 10;
                             int points = 0;
                             for (int i = 0; i < amountGained; i++)
                             {
@@ -188,7 +207,7 @@ namespace Texemon.Scenes.BattleScene
 
                     case "Mana":
                         {
-                            double challengeBias = encounterRecord.Challenge - (int)(Stats.Mana.Value / 10);
+                            double challengeBias = encounterRecord.Challenge - Math.Max((Stats as HeroModel).NakedAgility.Value, (Stats as HeroModel).NakedMana.Value) / 10;
                             int points = 0;
                             for (int i = 0; i < amountGained; i++)
                             {

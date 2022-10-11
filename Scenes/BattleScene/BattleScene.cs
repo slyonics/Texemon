@@ -178,6 +178,7 @@ namespace Texemon.Scenes.BattleScene
                     var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
                     convoScene.OnTerminated += new TerminationFollowup(() =>
                     {
+                        GameProfile.Inventory.ModelList.Clear();
                         GameProfile.PlayerProfile.Party.ModelList.Clear();
                         GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
                         for (int i = 1; i <= 10; i++) GameProfile.SetSaveData<bool>("JunkChest" + i + "Opened", false);

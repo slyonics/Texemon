@@ -28,6 +28,12 @@ namespace Texemon.Scenes.StatusScene
             AgilityGrowth.Value = heroRecord.AgilityGrowth;
             ManaGrowth.Value = heroRecord.ManaGrowth;
 
+            NakedHealth.Value = Health.Value;
+            NakedStrength.Value = Strength.Value;
+            NakedDefense.Value = Defense.Value;
+            NakedAgility.Value = Agility.Value;
+            NakedMana.Value = Mana.Value;
+
             Sprite.Value = (GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + heroRecord.Sprite);
             if (heroRecord.FlightHeight > 0)
             {
@@ -137,5 +143,11 @@ namespace Texemon.Scenes.StatusScene
         public ModelProperty<double> DefenseGrowth { get; set; } = new ModelProperty<double>(0);
         public ModelProperty<double> AgilityGrowth { get; set; } = new ModelProperty<double>(0);
         public ModelProperty<double> ManaGrowth { get; set; } = new ModelProperty<double>(0);
+
+        public ModelProperty<int> NakedHealth { get; set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> NakedStrength { get; set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> NakedDefense { get; set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> NakedAgility { get; set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> NakedMana { get; set; } = new ModelProperty<int>(0);
     }
 }

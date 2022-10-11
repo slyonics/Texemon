@@ -32,7 +32,34 @@ namespace Texemon.Scenes.MapScene
 
         public void ChestOpened()
         {
-            string[] script = new string[] { "GiveItem " + chest.Item, "SetFlag " + chest.Name + "Opened True" };
+            string item = chest.Item;
+            if (item[0] == '$')
+            {
+                switch (item)
+                {
+                    case "$JunkWeapon":
+                        switch (Rng.RandomInt(1, 4))
+                        {
+                            case 1: item = "Longsword"; break;
+                            case 2: item = "Blowtorch"; break;
+                            case 3: item = "Arc Welder"; break;
+                            case 4: item = "Blaster"; break;
+                        }
+                        break;
+
+                    case "$JunkConsumable": item = "Repair Kit"; break;
+
+                    case "$JunkPart":
+                        switch (Rng.RandomInt(1, 2))
+                        {
+                            case 1: item = "Spare Parts"; break;
+                            case 2: item = "Advanced Parts"; break;
+                        }
+                        break;
+                }
+            }
+
+            string[] script = new string[] { "GiveItem " + item, "SetFlag " + chest.Name + "Opened True" };
             EventController eventController = new EventController(mapScene, script);
             mapScene.AddController(eventController);
 

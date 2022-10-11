@@ -47,6 +47,14 @@ namespace Texemon.Scenes.MapScene
             {
                 return GameProfile.GetSaveData<bool>(parameter.Split('.')[1]).ToString();
             }
+            else if (parameter[0] == '$')
+            {
+                switch (parameter)
+                {
+                    case "$ReviveConvo": return "TechRevive";
+                    default: return "";
+                }
+            }
             else return base.ParseParameter(parameter);
         }
 
