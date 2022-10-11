@@ -56,6 +56,14 @@
 		]
 	},
 	{
+		"Name": "JunkLocker",
+		"DialogueRecords": [
+			{
+				"Text": "Step through the portal?"
+			}
+		]
+	},
+	{
 		"Name": "TreeConvo",
 		"Background": "",
 		"EndScript": [ "Actor Actors_Blank" ],

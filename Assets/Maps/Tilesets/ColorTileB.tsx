@@ -103,7 +103,7 @@
  </tile>
  <tile id="113">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="6" width="16" height="8"/>
+   <object id="1" x="1" y="2" width="14" height="12"/>
   </objectgroup>
  </tile>
  <tile id="118">

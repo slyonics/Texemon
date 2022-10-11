@@ -36,14 +36,21 @@ namespace Texemon.Scenes.MapScene
 
             if (target != null && mapScene.PriorityLevel == PriorityLevel.GameLevel)
             {
-                int width = Text.GetStringLength(GAME_FONT, target.Label);
+                string[] textLines = target.Label.Split('\n');
+                string longestLine = textLines.MaxBy(x => Text.GetStringLength(GAME_FONT, x));
+                int width = Text.GetStringLength(GAME_FONT, longestLine);
                 int height = Text.GetStringHeight(GAME_FONT);
-                textbox.Bounds = new Rectangle(0, 0, width + 8, height + 2);
-
+                textbox.Bounds = new Rectangle(0, 0, width + 8, height * textLines.Count() + 2);
                 Vector2 cameraOffset = new Vector2(mapScene.Camera.CenteringOffsetX, mapScene.Camera.CenteringOffsetY);
 
                 textbox.Draw(spriteBatch, target.LabelPosition - mapScene.Camera.Position - new Vector2(textbox.Bounds.Width / 2, 0) - cameraOffset);
-                Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(0, 5) - mapScene.Camera.Position - cameraOffset, GAME_FONT, target.Label, color, 0.03f);
+
+                int row = 0;
+                foreach (string text in textLines)
+                {
+                    Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(0, 5) - mapScene.Camera.Position - cameraOffset, GAME_FONT, text, color, 0.03f, row);
+                    row++;
+                }
             }
         }
 

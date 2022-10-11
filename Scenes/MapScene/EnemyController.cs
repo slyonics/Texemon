@@ -80,11 +80,11 @@ namespace Texemon.Scenes.MapScene
                 case Orientation.Left: tileX--; break;
             }
 
-            Tile npcDestination = mapScene.Tilemap.GetTile(tileX, tileY);
-            if (npcDestination == null) return false;
-            if (!mapScene.Tilemap.CanTraverse(enemy, npcDestination)) return false;
+            Tile enemyDestination = mapScene.Tilemap.GetTile(tileX, tileY);
+            if (enemyDestination == null) return false;
+            if (!mapScene.Tilemap.CanTraverse(enemy, enemyDestination)) return false;
             
-            destinationTile = npcDestination;
+            destinationTile = enemyDestination;
             currentWalkLength = walkTimeLeft = walkLength;
 
             return true;

@@ -54,8 +54,11 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.ApplyAlignment();
 
-            int width = Main.Text.GetStringLength(Font, Text) + InnerMargin.X + InnerMargin.Width; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
-            int height = Main.Text.GetStringHeight(Font) + InnerMargin.Y + InnerMargin.Height; //Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
+            string[] textLines = Text.Split('\n');
+            string longestLine = textLines.MaxBy(x => Main.Text.GetStringLength(Font, x));
+
+            int width = Main.Text.GetStringLength(Font, longestLine) + InnerMargin.X + InnerMargin.Width; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
+            int height = Main.Text.GetStringHeight(Font) * textLines.Count() + InnerMargin.Y + InnerMargin.Height; //Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
 
             if (Alignment == Alignment.Center)
             {
@@ -65,7 +68,7 @@ namespace Texemon.SceneObjects.Widgets
                 base.ApplyAlignment();
 
                 currentWindow.X -= width / 2;
-                currentWindow.Y -= height / 2;
+                currentWindow.Y -= (Main.Text.GetStringHeight(Font) + InnerMargin.Y + InnerMargin.Height) / 2;
                 currentWindow.Width = width;
                 currentWindow.Height = height;
             }
@@ -80,8 +83,11 @@ namespace Texemon.SceneObjects.Widgets
 
         private void ResizeTextplate()
         {
-            int width = Main.Text.GetStringLength(Font, Text) + InnerMargin.X + InnerMargin.Width; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
-            int height = Main.Text.GetStringHeight(Font) + InnerMargin.Y + InnerMargin.Height; // Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
+            string[] textLines = Text.Split('\n');
+            string longestLine = textLines.MaxBy(x => Main.Text.GetStringLength(Font, x));
+
+            int width = Main.Text.GetStringLength(Font, longestLine) + InnerMargin.X + InnerMargin.Width; // Math.Max(Text.GetStringLength(font, text) + TOOLTIP_MARGIN_WIDTH * 2, textplateFrame.FrameWidth * 3) + 20;
+            int height = Main.Text.GetStringHeight(Font) * textLines.Count() + InnerMargin.Y + InnerMargin.Height; // Math.Max(Text.GetStringHeight(font) + TOOLTIP_MARGIN_HEIGHT * 2, textplateFrame.FrameHeight * 3);
 
             if (Alignment == Alignment.Center)
             {
@@ -91,7 +97,7 @@ namespace Texemon.SceneObjects.Widgets
                 base.ApplyAlignment();
 
                 currentWindow.X -= width / 2;
-                currentWindow.Y -= height / 2;
+                currentWindow.Y -= (Main.Text.GetStringHeight(Font) + InnerMargin.Y + InnerMargin.Height) / 2;
                 currentWindow.Width = width;
                 currentWindow.Height = height;
             }
@@ -111,7 +117,14 @@ namespace Texemon.SceneObjects.Widgets
             base.Draw(spriteBatch);
 
             textplateFrame.Draw(spriteBatch, Position);
-            Main.Text.DrawCenteredText(spriteBatch, new Vector2(InnerBounds.Center.X, InnerBounds.Center.Y + Main.Text.FONT_DATA[Font].heightOffset) + Position, Font, base.ParseString(Text), Color, 0);
+            string[] textLines = base.ParseString(Text).Split('\n');
+            int row = 0;
+            int offset = (textLines.Count() > 1) ? -5 : 0;
+            foreach (string textLine in textLines)
+            {
+                Main.Text.DrawCenteredText(spriteBatch, new Vector2(InnerBounds.Center.X, InnerBounds.Center.Y + Main.Text.FONT_DATA[Font].heightOffset + offset) + Position, Font, textLine, Color, row);
+                row++;
+            }
         }
     }
 }
