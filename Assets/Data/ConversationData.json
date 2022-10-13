@@ -65,7 +65,8 @@
 					"SelectionPrompt",
 					"No",
 					"Yes",
-					"End"
+					"End",
+					"Wait 1"
 				]
 			}
 		]

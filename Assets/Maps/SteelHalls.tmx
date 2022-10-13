@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="15">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="16">
  <properties>
   <property name="LocationName" value="Distant Scrapyard"/>
   <property name="Music" value="Scrapyard"/>
@@ -274,6 +274,12 @@ Case Yes
 ChangeMap SteelHalls
 Break
 End</property>
+   </properties>
+  </object>
+  <object id="15" name="Junkyard" type="Travel" x="360" y="333" width="47" height="16">
+   <properties>
+    <property name="Direction" value="Up"/>
+    <property name="Label" value="Back"/>
    </properties>
   </object>
  </objectgroup>

@@ -52,10 +52,10 @@ namespace Texemon.Scenes.MapScene
                 switch (parameter)
                 {
                     case "$ReviveConvo": return "TechRevive";
-                    default: return "";
+                    default: return null;
                 }
             }
-            else return base.ParseParameter(parameter);
+            else return null;
         }
 
         public static void ChangeMap(string[] tokens, MapScene mapScene)

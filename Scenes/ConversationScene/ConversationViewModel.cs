@@ -77,14 +77,9 @@ namespace Texemon.Scenes.ConversationScene
 
             if (!Closed && !ChildList.Any(x => x.Transitioning))
             {
-                if (Input.CurrentInput.CommandPressed(Command.Confirm))
+                if (Input.CurrentInput.CommandPressed(Command.Confirm) )
                 {
-                    if (!crawlText.ReadyToProceed)
-                    {
-                        crawlText.FinishText();
-                        conversationScene.FinishDialogue();
-                    }
-                    else if (!AutoProceed) NextDialogue();
+                    Proceed();
                 }
             }
 
@@ -92,6 +87,16 @@ namespace Texemon.Scenes.ConversationScene
             {
                 parentScene.EndScene();
             }
+        }
+
+        public void Proceed()
+        {
+            if (!crawlText.ReadyToProceed)
+            {
+                crawlText.FinishText();
+                conversationScene.FinishDialogue();
+            }
+            else if (!AutoProceed) NextDialogue();
         }
 
         public override void LeftClickChild(Vector2 mouseStart, Vector2 mouseEnd, Widget clickWidget, Widget otherWidget)

@@ -173,8 +173,7 @@ namespace Texemon.SceneObjects
                         case "$bottom": return CrossPlatformGame.ScreenHeight.ToString();
                         case "$top": return "0";
                         case "$left": return "0";
-                        case "$selection": 
-                            
+                        case "$selection":
                             return GameProfile.GetSaveData<string>("LastSelection");
                         default:
                             if (parameter.Contains("$random"))
