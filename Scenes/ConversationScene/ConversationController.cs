@@ -44,6 +44,7 @@ namespace Texemon.Scenes.ConversationScene
                 case "ProceedText": conversationScene.ConversationViewModel.NextDialogue(); break;
                 case "Actor": Actor(tokens); break;
                 case "Animate": Animate(tokens); break;
+                case "SelectionPrompt": SelectionPrompt(tokens); break;
 
                 case "IncreaseStat": BattleScene.BattleController.IncreaseStat(tokens); break;
                 default: return false;
@@ -181,6 +182,21 @@ namespace Texemon.Scenes.ConversationScene
         private void Animate(string[] tokens)
         {
             //CrossPlatformGame.GetScene<MapScene.MapScene>().MapViewModel.AnimateActor(tokens[1]);
+        }
+
+        private void SelectionPrompt(string[] tokens)
+        {
+            List<string> options = new List<string>();
+            string skipLine;
+            do
+            {
+                skipLine = scriptParser.DequeueNextCommand();
+                options.Add(skipLine);
+            } while (skipLine != "End");
+            options.RemoveAt(options.Count - 1);
+
+            SelectionViewModel selectionViewModel = new SelectionViewModel(conversationScene, options);
+            conversationScene.AddOverlay(selectionViewModel);
         }
     }
 }

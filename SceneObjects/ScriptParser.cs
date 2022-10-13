@@ -95,6 +95,11 @@ namespace Texemon.SceneObjects
             }
         }
 
+        public string DequeueNextCommand()
+        {
+            return scriptCommands.Dequeue().Trim();
+        }
+
         public void AddParticle(Particle particle)
         {
             childParticles.Add(particle);
@@ -118,8 +123,9 @@ namespace Texemon.SceneObjects
                 {
                     case "Terminate": waitTimeLeft = 0; scriptCommands.Clear(); break;
                     case "If": If(tokens); break;
-                    case "ElseIf": SkipToNextEnd(); break;
+                    case "ElseIf": SkipToNextEnd(); break; // TODO: needs to include a conditional
                     case "Else": SkipToNextEnd(); break;
+                    case "Break": SkipToNextEnd(); break;
                     case "Wait": waitTimeLeft = int.Parse(tokens[1]); break;
                     case "Repeat": RunScript(latestScript); break;
                     case "While": While(tokens, originalTokens); break;
@@ -133,6 +139,7 @@ namespace Texemon.SceneObjects
                     case "AddView": AddView(tokens); break;
                     case "ChangeScene": ChangeScene(tokens); break;
                     case "StackScene": StackScene(tokens); break;
+                    case "Switch": Switch(tokens); break;
                 }
             }
         }
@@ -166,6 +173,9 @@ namespace Texemon.SceneObjects
                         case "$bottom": return CrossPlatformGame.ScreenHeight.ToString();
                         case "$top": return "0";
                         case "$left": return "0";
+                        case "$selection": 
+                            
+                            return GameProfile.GetSaveData<string>("LastSelection");
                         default:
                             if (parameter.Contains("$random"))
                             {
@@ -317,6 +327,16 @@ namespace Texemon.SceneObjects
             if (tokens.Length == 2) CrossPlatformGame.Transition(sceneType);
             else if (tokens.Length == 3) CrossPlatformGame.Transition(sceneType, tokens[2]);
             else if (tokens.Length == 4) CrossPlatformGame.Transition(sceneType, tokens[2], tokens[3]);
+        }
+
+        private void Switch(string[] tokens)
+        {
+            string switchValue = ParseParameter(tokens[1]);
+            string skipLine;
+            do
+            {
+                skipLine = scriptCommands.Dequeue().Trim();
+            } while (skipLine != "Case " + switchValue);
         }
 
         public bool Finished { get => scriptCommands == null; }

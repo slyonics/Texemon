@@ -183,6 +183,11 @@ namespace Texemon.Scenes.BattleScene
                         GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
                         for (int i = 1; i <= 10; i++) GameProfile.SetSaveData<bool>("JunkChest" + i + "Opened", false);
                         CrossPlatformGame.Transition(this, typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
+
+                        foreach (var keyValuePair in GameProfile.SaveData)
+                        {
+                            if (keyValuePair.Key.EndsWith("Recruited")) GameProfile.SaveData[keyValuePair.Key] = false;
+                        }
                     });
                     CrossPlatformGame.StackScene(convoScene);
                 }

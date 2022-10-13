@@ -59,7 +59,14 @@
 		"Name": "JunkLocker",
 		"DialogueRecords": [
 			{
-				"Text": "Step through the portal?"
+				"Text": "This locker contains a portal to the Steel Halls world. Enter the portal?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"No",
+					"Yes",
+					"End"
+				]
 			}
 		]
 	},

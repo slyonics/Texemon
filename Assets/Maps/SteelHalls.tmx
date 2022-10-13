@@ -267,7 +267,7 @@ Repeat</property>
     <property name="Label">Conspicuous
 Locker</property>
     <property name="Script">Conversation JunkLocker
-Switch $selection
+SelectionPrompt Enter the portal?
 Case No
 Terminate
 Case Yes

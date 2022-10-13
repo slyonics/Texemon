@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind Window" InnerMargin="8,4,8,8" TransitionIn="Expand" TransitionOut="Shrink">
+		<CrawlText Name="ConversationText" Text="MAKE UR SELECTION" Font="Dialogue" Alignment="Stretch" Color="#D8D8D8FF" VoiceSound="Blip"/>
+	</Panel>
+  
+</View>
