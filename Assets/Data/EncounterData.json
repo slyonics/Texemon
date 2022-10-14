@@ -32,5 +32,26 @@
 		"Challenge": 2,
 		"Script": [],
 		"Intro": "A nest of angry scorpions swarm around you!"
+	},
+	{
+		"Name": "SteelPatrol",
+		"Background": "Steel",
+		"Enemies": [
+			"Steel Knight",
+			"Steel Knight"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "You are detected by a patrolling squad of Steel Knights!"
+	},
+	{
+		"Name": "SteelSpectre",
+		"Background": "Steel",
+		"Enemies": [
+			"Spectre"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "A restless spectre"
 	}
 ]

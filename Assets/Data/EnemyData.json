@@ -70,5 +70,58 @@
 				"Weight": 100
 			}
 		]
+	},
+	{
+		"Name": "Steel Knight",
+		"Sprite": "DarkKnight",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 6,
+		"Agility": 3,
+		"Mana": 3,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			},
+			{
+				"Script": [
+					"Counter"
+				],
+				"Weight": 1
+			}
+		]
+	},
+	{
+		"Name": "Spectre",
+		"Sprite": "Ghost",
+		"ShadowOffset": 0,
+		"MaxHealth": 40,
+		"Strength": 6,
+		"Defense": 4,
+		"Agility": 1,
+		"Mana": 10,
+		"Evasion": 50,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 50
+			},
+			{
+				"Script": [
+					"Animate Attack",
+					"Sound Fireball",
+					"Effect Flame $targetCenterX $targetCenterY 3",
+					"Flash 255 27 0",
+					"Damage Mana 10 Fire"
+				],
+				"Weight": 50
+			}
+		]
 	}
 ]

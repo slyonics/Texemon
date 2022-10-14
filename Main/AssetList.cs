@@ -142,6 +142,7 @@ namespace Texemon.Main
         Background_Blank,
         Background_Desert,
         Background_Splash,
+        Background_Steel,
         Background_Title,
         Background_Trees,
         Enemies_ArcherF,

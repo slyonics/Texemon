@@ -24,6 +24,12 @@ namespace Texemon.Scenes.BattleScene
             battleScene = iBattleScene;
             attacker = iAttacker;
             target = iTarget;
+
+            if (target == null && attacker is BattleEnemy)
+            {
+                List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
+                target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
+            }
         }
 
         public override void PreUpdate(GameTime gameTime)

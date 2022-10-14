@@ -17,6 +17,8 @@ namespace Texemon.Scenes.ConversationScene
     {
         private ConversationScene conversationScene;
 
+        private int selection = -1;
+
         public SelectionViewModel(Scene iScene, List<string> options)
             : base(iScene, PriorityLevel.MenuLevel)
         {
@@ -37,6 +39,48 @@ namespace Texemon.Scenes.ConversationScene
             LoadView(GameView.ConversationScene_SelectionView);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            var input = Input.CurrentInput;
+            if (input.CommandPressed(Command.Up)) CursorUp();
+            else if (input.CommandPressed(Command.Down)) CursorDown();
+            else if (input.CommandPressed(Command.Confirm))
+            {
+                Audio.PlaySound(GameSound.Confirm);
+                Terminate();
+            }
+        }
+
+        private void CursorUp()
+        {
+            if (AvailableOptions.Count() == 0) return;
+
+            Audio.PlaySound(GameSound.menu_select);
+
+            if (selection == -1) selection = 0;
+            else if (selection == 0) selection = AvailableOptions.Count() - 1;
+            else selection--;
+
+            (GetWidget<DataGrid>("OptionsList").ChildList[selection] as Button).RadioSelect();
+            SelectOption(AvailableOptions.ElementAt(selection));
+        }
+
+        private void CursorDown()
+        {
+            if (AvailableOptions.Count() == 0) return;
+
+            Audio.PlaySound(GameSound.menu_select);
+
+            if (selection == -1) selection = 0;
+            else if (selection == AvailableOptions.Count() - 1) selection = 0;
+            else selection++;
+
+            (GetWidget<DataGrid>("OptionsList").ChildList[selection] as Button).RadioSelect();
+            SelectOption(AvailableOptions.ElementAt(selection));
+        }
+
         public override void Terminate()
         {
             conversationScene.ConversationViewModel.Proceed();
@@ -46,7 +90,7 @@ namespace Texemon.Scenes.ConversationScene
         public void SelectOption(object parameter)
         {
             GameProfile.SetSaveData<string>("LastSelection", parameter.ToString());
-            Terminate();
+            if (Input.MOUSE_MODE) Terminate();
         }
 
         public ModelCollection<string> AvailableOptions { get; set; } = new ModelCollection<string>();
