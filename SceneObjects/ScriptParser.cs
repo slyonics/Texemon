@@ -134,6 +134,7 @@ namespace Texemon.SceneObjects
                     case "Particle": AddParticle(tokens); break;
                     case "Sound": Audio.PlaySound(tokens); break;
                     case "Music": Audio.PlayMusic(tokens); break;
+                    case "StopMusic": Audio.StopMusic(); break;
                     case "SetFlag": SetFlag(tokens); break;
                     case "SetProperty": SetProperty(tokens); break;
                     case "AddView": AddView(tokens); break;

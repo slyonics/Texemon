@@ -58,7 +58,7 @@ namespace Texemon.Main
         enemy_encounter,
         Error,
         Fireball,
-        game_over,
+        gameover,
         GetItem,
         Heal,
         JoinParty,
@@ -84,7 +84,9 @@ namespace Texemon.Main
     public enum GameMusic
     {
         Battle,
+        DeprivedArcaney,
         NewDestinations,
+        OrichalcumSword,
         Scrapyard,
         Selection,
         Title,
@@ -295,6 +297,7 @@ namespace Texemon.Main
 
     public enum GameMap
     {
+        CanyonEntrance,
         HomeLab,
         Junkyard,
         MageConvention,

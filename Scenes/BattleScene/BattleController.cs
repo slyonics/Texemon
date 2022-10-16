@@ -106,7 +106,7 @@ namespace Texemon.Scenes.BattleScene
             int attackerHit = 0;
             if (tokens[2] == "Strength") attackerHit = attacker.Stats.Strength.Value * 2;
             else if (tokens[2] == "Agility") attackerHit = attacker.Stats.Agility.Value * 2;
-            int targetEvade = Math.Max(target.Stats.Strength.Value, target.Stats.Agility.Value) * 2;
+            int targetEvade = Math.Max(target.Stats.Defense.Value, Math.Max(target.Stats.Strength.Value, target.Stats.Agility.Value)) * 2;
 
             if (Rng.RandomInt(1, 100) <= accuracy + attackerHit - targetEvade)
             {

@@ -171,7 +171,7 @@ namespace Texemon.Scenes.BattleScene
                     {
                         DialogueRecords = new ConversationScene.DialogueRecord[]
                         {
-                            new ConversationScene.DialogueRecord() { Text = narration }
+                            new ConversationScene.DialogueRecord() { Text = narration, Script = new string[] { "StopMusic", "Sound gameover", "Wait 3500" } }
                         }
                     };
 
