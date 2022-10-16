@@ -270,7 +270,13 @@ namespace Texemon.Scenes.BattleScene
             targetViewModel = null;
 
             List<ModelProperty<CommandRecord>> commands = new List<ModelProperty<CommandRecord>>();
-            foreach (var command in ActivePlayer.HeroModel.Equipment.ModelList) commands.Add(new ModelProperty<CommandRecord>(command.Value as CommandRecord));
+            foreach (var command in ActivePlayer.HeroModel.Equipment.ModelList)
+            {
+                if (command.Value.ItemType != ItemType.Armor && command.Value.ItemType != ItemType.Crafting)
+                {
+                    commands.Add(new ModelProperty<CommandRecord>(command.Value as CommandRecord));
+                }
+            }
             AvailableCommands.ModelList = commands;
             ActivePlayer.HeroModel.LastCategory.Value = category = 0;
 

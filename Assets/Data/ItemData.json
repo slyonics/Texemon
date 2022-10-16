@@ -172,6 +172,6 @@
 		"Charges": -1,
 		"ItemType": "Armor",
 		"RobotHealth": 20,
-		"RobotDefense": 8
+		"BonusDefense": 8
 	}
 ]
