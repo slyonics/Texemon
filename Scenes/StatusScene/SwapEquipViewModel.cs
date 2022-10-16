@@ -82,7 +82,10 @@ namespace Texemon.Scenes.StatusScene
                 });
             }
 
-            AvailableItems.ModelList.AddRange(GameProfile.Inventory.Where(x => x.Value.ItemType == ItemType.Weapon || x.Value.ItemType == ItemType.Consumable));
+            if (HeroModel.Equipment.Any(x => x.Value.Icon == "Armor"))
+                AvailableItems.ModelList.AddRange(GameProfile.Inventory.Where(x => x.Value.ItemType == ItemType.Weapon || x.Value.ItemType == ItemType.Consumable));
+            else
+                AvailableItems.ModelList.AddRange(GameProfile.Inventory.Where(x => x.Value.ItemType == ItemType.Weapon || x.Value.ItemType == ItemType.Consumable || x.Value.ItemType == ItemType.Armor));
 
             Description2.Value = AvailableItems.First().Value.Description[1];
             Description3.Value = AvailableItems.First().Value.Description[2];
@@ -222,7 +225,7 @@ namespace Texemon.Scenes.StatusScene
             else if (deltaAgility < 0) { AgilityColor.Value = Color.PaleVioletRed; DeltaAgility.Value = deltaAgility.ToString(); }
 
             deltaMana = itemRecord.BonusMana - EquipmentList[equipmentSlot].BonusMana;
-            if (HeroModel.Class.Value == ClassType.Android || HeroModel.Class.Value == ClassType.Drone)
+            if (HeroModel.Class.Value == ClassType.Android)
             {
                 deltaMana += itemRecord.RobotMana - EquipmentList[equipmentSlot].RobotMana;
             }

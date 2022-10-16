@@ -64,6 +64,8 @@ namespace Texemon.Scenes.ConversationScene
         {
             base.Update(gameTime);
 
+            if (conversationScene.PriorityLevel > PriorityLevel.GameLevel) return;
+
             if (crawlText.ReadyToProceed && !ReadyToProceed.Value)
             {
                 if (!conversationScene.IsScriptRunning())

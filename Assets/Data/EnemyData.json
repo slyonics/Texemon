@@ -76,10 +76,10 @@
 		"Sprite": "DarkKnight",
 		"ShadowOffset": 0,
 		"MaxHealth": 80,
-		"Strength": 8,
-		"Defense": 6,
-		"Agility": 3,
-		"Mana": 3,
+		"Strength": 16,
+		"Defense": 16,
+		"Agility": 6,
+		"Mana": 8,
 		"Attacks": [
 			{
 				"Script": [
@@ -95,10 +95,29 @@
 			}
 		]
 	},
+
+	{
+		"Name": "Scout",
+		"Sprite": "Drone",
+		"ShadowOffset": 24,
+		"MaxHealth": 40,
+		"Strength": 8,
+		"Defense": 10,
+		"Agility": 14,
+		"Mana": 0,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
 	{
 		"Name": "Spectre",
 		"Sprite": "Ghost",
-		"ShadowOffset": 0,
+		"ShadowOffset": 4,
 		"MaxHealth": 40,
 		"Strength": 6,
 		"Defense": 4,

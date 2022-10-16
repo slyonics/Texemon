@@ -20,6 +20,7 @@ namespace Texemon.Scenes.BattleScene
             public string Name { get; set; }
             public bool NameVisible { get; set; }
             public Rectangle Bounds { get; set; }
+            public Rectangle LabelBounds { get; set; }
 
             public Battler target;
 
@@ -47,15 +48,30 @@ namespace Texemon.Scenes.BattleScene
             {
                 case TargetType.SingleEnemy:
                     Targets.ModelList = new List<ModelProperty<TargetButton>>();
-                    foreach (BattleEnemy battleEnemy in battleScene.EnemyList) Targets.Add(new TargetButton() { Name = battleEnemy.Stats.Name.Value, NameVisible = true, Bounds=battleEnemy.SpriteBounds, target = battleEnemy });
+                    foreach (BattleEnemy battleEnemy in battleScene.EnemyList)
+                    {
+                        string name = (Text.GetStringLength(GameFont.Dialogue, battleEnemy.Stats.Name.Value) > battleEnemy.SpriteBounds.Width - 4) ?
+                            battleEnemy.Stats.Name.Value.Replace(' ', '\n') :
+                            battleEnemy.Stats.Name.Value;
+                        int nameLines = name.Count(x => x == '\n');
+                        Targets.Add(new TargetButton()
+                        {
+                            Name = name,
+                            NameVisible = true,
+                            Bounds = new Rectangle(battleEnemy.SpriteBounds.X, battleEnemy.SpriteBounds.Y - battleEnemy.ShadowOffset / 2, battleEnemy.SpriteBounds.Width, battleEnemy.SpriteBounds.Height),
+                            LabelBounds = new Rectangle(0, -battleEnemy.SpriteBounds.Height / 2 - 4 - (nameLines * 8), -1, 10),
+                            target = battleEnemy
+                        });
+                    }
                     break;
 
                 case TargetType.AllEnemy:
                     {
                         Targets.ModelList = new List<ModelProperty<TargetButton>>();
-                        Rectangle bounds = battleScene.EnemyList[0].SpriteBounds;
+                        Rectangle bounds = new Rectangle(battleScene.EnemyList[0].SpriteBounds.X, battleScene.EnemyList[0].SpriteBounds.Y - battleScene.EnemyList[0].ShadowOffset / 2, battleScene.EnemyList[0].SpriteBounds.Width, battleScene.EnemyList[0].SpriteBounds.Height);
+                        Rectangle labelBounds = new Rectangle(0, -battleScene.EnemyList[0].SpriteBounds.Height / 2 - 8, -1, 10);
                         for (int i = 1; i < battleScene.EnemyList.Count; i++) bounds = Rectangle.Union(bounds, battleScene.EnemyList[i].SpriteBounds);
-                        Targets.Add(new TargetButton() { Name = "All Enemies", NameVisible = true, Bounds = bounds });
+                        Targets.Add(new TargetButton() { Name = "All Enemies", NameVisible = true, Bounds = bounds, LabelBounds = labelBounds });
 
                         break;
                     }

@@ -58,8 +58,8 @@ namespace Texemon.Scenes.StatusScene
                     Strength.Value += item.RobotStrength;
                     Defense.Value += item.RobotDefense;
                     Agility.Value += item.RobotAgility;
-                    Mana.Value += item.RobotMana;
                 }
+                if (Class.Value == ClassType.Android) Mana.Value += item.RobotMana;
                 MaxHealth.Value = Health.Value;
             }
 
@@ -80,8 +80,8 @@ namespace Texemon.Scenes.StatusScene
                     Strength.Value += item.RobotStrength;
                     Defense.Value += item.RobotDefense;
                     Agility.Value += item.RobotAgility;
-                    Mana.Value += item.RobotMana;
                 }
+                if (Class.Value == ClassType.Android) Mana.Value += item.RobotMana;
                 MaxHealth.Value = Health.Value;
             }
 

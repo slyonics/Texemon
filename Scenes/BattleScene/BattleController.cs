@@ -103,7 +103,12 @@ namespace Texemon.Scenes.BattleScene
         private bool CalculateHit(string[] tokens)
         {
             int accuracy = int.Parse(tokens[1]);
-            if (Rng.RandomInt(1, 100) <= accuracy)
+            int attackerHit = 0;
+            if (tokens[2] == "Strength") attackerHit = attacker.Stats.Strength.Value * 2;
+            else if (tokens[2] == "Agility") attackerHit = attacker.Stats.Agility.Value * 2;
+            int targetEvade = Math.Max(target.Stats.Strength.Value, target.Stats.Agility.Value) * 2;
+
+            if (Rng.RandomInt(1, 100) <= accuracy + attackerHit - targetEvade)
             {
                 return true;
             }
@@ -133,6 +138,8 @@ namespace Texemon.Scenes.BattleScene
                     if (tokens.Length == 3) damage = int.Parse(tokens[1]);
                     else damage = Rng.RandomInt(int.Parse(tokens[1]), int.Parse(tokens[2]));
                     damage += Rng.RandomInt(0, 9);
+                    damage -= target.Stats.Defense.Value * 5;
+
                     goto dealDamage;
                 }
             }
@@ -141,16 +148,11 @@ namespace Texemon.Scenes.BattleScene
             string element = tokens[3];
             if (element == "Physical") damage = stat * multiplier + Rng.RandomInt(0, stat) - target.Stats.Defense.Value * 5;
             else damage = (int)((stat * multiplier + Rng.RandomInt(0, stat)) / 5.0f * (200 - target.Stats.Mana.Value) / 40.0f);
-            if (damage < 1) damage = 1;
-
+            
             dealDamage:
 
+            if (damage < 1) damage = 1;
             target.Damage(damage);
-        }
-
-        private void Exercise(string[] tokens)
-        {
-
         }
 
         private void Attack(string[] tokens)
@@ -158,7 +160,7 @@ namespace Texemon.Scenes.BattleScene
             List<BattlePlayer> eligibleTargets = battleScene.PlayerList.FindAll(x => !x.Dead);
             target = eligibleTargets[Rng.RandomInt(0, eligibleTargets.Count - 1)];
 
-            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nFlash 255 27 0\nDamage Strength 5 Physical");
+            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " attacks " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nOnHit 100 Strength\nFlash 255 27 0\nDamage Strength 5 Physical");
         }
 
         private void Flee(string[] tokens)

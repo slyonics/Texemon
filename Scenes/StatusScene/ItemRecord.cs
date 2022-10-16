@@ -10,7 +10,8 @@ namespace Texemon.Scenes.StatusScene
     {
         Weapon,
         Armor,
-        Consumable
+        Consumable,
+        Crafting
     }
 
     [Serializable]

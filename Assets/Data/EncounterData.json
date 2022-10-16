@@ -5,7 +5,7 @@
 			"Sentinel",
 			"Sentinel"
 		],
-		"Challenge": 3,
+		"Challenge": 2,
 		"Script": [],
 		"Intro": "Two sentinels appear and move into attack formation!"
 	},
@@ -45,13 +45,15 @@
 		"Intro": "You are detected by a patrolling squad of Steel Knights!"
 	},
 	{
-		"Name": "SteelSpectre",
+		"Name": "SteelScout",
 		"Background": "Steel",
 		"Enemies": [
-			"Spectre"
+			"Scout",
+			"Scout",
+			"Scout"
 		],
 		"Challenge": 3,
 		"Script": [],
-		"Intro": "A restless spectre"
+		"Intro": "You are detected by a patrolling squadron of drone scouts!"
 	}
 ]

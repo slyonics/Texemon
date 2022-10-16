@@ -49,6 +49,7 @@ namespace Texemon.Scenes.BattleScene
             shadow = ENEMY_SHADOWS["Enemies_" + EnemyRecord.Sprite];
 
             bounds = AnimatedSprite.SpriteBounds();
+            bounds.Y -= EnemyRecord.ShadowOffset / 2;
 
             battleScene.AddBattler(this);
         }
@@ -164,5 +165,7 @@ namespace Texemon.Scenes.BattleScene
         public override bool Busy { get => base.Busy || deathTimeLeft > 0 || Transitioning || fadeInTime < FADE_IN_DURATION; }
 
         public override bool Transitioning { get => GetParent<Panel>().Transitioning; }
+
+        public int ShadowOffset { get => EnemyRecord.ShadowOffset; }
     }
 }

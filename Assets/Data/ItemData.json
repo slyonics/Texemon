@@ -19,6 +19,7 @@
 			"Animate Attack",
 			"Sound Slash",
 			"Effect Slash $targetCenterX $targetCenterY 3",
+			"OnHit 100 Strength",
 			"Flash 255 27 0",
 			"Damage Strength 7 Physical"
 		]
@@ -43,7 +44,7 @@
 			"Animate Attack",
 			"Sound Laser",
 			"Effect Gunshot $targetCenterX $targetCenterY 4",
-			"OnHit 80 Physical",
+			"OnHit 100 Agility",
 			"Flash 255 27 0",
 			"Damage Agility 8 Physical"
 		]
@@ -86,6 +87,7 @@
 			"Animate Attack",
 			"Sound Thunder",
 			"Effect Shock $targetCenterX $targetCenterY 3",
+			"OnHit 80 Agility",
 			"Flash 251 206 177",
 			"Damage 30 80 Electric"
 		]
@@ -108,6 +110,7 @@
 			"Animate Attack",
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
+			"OnHit 80 Agility",
 			"Flash 255 27 0",
 			"Damage 30 80 Fire"
 		]
@@ -138,7 +141,6 @@
 	},
 	{
 		"Name": "Spare Parts",
-		"Animation": "Guarding",
 		"Description": [
 			"",
 			"Used for crafting",
@@ -146,11 +148,10 @@
 		],
 		"Icon": "Chest",
 		"Charges": -1,
-		"ItemType": "Armor"
+		"ItemType": "Crafting"
 	},
 	{
 		"Name": "Advanced Parts",
-		"Animation": "Guarding",
 		"Description": [
 			"",
 			"Used for crafting",
@@ -158,6 +159,19 @@
 		],
 		"Icon": "Chest",
 		"Charges": -1,
-		"ItemType": "Armor"
+		"ItemType": "Crafting"
+	},
+	{
+		"Name": "Kevlar",
+		"Description": [
+			"",
+			"Lightweight but",
+			"durable body armor"
+		],
+		"Icon": "Armor",
+		"Charges": -1,
+		"ItemType": "Armor",
+		"RobotHealth": 20,
+		"RobotDefense": 8
 	}
 ]
