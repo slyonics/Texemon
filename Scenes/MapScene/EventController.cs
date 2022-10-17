@@ -43,15 +43,15 @@ namespace Texemon.Scenes.MapScene
 
         public override string ParseParameter(string parameter)
         {
-            if (parameter.Contains("Flag."))
+            if (parameter.StartsWith("$SaveData."))
             {
-                return GameProfile.GetSaveData<bool>(parameter.Split('.')[1]).ToString();
+                return GameProfile.GetSaveData<string>(parameter.Split('.')[1]).ToString();
             }
             else if (parameter[0] == '$')
             {
                 switch (parameter)
                 {
-                    case "$ReviveConvo": return "TechRevive";
+                    
                     default: return null;
                 }
             }

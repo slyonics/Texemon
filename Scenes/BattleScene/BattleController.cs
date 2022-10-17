@@ -190,30 +190,26 @@ namespace Texemon.Scenes.BattleScene
                 var unblock = scriptParser.BlockScript();
                 convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
                 CrossPlatformGame.StackScene(convoScene);
+
+                timeleft = 1000;
             }
             else
             {
                 StackDialogue(String.Join(' ', tokens.Skip(1)));
             }
-
-            timeleft = 1000;
         }
 
         private void StackDialogue(string text)
         {
             var convoRecord = new ConversationScene.ConversationRecord()
             {
-                DialogueRecords = new ConversationScene.DialogueRecord[] {
-                            new ConversationScene.DialogueRecord() { Text = text }
-                        }
+                DialogueRecords = new ConversationScene.DialogueRecord[] { new ConversationScene.DialogueRecord() { Text = text, Script = new string[] { "Wait 1250" } } }
             };
 
             convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);
             var unblock = scriptParser.BlockScript();
             convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
             CrossPlatformGame.StackScene(convoScene);
-
-            timeleft = 1000;
         }
 
         public static void IncreaseStat(string[] tokens)

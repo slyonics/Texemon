@@ -34,12 +34,44 @@
 		]
 	},
 	{
-		"Name": "TechRevive",
+		"Name": "SoloRevive",
+		"Bounds": "-120,-70,240,54",
+		"DialogueRecords": [
+			{
+				"Speaker": "Inventor",
+				"Text": "Your repairs are all finished now. If ."
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "Be careful out there, and check the scrapyard #F3C14CFF northeast #FFFFFFFF of here if you need more parts for drone companions."
+			}
+		]
+	},
+	{
+		"Name": "WhereMyRecruitsRevive",
 		"Bounds": "-120,-70,240,54",
 		"DialogueRecords": [
 			{
 				"Speaker": "Inventor",
 				"Text": "Your repairs are all finished now. I'm not sure if you were accompanied by friends when you were disabled, but I only found you at the scrapyard."
+			},
+			{
+				"Speaker": "$Party.0",
+				"Text": "Where are my companions"
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "I."
+			}
+		]
+	},
+	{
+		"Name": "DefaultRevive",
+		"Bounds": "-120,-70,240,54",
+		"DialogueRecords": [
+			{
+				"Speaker": "Inventor",
+				"Text": "Your repairs are all finished now. If ."
 			},
 			{
 				"Speaker": "Inventor",

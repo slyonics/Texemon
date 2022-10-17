@@ -47,6 +47,8 @@ namespace Texemon.Scenes.ConversationScene
                 case "SelectionPrompt": SelectionPrompt(tokens); break;
 
                 case "IncreaseStat": BattleScene.BattleController.IncreaseStat(tokens); break;
+                case "ChangeMap": MapScene.EventController.ChangeMap(tokens, null); break;
+
                 default: return false;
             }
 

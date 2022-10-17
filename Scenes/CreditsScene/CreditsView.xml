@@ -4,22 +4,30 @@
   <Panel Style="TechWindow" Anchor="$CenterX,$CenterY" Bounds="-160,-120,320,240" InnerMargin="8,8,8,8" TransitionIn="Expand">
 
     <Panel Bounds="0,0,304,200">
-      <Label Text="Bryce Sheehan (Moxy)" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
-      <Label Text="Sprite Artist, Sound Effects, Designer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
 		
+      <Label Text="Created by Slyonics" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+
 		<LineBreak/>
+
+		<Label Text="Includes sprite art from" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+		<Label Text="Ocean's Nostalgia, Omega Modern" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
+
 		<LineBreak/>
+
+		<Label Text="Includes particle effects by" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+		<Label Text="Ben M. Henry" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
+
+		<LineBreak/>
+
+		<Label Text="Includes fonts by" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+		<Label Text="Masubiwa, Samuel Sousa" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
+
+		<LineBreak/>
+
+		<Label Text="Includes music from" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
+		<Label Text="8bit RPG ME Perfect Collection" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
+		<Label Text="8Bit Sound VGM Materials 'Orichalcum Sword'" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
 		
-      <Label Text="Noyemi K" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
-      <Label Text="Chiptune Composer, Texture Artist, Designer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
-		<Label Text="Noyemi@delmunsoft.com" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
-		
-		<LineBreak/>
-		<LineBreak/>
-		
-      <Label Text="Johnny Garza (Slyonics)" Alignment="Vertical" Font="Dialogue" Color="#C7895BFF"/>
-      <Label Text="Programmer, Designer, Writer" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
-      <Label Text="johnnygarza@gmx.com" Alignment="Vertical" Font="Dialogue" Color="#E0BFA2FF"/>
     </Panel>
 
     <Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0, -20, 60, 18" Alignment="ReverseVertical" Action="Back" InnerMargin="0,1,0,0">

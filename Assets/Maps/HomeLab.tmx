@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="15">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="19">
  <properties>
   <property name="LocationName" value="Distant Laboratory"/>
  </properties>
@@ -137,8 +137,33 @@ SetFlag NewTechGame False</property>
   <object id="14" name="Revive Sequence" type="Automatic" x="59" y="83" width="56" height="47">
    <properties>
     <property name="EnableIf" value="Wipeout"/>
-    <property name="Script">Conversation $ReviveConvo
+    <property name="Script">Music NewDestinations
+Conversation $SaveData.ReviveConvo
 SetFlag Wipeout False</property>
+   </properties>
+  </object>
+  <object id="15" name="Computer" type="Interactive" x="145" y="54" width="15" height="22">
+   <properties>
+    <property name="Label" value="Computer"/>
+    <property name="Script" value="Inn"/>
+   </properties>
+  </object>
+  <object id="16" name="Journal" type="Interactive" x="256" y="73" width="15" height="17">
+   <properties>
+    <property name="Label" value="Journal"/>
+    <property name="Script" value="Inn"/>
+   </properties>
+  </object>
+  <object id="17" name="Bookcase" type="Interactive" x="129" y="49" width="14" height="24">
+   <properties>
+    <property name="Label" value="Bookcase"/>
+    <property name="Script" value="Inn"/>
+   </properties>
+  </object>
+  <object id="18" name="Bookcase" type="Interactive" x="33" y="50" width="14" height="24">
+   <properties>
+    <property name="Label" value="Bookcase"/>
+    <property name="Script" value="Inn"/>
    </properties>
   </object>
  </objectgroup>

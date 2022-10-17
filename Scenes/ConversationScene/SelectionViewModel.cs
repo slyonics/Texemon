@@ -48,7 +48,7 @@ namespace Texemon.Scenes.ConversationScene
             else if (input.CommandPressed(Command.Down)) CursorDown();
             else if (input.CommandPressed(Command.Confirm) && selection != -1)
             {
-                Audio.PlaySound(GameSound.Confirm);
+                Audio.PlaySound(GameSound.Cursor);
                 Terminate();
             }
         }

@@ -6,6 +6,7 @@ using Texemon.Main;
 using Texemon.Models;
 using Texemon.SceneObjects;
 using Texemon.SceneObjects.Widgets;
+using System.Threading.Tasks;
 
 namespace Texemon.Scenes.ConversationScene
 {
@@ -71,6 +72,7 @@ namespace Texemon.Scenes.ConversationScene
                 if (!conversationScene.IsScriptRunning())
                 {
                     ReadyToProceed.Value = true;
+                    if (AutoProceed) NextDialogue();
                 }
 
                 OnDialogueScrolled?.Invoke();
@@ -144,7 +146,10 @@ namespace Texemon.Scenes.ConversationScene
 
         private void EndConversation()
         {
-            if (string.IsNullOrEmpty(conversationRecord.Background)) Close();
+            if (string.IsNullOrEmpty(conversationRecord.Background))
+            {
+                Close();
+            }
             else
             {
                 if (conversationScene.EndGame) CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));

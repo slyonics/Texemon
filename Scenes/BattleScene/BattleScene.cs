@@ -31,6 +31,7 @@ namespace Texemon.Scenes.BattleScene
         private List<Battler> initiativeList = new List<Battler>();
 
         private bool introFinished = false;
+        private bool wipeout = false;
 
         private GameMusic mapMusic;
 
@@ -74,7 +75,7 @@ namespace Texemon.Scenes.BattleScene
 
         public override void EndScene()
         {
-            Audio.PlayMusic(mapMusic);
+            if (!wipeout) Audio.PlayMusic(mapMusic);
 
             foreach (ModelProperty<StatusScene.HeroModel> heroModel in GameProfile.PlayerProfile.Party)
             {
@@ -161,7 +162,19 @@ namespace Texemon.Scenes.BattleScene
                 }
                 else if (PlayerList.All(x => x.Dead))
                 {
+                    wipeout = true;
+
                     GameProfile.SetSaveData<bool>("Wipeout", true);
+                    PickReviveConvo();
+
+                    GameProfile.Inventory.ModelList.Clear();
+                    GameProfile.PlayerProfile.Party.ModelList.Clear();
+                    GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
+                    for (int j = 1; j <= 10; j++) GameProfile.SetSaveData<bool>("JunkChest" + j + "Opened", false);
+                    foreach (var keyValuePair in GameProfile.SaveData)
+                    {
+                        if (keyValuePair.Key.EndsWith("Recruited")) GameProfile.SaveData[keyValuePair.Key] = false;
+                    }
 
                     string narration = (PlayerList.Count > 1) ?
                         "Despite their best efforts, " + PlayerList[0].Stats.Name.Value + "'s party was wiped out..." :
@@ -171,24 +184,10 @@ namespace Texemon.Scenes.BattleScene
                     {
                         DialogueRecords = new ConversationScene.DialogueRecord[]
                         {
-                            new ConversationScene.DialogueRecord() { Text = narration, Script = new string[] { "StopMusic", "Sound gameover", "Wait 3500" } }
+                            new ConversationScene.DialogueRecord() { Text = narration, Script = new string[] { "StopMusic", "Sound gameover", "Wait 3500", "ChangeMap HomeLab 5 7 Up"} }
                         }
                     };
-
-                    var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
-                    convoScene.OnTerminated += new TerminationFollowup(() =>
-                    {
-                        GameProfile.Inventory.ModelList.Clear();
-                        GameProfile.PlayerProfile.Party.ModelList.Clear();
-                        GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
-                        for (int i = 1; i <= 10; i++) GameProfile.SetSaveData<bool>("JunkChest" + i + "Opened", false);
-                        CrossPlatformGame.Transition(this, typeof(MapScene.MapScene), "HomeLab", 5, 7, SceneObjects.Maps.Orientation.Up);
-
-                        foreach (var keyValuePair in GameProfile.SaveData)
-                        {
-                            if (keyValuePair.Key.EndsWith("Recruited")) GameProfile.SaveData[keyValuePair.Key] = false;
-                        }
-                    });
+                    var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);                    
                     CrossPlatformGame.StackScene(convoScene);
                 }
                 else ActivateNextBattler();
@@ -269,6 +268,25 @@ namespace Texemon.Scenes.BattleScene
             initiativeList.Remove(battler);
             int insertIndex = initiativeList.FindLastIndex(x => x.ActionTime <= battler.ActionTime);
             initiativeList.Insert(Math.Max(insertIndex + 1, initiativeList.Count - 1), battler);
+        }
+
+        private void PickReviveConvo()
+        {
+            if (GameProfile.PlayerProfile.Party.Count() > 1 && !GameProfile.GetSaveData<bool>("PartyResetExplained"))
+            {
+                GameProfile.SetSaveData<bool>("PartyResetExplained", true);
+                GameProfile.SetSaveData<string>("ReviveConvo", "WhereMyPartyRevive");
+                return;
+            }
+
+            if (GameProfile.PlayerProfile.Party.Count() == 1 && !GameProfile.GetSaveData<bool>("SoloWarningExplained"))
+            {
+                GameProfile.SetSaveData<bool>("SoloWarningExplained", true);
+                GameProfile.SetSaveData<string>("ReviveConvo", "SoloRevive");
+                return;
+            }
+
+            GameProfile.SetSaveData<string>("ReviveConvo", "DefaultRevive");
         }
 
         public List<Battler> InitiativeList { get => initiativeList; }
