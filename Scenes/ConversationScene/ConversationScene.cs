@@ -77,6 +77,12 @@ namespace Texemon.Scenes.ConversationScene
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
         }
 
+        public ConversationScene(ConversationRecord iConversationData, Rectangle dialogBounds, int autoProceedLength)
+            : this(iConversationData, dialogBounds, true)
+        {
+            ConversationViewModel.AutoProceedLength = autoProceedLength;
+        }
+
         public static void Initialize()
         {
             if (CONVERSATIONS == null) CONVERSATIONS = AssetCache.LoadRecords<ConversationRecord>("ConversationData");

@@ -35,6 +35,7 @@ namespace Texemon.Scenes.MapScene
                 case "Shop": Shop(tokens); break;
                 case "GiveItem": GiveItem(tokens); break;
                 case "Inn": Inn(tokens); break;
+                case "RestoreParty": RestoreParty(); break;
                 default: return false;
             }
 
@@ -144,8 +145,14 @@ namespace Texemon.Scenes.MapScene
             mapScene.AddController(transitionOutController);
             mapScene.SceneShader = colorFadeOut;
 
+            RestoreParty();
+        }
+
+        public void RestoreParty()
+        {
             foreach (var partyMember in GameProfile.PlayerProfile.Party)
             {
+                partyMember.Value.Health.Value = partyMember.Value.MaxHealth.Value;
                 foreach (var ability in partyMember.Value.Abilities)
                 {
                     ability.Value.ChargesLeft = ability.Value.Charges;

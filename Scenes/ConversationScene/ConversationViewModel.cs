@@ -20,6 +20,7 @@ namespace Texemon.Scenes.ConversationScene
         private CrawlText crawlText;
 
         public bool AutoProceed { get; set; }
+        public int AutoProceedLength { get; set; } = -1;
 
         public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord)
             : base(iScene, PriorityLevel.GameLevel)
@@ -67,12 +68,17 @@ namespace Texemon.Scenes.ConversationScene
 
             if (conversationScene.PriorityLevel > PriorityLevel.GameLevel) return;
 
+            if (AutoProceedLength > 0)
+            {
+                AutoProceedLength -= gameTime.ElapsedGameTime.Milliseconds;
+                if (AutoProceedLength <= 0) Proceed();
+            }
+
             if (crawlText.ReadyToProceed && !ReadyToProceed.Value)
             {
                 if (!conversationScene.IsScriptRunning())
                 {
                     ReadyToProceed.Value = true;
-                    if (AutoProceed) NextDialogue();
                 }
 
                 OnDialogueScrolled?.Invoke();
