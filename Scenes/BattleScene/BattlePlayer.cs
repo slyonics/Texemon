@@ -240,6 +240,8 @@ namespace Texemon.Scenes.BattleScene
             else HeroModel.HealthColor.Value = new Color(136, 20, 0, 255);
 
             Exercise("Health");
+
+            if (Defending || Rng.RandomInt(0, 5) == 0) Exercise("Defense");
         }
 
         public override void Heal(int healing)

@@ -38,6 +38,8 @@ namespace Texemon.Scenes.BattleScene
         protected BattlerModel stats;
         public BattlerModel Stats { get => stats; }
 
+        public bool Defending { get; set; }
+
         public AnimatedSprite AnimatedSprite { get; protected set; }
 
         public List<Particle> ParticleList { get; } = new List<Particle>();
@@ -116,6 +118,7 @@ namespace Texemon.Scenes.BattleScene
         public virtual void StartTurn()
         {
             turnActive = true;
+            Defending = false;
         }
 
         public virtual void EndTurn(int initiativeModifier = 0)
@@ -138,6 +141,11 @@ namespace Texemon.Scenes.BattleScene
 
         public virtual void Damage(int damage)
         {
+            if (Defending)
+            {
+                damage /= 2;                
+            }
+
             Stats.Health.Value = Math.Max(0, Stats.Health.Value - damage);
 
             ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, damage.ToString())));
