@@ -13,7 +13,7 @@ namespace Texemon.Main
             int red = int.Parse(hexCode.Substring(1, 2), NumberStyles.HexNumber);
             int green = int.Parse(hexCode.Substring(3, 2), NumberStyles.HexNumber);
             int blue = int.Parse(hexCode.Substring(5, 2), NumberStyles.HexNumber);
-            int alpha = int.Parse(hexCode.Substring(7, 2), NumberStyles.HexNumber);
+            int alpha = (hexCode.Length > 7) ? int.Parse(hexCode.Substring(7, 2), NumberStyles.HexNumber) : 255;
 
             return new Color(red, green, blue, alpha);
         }

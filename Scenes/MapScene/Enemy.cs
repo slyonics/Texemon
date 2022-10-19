@@ -59,6 +59,9 @@ namespace Texemon.Scenes.MapScene
                     case "Sprite":
                         animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + tiledProperty.value)], NPC_ANIMATIONS);
                         break;
+                    case "SpriteHeight":
+                        SetFlight(int.Parse(tiledProperty.value), AssetCache.SPRITES[GameSprite.Actors_DroneShadow]);
+                        break;
                 }
             }
 

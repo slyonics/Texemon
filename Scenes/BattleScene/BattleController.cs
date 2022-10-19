@@ -174,12 +174,12 @@ namespace Texemon.Scenes.BattleScene
                         }
             };
 
-            convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), false);
+            convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
             scriptParser.BlockScript();
             convoScene.OnTerminated += battleScene.BattleViewModel.Close;
             CrossPlatformGame.StackScene(convoScene);
 
-            timeleft = 1000;
+            // timeleft = 1000;
         }
 
         private void Dialogue(string[] tokens)
@@ -191,7 +191,7 @@ namespace Texemon.Scenes.BattleScene
                 convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
                 CrossPlatformGame.StackScene(convoScene);
 
-                timeleft = 1000;
+                // timeleft = 1000;
             }
             else
             {
@@ -203,13 +203,15 @@ namespace Texemon.Scenes.BattleScene
         {
             var convoRecord = new ConversationScene.ConversationRecord()
             {
-                DialogueRecords = new ConversationScene.DialogueRecord[] { new ConversationScene.DialogueRecord() { Text = text, Script = new string[] { "Wait 1250" } } }
+                DialogueRecords = new ConversationScene.DialogueRecord[] { new ConversationScene.DialogueRecord() { Text = text} }
             };
 
             convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);
             var unblock = scriptParser.BlockScript();
             convoScene.ConversationViewModel.OnDialogueScrolled += new Action(unblock);
             CrossPlatformGame.StackScene(convoScene);
+
+            timeleft = 1000;
         }
 
         public static void IncreaseStat(string[] tokens)

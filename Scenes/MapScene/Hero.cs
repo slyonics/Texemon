@@ -51,6 +51,8 @@ namespace Texemon.Scenes.MapScene
 
         private MapScene mapScene;
 
+        private SceneObjects.Shaders.Light light;
+
         public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, StatusScene.HeroModel heroModel, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.Sprite.Value.ToString())], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
         {
@@ -68,6 +70,28 @@ namespace Texemon.Scenes.MapScene
                 if (shadowSprite != null) shadowSprite.Scale = new Vector2(0.5f, 0.5f);
             }
             */
+
+            if (mapScene.SceneShader != null && mapScene.SceneShader is SceneObjects.Shaders.DayNight)
+            {
+                light = new SceneObjects.Shaders.Light(position - new Vector2(0, 6), 0.0f);
+                light.Color = Color.AntiqueWhite;
+                light.Intensity = 40;
+                (mapScene.SceneShader as SceneObjects.Shaders.DayNight).Lights.Add(light);
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (light != null) light.Position = position - new Vector2(0, 6);
+        }
+
+        public override void CenterOn(Vector2 destination)
+        {
+            base.CenterOn(destination);
+
+            if (light != null) light.Position = position - new Vector2(0, 6);
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)

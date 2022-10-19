@@ -114,11 +114,10 @@ namespace Texemon.Main
         BattleEnemy,
         BattlePlayer,
         ColorFade,
+        DayNight,
         Default,
         HeatDistortion,
         Portrait,
-        Wall,
-        WallPlus,
 
         None = -1
     }
@@ -234,6 +233,7 @@ namespace Texemon.Main
         Widgets_TechLabel,
         Widgets_TechSelected,
         Widgets_TechWindow,
+        Background_Canyon_Canyon0,
         Widgets_Buttons_ClearPanel,
         Widgets_Buttons_GamePanel,
         Widgets_Buttons_GamePanelOpaque,

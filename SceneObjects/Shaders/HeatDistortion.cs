@@ -17,7 +17,7 @@ namespace Texemon.SceneObjects.Shaders
         public HeatDistortion()
             : base(AssetCache.EFFECTS[GameShader.HeatDistortion].Clone())
         {
-            shaderEffect.Parameters["amplitude"].SetValue(1.5f);
+            shaderEffect.Parameters["amplitude"].SetValue(2.0f);
             shaderEffect.Parameters["red"].SetValue(1.0f);
             shaderEffect.Parameters["green"].SetValue(0.8f);
             shaderEffect.Parameters["blue"].SetValue(0.6f);
@@ -28,7 +28,7 @@ namespace Texemon.SceneObjects.Shaders
         public override void Update(GameTime gameTime, Camera camera)
         {
             distortionTime += gameTime.ElapsedGameTime.Milliseconds;
-            shaderEffect.Parameters["time"].SetValue(distortionTime * 0.0015f);
+            shaderEffect.Parameters["time"].SetValue(distortionTime * 0.0005f);
         }
     }
 }

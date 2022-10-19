@@ -366,7 +366,7 @@ namespace Texemon.SceneObjects.Maps
             position = new Vector2(destination.X + boundingBox.Left + boundingBox.Width / 2, destination.Y + boundingBox.Bottom);
         }
 
-        public void CenterOn(Vector2 destination)
+        public virtual void CenterOn(Vector2 destination)
         {
             position = new Vector2(destination.X, destination.Y + boundingBox.Height / 2);
             UpdateBounds();

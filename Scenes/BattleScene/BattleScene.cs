@@ -31,7 +31,6 @@ namespace Texemon.Scenes.BattleScene
         private List<Battler> initiativeList = new List<Battler>();
 
         private bool introFinished = false;
-        private bool wipeout = false;
 
         private GameMusic mapMusic;
 
@@ -75,7 +74,7 @@ namespace Texemon.Scenes.BattleScene
 
         public override void EndScene()
         {
-            if (!wipeout) Audio.PlayMusic(mapMusic);
+            Audio.PlayMusic(mapMusic);
 
             foreach (ModelProperty<StatusScene.HeroModel> heroModel in GameProfile.PlayerProfile.Party)
             {
@@ -162,10 +161,16 @@ namespace Texemon.Scenes.BattleScene
                 }
                 else if (PlayerList.All(x => x.Dead))
                 {
-                    wipeout = true;
-
                     GameProfile.SetSaveData<bool>("Wipeout", true);
                     PickReviveConvo();
+
+                    foreach (BattlePlayer battlePlayer in PlayerList)
+                    {
+                        foreach (var equipment in battlePlayer.HeroModel.Equipment)
+                        {
+                            if (equipment.Value.ItemType != StatusScene.ItemType.Consumable) equipment.Value.ChargesLeft = equipment.Value.Charges;
+                        }
+                    }
 
                     GameProfile.Inventory.ModelList.Clear();
                     GameProfile.PlayerProfile.Party.ModelList.Clear();
@@ -187,7 +192,7 @@ namespace Texemon.Scenes.BattleScene
                             new ConversationScene.DialogueRecord() { Text = narration, Script = new string[] { "StopMusic", "Sound gameover", "Wait 3500", "ChangeMap HomeLab 5 7 Up"} }
                         }
                     };
-                    var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), true);                    
+                    var convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80), 3500);                    
                     CrossPlatformGame.StackScene(convoScene);
                 }
                 else ActivateNextBattler();
