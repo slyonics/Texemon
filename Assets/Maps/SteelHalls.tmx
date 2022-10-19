@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="18">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="18">
  <properties>
+  <property name="DayNight" type="color" value="#ff00001a"/>
   <property name="LocationName" value="Distant Scrapyard"/>
   <property name="Music" value="DeprivedArcaney"/>
  </properties>
@@ -172,7 +173,8 @@ Encounter SteelScout</property>
     <property name="Idle">Wait 2000
 Wander 800
 Repeat</property>
-    <property name="Sprite" value="Sentinel"/>
+    <property name="Sprite" value="DeflectorDrone"/>
+    <property name="SpriteHeight" type="int" value="4"/>
    </properties>
   </object>
  </objectgroup>

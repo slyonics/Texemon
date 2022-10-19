@@ -149,10 +149,10 @@ SetFlag Wipeout False</property>
     <property name="Script" value="Inn"/>
    </properties>
   </object>
-  <object id="16" name="Journal" type="Interactive" x="256" y="73" width="15" height="17">
+  <object id="16" name="Tutorial" type="Interactive" x="256" y="73" width="15" height="17">
    <properties>
-    <property name="Label" value="Journal"/>
-    <property name="Script" value="Inn"/>
+    <property name="Label" value="Tutorial"/>
+    <property name="Script" value="Conversation Tutorial"/>
    </properties>
   </object>
   <object id="17" name="Bookcase" type="Interactive" x="129" y="49" width="14" height="24">
