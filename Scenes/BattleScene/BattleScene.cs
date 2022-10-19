@@ -57,6 +57,12 @@ namespace Texemon.Scenes.BattleScene
 
             BuildBackground(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + encounterRecord.Background)], battleViewModel.EnemyWindow.Value.Width);
             battleViewModel.BackgroundRender.Value = backgroundRender;
+
+            List<Battler> battlerList = new List<Battler>();
+            battlerList.AddRange(PlayerList);
+            battlerList.AddRange(EnemyList);
+            foreach (Battler battler in battlerList) battler.Initiative = (int)(battler.BiggestStat * Rng.RandomDouble(0.75, 1.25));
+            foreach (Battler battler in battlerList.OrderByDescending(x => x.Initiative)) EnqueueInitiative(battler);
         }
 
         ~BattleScene()
@@ -172,7 +178,7 @@ namespace Texemon.Scenes.BattleScene
                         }
                     }
 
-                    GameProfile.Inventory.ModelList.Clear();
+                    // GameProfile.Inventory.ModelList.Clear();
                     GameProfile.PlayerProfile.Party.ModelList.Clear();
                     GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
                     for (int j = 1; j <= 10; j++) GameProfile.SetSaveData<bool>("JunkChest" + j + "Opened", false);
@@ -241,8 +247,7 @@ namespace Texemon.Scenes.BattleScene
         }
 
         public void AddBattler(Battler battler)
-        {
-            EnqueueInitiative(battler);
+        {            
             if (battler is BattleEnemy) EnemyList.Add(battler as BattleEnemy);
             else if (battler is BattlePlayer) PlayerList.Add(battler as BattlePlayer);
         }

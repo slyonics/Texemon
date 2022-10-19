@@ -44,6 +44,9 @@ namespace Texemon.Scenes.BattleScene
 
         public List<Particle> ParticleList { get; } = new List<Particle>();
 
+        public int BiggestStat { get => Math.Max(Stats.Mana.Value, Math.Max(Stats.Strength.Value, Stats.Agility.Value)); }
+        public int Initiative { get; set; }
+
         protected bool drawSprite = false;
 
         public Battler(Widget iParent, float widgetDepth)

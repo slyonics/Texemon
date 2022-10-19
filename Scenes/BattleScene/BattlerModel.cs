@@ -43,6 +43,7 @@ namespace Texemon.Scenes.BattleScene
             if (enemyRecord.Evade != null) foreach (var evadeEntry in enemyRecord.Evade) Evade.Add(evadeEntry);
         }
 
+
         public ModelProperty<string> Name { get; set; } = new ModelProperty<string>("Enemy");
         public ModelProperty<ClassType> Class { get; set; } = new ModelProperty<ClassType>(ClassType.Monster);
         public ModelProperty<int> Health { get; set; } = new ModelProperty<int>(10);
