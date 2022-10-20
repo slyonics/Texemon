@@ -22,18 +22,53 @@ float4 PixelShaderFunction(float4 position : SV_POSITION, float4 color1 : COLOR0
 {
 	float4 pixel = tex2D(s0, texCoord) * color1;
 
-	float distance1 = 0; if (lightI._11 > 0) distance1 = (lightI._11 - sqrt(pow(position.x - lightX._11, 2) + pow(position.y - lightY._11, 2))) / lightI._11 / lightI._11;
-	float distance2 = 0; if (lightI._12 > 0) distance2 = (lightI._12 - sqrt(pow(position.x - lightX._12, 2) + pow(position.y - lightY._12, 2))) / lightI._12 / lightI._12;
-	float distance3 = 0; if (lightI._13 > 0) distance3 = (lightI._13 - sqrt(pow(position.x - lightX._13, 2) + pow(position.y - lightY._13, 2))) / lightI._13 / lightI._13;
-	float distance4 = 0; if (lightI._14 > 0) distance4 = (lightI._14 - sqrt(pow(position.x - lightX._14, 2) + pow(position.y - lightY._14, 2))) / lightI._14 / lightI._14;
-	float distance5 = 0; if (lightI._21 > 0) distance5 = (lightI._21 - sqrt(pow(position.x - lightX._21, 2) + pow(position.y - lightY._21, 2))) / lightI._21 / lightI._21;
-	float distance6 = 0; if (lightI._22 > 0) distance6 = (lightI._22 - sqrt(pow(position.x - lightX._22, 2) + pow(position.y - lightY._22, 2))) / lightI._22 / lightI._22;
-	float distance7 = 0; if (lightI._23 > 0) distance7 = (lightI._23 - sqrt(pow(position.x - lightX._23, 2) + pow(position.y - lightY._23, 2))) / lightI._23 / lightI._23;
-	float distance8 = 0; if (lightI._24 > 0) distance8 = (lightI._24 - sqrt(pow(position.x - lightX._24, 2) + pow(position.y - lightY._24, 2))) / lightI._24 / lightI._24;
-	float distance9 = 0; if (lightI._31 > 0) distance9 = (lightI._31 - sqrt(pow(position.x - lightX._31, 2) + pow(position.y - lightY._31, 2))) / lightI._31 / lightI._31;
-	float distance10 = 0; if (lightI._32 > 0) distance10 = (lightI._32 - sqrt(pow(position.x - lightX._32, 2) + pow(position.y - lightY._32, 2))) / lightI._32 / lightI._32;
-	float distance11 = 0; if (lightI._33 > 0) distance11 = (lightI._33 - sqrt(pow(position.x - lightX._33, 2) + pow(position.y - lightY._33, 2))) / lightI._33 / lightI._33;
-	float distance12 = 0; if (lightI._34 > 0) distance12 = (lightI._34 - sqrt(pow(position.x - lightX._34, 2) + pow(position.y - lightY._34, 2))) / lightI._34 / lightI._34;
+	float distance1 = 0;
+	if (lightI._11 > 0) distance1 = (lightI._11 - sqrt(pow(position.x - lightX._11, 2) + pow(position.y - lightY._11, 2))) / lightI._11 / lightI._11;
+	if (distance1 < 0) distance1 = 0;
+
+	float distance2 = 0;
+	if (lightI._12 > 0) distance2 = (lightI._12 - sqrt(pow(position.x - lightX._12, 2) + pow(position.y - lightY._12, 2))) / lightI._12 / lightI._12;
+	if (distance2 < 0) distance2 = 0;
+
+	float distance3 = 0;
+	if (lightI._13 > 0) distance3 = (lightI._13 - sqrt(pow(position.x - lightX._13, 2) + pow(position.y - lightY._13, 2))) / lightI._13 / lightI._13;
+	if (distance3 < 0) distance3 = 0;
+
+	float distance4 = 0;
+	if (lightI._14 > 0) distance4 = (lightI._14 - sqrt(pow(position.x - lightX._14, 2) + pow(position.y - lightY._14, 2))) / lightI._14 / lightI._14;
+	if (distance4 < 0) distance4 = 0;
+
+	float distance5 = 0;
+	if (lightI._21 > 0) distance5 = (lightI._21 - sqrt(pow(position.x - lightX._21, 2) + pow(position.y - lightY._21, 2))) / lightI._21 / lightI._21;
+	if (distance5 < 0) distance5 = 0;
+
+	float distance6 = 0;
+	if (lightI._22 > 0) distance6 = (lightI._22 - sqrt(pow(position.x - lightX._22, 2) + pow(position.y - lightY._22, 2))) / lightI._22 / lightI._22;
+	if (distance6 < 0) distance6 = 0;
+
+	float distance7 = 0;
+	if (lightI._23 > 0) distance7 = (lightI._23 - sqrt(pow(position.x - lightX._23, 2) + pow(position.y - lightY._23, 2))) / lightI._23 / lightI._23;
+	if (distance7 < 0) distance7 = 0;
+
+	float distance8 = 0;
+	if (lightI._24 > 0) distance8 = (lightI._24 - sqrt(pow(position.x - lightX._24, 2) + pow(position.y - lightY._24, 2))) / lightI._24 / lightI._24;
+	if (distance8 < 0) distance8 = 0;
+
+	float distance9 = 0;
+	if (lightI._31 > 0) distance9 = (lightI._31 - sqrt(pow(position.x - lightX._31, 2) + pow(position.y - lightY._31, 2))) / lightI._31 / lightI._31;
+	if (distance9 < 0) distance9 = 0;
+
+	float distance10 = 0;
+	if (lightI._32 > 0) distance10 = (lightI._32 - sqrt(pow(position.x - lightX._32, 2) + pow(position.y - lightY._32, 2))) / lightI._32 / lightI._32;
+	if (distance10 < 0) distance10 = 0;
+
+	float distance11 = 0;
+	if (lightI._33 > 0) distance11 = (lightI._33 - sqrt(pow(position.x - lightX._33, 2) + pow(position.y - lightY._33, 2))) / lightI._33 / lightI._33;
+	if (distance11 < 0) distance11 = 0;
+
+	float distance12 = 0;
+	if (lightI._34 > 0) distance12 = (lightI._34 - sqrt(pow(position.x - lightX._34, 2) + pow(position.y - lightY._34, 2))) / lightI._34 / lightI._34;
+	if (distance12 < 0) distance12 = 0;
 
 	float redlight = distance1 * lightR._11 + distance2 * lightR._12 + distance3 * lightR._13 + distance4 * lightR._14 + distance5 * lightR._21 + distance6 * lightR._22 + distance7 * lightR._23 + distance8 * lightR._24 + distance9 * lightR._31 + distance10 * lightR._32 + distance11 * lightR._33 + distance11 * lightR._34;
 	if (redlight > bloom) redlight = bloom;

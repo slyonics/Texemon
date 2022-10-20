@@ -169,6 +169,12 @@ namespace Texemon.Scenes.BattleScene
 
         public virtual void Heal(int healing)
         {
+            if (Dead)
+            {
+                actionTime = 0;
+                battleScene.EnqueueInitiative(this);
+            }
+
             Stats.Health.Value = Math.Min(Stats.MaxHealth.Value, Stats.Health.Value + healing);
 
             ParticleList.Add(battleScene.AddParticle(new DamageParticle(battleScene, Bottom, healing.ToString(), new Color(28, 210, 160))));

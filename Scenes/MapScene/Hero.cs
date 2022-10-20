@@ -75,7 +75,7 @@ namespace Texemon.Scenes.MapScene
             {
                 light = new SceneObjects.Shaders.Light(position - new Vector2(0, 6), 0.0f);
                 light.Color = Color.AntiqueWhite;
-                light.Intensity = 40;
+                light.Intensity = 30;
                 (mapScene.SceneShader as SceneObjects.Shaders.DayNight).Lights.Add(light);
             }
         }

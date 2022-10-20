@@ -32,7 +32,7 @@ namespace Texemon.Scenes.MapScene
                     case "Music": Audio.PlayMusic((GameMusic)Enum.Parse(typeof(GameMusic), tiledProperty.value)); break;
                     case "Script": AddController(new EventController(this, tiledProperty.value.Split('\n'))); break;
                     case "ColorFilter": SceneShader = new SceneObjects.Shaders.ColorFade(Graphics.ParseHexcode("#" + tiledProperty.value.Substring(3)), 0.5f); break;
-                    case "DayNight": SceneShader = new SceneObjects.Shaders.DayNight(Graphics.ParseHexcode("#" + tiledProperty.value.Substring(3)), 0.5f); break;
+                    case "DayNight": SceneShader = new SceneObjects.Shaders.DayNight(Graphics.ParseHexcode("#" + tiledProperty.value.Substring(3)), 1.2f); break;
                     case "HeatDistortion": SceneShader = new SceneObjects.Shaders.HeatDistortion(); break;
                 }
             }
