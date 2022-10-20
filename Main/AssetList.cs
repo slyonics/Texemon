@@ -137,6 +137,7 @@ namespace Texemon.Main
         Actors_DeflectorDrone,
         Actors_DroneShadow,
         Actors_FutureChest,
+        Actors_HumanF,
         Actors_Inventor,
         Actors_RepairDrone,
         Actors_Scorpion,

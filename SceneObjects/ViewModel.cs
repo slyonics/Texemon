@@ -85,8 +85,11 @@ namespace Texemon.SceneObjects
             base.Terminate();
 
             widgetController.Terminate();
+            OnTerminated?.Invoke();
         }
 
         public Scene ParentScene { get => parentScene; }
+
+        public event Action OnTerminated;
     }
 }

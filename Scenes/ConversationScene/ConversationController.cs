@@ -45,6 +45,7 @@ namespace Texemon.Scenes.ConversationScene
                 case "Actor": Actor(tokens); break;
                 case "Animate": Animate(tokens); break;
                 case "SelectionPrompt": SelectionPrompt(tokens); break;
+                case "ChangeConversation": ChangeConversation(tokens); break;
 
                 case "IncreaseStat": BattleScene.BattleController.IncreaseStat(tokens); break;
                 case "ChangeMap": MapScene.EventController.ChangeMap(tokens, null); break;
@@ -199,6 +200,19 @@ namespace Texemon.Scenes.ConversationScene
 
             SelectionViewModel selectionViewModel = new SelectionViewModel(conversationScene, options);
             conversationScene.AddOverlay(selectionViewModel);
+
+            ScriptParser.UnblockFollowup followup = scriptParser.BlockScript();
+            selectionViewModel.OnTerminated += new Action(followup);
+        }
+
+        private void ChangeConversation(string[] tokens)
+        {
+            var conversationData = ConversationScene.CONVERSATIONS.FirstOrDefault(x => x.Name == tokens[1]);
+
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) conversationScene.RunScript(conversationData.DialogueRecords[0].Script);
+
+            conversationScene.ConversationViewModel.ChangeConversation(conversationData);
         }
     }
 }

@@ -172,9 +172,13 @@ namespace Texemon.Scenes.BattleScene
 
                     foreach (BattlePlayer battlePlayer in PlayerList)
                     {
+                        bool isProtagonist = (battlePlayer == PlayerList[0]);
+
                         foreach (var equipment in battlePlayer.HeroModel.Equipment)
                         {
                             if (equipment.Value.ItemType != StatusScene.ItemType.Consumable) equipment.Value.ChargesLeft = equipment.Value.Charges;
+
+                            if (!isProtagonist) GameProfile.Inventory.Add(equipment.Value);
                         }
                     }
 

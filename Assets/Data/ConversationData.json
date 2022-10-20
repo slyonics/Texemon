@@ -94,7 +94,7 @@
 					"No",
 					"Yes",
 					"End",
-					"Wait 1"
+					"ProceedText"
 				]
 			}
 		]
@@ -107,36 +107,42 @@
 				"Script": [
 					"WaitForText",
 					"SelectionPrompt",
-					"No",
-					"Yes",
+					"Don't read",
+					"Read about stats",
+					"Read about leveling up",
 					"End",
-					"Wait 1"
+					"Switch $selection",
+					"Case Don't read",
+					"ProceedText",
+					"Break",
+					"Case Read about stats",
+					"ChangeConversation StatsTutorial",
+					"Break",
+					"Case Read about leveling up",
+					"Break",
+					"End"
 				]
 			}
 		]
 	},
 	{
-		"Name": "TreeConvo",
-		"Background": "",
-		"EndScript": [ "Actor Actors_Blank" ],
+		"Name": "StatsTutorial",
 		"DialogueRecords": [
 			{
-				"Speaker": "TestSpeaker",
-				"Text": "This is a test conversation triggered on an NPC.",
-				"Script": [ "Actor Actors_Student", "Animate Talk", "WaitForText", "Animate Idle" ]
-			},
-			{
-				"Speaker": "$PlayerProfile.WindowStyle",
-				"Text": "Conversations can span multiple pages.",
-				"Script": [ "Animate Talk", "WaitForText", "Animate Idle" ]
+				"Text": "All about stats!"
 			}
 		]
 	},
 	{
-		"Name": "BattleTime",
+		"Name": "TalkCanyonAdventurer",
 		"DialogueRecords": [
 			{
-				"Text": "Battle Scene Goes Here"
+				"Speaker": "TestSpeaker",
+				"Text": "This is a test conversation triggered on an NPC."
+			},
+			{
+				"Speaker": "$PlayerProfile.WindowStyle",
+				"Text": "Conversations can span multiple pages."
 			}
 		]
 	}

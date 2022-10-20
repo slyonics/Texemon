@@ -32,9 +32,10 @@ namespace Texemon.Scenes.ConversationScene
                 if (optionLength > longestOption) longestOption = optionLength;
             }
             int width = longestOption + 14;
-            WindowSize.Value = new Rectangle(120 - width, 70, width, Text.GetStringHeight(GameProfile.PlayerProfile.Font.Value) * options.Count() + 9);
-            ButtonSize.Value = new Rectangle(0, 2, longestOption + 6, (Text.GetStringHeight(GameProfile.PlayerProfile.Font.Value)));
+            ButtonSize.Value = new Rectangle(0, 0, longestOption + 6, Text.GetStringHeight(GameProfile.PlayerProfile.Font.Value));
             LabelSize.Value = new Rectangle(0, -2, longestOption + 6, ButtonSize.Value.Height);
+            WindowSize.Value = new Rectangle(120 - width, 70, width, ButtonSize.Value.Height * options.Count() + 8);
+
 
             LoadView(GameView.ConversationScene_SelectionView);
         }
@@ -83,7 +84,7 @@ namespace Texemon.Scenes.ConversationScene
 
         public override void Terminate()
         {
-            conversationScene.ConversationViewModel.Proceed();
+            //conversationScene.ConversationViewModel.Proceed();
             base.Terminate();
         }
 

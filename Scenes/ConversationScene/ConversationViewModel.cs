@@ -163,6 +163,17 @@ namespace Texemon.Scenes.ConversationScene
             }
         }
 
+        public void ChangeConversation(ConversationRecord newConversationRecord)
+        {
+            dialogueIndex = 0;
+
+            conversationRecord = newConversationRecord;
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
+
+            Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
+            Dialogue.Value = currentDialogue.Text;
+        }
+
         public event Action OnDialogueScrolled;
 
         public ModelProperty<Rectangle> Window { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-120, 20, 240, 60));
