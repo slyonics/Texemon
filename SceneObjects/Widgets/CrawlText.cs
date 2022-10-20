@@ -96,7 +96,7 @@ namespace Texemon.SceneObjects.Widgets
                 {
                     if (textElement.icon != null)
                     {
-                        spriteBatch.Draw(textElement.icon, base.Position + new Vector2(currentWindow.X + textElement.offset - 4, currentWindow.Y + 2), null, textElement.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.05f);
+                        spriteBatch.Draw(textElement.icon, base.Position + new Vector2(currentWindow.X + textElement.offset - 4, currentWindow.Y + 2 + textElement.line * 10), null, textElement.color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.05f);
                     }
                     else Main.Text.DrawText(spriteBatch, base.Position + new Vector2(currentWindow.X + textElement.offset, currentWindow.Y), Font, textElement.text.ToString(), textElement.color, textElement.line);
                 }

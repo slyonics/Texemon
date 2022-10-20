@@ -22,6 +22,8 @@ namespace Texemon.Scenes.MapScene
         public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
         public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
 
+        private ParallaxBackdrop parallaxBackdrop;
+
         public MapScene(string mapName)
         {
             Tilemap = AddEntity(new Tilemap(this, (GameMap)Enum.Parse(typeof(GameMap), mapName)));
@@ -31,9 +33,12 @@ namespace Texemon.Scenes.MapScene
                 {
                     case "Music": Audio.PlayMusic((GameMusic)Enum.Parse(typeof(GameMusic), tiledProperty.value)); break;
                     case "Script": AddController(new EventController(this, tiledProperty.value.Split('\n'))); break;
+
                     case "ColorFilter": SceneShader = new SceneObjects.Shaders.ColorFade(Graphics.ParseHexcode("#" + tiledProperty.value.Substring(3)), 0.5f); break;
                     case "DayNight": SceneShader = new SceneObjects.Shaders.DayNight(Graphics.ParseHexcode("#" + tiledProperty.value.Substring(3)), 1.2f); break;
                     case "HeatDistortion": SceneShader = new SceneObjects.Shaders.HeatDistortion(); break;
+
+                    case "Background": BuildParallaxBackground(tiledProperty.value); break;
                 }
             }
 
@@ -239,11 +244,22 @@ namespace Texemon.Scenes.MapScene
 
             NPCs.RemoveAll(x => x.Terminated);
             Enemies.RemoveAll(x => x.Terminated);
+
+            parallaxBackdrop?.Update(gameTime, Camera);
         }
 
         public override void DrawBackground(SpriteBatch spriteBatch)
         {
+            parallaxBackdrop?.Draw(spriteBatch);
+
             Tilemap.DrawBackground(spriteBatch, Camera);
+        }
+
+        private void BuildParallaxBackground(string background)
+        {
+            string[] tokens = background.Split(' ');
+
+            parallaxBackdrop = new ParallaxBackdrop(tokens[0], tokens.Skip(1).Select(x => float.Parse(x)).ToArray());
         }
 
         public override void DrawGame(SpriteBatch spriteBatch, Effect shader, Matrix matrix)
