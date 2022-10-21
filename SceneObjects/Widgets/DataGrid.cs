@@ -66,13 +66,16 @@ namespace Texemon.SceneObjects.Widgets
             foreach (Widget widget in ChildList) widget.Terminate();
             ChildList.Clear();
 
+            float depthOffset = 0.0f;
             foreach (var modelProperty in items)
             {
                 Widget childWidget;
-                if (!dataTemplate.Name.Contains('.')) childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + WIDGET_DEPTH_OFFSET }, null, null);
-                else childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + "." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + WIDGET_DEPTH_OFFSET }, null, null);
+                if (!dataTemplate.Name.Contains('.')) childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + depthOffset + WIDGET_DEPTH_OFFSET }, null, null);
+                else childWidget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + "." + dataTemplate.Name, false, BindingFlags.CreateInstance, null, new object[] { this, Depth + depthOffset + WIDGET_DEPTH_OFFSET }, null, null);
 
                 AddChild(childWidget, dataTemplate);
+
+                depthOffset -= 0.0001f;
             }
         }
 
