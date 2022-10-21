@@ -133,6 +133,7 @@ namespace Texemon.SceneObjects
                     case "ClearParticles": foreach (Particle particle in childParticles) particle.Terminate(); childParticles.Clear(); break;
                     case "Particle": AddParticle(tokens); break;
                     case "Sound": Audio.PlaySound(tokens); break;
+                    case "SoundSolo": Audio.PlaySoundSolo(tokens); break;
                     case "Music": Audio.PlayMusic(tokens); break;
                     case "StopMusic": Audio.StopMusic(); break;
                     case "SetFlag": SetFlag(tokens); break;

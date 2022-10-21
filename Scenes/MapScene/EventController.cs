@@ -173,11 +173,7 @@ namespace Texemon.Scenes.MapScene
 
             if (tokens.Length >= 2) ActorSubject.Terminate();
 
-            Audio.PauseMusic(true);
-            Audio.PlaySound(GameSound.JoinParty);
-            Task.Delay(1500).ContinueWith(t => Audio.PauseMusic(false));
-
-            mapScene.AddPartyMember(heroModel);
+            mapScene.AddPartyMember(heroModel, ActorSubject);
         }
     }
 }

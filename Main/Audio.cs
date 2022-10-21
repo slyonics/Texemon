@@ -138,6 +138,13 @@ namespace Texemon.Main
             PlaySound((GameSound)Enum.Parse(typeof(GameSound), scriptTokens[1]), volume, pan, pitch);
         }
 
+        public static void PlaySoundSolo(string[] scriptTokens)
+        {
+            Audio.PauseMusic(true);
+            PlaySound((GameSound)Enum.Parse(typeof(GameSound), scriptTokens[1]));
+            Task.Delay(int.Parse(scriptTokens[2])).ContinueWith(t => Audio.PauseMusic(false));
+        }
+
         public static float SoundVolume { set => soundVolume = value; get => soundVolume; }
         public static float MusicVolume
         {

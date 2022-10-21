@@ -212,6 +212,18 @@ namespace Texemon.Scenes.MapScene
             AddParticle(new SceneObjects.Particles.AnimationParticle(this, follower.Center, SceneObjects.Particles.AnimationType.Smoke));
         }
 
+        public void AddPartyMember(HeroModel heroModel, Actor oldActor)
+        {
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), heroModel);
+            AddEntity(follower);
+            FollowerController followerController = new FollowerController(this, follower, Party.Last());
+            AddController(followerController);
+            Party.Add(follower);
+            follower.Position = oldActor.Position;
+            follower.Orientation = oldActor.Orientation;
+            follower.Idle();
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

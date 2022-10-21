@@ -207,7 +207,7 @@
 					"ChangeConversation RecruitCanyon",
 					"Break",
 					"Case Gently refuse",
-					"ChangeConversation RefuseCannyon",
+					"ChangeConversation RefuseCanyon",
 					"Break",
 					"End"
 				]
@@ -228,7 +228,10 @@
 		"DialogueRecords": [
 			{
 				"Speaker": "Adventurer",
-				"Text": "Alright! I'll do my best!"
+				"Text": "Alright! I'll do my best!",
+				"Script": [
+					"SoundSolo JoinParty 1500"
+				]
 			}
 		]
 	},
