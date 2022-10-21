@@ -39,6 +39,7 @@ namespace Texemon.Scenes.BattleScene
         public BattlerModel Stats { get => stats; }
 
         public bool Defending { get; set; }
+        public bool Delaying { get; set; }
 
         public AnimatedSprite AnimatedSprite { get; protected set; }
 
@@ -122,12 +123,14 @@ namespace Texemon.Scenes.BattleScene
         {
             turnActive = true;
             Defending = false;
+            Delaying = false;
         }
 
         public virtual void EndTurn(int initiativeModifier = 0)
         {
             turnActive = false;
-            actionTime += initiativeModifier + STANDARD_TURN;
+            if (Delaying) actionTime += initiativeModifier + STANDARD_TURN / 2;
+            else actionTime += initiativeModifier + STANDARD_TURN;
             battleScene.EnqueueInitiative(this);
         }
 

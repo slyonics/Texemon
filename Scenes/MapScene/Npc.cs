@@ -79,6 +79,7 @@ namespace Texemon.Scenes.MapScene
 
             Rectangle areaOfInterest = Rectangle.Union(SpriteBounds, mapScene.PartyLeader.SpriteBounds);
             EventController eventController = new EventController(mapScene, interactionScript);
+            eventController.ActorSubject = this;
 
             mapScene.AddController(eventController);
             controllerList.Add(eventController);

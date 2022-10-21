@@ -189,6 +189,10 @@ namespace Texemon.Scenes.BattleScene
                     foreach (var keyValuePair in GameProfile.SaveData)
                     {
                         if (keyValuePair.Key.EndsWith("Recruited")) GameProfile.SaveData[keyValuePair.Key] = false;
+                        else if (keyValuePair.Key.EndsWith("Recruitable"))
+                        {
+                            if (Rng.RandomInt(0, 1) == 1) GameProfile.SaveData[keyValuePair.Key] = false;
+                        }
                     }
 
                     string narration = (PlayerList.Count > 1) ?

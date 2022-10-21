@@ -56,6 +56,7 @@ namespace Texemon.Scenes.IntroScene
             if (selection == SelectionViewModel.Selection.Technology)
             {
                 GameProfile.SetSaveData<bool>("NewTechGame", true);
+                GameProfile.SetSaveData<bool>("NoviceWarriorRecruitable", true);
 
                 var hero = new HeroModel(HeroType.TechHero);
                 hero.Name.Value = namingBox.Text;

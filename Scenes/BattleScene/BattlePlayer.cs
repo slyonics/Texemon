@@ -241,7 +241,7 @@ namespace Texemon.Scenes.BattleScene
 
             Exercise("Health");
 
-            if (Defending || Rng.RandomInt(0, 5) == 0) Exercise("Defense");
+            if (Defending || Rng.RandomInt(0, 4) == 0) Exercise("Defense");
         }
 
         public override void Heal(int healing)

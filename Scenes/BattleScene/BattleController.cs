@@ -68,7 +68,7 @@ namespace Texemon.Scenes.BattleScene
                 case "Dialogue": Dialogue(tokens); break;
                 case "Flee": Flee(tokens); break;
                 case "Defend": attacker.Defending = true; StackDialogue(attacker.Stats.Name.Value + " is defending against attacks..."); break;
-                case "Delay": StackDialogue(attacker.Stats.Name.Value + " is waiting for the right moment to act..."); break;
+                case "Delay": attacker.Delaying = true; StackDialogue(attacker.Stats.Name.Value + " is waiting for the right moment to act..."); break;
                 case "OnHit": if (!CalculateHit(tokens)) scriptParser.EndScript(); break;
                 default: return false;
             }

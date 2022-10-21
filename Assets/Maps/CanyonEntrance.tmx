@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="11">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="11">
  <properties>
   <property name="Background" value="Canyon 0"/>
   <property name="LocationName" value="Canyon Entrance"/>
@@ -160,12 +160,20 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="NPCs">
-  <object id="10" name="Inventor" x="241" y="198" width="16" height="16">
+  <object id="10" name="Novice Warrior" x="241" y="198" width="16" height="16">
    <properties>
     <property name="Behavior" value=""/>
     <property name="Direction" value="Down"/>
-    <property name="Interact" value="Conversation TalkCanyonAdventurer"/>
-    <property name="Label" value="Adventurer"/>
+    <property name="EnableIf" value="NoviceWarriorRecruitable"/>
+    <property name="Interact">Conversation TalkCanyonAdventurer
+Switch $selection
+Case Recruit her
+Recruit NoviceWarrior
+SetFlag NoviceWarriorRecruitable False
+Break
+End</property>
+    <property name="Label">Novice
+Warrior</property>
     <property name="Sprite" value="HumanF"/>
    </properties>
   </object>

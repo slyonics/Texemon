@@ -64,51 +64,50 @@ namespace Texemon.Scenes.MapScene
 
             foreach (Tuple<TiledLayer, TiledGroup> layer in Tilemap.ObjectData)
             {
-                switch (layer.Item1.name)
+                foreach (TiledObject tiledObject in layer.Item1.objects)
                 {
-                    case "Triggers":
-                        foreach (TiledObject tiledObject in layer.Item1.objects)
-                        {
-                            var prop = tiledObject.properties.FirstOrDefault(x => x.name == "EnableIf");
-                            if (prop != null && !Models.GameProfile.GetSaveData<bool>(prop.value)) continue;
+                    var prop = tiledObject.properties.FirstOrDefault(x => x.name == "EnableIf");
+                    if (prop != null && !Models.GameProfile.GetSaveData<bool>(prop.value)) continue;
 
-                            prop = tiledObject.properties.FirstOrDefault(x => x.name == "DisableIf");
-                            if (prop != null && Models.GameProfile.GetSaveData<bool>(prop.value)) continue;
+                    prop = tiledObject.properties.FirstOrDefault(x => x.name == "DisableIf");
+                    if (prop != null && Models.GameProfile.GetSaveData<bool>(prop.value)) continue;
 
-                            EventTriggers.Add(new EventTrigger(this, tiledObject));
-                        }
-                        break;
+                    switch (layer.Item1.name)
+                    {
+                        case "Triggers":
+                            {
+                                EventTriggers.Add(new EventTrigger(this, tiledObject));
+                            }
+                            break;
 
-                    case "NPCs":
-                        foreach (TiledObject tiledObject in layer.Item1.objects)
-                        {
-                            Npc npc = new Npc(this, Tilemap, tiledObject, "Base");
-                            NpcController npcController = new NpcController(this, npc);
-                            NPCs.Add(npc);
-                            AddEntity(npc);
-                            AddController(npcController);
-                        }
-                        break;
+                        case "NPCs":
+                            {
+                                Npc npc = new Npc(this, Tilemap, tiledObject, "Base");
+                                NpcController npcController = new NpcController(this, npc);
+                                NPCs.Add(npc);
+                                AddEntity(npc);
+                                AddController(npcController);
+                            }
+                            break;
 
-                    case "Chests":
-                        foreach (TiledObject tiledObject in layer.Item1.objects)
-                        {
-                            Chest chest = new Chest(this, Tilemap, tiledObject, tiledObject.properties.First(x => x.name == "Sprite").value);
-                            NPCs.Add(chest);
-                            AddEntity(chest);
-                        }
-                        break;
+                        case "Chests":
+                            {
+                                Chest chest = new Chest(this, Tilemap, tiledObject, tiledObject.properties.First(x => x.name == "Sprite").value);
+                                NPCs.Add(chest);
+                                AddEntity(chest);
+                            }
+                            break;
 
-                    case "Enemies":
-                        foreach (TiledObject tiledObject in layer.Item1.objects)
-                        {
-                            Enemy enemy = new Enemy(this, Tilemap, tiledObject, "Base");
-                            EnemyController enemyController = new EnemyController(this, enemy);
-                            Enemies.Add(enemy);
-                            AddEntity(enemy);
-                            AddController(enemyController);
-                        }
-                        break;
+                        case "Enemies":
+                            {
+                                Enemy enemy = new Enemy(this, Tilemap, tiledObject, "Base");
+                                EnemyController enemyController = new EnemyController(this, enemy);
+                                Enemies.Add(enemy);
+                                AddEntity(enemy);
+                                AddController(enemyController);
+                            }
+                            break;
+                    }
                 }
             }
         }

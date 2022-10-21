@@ -152,5 +152,28 @@
 			"Agility": { "Value": 3 },
 			"Mana": { "Value": 0 }
 		}
+	},
+	{
+		"Name": "NoviceWarrior",
+		"Class": "Human",
+		"Sprite": "HumanF",
+		"HealthGrowth": 0.8,
+		"StrengthGrowth": 0.5,
+		"DefenseGrowth": 0.08,
+		"AgilityGrowth": 0.2,
+		"ManaGrowth": 0.3,
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [ ],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Novice" },
+			"MaxHealth": { "Value": 60 },
+			"Strength": { "Value": 3 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 2 },
+			"Mana": { "Value": 5 }
+		}
 	}
 ]

@@ -170,12 +170,74 @@
 		"Name": "TalkCanyonAdventurer",
 		"DialogueRecords": [
 			{
-				"Speaker": "TestSpeaker",
-				"Text": "This is a test conversation triggered on an NPC."
-			},
+				"Speaker": "Adventurer",
+				"Text": "I've been thinking about trying the adventuring life style lately. Do you know a lot about adventuring?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Yes",
+					"No",
+					"End",
+					"Switch $selection",
+					"Case Yes",
+					"ChangeConversation BragCanyon",
+					"Break",
+					"Case No",
+					"ChangeConversation DenyCanyon",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "BragCanyon",
+		"DialogueRecords": [
 			{
-				"Speaker": "$PlayerProfile.WindowStyle",
-				"Text": "Conversations can span multiple pages."
+				"Speaker": "Adventurer",
+				"Text": "Really? That's great! Do you mind if I follow along for a bit?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Recruit her",
+					"Gently refuse",
+					"End",
+					"Switch $selection",
+					"Case Recruit her",
+					"ChangeConversation RecruitCanyon",
+					"Break",
+					"Case Gently refuse",
+					"ChangeConversation RefuseCannyon",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "RefuseCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I understand. You're probably pretty busy anyways I bet. Well, good luck out there."
+			}
+		]
+	},
+	{
+		"Name": "RecruitCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Alright! I'll do my best!"
+			}
+		]
+	},
+	{
+		"Name": "DenyCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Yeah, me neither really. But I'll figure it out as I go along."
 			}
 		]
 	}

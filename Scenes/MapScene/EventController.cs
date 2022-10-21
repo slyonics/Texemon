@@ -8,6 +8,7 @@ using Texemon.Models;
 using Texemon.SceneObjects.Controllers;
 using Texemon.SceneObjects.Maps;
 using Texemon.Scenes.ConversationScene;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.MapScene
 {
@@ -16,6 +17,7 @@ namespace Texemon.Scenes.MapScene
         private MapScene mapScene;
 
         public bool EndGame { get; private set; }
+        public Actor ActorSubject { get; set; }
 
         public EventController(MapScene iScene, string[] script)
             : base(iScene, script, PriorityLevel.CutsceneLevel)
@@ -36,6 +38,7 @@ namespace Texemon.Scenes.MapScene
                 case "GiveItem": GiveItem(tokens); break;
                 case "Inn": Inn(tokens); break;
                 case "RestoreParty": RestoreParty(); break;
+                case "Recruit": Recruit(tokens); break;
                 default: return false;
             }
 
@@ -158,6 +161,23 @@ namespace Texemon.Scenes.MapScene
                     ability.Value.ChargesLeft = ability.Value.Charges;
                 }
             }
+        }
+
+        public void Recruit(string[] tokens)
+        {
+            HeroModel heroModel = new HeroModel((HeroType)Enum.Parse(typeof(HeroType), tokens[1]));
+            //heroModel.Name.Value = namingBox.Text;
+            // TODO overflow party to backbench
+            GameProfile.PlayerProfile.Party.Add(heroModel);
+            GameProfile.SetSaveData<bool>(heroModel.Name.Value + "Recruited", true);
+
+            if (tokens.Length >= 2) ActorSubject.Terminate();
+
+            Audio.PauseMusic(true);
+            Audio.PlaySound(GameSound.JoinParty);
+            Task.Delay(1500).ContinueWith(t => Audio.PauseMusic(false));
+
+            mapScene.AddPartyMember(heroModel);
         }
     }
 }

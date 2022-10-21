@@ -14,7 +14,8 @@ namespace Texemon.Scenes.StatusScene
         DeflectorDrone,
         BlowtorchDrone,
         ArcWelderDrone,
-        TechnoMage
+        TechnoMage,
+        NoviceWarrior
     }
 
     public enum ElementType
