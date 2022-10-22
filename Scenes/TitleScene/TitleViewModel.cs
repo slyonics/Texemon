@@ -35,6 +35,14 @@ namespace Texemon.Scenes.TitleScene
         public TitleViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel)
         {
+            GameProfile.NewState();
+            GameProfile.PlayerProfile.WindowStyle.Value = "TechWindow";
+            GameProfile.PlayerProfile.FrameStyle.Value = "TechFrame";
+            GameProfile.PlayerProfile.SelectedStyle.Value = "TechSelected";
+            GameProfile.PlayerProfile.FrameSelectedStyle.Value = "TechFrameSelected";
+            GameProfile.PlayerProfile.LabelStyle.Value = "TechLabel";
+            GameProfile.PlayerProfile.Font.Value = GameFont.Pixel;
+
             var saves = GameProfile.GetAllSaveData();
             foreach (var saveEntry in saves)
             {

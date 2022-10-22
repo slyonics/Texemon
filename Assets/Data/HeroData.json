@@ -168,7 +168,7 @@
 		"InitialAbilities": [ ],
 		"Actions": [],
 		"BattlerModel": {
-			"Name": { "Value": "Novice" },
+			"Name": { "Value": "Jessica" },
 			"MaxHealth": { "Value": 60 },
 			"Strength": { "Value": 4 },
 			"Defense": { "Value": 3 },
