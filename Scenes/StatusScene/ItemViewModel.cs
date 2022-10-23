@@ -73,7 +73,10 @@ namespace Texemon.Scenes.StatusScene
             Audio.PlaySound(GameSound.menu_select);
 
             SelectItem(AvailableItems[slot]);
-            (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
+
+            var itemGrid = GetWidget<DataGrid>("ItemList");
+            (itemGrid.ChildList[slot] as Button).RadioSelect();
+            if (!itemGrid.IsChildVisible(itemGrid.ChildList[slot])) itemGrid.ScrollUp();
         }
 
         private void CursorDown()
@@ -86,9 +89,12 @@ namespace Texemon.Scenes.StatusScene
             }
             
             Audio.PlaySound(GameSound.menu_select);
-
+                        
             SelectItem(AvailableItems[slot]);
-            (GetWidget<DataGrid>("ItemList").ChildList[slot] as Button).RadioSelect();
+
+            var itemGrid = GetWidget<DataGrid>("ItemList");
+            (itemGrid.ChildList[slot] as Button).RadioSelect();
+            if (!itemGrid.IsChildVisible(itemGrid.ChildList[slot])) itemGrid.ScrollDown();
         }
 
         public void SelectItem(object parameter)

@@ -28,7 +28,7 @@ namespace Texemon.Scenes.TitleScene
             { "Idle", new Animation(0, 0, 24, 32, 4, 400) }
         };
 
-        private SettingsViewModel settingsViewModel;
+        private ViewModel settingsViewModel;
 
         public ModelCollection<SaveModel> AvailableSaves { get; set; } = new ModelCollection<SaveModel>();
 
@@ -86,7 +86,9 @@ namespace Texemon.Scenes.TitleScene
 
         public void Credits()
         {
-            CrossPlatformGame.Transition(typeof(CreditsScene.CreditsScene));
+            //CrossPlatformGame.Transition(typeof(CreditsScene.CreditsScene));
+            settingsViewModel = new CreditsScene.CreditsViewModel(parentScene, GameView.CreditsScene_CreditsView);
+            parentScene.AddOverlay(settingsViewModel);
         }
 
         public void Exit()

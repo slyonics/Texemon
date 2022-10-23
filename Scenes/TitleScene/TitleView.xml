@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 	
-	<Panel Anchor="$CenterX,$CenterY" Bounds="-90,-100,180,20">		  
-		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Cascading" Action="SettingsMenu" InnerMargin="8,1,8,4">
+	<Panel Anchor="$CenterX,$CenterY" Bounds="100,-120,60,60">		  
+		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Vertical" Action="SettingsMenu" InnerMargin="8,1,8,4">
 			<Label Text="Settings" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
 		</Button>
-		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Cascading" Action="Credits" InnerMargin="8,1,8,4">
+		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Vertical" Action="Credits" InnerMargin="8,1,8,4">
 			<Label Text="Credits" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
 		</Button>
-		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Cascading" Action="Exit" InnerMargin="8,1,8,4">
+		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Vertical" Action="Exit" InnerMargin="8,1,8,4">
 			<Label Text="Exit" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
 		</Button>
 	</Panel>

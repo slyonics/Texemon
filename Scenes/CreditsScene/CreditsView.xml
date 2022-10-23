@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-  <Panel Style="TechWindow" Anchor="$CenterX,$CenterY" Bounds="-160,-120,320,240" InnerMargin="8,8,8,8" TransitionIn="Expand">
+  <Panel Style="TechWindow" Anchor="$CenterX,$CenterY" Bounds="-160,-120,320,240" InnerMargin="8,8,8,8" TransitionIn="Expand" TransitionOut="Shrink">
 
     <Panel Bounds="0,0,304,200">
 		

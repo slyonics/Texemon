@@ -88,8 +88,8 @@ namespace Texemon.SceneObjects.Widgets
         {
             if (!Scrolling) return true;
 
-            return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y + 4) &&
-                   (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y - 4);
+            return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y) &&
+                   (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y);
         }
 
         public void ScrollUp()
