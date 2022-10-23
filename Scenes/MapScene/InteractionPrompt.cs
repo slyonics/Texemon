@@ -23,6 +23,8 @@ namespace Texemon.Scenes.MapScene
         {
             mapScene = iMapScene;
             textbox = new NinePatch(GameProfile.PlayerProfile.LabelStyle.Value, 0.05f);
+
+
         }
 
         public override void Update(GameTime gameTime)

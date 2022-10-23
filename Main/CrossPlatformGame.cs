@@ -35,6 +35,8 @@ namespace Texemon.Main
         private RenderTarget2D gameRender;
         private RenderTarget2D compositeRender;
 
+        private int originalHeight;
+
         private static int scaledScreenWidth = TARGET_SCREEN_WIDTH;
         private static int scaledScreenHeight = TARGET_SCREEN_HEIGHT;
         private static int screenScale = 1;
@@ -65,6 +67,8 @@ namespace Texemon.Main
 
         protected override void Initialize()
         {
+            originalHeight = GraphicsDevice.Adapter.CurrentDisplayMode.TitleSafeArea.Height;
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Settings.LoadSettings();
             Audio.ApplySettings();
@@ -93,6 +97,7 @@ namespace Texemon.Main
 
             if (fullscreen)
             {
+                /*
                 DisplayModeCollection displayModes = GraphicsDevice.Adapter.SupportedDisplayModes;
                 IEnumerable<DisplayMode> bestModes = displayModes.Where(x => x.Width >= TARGET_SCREEN_WIDTH && x.Width <= MAXIMUM_SCREEN_WIDTH &&
                                                                              x.Height >= TARGET_SCREEN_HEIGHT && x.Height <= MAXIMUM_SCREEN_HEIGHT);
@@ -102,10 +107,15 @@ namespace Texemon.Main
                 scaledScreenHeight = targetMode.Height;
                 int scale = targetMode.Height / TARGET_SCREEN_HEIGHT;
                 screenScale = scale;
+                */
+
+                screenScale = 2;
+                scaledScreenWidth = TARGET_SCREEN_WIDTH * screenScale;
+                scaledScreenHeight = TARGET_SCREEN_HEIGHT * screenScale;
             }
             else
             {
-                int availableHeight = GraphicsDevice.Adapter.CurrentDisplayMode.TitleSafeArea.Height - WINDOWED_MARGIN;
+                int availableHeight = originalHeight - WINDOWED_MARGIN;
                 int scale = availableHeight / TARGET_SCREEN_HEIGHT;
 
                 screenScale = scale;

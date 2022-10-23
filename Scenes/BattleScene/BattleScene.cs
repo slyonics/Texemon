@@ -191,7 +191,7 @@ namespace Texemon.Scenes.BattleScene
                         if (keyValuePair.Key.EndsWith("Recruited")) GameProfile.SaveData[keyValuePair.Key] = false;
                         else if (keyValuePair.Key.EndsWith("Recruitable"))
                         {
-                            if (Rng.RandomInt(0, 1) == 1) GameProfile.SaveData[keyValuePair.Key] = false;
+                            if (Rng.RandomInt(0, 1) == 1) GameProfile.SaveData[keyValuePair.Key] = true;
                         }
                     }
 

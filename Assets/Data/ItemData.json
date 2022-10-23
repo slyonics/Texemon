@@ -173,5 +173,28 @@
 		"ItemType": "Armor",
 		"RobotHealth": 20,
 		"BonusDefense": 8
+	},
+	{
+		"Name": "Firebolt",
+		"Animation": "Guarding",
+		"Description": [
+			"- Uses MANA",
+			"- 5x damage",
+			"- Incendiary",
+			"- VS 1 enemy"
+		],
+		"Icon": "Staff",
+		"Charges": -1,
+		"ItemType": "Weapon",
+		"Targetting": "SingleEnemy",
+		"RobotMana": 6,
+		"Script": [
+			"Exercise Mana",
+			"Animate Attack",
+			"Sound Fireball",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage Mana 5 Fire"
+		]
 	}
 ]

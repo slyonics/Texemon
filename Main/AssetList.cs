@@ -237,6 +237,7 @@ namespace Texemon.Main
         Widgets_TechSelected,
         Widgets_TechWindow,
         Background_Canyon_Canyon0,
+        Background_Canyon_Canyon1,
         Widgets_Buttons_ClearPanel,
         Widgets_Buttons_GamePanel,
         Widgets_Buttons_GamePanelOpaque,
@@ -290,6 +291,7 @@ namespace Texemon.Main
 
     public enum GameMap
     {
+        CanyonCliff,
         CanyonEntrance,
         HomeLab,
         Junkyard,

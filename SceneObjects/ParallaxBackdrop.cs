@@ -67,11 +67,11 @@ namespace Texemon.SceneObjects
 
             foreach (Layer layer in layerList)
             {
-                if (layer.speed > 0.01f)
+                if (layer.speed > 0.001f)
                 {
                     for (int i = 0; i < Math.Max(2, CrossPlatformGame.ScreenWidth / layer.background.Width); i++)
                     {
-                        spriteBatch.Draw(layer.background, layer.offset + new Vector2(layer.background.Width * i, backdropHeight - layer.background.Height), null, color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, STARTING_DEPTH + depthOffset);
+                        spriteBatch.Draw(layer.background, layer.offset + new Vector2(layer.background.Width * i, backdropHeight - layer.background.Height), null, color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, STARTING_DEPTH - depthOffset);
                     }
                 }
                 else
