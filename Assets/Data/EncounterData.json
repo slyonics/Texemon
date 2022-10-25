@@ -34,6 +34,21 @@
 		"Intro": "A nest of angry scorpions swarm around you!"
 	},
 	{
+		"Name": "BigPlant",
+		"Background": "Trees",
+		"Enemies": [
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "Toxic, carnivourous plants are drawn by your scent and move at alarming speed!"
+	},
+	{
 		"Name": "SteelPatrol",
 		"Background": "Steel",
 		"Enemies": [

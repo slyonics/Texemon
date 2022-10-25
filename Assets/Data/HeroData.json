@@ -55,11 +55,11 @@
 		"Name": "TechHero",
 		"Class": "Android",
 		"Sprite": "Android",
-		"HealthGrowth": 0.1,
-		"StrengthGrowth": 0.1,
-		"DefenseGrowth": 0.01,
-		"AgilityGrowth": 0.1,
-		"ManaGrowth": 0.1,
+		"HealthGrowth": 0.2,
+		"StrengthGrowth": 0.2,
+		"DefenseGrowth": 0.02,
+		"AgilityGrowth": 0.2,
+		"ManaGrowth": 0.2,
 		"InitialEquipment": [
 			"Blaster",
 			"Repair Kit"

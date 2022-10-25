@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 	
-	<Panel Anchor="$CenterX,$CenterY" Bounds="100,-120,60,60">		  
+	<Panel Anchor="$CenterX,$CenterY" Bounds="90,-110,60,60">		  
 		<Button Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,60,20" Alignment="Vertical" Action="SettingsMenu" InnerMargin="8,1,8,4">
 			<Label Text="Settings" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
 		</Button>

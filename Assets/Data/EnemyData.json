@@ -95,7 +95,60 @@
 			}
 		]
 	},
-
+	{
+		"Name": "Water Spirit",
+		"Sprite": "WaterSpirit",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 8,
+		"Agility": 0,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Toxic Bloom",
+		"Sprite": "PoisonFlower",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 8,
+		"Agility": 0,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Genbu",
+		"Sprite": "Turtle",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 8,
+		"Agility": 0,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
 	{
 		"Name": "Scout",
 		"Sprite": "Drone",

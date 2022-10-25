@@ -139,6 +139,7 @@ namespace Texemon.Main
         Actors_FutureChest,
         Actors_HumanF,
         Actors_Inventor,
+        Actors_Plant,
         Actors_RepairDrone,
         Actors_Scorpion,
         Actors_Sentinel,
@@ -293,6 +294,7 @@ namespace Texemon.Main
     {
         CanyonCliff,
         CanyonEntrance,
+        EastOasis,
         HomeLab,
         Junkyard,
         MageConvention,
@@ -300,6 +302,7 @@ namespace Texemon.Main
         SteelHalls,
         TechHomeworld,
         Test,
+        WestOasis,
         Tilesets_ColorTileA1,
         Tilesets_ColorTileA2,
         Tilesets_ColorTileA4,
