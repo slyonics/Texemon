@@ -24,6 +24,8 @@ namespace Texemon.Scenes.IntroScene
             GameProfile.NewState();
 
             selectionViewModel = AddView(new SelectionViewModel(this, GameView.IntroScene_SelectionView));
+
+            selectionViewModel.Autostart();
         }
 
         public override void BeginScene()

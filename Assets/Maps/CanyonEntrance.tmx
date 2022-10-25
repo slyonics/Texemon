@@ -126,14 +126,14 @@
     <property name="Label" value="Outside"/>
    </properties>
   </object>
-  <object id="11" name="CanyonCliff" type="Travel" x="602" y="159" width="36" height="63">
+  <object id="11" name="CanyonCliff" type="Travel" x="593" y="159" width="45" height="63">
    <properties>
     <property name="Direction" value="Left"/>
     <property name="Label">Descend
 canyon</property>
    </properties>
   </object>
-  <object id="13" name="CanyonCliff" type="Travel" x="602" y="224" width="37" height="63">
+  <object id="13" name="CanyonCliff" type="Travel" x="593" y="224" width="46" height="63">
    <properties>
     <property name="Direction" value="Left"/>
     <property name="Label">Descend

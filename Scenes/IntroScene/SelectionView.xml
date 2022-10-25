@@ -13,7 +13,7 @@
 
 	<Panel Anchor="$CenterX,$CenterY" Bounds="-140,0,280,110">
 		<CrawlText Font="Bind PlayerProfile.Font" Name="Description" Bounds="0,0,280,90"/>
-		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,30,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Visible="Bind ReadyToProceed">
+		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,30,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Visible="False">
 			<Label Text="OK" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
 		</Button>
 	</Panel>

@@ -32,7 +32,7 @@ namespace Texemon.Scenes.IntroScene
 
             if (Input.CurrentInput.CommandPressed(Command.Cancel))
             {
-                Terminate();
+                //Terminate();
             }
             else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0 && GetWidget<Button>("OK").Enabled)
             {

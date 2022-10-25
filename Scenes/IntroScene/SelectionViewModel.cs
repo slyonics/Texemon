@@ -48,6 +48,7 @@ namespace Texemon.Scenes.IntroScene
                 else return;
             }
 
+            /*
             if (Input.CurrentInput.CommandPressed(Command.Up))
             {
                 Audio.PlaySound(GameSound.menu_select);
@@ -69,6 +70,15 @@ namespace Texemon.Scenes.IntroScene
                 Audio.PlaySound(GameSound.menu_select);
                 Proceed();
             }
+            */
+
+        }
+
+        public void Autostart()
+        {
+            GetWidget<Button>("Technology").RadioSelect();
+            Technology();
+            Proceed();
         }
 
         public void Magic()

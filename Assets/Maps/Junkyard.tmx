@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="15">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="15">
  <properties>
-  <property name="ColorFilter" type="color" value="#ffffaa00"/>
   <property name="LocationName" value="Distant Scrapyard"/>
   <property name="Music" value="Scrapyard"/>
  </properties>
