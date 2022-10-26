@@ -109,6 +109,7 @@ namespace Texemon.Scenes.StatusScene
         private void CursorDown()
         {
             saveSlot++;
+            
             if (saveSlot >= 5)
             {
                 saveSlot = 4;

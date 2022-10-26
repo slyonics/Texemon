@@ -88,7 +88,7 @@ namespace Texemon.SceneObjects.Widgets
         {
             if (!Scrolling) return true;
 
-            return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y) &&
+            return (child.OuterBounds.Bottom - scrollOffset.Y < InnerBounds.Bottom + InnerMargin.Y + 1) &&
                    (child.OuterBounds.Top - scrollOffset.Y >= InnerBounds.Top + InnerMargin.Y);
         }
 

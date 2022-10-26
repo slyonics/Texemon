@@ -100,8 +100,8 @@ namespace Texemon.Scenes.StatusScene
         {
             base.Update(gameTime);
 
-            if (Input.CurrentInput.CommandPressed(Command.Up)) CursorUp();
-            else if (Input.CurrentInput.CommandPressed(Command.Down)) CursorDown();
+            if (Input.CurrentInput.CommandPressed(Command.Up) || Input.MouseWheel > 0) CursorUp();
+            else if (Input.CurrentInput.CommandPressed(Command.Down) || Input.MouseWheel < 0) CursorDown();
             else if (Input.CurrentInput.CommandPressed(Command.Confirm) && confirmCooldown <= 0)
             {
                 Audio.PlaySound(GameSound.Cursor);

@@ -32,6 +32,9 @@ namespace Texemon.Scenes.TitleScene
 
         public ModelCollection<SaveModel> AvailableSaves { get; set; } = new ModelCollection<SaveModel>();
 
+        private DataGrid dataGrid;
+        private int slot = -1;
+
         public TitleViewModel(Scene iScene, GameView viewName)
             : base(iScene, PriorityLevel.GameLevel)
         {
@@ -61,6 +64,62 @@ namespace Texemon.Scenes.TitleScene
             }
 
             LoadView(GameView.TitleScene_TitleView);
+
+            dataGrid = GetWidget<DataGrid>("SaveList");
+            if (AvailableSaves.Count() > 0)
+            {
+                slot = 0;
+                (dataGrid.ChildList[slot] as Button).RadioSelect();
+            }
+            else
+            {
+                GetWidget<Button>("NewGame").RadioSelect();
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (Input.CurrentInput.CommandPressed(Command.Up))
+            {
+                if (slot == -1) return;
+                slot--;
+
+                Audio.PlaySound(GameSound.menu_select);
+
+                if (slot > -1) (dataGrid.ChildList[slot] as Button).RadioSelect();
+                else
+                {
+                    (dataGrid.ChildList[0] as Button).UnSelect();
+                    GetWidget<Button>("NewGame").RadioSelect();
+                }
+            }
+            else if (Input.CurrentInput.CommandPressed(Command.Down))
+            {
+                if (slot == AvailableSaves.Count() - 1) return;
+                slot++;
+
+                Audio.PlaySound(GameSound.menu_select);
+
+                if (slot > -1)
+                {
+                    GetWidget<Button>("NewGame").UnSelect();
+                    (dataGrid.ChildList[slot] as Button).RadioSelect();
+                } 
+                else
+                {
+                    (dataGrid.ChildList[0] as Button).UnSelect();
+                    GetWidget<Button>("NewGame").RadioSelect();
+                }
+            }
+            else if (Input.CurrentInput.CommandPressed(Command.Confirm))
+            {
+                Audio.PlaySound(GameSound.Cursor);
+
+                if (slot == -1) NewGame();
+                else Continue(slot);
+            }
         }
 
         public void NewGame()

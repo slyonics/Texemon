@@ -54,6 +54,7 @@ namespace Texemon.Main
         public static ButtonState RightMouseState { get => newMouseState.RightButton; }
         public static Vector2 MousePosition { get; private set; }
         public static Vector2 DeltaMouseGame { get; private set; }
+        public static int MouseWheel { get => newMouseState.ScrollWheelValue - oldMouseState.ScrollWheelValue; }
 
         public static InputFrame CurrentInput { get => inputFrame; }
     }

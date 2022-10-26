@@ -12,17 +12,19 @@
 			<Label Text="Exit" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
 		</Button>
 	</Panel>
-	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,120">
-		<DataGrid Items="Bind AvailableSaves" Alignment="Stretch">
-			<Button Style="Bind DataGrid.WindowStyle" PushedStyle="Bind DataGrid.WindowSelectedStyle" Alignment="Vertical" Bounds="0,0,120,30" Action="Continue" ActionParameter="Ref DataGrid.SaveSlot">
+
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,140">
+		<Button Radio="True" Name="NewGame" Style="TechWindow" PushedStyle="TechSelected" Alignment="Vertical" Bounds="0,0,70,20" Action="NewGame" InnerMargin="8,1,8,4">
+			<Label Text="New Game" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
+		</Button>
+		<DataGrid Name="SaveList" Items="Bind AvailableSaves" Scrolling="False" Alignment="Vertical" Bounds="0,0,120,120">
+			<Button Radio="True" Style="Bind DataGrid.WindowStyle" PushedStyle="Bind DataGrid.WindowSelectedStyle" Alignment="Vertical" Bounds="0,0,120,30" Action="Continue" ActionParameter="Ref DataGrid.SaveSlot">
 				<Image Sprite="Bind DataGrid.AnimatedSprite" Alignment="Left" Bounds="10,32,28,20"/>
 				<Label Text="Bind DataGrid.PartyLeader.Name" Font="Bind DataGrid.Font" Alignment="Cascading" TextAlignment="Left" Bounds="22,12,80,20"/>
 				<Label Text="Bind DataGrid.PlayerLocation" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="22,13,110,10"/>
 			</Button>
 		</DataGrid>
 	</Panel>
-	<Button Style="TechWindow" PushedStyle="TechSelected" Anchor="$CenterX,$CenterY" Bounds="-35,40,70,20" Action="NewGame" InnerMargin="8,1,8,4">
-		<Label Text="New Game" Alignment="Center" Color="#E0BFA2FF" Font="Pixel"/>
-	</Button>
+	
   
 </View>

@@ -111,7 +111,10 @@
 		"Name": "LabBookcase2",
 		"DialogueRecords": [
 			{
-				"Text": "This bookcase will contain additional tutorials and world building later."
+				"Text": "Press the <ESCAPE> key to access the main menu. You can view character stats, equip items, browse your inventory, or save your game progress."
+			},
+			{
+				"Text": "Make sure to save your game progress often!"
 			}
 		]
 	},
