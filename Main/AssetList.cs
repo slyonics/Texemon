@@ -139,6 +139,7 @@ namespace Texemon.Main
         Actors_FutureChest,
         Actors_HumanF,
         Actors_Inventor,
+        Actors_MutantF,
         Actors_Plant,
         Actors_RepairDrone,
         Actors_Scorpion,

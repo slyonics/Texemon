@@ -281,6 +281,11 @@ namespace Texemon.Scenes.BattleScene
 
                 case TargetType.AllEnemy:
                     {
+                        {
+                            BattleController battleController = new BattleController(battleScene, Player, null, Command.PreScript);
+                            battleScene.AddController(battleController);
+                        }
+
                         int delay = 0;
                         foreach (BattleEnemy battleEnemy in battleScene.EnemyList)
                         {                            
@@ -297,6 +302,11 @@ namespace Texemon.Scenes.BattleScene
 
                 case TargetType.AllAlly:
                     {
+                        {
+                            BattleController battleController = new BattleController(battleScene, Player, null, Command.PreScript);
+                            battleScene.AddController(battleController);
+                        }
+
                         int delay = 0;
                         foreach (BattlePlayer battlePlayer in battleScene.PlayerList)
                         {

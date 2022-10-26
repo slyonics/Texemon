@@ -262,5 +262,38 @@
 				"Text": "Yeah, me neither really. But I'll figure it out as I go along."
 			}
 		]
+	},
+	{
+		"Name": "TalkNoviceMage",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I've been thinking about trying the adventuring life style lately. Do you know a lot about adventuring?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Yes",
+					"No",
+					"End",
+					"Switch $selection",
+					"Case Yes",
+					"SoundSolo JoinParty 1500",
+					"Break",
+					"Case No",
+					"ChangeConversation RefuseNoviceMage",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "RefuseNoviceMage",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I understand. You're probably pretty busy anyways I bet. Well, good luck out there."
+			}
+		]
 	}
 ]

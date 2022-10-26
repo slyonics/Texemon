@@ -38,6 +38,7 @@ namespace Texemon.Scenes.StatusScene
             TargetMechanical = clone.TargetMechanical;
             TargetOrganic = clone.TargetOrganic;
             if (clone.Script != null) Script = (string[])clone.Script.Clone();
+            if (clone.PreScript != null) PreScript = (string[])clone.PreScript.Clone();
         }
 
         public string Name { get; set; }
@@ -52,6 +53,7 @@ namespace Texemon.Scenes.StatusScene
         public bool TargetDead { get; set; } // true if this can target dead allies
         public bool TargetMechanical { get; set; } // true if this only targets robots
         public bool TargetOrganic { get; set; } // true if this only targets non-robots
+        public string[] PreScript { get; set; }
         public string[] Script { get; set; }
     }
 }

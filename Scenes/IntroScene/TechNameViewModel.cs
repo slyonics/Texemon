@@ -57,6 +57,7 @@ namespace Texemon.Scenes.IntroScene
             {
                 GameProfile.SetSaveData<bool>("NewTechGame", true);
                 GameProfile.SetSaveData<bool>("NoviceWarriorRecruitable", true);
+                GameProfile.SetSaveData<bool>("NoviceMageRecruitable", true);
 
                 var hero = new HeroModel(HeroType.TechHero);
                 hero.Name.Value = namingBox.Text;

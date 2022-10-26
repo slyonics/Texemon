@@ -11,8 +11,8 @@
 		"Icon": "Fire",
 		"Charges": 15,
 		"Targetting": "AllEnemy",
+		"PreScript": [ "Exercise Mana" ],
 		"Script": [
-			"Exercise Mana",
 			"Animate Attack",
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
