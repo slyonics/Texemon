@@ -153,7 +153,7 @@ namespace Texemon.SceneObjects
 
         private string ParseParameter(string parameter)
         {
-            if (parameter[0] == '!')
+            if (parameter[0] == '!' && parameter.Length > 1)
             {
                 parameter = ParseParameter(parameter.Substring(1, parameter.Length - 1));
                 if (parameter == "True") return "False";

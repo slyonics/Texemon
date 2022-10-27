@@ -47,7 +47,13 @@
 		"Attacks": [
 			{
 				"Script": [
-					"Attack"
+					"Dialogue $attackerName attacks $targetNameEx",
+					"Animate Attack",
+					"Sound Slash",
+					"Effect Bash $targetCenterX $targetCenterY 3",
+					"OnHit 100 Strength",
+					"Flash 255 27 0",
+					"Damage Strength 5 Physical"
 				],
 				"Weight": 100
 			}
@@ -83,7 +89,13 @@
 		"Attacks": [
 			{
 				"Script": [
-					"Attack"
+					"Dialogue $attackerName attacks $targetNameEx",
+					"Animate Attack",
+					"Sound Slash",
+					"Effect Bash $targetCenterX $targetCenterY 3",
+					"OnHit 100 Strength",
+					"Flash 255 27 0",
+					"Damage Strength 5 Physical"
 				],
 				"Weight": 100
 			},

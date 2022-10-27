@@ -61,7 +61,7 @@ namespace Texemon.Scenes.BattleScene
                 case "Effect": Effect(tokens); break;
                 case "Exercise": (attacker as BattlePlayer).Exercise(tokens[1]); break;
                 case "Damage": CalculateDamage(tokens); break;
-                case "Heal": target.Heal(int.Parse(tokens[1])); break;
+                case "Heal": CalculateHealing(tokens); break;
                 case "Repair": target.Repair(int.Parse(tokens[1])); break;
                 case "Flash": target.FlashColor(new Color(byte.Parse(tokens[1]), byte.Parse(tokens[2]), byte.Parse(tokens[3]))); break;
                 case "Attack": Attack(tokens); break;
@@ -84,6 +84,9 @@ namespace Texemon.Scenes.BattleScene
                 case "$targetCenterY": return target.Center.Y.ToString();
                 case "$targetTop": return target.Top.Y.ToString();
                 case "$targetBottom": return target.Bottom.Y.ToString();
+                case "$targetName": return target.Stats.Name.Value;
+                case "$attackerName": return attacker.Stats.Name.Value;
+                case "$attackerNameEx": return attacker.Stats.Name.Value + "!";
                 default: return base.ParseParameter(parameter);
             }
         }
@@ -153,6 +156,15 @@ namespace Texemon.Scenes.BattleScene
 
             if (damage < 1) damage = 1;
             target.Damage(damage);
+        }
+
+        private void CalculateHealing(string[] tokens)
+        {
+            if (tokens.Length == 2) target.Heal(int.Parse(tokens[1]));
+            else
+            {
+                int healing = (attacker.Stats.Mana.Value + target.Stats.Mana.Value) * 5;
+            }
         }
 
         private void Attack(string[] tokens)
