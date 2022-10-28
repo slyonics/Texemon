@@ -43,7 +43,7 @@ namespace Texemon.Scenes.MapScene
                             case 1: item = "Longsword"; break;
                             case 2: item = "Blowtorch"; break;
                             case 3: item = "Arc Welder"; break;
-                            case 4: item = "Blaster"; break;
+                            case 4: item = "Shotgun"; break;
                         }
                         break;
 

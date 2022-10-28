@@ -25,7 +25,32 @@
 		]
 	},
 	{
-		"Name": "Blaster",
+		"Name": "Claymore",
+		"Animation": "Guarding",
+		"Description": [
+			"- Uses POWER",
+			"- 9x damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Greatsword",
+		"Charges": -1,
+		"ItemType": "Weapon",
+		"Targetting": "SingleEnemy",
+		"RobotHealth": 30,
+		"RobotStrength": 12,
+		"Script": [
+			"Exercise Strength",
+			"Animate Attack",
+			"Sound Slash",
+			"Effect Slash $targetCenterX $targetCenterY 3",
+			"OnHit 100 Strength",
+			"Flash 255 27 0",
+			"Damage Strength 9 Physical"
+		]
+	},
+	{
+		"Name": "Shotgun",
 		"Animation": "Guarding",
 		"Description": [
 			"- Uses TECH",

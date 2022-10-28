@@ -61,7 +61,7 @@
 		"AgilityGrowth": 0.2,
 		"ManaGrowth": 0.2,
 		"InitialEquipment": [
-			"Blaster",
+			"Shotgun",
 			"Repair Kit"
 		],
 		"InitialAbilities": [],
