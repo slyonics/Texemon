@@ -221,6 +221,7 @@ namespace Texemon.Scenes.MapScene
             Party.Add(follower);
             follower.Position = oldActor.Position;
             follower.Orientation = oldActor.Orientation;
+            follower.UpdateBounds();
             follower.Idle();
         }
 
@@ -280,7 +281,7 @@ namespace Texemon.Scenes.MapScene
 
         public void HandleOffscreen()
         {
-            var travelZone = EventTriggers.Where(x => x.TravelZone).OrderBy(x => Vector2.Distance(new Vector2(x.Bounds.Center.X, x.Bounds.Center.Y), PartyLeader.Position)).First();
+            var travelZone = EventTriggers.Where(x => x.TravelZone && x.DefaultTravelZone).OrderBy(x => Vector2.Distance(new Vector2(x.Bounds.Center.X, x.Bounds.Center.Y), PartyLeader.Position)).First();
             travelZone.Activate(PartyLeader);
         }
     }

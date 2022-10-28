@@ -295,6 +295,7 @@ namespace Texemon.Main
     {
         CanyonCliff,
         CanyonEntrance,
+        CanyonRiver,
         EastOasis,
         HomeLab,
         Junkyard,

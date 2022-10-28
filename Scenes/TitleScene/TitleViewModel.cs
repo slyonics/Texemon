@@ -124,11 +124,18 @@ namespace Texemon.Scenes.TitleScene
 
         public void NewGame()
         {
+            foreach (var widget in dataGrid.ChildList)
+            {
+                (widget as Button).UnSelect();
+            }
+
             CrossPlatformGame.Transition(typeof(IntroScene.IntroScene));
         }
 
         public void Continue(object saveSlot)
         {
+            GetWidget<Button>("NewGame").UnSelect();
+
             GameProfile.LoadState("Save" + saveSlot.ToString() + ".sav");
 
             string mapName = GameProfile.GetSaveData<string>("LastMapName");

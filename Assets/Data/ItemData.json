@@ -34,7 +34,7 @@
 			"- VS 1 enemy"
 		],
 		"Icon": "Gun",
-		"Charges": -1,
+		"Charges": 2,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
 		"RobotHealth": 12,

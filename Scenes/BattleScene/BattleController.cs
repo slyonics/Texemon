@@ -67,6 +67,8 @@ namespace Texemon.Scenes.BattleScene
                 case "Attack": Attack(tokens); break;
                 case "Dialogue": Dialogue(tokens); break;
                 case "Flee": Flee(tokens); break;
+                case "Punch": Punch(tokens); break;
+                case "Tackle": Tackle(tokens); break;
                 case "Defend": attacker.Defending = true; StackDialogue(attacker.Stats.Name.Value + " is defending against attacks..."); break;
                 case "Delay": attacker.Delaying = true; StackDialogue(attacker.Stats.Name.Value + " is waiting for the right moment to act..."); break;
                 case "OnHit": if (!CalculateHit(tokens)) scriptParser.EndScript(); break;
@@ -192,6 +194,16 @@ namespace Texemon.Scenes.BattleScene
             CrossPlatformGame.StackScene(convoScene);
 
             // timeleft = 1000;
+        }
+
+        private void Punch(string[] tokens)
+        {
+            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " punches " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nOnHit 80 Strength\nFlash 255 27 0\nDamage Strength 5 Physical");
+        }
+
+        private void Tackle(string[] tokens)
+        {
+            scriptParser.RunScript("Dialogue " + attacker.Stats.Name + " tackles " + target.Stats.Name + "!\nAnimate Attack\nSound Slash\nEffect Bash $targetCenterX $targetCenterY 3\nOnHit 80 Strength\nFlash 255 27 0\nDamage Strength 5 Physical");
         }
 
         private void Dialogue(string[] tokens)

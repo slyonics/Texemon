@@ -113,6 +113,8 @@ namespace Texemon.Scenes.StatusScene
                     case "Delay": item.Description = new string[] { "Hold turn briefly", "and act later" }; break;
                     case "Defend": item.Description = new string[] { "Spend turn", "evading and", "blocking attacks" }; break;
                     case "Flee": item.Description = new string[] { "Try and escape", "from battle" }; break;
+                    case "Punch": item.Description = new string[] { "Improvised", "attack with", "bare hands" }; item.Icon = "Blank"; item.Targetting = TargetType.SingleEnemy; break;
+                    case "Tackle": item.Description = new string[] { "Improvised", "attack with", "body slam" }; item.Icon = "Blank"; item.Targetting = TargetType.SingleEnemy; break;
                 }
                 Actions.Add(item);
             }

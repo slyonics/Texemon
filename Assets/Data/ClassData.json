@@ -6,7 +6,8 @@
 		"Actions": [
 			"Delay",
 			"Defend",
-			"Flee"
+			"Flee",
+			"Punch"
 		]
 	},
 	{
@@ -16,7 +17,8 @@
 		"Actions": [
 			"Delay",
 			"Defend",
-			"Flee"
+			"Flee",
+			"Punch"
 		]
 	},
 	{
@@ -26,7 +28,8 @@
 		"Actions": [
 			"Delay",
 			"Defend",
-			"Flee"
+			"Flee",
+			"Tackle"
 		]
 	}
 ]

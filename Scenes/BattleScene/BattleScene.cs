@@ -178,20 +178,24 @@ namespace Texemon.Scenes.BattleScene
                         {
                             if (equipment.Value.ItemType != StatusScene.ItemType.Consumable) equipment.Value.ChargesLeft = equipment.Value.Charges;
 
-                            if (!isProtagonist) GameProfile.Inventory.Add(equipment.Value);
+                            // if (!isProtagonist) GameProfile.Inventory.Add(equipment.Value);
                         }
                     }
 
-                    // GameProfile.Inventory.ModelList.Clear();
+                    GameProfile.Inventory.ModelList.Clear();
                     GameProfile.PlayerProfile.Party.ModelList.Clear();
                     GameProfile.PlayerProfile.Party.ModelList.Add(new ModelProperty<StatusScene.HeroModel>(PlayerList[0].Stats as StatusScene.HeroModel));
-                    for (int j = 1; j <= 10; j++) GameProfile.SetSaveData<bool>("JunkChest" + j + "Opened", false);
+                    //for (int j = 1; j <= 10; j++) GameProfile.SetSaveData<bool>("JunkChest" + j + "Opened", false);
                     foreach (var keyValuePair in GameProfile.SaveData)
                     {
                         if (keyValuePair.Key.EndsWith("Recruited")) GameProfile.SaveData[keyValuePair.Key] = false;
                         else if (keyValuePair.Key.EndsWith("Recruitable"))
                         {
                             if (Rng.RandomInt(0, 1) == 1) GameProfile.SaveData[keyValuePair.Key] = true;
+                        }
+                        else if (keyValuePair.Key.EndsWith("ChestOpened"))
+                        {
+                            GameProfile.SaveData[keyValuePair.Key] = false;
                         }
                     }
 

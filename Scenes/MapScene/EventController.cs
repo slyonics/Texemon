@@ -171,9 +171,9 @@ namespace Texemon.Scenes.MapScene
             GameProfile.PlayerProfile.Party.Add(heroModel);
             GameProfile.SetSaveData<bool>(heroModel.Name.Value + "Recruited", true);
 
-            if (tokens.Length >= 2) ActorSubject.Terminate();
-
             mapScene.AddPartyMember(heroModel, ActorSubject);
+
+            if (tokens.Length >= 2) ActorSubject.Terminate();
         }
     }
 }

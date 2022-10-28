@@ -16,6 +16,7 @@ namespace Texemon.Scenes.MapScene
         public string[] Script { get; set; }
 
         public bool TravelZone { get; set; }
+        public bool DefaultTravelZone { get; set; } = true;
 
         public EventTrigger(MapScene iMapScene, TiledObject iObjectData)
         {
@@ -36,6 +37,7 @@ namespace Texemon.Scenes.MapScene
                     Label = objectData.properties.FirstOrDefault(x => x.name == "Label").value;
                     Script = new string[] { "ChangeMap " + objectData.name };
                     TravelZone = true;
+                    if (objectData.properties.Any(x => x.name == "NoDefault")) DefaultTravelZone = false;
                     break;
 
                 case "Interactive":

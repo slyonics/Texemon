@@ -49,11 +49,11 @@ namespace Texemon.Scenes.MapScene
 
                     case "$JunkConsumable": item = "Repair Kit"; break;
 
-                    case "$JunkPart":
+                    case "$JunkArmor":
                         switch (Rng.RandomInt(1, 2))
                         {
-                            case 1: item = "Spare Parts"; break;
-                            case 2: item = "Advanced Parts"; break;
+                            case 1: item = "Kevlar"; break;
+                            case 2: item = "Kevlar"; break;
                         }
                         break;
                 }

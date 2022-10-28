@@ -278,6 +278,7 @@
 					"Switch $selection",
 					"Case Yes",
 					"SoundSolo JoinParty 1500",
+					"ChangeConversation RecruitNoviceMage",
 					"Break",
 					"Case No",
 					"ChangeConversation RefuseNoviceMage",
@@ -293,6 +294,15 @@
 			{
 				"Speaker": "Adventurer",
 				"Text": "I understand. You're probably pretty busy anyways I bet. Well, good luck out there."
+			}
+		]
+	},
+	{
+		"Name": "RecruitNoviceMage",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Okay, let's go!"
 			}
 		]
 	}
