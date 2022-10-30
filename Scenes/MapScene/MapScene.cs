@@ -167,9 +167,9 @@ namespace Texemon.Scenes.MapScene
             switch (orientation)
             {
                 case Orientation.Up: spawnPosition = new Vector2(spawnZone.Bounds.Center.X, spawnZone.Bounds.Top); break;
-                case Orientation.Right: spawnPosition = new Vector2(); break;
+                case Orientation.Right: spawnPosition = new Vector2(spawnZone.Bounds.Center.X, spawnZone.Bounds.Bottom + PartyLeader.Bounds.Height); break;
                 case Orientation.Down: spawnPosition = new Vector2(spawnZone.Bounds.Center.X, spawnZone.Bounds.Bottom + PartyLeader.Bounds.Height); break;
-                case Orientation.Left: spawnPosition = new Vector2(); break;
+                case Orientation.Left: spawnPosition = new Vector2(spawnZone.Bounds.Center.X, spawnZone.Bounds.Bottom + PartyLeader.Bounds.Height); break;
             }
             PartyLeader.CenterOn(spawnPosition);
             PartyLeader.Orientation = orientation;

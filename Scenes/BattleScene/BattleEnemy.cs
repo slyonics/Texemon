@@ -132,11 +132,34 @@ namespace Texemon.Scenes.BattleScene
         {
             base.StartTurn();
 
-            Dictionary<string[], double> attacks = EnemyRecord.Attacks.ToDictionary(x => x.Script, x => (double)x.Weight);
-            string[] attack = Rng.WeightedEntry<string[]>(attacks);
+            Dictionary<AttackData, double> attacks = EnemyRecord.Attacks.ToDictionary(x => x, x => (double)x.Weight);
+            AttackData attack = Rng.WeightedEntry<AttackData>(attacks);
 
-            BattleController battleController = new BattleController(battleScene, this, null, attack);
-            battleScene.AddController(battleController);
+            if (attack.PreScript != null)
+            {
+                BattleController preController = new BattleController(battleScene, this, null, attack.PreScript);
+                battleScene.AddController(preController);
+            }
+
+            if (attack.AttackAll)
+            {
+                int delay = 0;
+                foreach (var player in battleScene.PlayerList.FindAll(x => !x.Dead))
+                {
+                    string[] script = new string[attack.Script.Count() + 1];
+                    script[0] = "Wait " + delay;
+                    for (int i = 1; i < script.Count(); i++) script[i] = attack.Script[i - 1];
+                    delay += 200;
+
+                    BattleController battleController = new BattleController(battleScene, this, player, script);
+                    battleScene.AddController(battleController);
+                }
+            }
+            else
+            {
+                BattleController battleController = new BattleController(battleScene, this, null, attack.Script);
+                battleScene.AddController(battleController);
+            }
 
             EndTurn();
         }

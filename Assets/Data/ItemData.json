@@ -75,6 +75,31 @@
 		]
 	},
 	{
+		"Name": "Revolver",
+		"Animation": "Guarding",
+		"Description": [
+			"- Uses TECH",
+			"- 6x damage",
+			"- Physical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Gun",
+		"Charges": 6,
+		"ItemType": "Weapon",
+		"Targetting": "SingleEnemy",
+		"RobotHealth": 8,
+		"RobotAgility": 6,
+		"Script": [
+			"Exercise Agility",
+			"Animate Attack",
+			"Sound Laser",
+			"Effect Gunshot $targetCenterX $targetCenterY 4",
+			"OnHit 100 Agility",
+			"Flash 255 27 0",
+			"Damage Agility 6 Physical"
+		]
+	},
+	{
 		"Name": "Deflector",
 		"Animation": "Guarding",
 		"Description": [
@@ -200,16 +225,44 @@
 		"BonusDefense": 8
 	},
 	{
+		"Name": "Chainmail",
+		"Description": [
+			"",
+			"Primitive metal",
+			"body armor"
+		],
+		"Icon": "Armor",
+		"Charges": -1,
+		"ItemType": "Armor",
+		"RobotHealth": 12,
+		"BonusDefense": 5
+	},
+	{
+		"Name": "Wizard",
+		"Description": [
+			"",
+			"Armor that",
+			"enhances magic",
+			"abilities"
+		],
+		"Icon": "Armor",
+		"Charges": -1,
+		"ItemType": "Armor",
+		"RobotHealth": 4,
+		"BonusDefense": 6,
+		"BonusMana":  5
+	},
+	{
 		"Name": "Firebolt",
 		"Animation": "Guarding",
 		"Description": [
 			"- Uses MANA",
-			"- 5x damage",
+			"- 6x damage",
 			"- Incendiary",
 			"- VS 1 enemy"
 		],
 		"Icon": "Staff",
-		"Charges": -1,
+		"Charges": 3,
 		"ItemType": "Weapon",
 		"Targetting": "SingleEnemy",
 		"RobotMana": 6,
@@ -219,7 +272,30 @@
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage Mana 5 Fire"
+			"Damage Mana 6 Fire"
+		]
+	},
+	{
+		"Name": "Inferno",
+		"Animation": "Guarding",
+		"Description": [
+			"- Uses MANA",
+			"- 6x damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Staff",
+		"Charges": 2,
+		"ItemType": "Weapon",
+		"Targetting": "AllEnemy",
+		"RobotMana": 10,
+		"PreScript": [ "Exercise Mana" ],
+		"Script": [
+			"Animate Attack",
+			"Sound Fireball",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage Mana 6 Fire"
 		]
 	}
 ]

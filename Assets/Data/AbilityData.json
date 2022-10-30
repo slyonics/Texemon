@@ -4,7 +4,7 @@
 		"Animation": "Chanting",
 		"Description": [
 			"- Uses MANA",
-			"- 10x damage",
+			"- 5x damage",
 			"- Incendiary",
 			"- VS all enemies"
 		],
@@ -17,7 +17,7 @@
 			"Sound Fireball",
 			"Effect Flame $targetCenterX $targetCenterY 3",
 			"Flash 255 27 0",
-			"Damage Mana 10 Fire"
+			"Damage Mana 5 Fire"
 		]
 	},
 	{

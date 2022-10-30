@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="15">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="15">
  <properties>
   <property name="LocationName" value="Distant Scrapyard"/>
   <property name="Music" value="Scrapyard"/>
@@ -224,7 +224,7 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="Enemies">
-  <object id="9" name="Base" x="484" y="243" width="16" height="14">
+  <object id="9" name="Snake" x="484" y="243" width="16" height="14">
    <properties>
     <property name="Collide">Sound Encounter
 Encounter Rattlesnake</property>
@@ -234,7 +234,7 @@ Repeat</property>
     <property name="Sprite" value="Snake"/>
    </properties>
   </object>
-  <object id="10" name="Base" x="186" y="314" width="16" height="14">
+  <object id="10" name="Snake" x="186" y="314" width="16" height="14">
    <properties>
     <property name="Collide">Sound Encounter
 Encounter Rattlesnake</property>
@@ -244,7 +244,7 @@ Repeat</property>
     <property name="Sprite" value="Snake"/>
    </properties>
   </object>
-  <object id="11" name="Base" x="82" y="132" width="16" height="14">
+  <object id="11" name="Scorpions" x="82" y="132" width="16" height="14">
    <properties>
     <property name="Collide">Sound Encounter
 Encounter ScorpionNest</property>
@@ -260,20 +260,6 @@ Repeat</property>
    <properties>
     <property name="Direction" value="Up"/>
     <property name="Label" value="Outside"/>
-   </properties>
-  </object>
-  <object id="14" name="Locker Portal" type="Interactive" x="241" y="145" width="13" height="25">
-   <properties>
-    <property name="Label">Conspicuous
-Locker</property>
-    <property name="Script">Conversation JunkLocker
-Switch $selection
-Case No
-Terminate
-Case Yes
-ChangeMap SteelHalls 25 5 Right
-Break
-End</property>
    </properties>
   </object>
  </objectgroup>

@@ -10,8 +10,10 @@ namespace Texemon.Scenes.BattleScene
 {
     public class AttackData
     {
+        public string[] PreScript;
         public string[] Script;
         public int Weight;
+        public bool AttackAll;
     }
 
     [Serializable]

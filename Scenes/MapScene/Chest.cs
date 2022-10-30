@@ -38,22 +38,66 @@ namespace Texemon.Scenes.MapScene
                 switch (item)
                 {
                     case "$JunkWeapon":
-                        switch (Rng.RandomInt(1, 4))
+                        switch (Rng.RandomInt(1, 6))
                         {
                             case 1: item = "Longsword"; break;
-                            case 2: item = "Blowtorch"; break;
-                            case 3: item = "Arc Welder"; break;
-                            case 4: item = "Shotgun"; break;
+                            case 2:
+                            case 3: item = "Blowtorch"; break;
+                            case 4:
+                            case 5: item = "Arc Welder"; break;
+                            case 6: item = "Shotgun"; break;
                         }
                         break;
 
                     case "$JunkConsumable": item = "Repair Kit"; break;
 
                     case "$JunkArmor":
-                        switch (Rng.RandomInt(1, 2))
+                        switch (Rng.RandomInt(1, 4))
                         {
-                            case 1: item = "Kevlar"; break;
-                            case 2: item = "Kevlar"; break;
+                            case 1:
+                            case 2:
+                            case 3: item = "Chainmail"; break;
+                            case 4: item = "Kevlar"; break;
+                        }
+                        break;
+
+                    case "$CanyonWeapon":
+                        switch (Rng.RandomInt(1, 4))
+                        {
+                            case 1: item = "Longsword"; break;
+                            case 2: item = "Claymore"; break;
+                            case 3: item = "Revolver"; break;
+                            case 4: item = "Shotgun"; break;
+                        }
+                        break;
+
+                    case "$CanyonArmor":
+                        switch (Rng.RandomInt(1, 4))
+                        {
+                            case 1:
+                            case 2: item = "Chainmail"; break;
+                            case 3:
+                            case 4: item = "Kevlar"; break;
+                        }
+                        break;
+
+                    case "$CaveWeapon":
+                        switch (Rng.RandomInt(1, 4))
+                        {
+                            case 1: item = "Firebolt"; break;
+                            case 2: item = "Claymore"; break;
+                            case 3: item = "Longsword"; break;
+                            case 4: item = "Inferno"; break;
+                        }
+                        break;
+
+                    case "$CaveArmor":
+                        switch (Rng.RandomInt(1, 4))
+                        {
+                            case 1:
+                            case 2: item = "Chainmail"; break;
+                            case 3:
+                            case 4: item = "Wizard"; break;
                         }
                         break;
                 }
