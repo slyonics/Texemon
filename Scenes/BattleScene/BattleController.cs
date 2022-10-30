@@ -188,6 +188,14 @@ namespace Texemon.Scenes.BattleScene
                         }
             };
 
+            foreach (BattlePlayer battlePlayer in battleScene.PlayerList)
+            {
+                foreach (var equipment in battlePlayer.HeroModel.Equipment)
+                {
+                    if (equipment.Value.ItemType != StatusScene.ItemType.Consumable) equipment.Value.ChargesLeft = equipment.Value.Charges;
+                }
+            }
+
             convoScene = new ConversationScene.ConversationScene(convoRecord, new Rectangle(-20, 30, 170, 80));
             scriptParser.BlockScript();
             convoScene.OnTerminated += battleScene.BattleViewModel.Close;
