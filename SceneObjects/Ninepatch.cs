@@ -27,7 +27,7 @@ namespace Texemon.SceneObjects
 
         private int frameWidth;
         private int frameHeight;
-        private float frameDepth;
+        public float FrameDepth { get; set; }
         private Rectangle[] frameSource;
         private Texture2D frameSprite;
         private Color frameColor = Color.White;
@@ -37,7 +37,7 @@ namespace Texemon.SceneObjects
         public NinePatch(string spriteName, float iFrameDepth, bool flatsize = false)
         {
             SetSprite(spriteName);
-            frameDepth = iFrameDepth;
+            FrameDepth = iFrameDepth;
 
             flatFrame = flatsize;
         }
@@ -45,7 +45,7 @@ namespace Texemon.SceneObjects
         public NinePatch(Texture2D spriteName, float iFrameDepth, bool flatsize = false)
         {
             SetSprite(spriteName);
-            frameDepth = iFrameDepth;
+            FrameDepth = iFrameDepth;
 
             flatFrame = flatsize;
         }
@@ -61,7 +61,7 @@ namespace Texemon.SceneObjects
 
             if (flatFrame)
             {
-                spriteBatch.Draw(frameSprite, new Rectangle(x, y, width, height), null, frameColor, 0.0f, Vector2.Zero, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, new Rectangle(x, y, width, height), null, frameColor, 0.0f, Vector2.Zero, SpriteEffects.None, FrameDepth);
                 return;
             }
 
@@ -77,10 +77,10 @@ namespace Texemon.SceneObjects
                 Rectangle bottomLeft = new Rectangle(0, frameHeight * 3 - height / 2, width / 2 + widthOffset, height / 2);
                 Rectangle bottomRight = new Rectangle(frameWidth * 3 - width / 2, frameHeight * 3 - height / 2, width / 2, height / 2);
 
-                spriteBatch.Draw(frameSprite, position, topLeft, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(topLeft.Width, 0), topRight, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(0, topLeft.Height), bottomLeft, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(topLeft.Width, topLeft.Height), bottomRight, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, topLeft, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(topLeft.Width, 0), topRight, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(0, topLeft.Height), bottomLeft, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(topLeft.Width, topLeft.Height), bottomRight, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
             }
             else if (width < frameWidth * 2 && height >= frameHeight * 2)
             {
@@ -93,14 +93,14 @@ namespace Texemon.SceneObjects
                 Rectangle rightcenterSource = new Rectangle(frameWidth * 3 - width / 2, frameHeight, width / 2 + widthOffset, frameHeight);
                 Rectangle rightbottomSource = new Rectangle(frameWidth * 3 - width / 2, frameHeight * 2, width / 2 + widthOffset, frameHeight);
 
-                spriteBatch.Draw(frameSprite, position, lefttopSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(width / 2 + widthOffset, 0), righttopSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, lefttopSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(width / 2 + widthOffset, 0), righttopSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
                 position.Y += frameHeight;
-                spriteBatch.Draw(frameSprite, position, leftcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(width / 2 + widthOffset, 0), rightcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, leftcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(width / 2 + widthOffset, 0), rightcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, FrameDepth);
                 position.Y += height - frameHeight * 2;
-                spriteBatch.Draw(frameSprite, position, leftbottomSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(width / 2 + widthOffset, 0), rightbottomSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, leftbottomSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(width / 2 + widthOffset, 0), rightbottomSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
             }
             else if (width >= frameWidth * 2 && height < frameHeight * 2)
             {
@@ -113,36 +113,36 @@ namespace Texemon.SceneObjects
                 Rectangle bottomcenterSource = new Rectangle(frameWidth, frameHeight * 3 - height / 2, frameWidth, height / 2 + heightOffset);
                 Rectangle bottomrightSource = new Rectangle(frameWidth * 2, frameHeight * 3 - height / 2, frameWidth, height / 2 + heightOffset);
 
-                spriteBatch.Draw(frameSprite, position, topleftSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(0, height / 2 + heightOffset), bottomleftSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, topleftSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(0, height / 2 + heightOffset), bottomleftSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
                 position.X += frameWidth;
-                spriteBatch.Draw(frameSprite, position, topcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(0, height / 2 + heightOffset), bottomcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, topcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(0, height / 2 + heightOffset), bottomcenterSource, frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, FrameDepth);
                 position.X += width - frameWidth * 2;
-                spriteBatch.Draw(frameSprite, position, toprightSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
-                spriteBatch.Draw(frameSprite, position + new Vector2(0, height / 2 + heightOffset), bottomrightSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, toprightSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
+                spriteBatch.Draw(frameSprite, position + new Vector2(0, height / 2 + heightOffset), bottomrightSource, frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
             }
             else
             {
-                spriteBatch.Draw(frameSprite, new Rectangle(x + frameWidth, y + frameHeight, width - frameWidth * 2, height - frameHeight * 2), frameSource[4], frameColor, 0.0f, Vector2.Zero, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, new Rectangle(x + frameWidth, y + frameHeight, width - frameWidth * 2, height - frameHeight * 2), frameSource[4], frameColor, 0.0f, Vector2.Zero, SpriteEffects.None, FrameDepth);
 
-                spriteBatch.Draw(frameSprite, position, frameSource[0], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[0], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
                 position.X += frameWidth;
-                spriteBatch.Draw(frameSprite, position, frameSource[1], frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[1], frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, FrameDepth);
                 position.X += width - frameWidth * 2;
-                spriteBatch.Draw(frameSprite, position, frameSource[2], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[2], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
 
                 position.Y += frameHeight;
-                spriteBatch.Draw(frameSprite, position, frameSource[5], frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[5], frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, FrameDepth);
                 position.X = x;
-                spriteBatch.Draw(frameSprite, position, frameSource[3], frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[3], frameColor, 0.0f, Vector2.Zero, new Vector2(1.0f, (float)(height - frameHeight * 2) / frameHeight), SpriteEffects.None, FrameDepth);
                 position.Y += height - frameHeight * 2;
 
-                spriteBatch.Draw(frameSprite, position, frameSource[6], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[6], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
                 position.X += frameWidth;
-                spriteBatch.Draw(frameSprite, position, frameSource[7], frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[7], frameColor, 0.0f, Vector2.Zero, new Vector2((float)(width - frameWidth * 2) / frameWidth, 1.0f), SpriteEffects.None, FrameDepth);
                 position.X += width - frameWidth * 2;
-                spriteBatch.Draw(frameSprite, position, frameSource[8], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, frameDepth);
+                spriteBatch.Draw(frameSprite, position, frameSource[8], frameColor, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FrameDepth);
             }
         }
 

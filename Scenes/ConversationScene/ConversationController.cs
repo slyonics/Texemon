@@ -44,6 +44,12 @@ namespace Texemon.Scenes.ConversationScene
                 case "ProceedText": conversationScene.ConversationViewModel.NextDialogue(); break;
                 case "Actor": Actor(tokens); break;
                 case "Animate": Animate(tokens); break;
+                case "SelectionPrompt": SelectionPrompt(tokens); break;
+                case "ChangeConversation": ChangeConversation(tokens); break;
+
+                case "IncreaseStat": BattleScene.BattleController.IncreaseStat(tokens); break;
+                case "ChangeMap": MapScene.EventController.ChangeMap(tokens, null); break;
+
                 default: return false;
             }
 
@@ -179,6 +185,34 @@ namespace Texemon.Scenes.ConversationScene
         private void Animate(string[] tokens)
         {
             //CrossPlatformGame.GetScene<MapScene.MapScene>().MapViewModel.AnimateActor(tokens[1]);
+        }
+
+        private void SelectionPrompt(string[] tokens)
+        {
+            List<string> options = new List<string>();
+            string skipLine;
+            do
+            {
+                skipLine = scriptParser.DequeueNextCommand();
+                options.Add(skipLine);
+            } while (skipLine != "End");
+            options.RemoveAt(options.Count - 1);
+
+            SelectionViewModel selectionViewModel = new SelectionViewModel(conversationScene, options);
+            conversationScene.AddOverlay(selectionViewModel);
+
+            ScriptParser.UnblockFollowup followup = scriptParser.BlockScript();
+            selectionViewModel.OnTerminated += new Action(followup);
+        }
+
+        private void ChangeConversation(string[] tokens)
+        {
+            var conversationData = ConversationScene.CONVERSATIONS.FirstOrDefault(x => x.Name == tokens[1]);
+
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) conversationScene.RunScript(conversationData.DialogueRecords[0].Script);
+
+            conversationScene.ConversationViewModel.ChangeConversation(conversationData);
         }
     }
 }

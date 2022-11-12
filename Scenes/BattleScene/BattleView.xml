@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Name="PlayerPanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind PlayerWindow" InnerMargin="8,16,8,8" TransitionIn="Expand" TransitionOut="Shrink">
+		<DataGrid Items="Bind PlayerProfile.Party" Scrolling="False" Alignment="Stretch">
+			<Panel Alignment="Vertical" Bounds="0,0,102,20">
+				<Scenes.BattleScene.BattlePlayer HeroModel="Bind DataGrid" Alignment="BottomLeft"/>
+				<Label Text="Bind DataGrid.Name" Font="Bind PlayerProfile.Font" Color="Bind DataGrid.NameColor" Alignment="Cascading" TextAlignment="Left" Bounds="10,0,0,20"/>
+				<Label Text="Bind DataGrid.Health" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Right" Bounds="90,-3,0,20"/>
+				<Label Text="/" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="0,0,5,20"/>
+				<Label Text="Bind DataGrid.MaxHealth" Font="Dialogue" Color="Bind DataGrid.HealthColor" Alignment="Left" TextAlignment="Left" Bounds="-1,3,0,20"/>
+			</Panel>
+		</DataGrid>
+	</Panel>
+
+	<Panel Name="EnemyPanel" Style="Bind PlayerProfile.FrameStyle" Anchor="$CenterX,$CenterY" Bounds="Bind EnemyWindow" InnerMargin="4,3,4,3" TransitionIn="Expand" TransitionOut="Shrink">
+		<DataGrid Items="Ref InitialEnemies" Alignment="Stretch" InnerMargin="Bind EnemyMargin">
+			<Scenes.BattleScene.BattleEnemy EnemyRecord="Ref DataGrid" Alignment="Horizontal"/>
+		</DataGrid>
+		<Image Picture="Bind BackgroundRender" Alignment="Stretch" Depth="1.0"/>
+	</Panel>
+
+	<Panel Name="BattlePanel" Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-20,30,170,80" InnerMargin="8,4,8,8" TransitionIn="Expand" TransitionOut="Shrink">
+
+	</Panel>
+	
+</View>

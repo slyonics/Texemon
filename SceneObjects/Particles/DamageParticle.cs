@@ -12,8 +12,8 @@ namespace Texemon.SceneObjects.Particles
 {
     public class DamageParticle : Particle
     {
-        private const int DIGIT_WIDTH = 56;
-        private const int DIGIT_HEIGHT = 77;
+        private const int DIGIT_WIDTH = 8;
+        private const int DIGIT_HEIGHT = 11;
         private const int DECAY_DURATION = 500;
         private const int NEXT_DIGIT_INTERVAL = 80;
 
@@ -24,22 +24,44 @@ namespace Texemon.SceneObjects.Particles
         private string digitsRemaining;
 
         private int digitIndex;
+        private char nonDigit;
         private int decayTimer;
         private int nextDigitTimer;
 
+        Color color = Color.White;
+
         public DamageParticle(Scene iScene, Vector2 iPosition, string digits)
-            : base(iScene, iPosition, false)
+            : base(iScene, iPosition, true)
         {
             DIGIT_SOURCES = new Rectangle[10];
             for (int i = 0; i < DIGIT_SOURCES.Length; i++) DIGIT_SOURCES[i] = new Rectangle(i * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT);
             digitIndex = digits.First() - '0';
+            if (digitIndex > DIGIT_SOURCES.Length) nonDigit = digits.First();
 
             initialPosition = iPosition;
             digitsRemaining = digits.Substring(1, digits.Length - 1);
 
-            velocityZ = 100 * 2;
+            velocityZ = DIGIT_HEIGHT * 10;
             landingFollowup += StartDecay;
             nextDigitTimer = NEXT_DIGIT_INTERVAL;
+        }
+
+        public DamageParticle(Scene iScene, Vector2 iPosition, string digits, Color iColor)
+            : base(iScene, iPosition, true)
+        {
+            DIGIT_SOURCES = new Rectangle[10];
+            for (int i = 0; i < DIGIT_SOURCES.Length; i++) DIGIT_SOURCES[i] = new Rectangle(i * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT);
+            digitIndex = digits.First() - '0';
+            if (digitIndex > DIGIT_SOURCES.Length) nonDigit = digits.First();
+
+            initialPosition = iPosition;
+            digitsRemaining = digits.Substring(1, digits.Length - 1);
+
+            velocityZ = DIGIT_HEIGHT * 10;
+            landingFollowup += StartDecay;
+            nextDigitTimer = NEXT_DIGIT_INTERVAL;
+
+            color = iColor;
         }
 
         public override void Update(GameTime gameTime)
@@ -52,7 +74,11 @@ namespace Texemon.SceneObjects.Particles
                 nextDigitTimer -= gameTime.ElapsedGameTime.Milliseconds;
                 if (nextDigitTimer <= 0 && digitsRemaining.Length > 0)
                 {
-                    DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(DIGIT_WIDTH, 0), digitsRemaining);
+                    int digitWidth;
+                    if (digitIndex > DIGIT_SOURCES.Length) digitWidth = Text.GetStringLength(GameFont.Battle, "" + nonDigit);
+                    else digitWidth = DIGIT_WIDTH;
+
+                    DamageParticle nextParticle = new DamageParticle(parentScene, initialPosition + new Vector2(digitWidth, 0), digitsRemaining, color);
                     parentScene.AddParticle(nextParticle);
                 }
             }
@@ -65,7 +91,11 @@ namespace Texemon.SceneObjects.Particles
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ), DIGIT_SOURCES[digitIndex], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.2f);
+            if (digitIndex > DIGIT_SOURCES.Length)
+            {
+                Text.DrawText(spriteBatch, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT + 16), GameFont.Battle, "" + nonDigit, Color.White, 0.1f);
+            }
+            else spriteBatch.Draw(DIGIT_SPRITE, position - new Vector2(0.0f, positionZ + DIGIT_HEIGHT), DIGIT_SOURCES[digitIndex], color, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.1f);
         }
 
         private void StartDecay()

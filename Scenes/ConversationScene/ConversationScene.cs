@@ -12,39 +12,80 @@ namespace Texemon.Scenes.ConversationScene
 {
     public class ConversationScene : Scene
     {
-        private ConversationModel conversationData;
+        public static List<ConversationRecord> CONVERSATIONS { get; set; }
+
+        private ConversationRecord conversationData;
         private Texture2D backgroundSprite;
         private ConversationViewModel conversationViewModel;
         private ConversationController conversationController;
 
         public ConversationScene(string conversationName)
             : base()
-        {
-            conversationData = ConversationModel.Models.FirstOrDefault(x => x.Name == conversationName);
+        {            
+            conversationData = CONVERSATIONS.FirstOrDefault(x => x.Name == conversationName);
 
-            string[] conversationScript = conversationData.DialogueData[0].Script;
-            if (conversationScript != null) RunScript(conversationData.DialogueData[0].Script);
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueRecords[0].Script);
 
-            conversationViewModel = new ConversationViewModel(this, GameView.ConversationScene_ConversationView, conversationData);
+            conversationViewModel = new ConversationViewModel(this, conversationData);
             AddOverlay(conversationViewModel);
 
             if (!string.IsNullOrEmpty(conversationData.Background))
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
         }
 
-        public ConversationScene(ConversationModel iConversationData)
+        public ConversationScene(ConversationRecord iConversationData)
             : base()
         {
             conversationData = iConversationData;
 
-            string[] conversationScript = conversationData.DialogueData[0].Script;
-            if (conversationScript != null) RunScript(conversationData.DialogueData[0].Script);
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueRecords[0].Script);
 
-            conversationViewModel = new ConversationViewModel(this, GameView.ConversationScene_ConversationView, conversationData);
+            conversationViewModel = new ConversationViewModel(this, conversationData);
             AddOverlay(conversationViewModel);
 
             if (!string.IsNullOrEmpty(conversationData.Background))
                 backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
+        }
+
+        public ConversationScene(string conversationName, Rectangle dialogBounds, bool autoProceed = false)
+        {
+            conversationData = CONVERSATIONS.FirstOrDefault(x => x.Name == conversationName);
+
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueRecords[0].Script);
+
+            conversationViewModel = new ConversationViewModel(this, conversationData, dialogBounds, autoProceed);
+            AddOverlay(conversationViewModel);
+
+            if (!string.IsNullOrEmpty(conversationData.Background))
+                backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
+        }
+
+        public ConversationScene(ConversationRecord iConversationData, Rectangle dialogBounds, bool autoProceed = false)
+        {
+            conversationData = iConversationData;
+
+            string[] conversationScript = conversationData.DialogueRecords[0].Script;
+            if (conversationScript != null) RunScript(conversationData.DialogueRecords[0].Script);
+
+            conversationViewModel = new ConversationViewModel(this, conversationData, dialogBounds, autoProceed);
+            AddOverlay(conversationViewModel);
+
+            if (!string.IsNullOrEmpty(conversationData.Background))
+                backgroundSprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + conversationData.Background)];
+        }
+
+        public ConversationScene(ConversationRecord iConversationData, Rectangle dialogBounds, int autoProceedLength)
+            : this(iConversationData, dialogBounds, true)
+        {
+            ConversationViewModel.AutoProceedLength = autoProceedLength;
+        }
+
+        public static void Initialize()
+        {
+            if (CONVERSATIONS == null) CONVERSATIONS = AssetCache.LoadRecords<ConversationRecord>("ConversationData");
         }
 
         public override void BeginScene()
@@ -55,13 +96,13 @@ namespace Texemon.Scenes.ConversationScene
             {
                 base.BeginScene();
 
-                Audio.PlayMusic(GameMusic.SMP_DUN);
+                //Audio.PlayMusic(GameMusic.SMP_DUN);
             }
         }
 
-        public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime, priorityLevel);
+            base.Update(gameTime);
 
             portraits.RemoveAll(x => x.Terminated);
         }

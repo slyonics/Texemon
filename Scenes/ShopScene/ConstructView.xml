@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-155,-110,140,220" InnerMargin="0,0,0,6" TransitionIn="Expand">
+		<Button Name="Back" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,60,20" Alignment="ReverseVertical" Action="Back" InnerMargin="8,8,8,8">
+			<Label Text="Back" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+		<DataGrid Name="EntryList" Items="Bind AvailableEntries" Alignment="Stretch">
+			<Button Radio="True" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,140,24" InnerMargin="8,3,8,3" Alignment="Vertical" Action="SelectEntry" ActionParameter="Ref DataGrid">
+				<Image Sprite="Ref DataGrid.Sprite" Alignment="BottomLeft" Bounds="20,23,8,8"/>
+				<Label Font="Bind PlayerProfile.Font" Text="Ref DataGrid.Name" Alignment="Left" TextAlignment="Left" Bounds="20,12,53,8"/>
+			</Button>
+		</DataGrid>
+	</Panel>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-10,-104,165,124" Visible="Bind ReadyToProceed">
+		<Panel Alignment="Vertical" Bounds="0,0,165,24" InnerMargin="8,3,8,6">
+			<Label Text="Build Cost" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="0,0,80,10"/>
+			<Label Text="Have" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="0,0,35,10"/>
+			<Label Text="Need" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="5,0,35,10"/>
+		</Panel>
+		<Panel Alignment="Vertical" Bounds="0,0,165,30" InnerMargin="8,3,8,6">
+			<DataGrid Items="Bind Cost" Alignment="Stretch">
+				<Panel Bounds="0,0,165,10" Alignment="Vertical">
+					<Image Icon="Ref DataGrid.Icon" Alignment="BottomLeft" Bounds="10,-6,8,8"/>
+					<Label Font="Dialogue" Text="Ref DataGrid.Item" TextAlignment="Left" Alignment="Left" Bounds="16,0,72,10"/>
+					<Label Font="Dialogue" Text="Ref DataGrid.Have" Alignment="Left" Bounds="0,-8,35,10" Color="Ref DataGrid.CostColor"/>
+					<Label Font="Dialogue" Text="/" Alignment="Left" Bounds="0,-8,5,10"/>
+					<Label Font="Dialogue" Text="Ref DataGrid.Need" Alignment="Left" Bounds="0,-8,35,10"/>
+				</Panel>
+			</DataGrid>
+		</Panel>
+		<Panel Alignment="Vertical" Bounds="0,0,165,18" InnerMargin="8,3,8,6">
+			<Label Text="Stats" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="0,0,50,10"/>
+			<Label Text="Abilities" Font="Bind PlayerProfile.Font" Alignment="Left" Bounds="0,0,99,10"/>
+		</Panel>
+		<Panel Alignment="Vertical" Bounds="0,0,165,40" InnerMargin="8,3,8,6">
+			<Panel Bounds="0,0,8,40" Alignment="Cascading">
+				<Image Icon="Axe" Bounds="12,-1,10,10"/>
+				<Image Icon="Shield" Bounds="12,9,10,10"/>
+				<Image Icon="Gun" Bounds="12,19,10,10"/>
+				<Image Icon="Staff" Bounds="12,29,10,10"/>
+			</Panel>
+			<Panel Bounds="0,0,42,40" Alignment="Cascading">
+				<Label Text="3" TextAlignment="Left" Bounds="16,10,20,10"/>
+				<Label Text="5" TextAlignment="Left" Bounds="16,20,20,10"/>
+				<Label Text="2" TextAlignment="Left" Bounds="16,30,20,10"/>
+				<Label Text="0" TextAlignment="Left" Bounds="16,40,20,10"/>
+			</Panel>
+			<DataGrid Items="Bind Abilities" Bounds="0,0,99,40" Alignment="Cascading">
+				<Panel Bounds="0,0,99,10" Alignment="Vertical" InnerMargin="8,0,8,0">
+					<Image Icon="Ref DataGrid.Icon" Bounds="0,-1,10,10" Alignment="Left"/>
+					<Label Text="Ref DataGrid.Name" Bounds="1,10,89,10" TextAlignment="Left" Alignment="Left"/>
+				</Panel>
+			</DataGrid>
+		</Panel>
+	</Panel>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="0,30,150,66" InnerMargin="8,3,8,6" TransitionIn="Expand">
+		<CrawlText Font="Bind PlayerProfile.Font" Name="Description" Bounds="0,0,134,40"/>
+		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,90,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Enabled="Bind IsAffordable" Visible="Bind ReadyToProceed">
+			<Label Text="Construct" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+	</Panel>
+	
+</View>

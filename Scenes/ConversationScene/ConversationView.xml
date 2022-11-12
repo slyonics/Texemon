@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Style="GamePanelOpaque" Anchor="$CenterX,$CenterY" Bounds="-120,-20,240,140" InnerMargin="16,18,16,18" TransitionIn="Expand" TransitionOut="Shrink">
-		<CrawlText Name="ConversationText" Binding="Dialogue" FontBinding="ConversationFont" Alignment="Stretch" Color="#FFFFFFFF"/>
-		<Textplate Name="SpeakerPlate" Style="GamePanelOpaque" Alignment="BottomLeft" Bounds="16,-166,-1,-1" FontBinding="ConversationFont" Binding="Speaker" Color="#FFFFFFFF"/>
-		<Image Sprite="Widgets\Images\Proceed,0,1,32,32,4,400,-1" Alignment="BottomRight" VisibleBinding="ReadyToProceed"/>
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind Window" InnerMargin="8,4,8,8" TransitionIn="Expand" TransitionOut="Shrink">
+		<CrawlText Name="ConversationText" Text="Bind Dialogue" Font="Bind ConversationFont" Alignment="Stretch" Color="#D8D8D8FF" VoiceSound="Blip"/>
+		<Textplate Name="SpeakerPlate" Style="Bind PlayerProfile.WindowStyle" Alignment="Left" Bounds="8,-19,-1,-1" InnerMargin="9,4,7,4" Font="Bind ConversationFont" Text="Bind Speaker" Color="#E0BFA2FF"/>
+		<Image Sprite="Enter,0,0,12,12,2,1200,-1" Alignment="BottomRight" Bounds="7,7,12,12" Visible="Bind ReadyToProceed"/>
 	</Panel>
   
 </View>

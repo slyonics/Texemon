@@ -7,9 +7,9 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
-int filterRed;
-int filterGreen;
-int filterBlue;
+float filterRed;
+float filterGreen;
+float filterBlue;
 
 float amount;
 
@@ -19,9 +19,10 @@ float4 PixelShaderFunction(float4 position : SV_POSITION, float4 color1 : COLOR0
 {
 	float4 color = tex2D(s0, texCoord) * color1;
 
-	color.r = lerp(filterRed / 255, color.r, amount);
-	color.g = lerp(filterGreen / 255, color.g, amount);
-	color.b = lerp(filterBlue / 255, color.b, amount);
+	color.r = lerp(filterRed, color.r, amount);
+	color.g = lerp(filterGreen, color.g, amount);
+	color.b = lerp(filterBlue, color.b, amount);
+	color.a = 1;
  
     return color;
 }

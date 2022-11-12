@@ -25,7 +25,7 @@ namespace Texemon.SceneObjects
         protected List<Particle> particleList = new List<Particle>();
 
         protected Shader spriteShader;
-        protected Shader sceneShader;
+        public Shader SceneShader { get; set; }
 
         protected bool sceneStarted;
         protected bool sceneEnded;
@@ -61,13 +61,13 @@ namespace Texemon.SceneObjects
             OnTerminated?.Invoke();
         }
 
-        public virtual void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
+        public virtual void Update(GameTime gameTime)
         {
             int i = 0;
 
             for (i = 0; i < Enum.GetNames(typeof(PriorityLevel)).Length; i++)
             {
-                if (controllerList[i].Count > 0 && (PriorityLevel)i >= priorityLevel)
+                if (controllerList[i].Count > 0)
                 {
                     priorityLevel = (PriorityLevel)i;
                 }
@@ -128,10 +128,10 @@ namespace Texemon.SceneObjects
                 if (spriteShader.Terminated) spriteShader = null;
             }
 
-            if (sceneShader != null)
+            if (SceneShader != null)
             {
-                sceneShader.Update(gameTime, Camera);
-                if (sceneShader.Terminated) sceneShader = null;
+                SceneShader.Update(gameTime, Camera);
+                if (SceneShader.Terminated) SceneShader = null;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Texemon.SceneObjects
                 graphicsDevice.Clear(Color.Transparent);
             }
 
-            shader = (sceneShader == null) ? null : sceneShader.Effect;
+            shader = (SceneShader == null) ? null : SceneShader.Effect;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.Identity);
             spriteBatch.Draw(pixelRender, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
             spriteBatch.End();
@@ -185,7 +185,7 @@ namespace Texemon.SceneObjects
             foreach (Overlay overlay in overlayList) overlay.Draw(spriteBatch);
         }
 
-        public T AddParticle<T>(T newParticle) where T : Particle
+        public virtual T AddParticle<T>(T newParticle) where T : Particle
         {
             particleList.Add(newParticle);
             return newParticle;

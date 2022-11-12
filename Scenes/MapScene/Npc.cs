@@ -26,7 +26,7 @@ namespace Texemon.Scenes.MapScene
             WalkUp
         }
 
-        public const int NPC_WIDTH = 16;
+        public const int NPC_WIDTH = 24;
         public const int NPC_HEIGHT = 32;
 
         public static readonly Rectangle NPC_BOUNDS = new Rectangle(-7, -8, 13, 6);
@@ -48,27 +48,38 @@ namespace Texemon.Scenes.MapScene
         private string[] interactionScript = null;
 
         public Npc(MapScene iMapScene, Tilemap iTilemap, TiledObject tiledObject, string spriteName, Orientation iOrientation = Orientation.Down)
-            : base(iMapScene, iTilemap, new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height),
-                  AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + spriteName)], NPC_ANIMATIONS, NPC_BOUNDS, iOrientation)
+            : base(iMapScene, iTilemap, new Vector2(), NPC_BOUNDS, iOrientation)
         {
             mapScene = iMapScene;
 
+            string sprite = "";
             foreach (TiledProperty tiledProperty in tiledObject.properties)
             {
                 switch (tiledProperty.name)
                 {
+                    case "Behavior": Behavior = tiledProperty.value.Split('\n'); break;
                     case "Interact": interactionScript = tiledProperty.value.Split('\n'); break;
                     case "Label": Label = tiledProperty.value; break;
+                    case "Direction": Orientation = (Orientation)Enum.Parse(typeof(Orientation), tiledProperty.value); break;
+                    case "Sprite":
+                        sprite = tiledProperty.value;
+                        break;
                 }
             }
+
+            animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + sprite)], NPC_ANIMATIONS);
+            CenterOn(iTilemap.GetTile(new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height)).Center);
+
+            Idle();
         }
 
-        public bool Activate(Hero activator)
+        public virtual bool Activate(Hero activator)
         {
             if (interactionScript == null) return false;
 
-            Rectangle areaOfInterest = Rectangle.Union(SpriteBounds, mapScene.Player.SpriteBounds);
+            Rectangle areaOfInterest = Rectangle.Union(SpriteBounds, mapScene.PartyLeader.SpriteBounds);
             EventController eventController = new EventController(mapScene, interactionScript);
+            eventController.ActorSubject = this;
 
             mapScene.AddController(eventController);
             controllerList.Add(eventController);
@@ -79,8 +90,9 @@ namespace Texemon.Scenes.MapScene
             return true;
         }
 
-        public string Label { get; private set; } = "NPC";
+        public string Label { get; protected set; } = "NPC";
+        public string[] Behavior { get; protected set; } = null;
         public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height); }
-        public bool Interactive { get => interactionScript != null; }
+        public virtual bool Interactive { get => interactionScript != null; }
     }
 }

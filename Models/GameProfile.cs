@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Texemon.Main;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Models
 {
@@ -23,20 +24,25 @@ namespace Texemon.Models
         public const string SAVE_FOLDER = "\\Save";
         private static Dictionary<string, object> DEFAULT_SAVE_VALUES = new Dictionary<string, object>()
         {
-            { "AliensAttack", false },
-            { "RandomBattle", 4 },
+            { "NewPlayer", true }
         };
 
         private static int saveSlot;
+        public static int SaveSlot { get => saveSlot; set => saveSlot = value; }
+
         private static Dictionary<string, object> saveData;
+        public static Dictionary<string, object> SaveData { get => saveData; }
+
         private static PlayerProfile playerProfile;
+        private static ModelCollection<ItemRecord> inventory;
 
         public static void NewState()
         {
-            //saveSlot = -1;
-            saveSlot = 0;
+            saveSlot = -1;
+            //saveSlot = 0;
             saveData = new Dictionary<string, object>(DEFAULT_SAVE_VALUES);
             playerProfile = new PlayerProfile();
+            inventory = new ModelCollection<ItemRecord>();
         }
 
         public static void LoadState(string saveFileName)
@@ -54,6 +60,7 @@ namespace Texemon.Models
             {
                 saveData = (Dictionary<string, object>)binaryFormatter.Deserialize(fileStream);
                 playerProfile = (PlayerProfile)binaryFormatter.Deserialize(fileStream);
+                inventory = (ModelCollection<ItemRecord>)binaryFormatter.Deserialize(fileStream);
             }
         }
 
@@ -83,12 +90,37 @@ namespace Texemon.Models
 
                 binaryFormatter.Serialize(fileStream, playerProfile);
                 fileStream.Flush();
+
+                binaryFormatter.Serialize(fileStream, inventory);
+                fileStream.Flush();
             }
         }
 
         public static void DeleteSave(int slot)
         {
             File.Delete(CrossPlatformGame.SETTINGS_DIRECTORY + SAVE_FOLDER + "\\" + slot + ".sav");
+        }
+
+        public static Dictionary<int, Dictionary<string, object>> GetAllSaveData()
+        {
+            Dictionary<int, Dictionary<string, object>> results = new Dictionary<int, Dictionary<string, object>>();
+
+            string savePath = CrossPlatformGame.SETTINGS_DIRECTORY + SAVE_FOLDER;
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+            foreach (string saveFile in Directory.GetFiles(savePath).Where(x => Path.GetExtension(x) == ".sav"))
+            {
+                Dictionary<string, object> saveData;
+                FileInfo fileInfo = new FileInfo(saveFile);
+                using (FileStream fileStream = fileInfo.OpenRead())
+                {
+                    saveData = (Dictionary<string, object>)binaryFormatter.Deserialize(fileStream);
+                }
+
+                results.Add(int.Parse(Path.GetFileNameWithoutExtension(saveFile).Replace("Save", "")), saveData);
+            }
+
+            return results;
         }
 
         public static void SetSaveData<T>(string name, T value)
@@ -111,10 +143,11 @@ namespace Texemon.Models
             int slotStart = saveName.LastIndexOf(SAVE_FOLDER) + 6;
             int slotEnd = saveName.LastIndexOf('.');
 
-            return int.Parse(saveName.Substring(slotStart, slotEnd - slotStart));
+            return int.Parse(Path.GetFileNameWithoutExtension(saveName).Replace("Save", ""));
         }
 
         public static PlayerProfile PlayerProfile { get => playerProfile; }
+        public static ModelCollection<ItemRecord> Inventory { get => inventory; }
 
         public static List<string> SaveList
         {

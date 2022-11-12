@@ -1,39 +1,78 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 using Texemon.Main;
 using Texemon.Models;
 using Texemon.SceneObjects;
 using Texemon.SceneObjects.Widgets;
+using System.Threading.Tasks;
 
 namespace Texemon.Scenes.ConversationScene
 {
     public class ConversationViewModel : ViewModel
     {
         private ConversationScene conversationScene;
-        private ConversationModel conversationData;
-        private DialogueModel currentDialogue;
+        private ConversationRecord conversationRecord;
+        private DialogueRecord currentDialogue;
         private int dialogueIndex;
 
         private CrawlText crawlText;
 
-        public ConversationViewModel(ConversationScene iScene, GameView viewName, ConversationModel iConversationData)
-            : base(iScene, PriorityLevel.GameLevel, viewName)
-        {
+        public bool AutoProceed { get; set; }
+        public int AutoProceedLength { get; set; } = -1;
 
+        public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord)
+            : base(iScene, PriorityLevel.GameLevel)
+        {
             conversationScene = (parentScene as ConversationScene);
-            conversationData = iConversationData;
-            currentDialogue = conversationData.DialogueData[dialogueIndex];
+            conversationRecord = iConversationRecord;
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
 
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
             Dialogue.Value = currentDialogue.Text;
 
+            if (!string.IsNullOrEmpty(conversationRecord.Bounds))
+            {
+                string[] tokens = conversationRecord.Bounds.Split(',');
+                Window.Value = new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3]));
+            }
+
+            LoadView(GameView.ConversationScene_ConversationView);
+
             crawlText = GetWidget<CrawlText>("ConversationText");
+        }
+
+        public ConversationViewModel(ConversationScene iScene, ConversationRecord iConversationRecord, Rectangle conversationBounds, bool autoProceed)
+            : base(iScene, PriorityLevel.GameLevel)
+        {
+            conversationScene = (parentScene as ConversationScene);
+            conversationRecord = iConversationRecord;
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
+
+            Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
+            Dialogue.Value = currentDialogue.Text;
+            Window.Value = conversationBounds;
+
+            if (autoProceed) LoadView(GameView.ConversationScene_ConversationView3);
+            else LoadView(GameView.ConversationScene_ConversationView2);
+
+            crawlText = GetWidget<CrawlText>("ConversationText");
+
+            AutoProceed = autoProceed;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (conversationScene.PriorityLevel > PriorityLevel.GameLevel) return;
+
+            if (AutoProceedLength > 0)
+            {
+                AutoProceedLength -= gameTime.ElapsedGameTime.Milliseconds;
+                if (AutoProceedLength <= 0) Proceed();
+            }
 
             if (crawlText.ReadyToProceed && !ReadyToProceed.Value)
             {
@@ -48,14 +87,9 @@ namespace Texemon.Scenes.ConversationScene
 
             if (!Closed && !ChildList.Any(x => x.Transitioning))
             {
-                if (Input.CurrentInput.CommandPressed(Command.Confirm))
+                if (Input.CurrentInput.CommandPressed(Command.Confirm) )
                 {
-                    if (!crawlText.ReadyToProceed)
-                    {
-                        crawlText.FinishText();
-                        conversationScene.FinishDialogue();
-                    }
-                    else NextDialogue();
+                    Proceed();
                 }
             }
 
@@ -63,6 +97,16 @@ namespace Texemon.Scenes.ConversationScene
             {
                 parentScene.EndScene();
             }
+        }
+
+        public void Proceed()
+        {
+            if (!crawlText.ReadyToProceed)
+            {
+                crawlText.FinishText();
+                conversationScene.FinishDialogue();
+            }
+            else if (!AutoProceed) NextDialogue();
         }
 
         public override void LeftClickChild(Vector2 mouseStart, Vector2 mouseEnd, Widget clickWidget, Widget otherWidget)
@@ -75,7 +119,7 @@ namespace Texemon.Scenes.ConversationScene
                         crawlText.FinishText();
                         conversationScene.FinishDialogue();
                     }
-                    else NextDialogue();
+                    else if (!AutoProceed) NextDialogue();
                     break;
             }
         }
@@ -84,11 +128,11 @@ namespace Texemon.Scenes.ConversationScene
         {
             dialogueIndex++;
 
-            if (dialogueIndex >= conversationData.DialogueData.Length)
+            if (dialogueIndex >= conversationRecord.DialogueRecords.Length)
             {
-                if (conversationData.EndScript != null)
+                if (conversationRecord.EndScript != null)
                 {
-                    ConversationController conversationController = conversationScene.AddController(new ConversationController(conversationScene, conversationData.EndScript));
+                    ConversationController conversationController = conversationScene.AddController(new ConversationController(conversationScene, conversationRecord.EndScript));
                     conversationController.OnTerminated += EndConversation;
                 }
                 else EndConversation();
@@ -96,7 +140,7 @@ namespace Texemon.Scenes.ConversationScene
                 return;
             }
 
-            currentDialogue = conversationData.DialogueData[dialogueIndex];
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
 
             Dialogue.Value = currentDialogue.Text;
             Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
@@ -108,7 +152,10 @@ namespace Texemon.Scenes.ConversationScene
 
         private void EndConversation()
         {
-            if (string.IsNullOrEmpty(conversationData.Background)) Close();
+            if (string.IsNullOrEmpty(conversationRecord.Background))
+            {
+                Close();
+            }
             else
             {
                 if (conversationScene.EndGame) CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
@@ -116,10 +163,22 @@ namespace Texemon.Scenes.ConversationScene
             }
         }
 
+        public void ChangeConversation(ConversationRecord newConversationRecord)
+        {
+            dialogueIndex = 0;
+
+            conversationRecord = newConversationRecord;
+            currentDialogue = conversationRecord.DialogueRecords[dialogueIndex];
+
+            Speaker.Value = string.IsNullOrEmpty(currentDialogue.Speaker) ? "" : currentDialogue.Speaker;
+            Dialogue.Value = currentDialogue.Text;
+        }
+
         public event Action OnDialogueScrolled;
 
+        public ModelProperty<Rectangle> Window { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-120, 20, 240, 60));
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
-        public ModelProperty<string> ConversationFont { get; set; } = new ModelProperty<string>("Dialogue");
+        public ModelProperty<GameFont> ConversationFont { get; set; } = GameProfile.PlayerProfile.Font;
         public ModelProperty<string> Dialogue { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Speaker { get; set; } = new ModelProperty<string>("");
     }

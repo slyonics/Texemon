@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-141,-80,282,71">
+		<DataGrid Name="PartyList" Items="Bind PartyMembers" Scrolling="False" Bounds="0,0,282,63" Alignment="Cascading" InnerMargin="4,3,0,4">
+			<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Alignment="Vertical" Bounds="0,0,274,16">
+				<Image Sprite="Bind DataGrid.PlayerSprite" Alignment="Left" Bounds="9,23,30,16"/>
+				<Label Text="Bind DataGrid.HeroModel.Name" Font="Bind PlayerProfile.Font" Alignment="Left" TextAlignment="Left" Bounds="-15,11,64,16"/>
+				<Panel Bounds="-61,-2,233,16" Alignment="Left">
+					<Image Icon="Heart" Alignment="Cascading" Bounds="60,6,10,10"/>
+					<Label Text="Bind DataGrid.HeroModel.Health" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,40,10"/>
+					<Image Icon="Axe" Alignment="Cascading" Bounds="-20,6,10,10"/>
+					<Label Text="Bind DataGrid.HeroModel.Strength" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+					<Image Icon="Shield" Alignment="Cascading" Bounds="0,6,10,10"/>
+					<Label Text="Bind DataGrid.HeroModel.Defense" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+					<Image Icon="Gun" Alignment="Cascading" Bounds="0,6,10,10"/>
+					<Label Text="Bind DataGrid.HeroModel.Agility" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+					<Image Icon="Staff" Alignment="Cascading" Bounds="0,6,10,10"/>
+					<Label Text="Bind DataGrid.HeroModel.Mana" Font="Dialogue" Alignment="Cascading" TextAlignment="Left" Bounds="0,15,14,10"/>
+				</Panel>
+			</Button>
+		</DataGrid>
+	</Panel>
+</View>

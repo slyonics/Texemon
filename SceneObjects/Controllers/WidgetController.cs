@@ -29,7 +29,7 @@ namespace Texemon.SceneObjects.Controllers
 
         public override void PreUpdate(GameTime gameTime)
         {
-            if (subject.Transitioning || subject.Closed) return;
+            if (subject.Transitioning || subject.Closed || !subject.Visible) return;
 
             Vector2 mousePosition = new Vector2(Input.MousePosition.X, Input.MousePosition.Y);
             Widget mousedWidget = subject.GetWidgetAt(mousePosition);

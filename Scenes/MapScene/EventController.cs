@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Texemon.Models;
 using Texemon.SceneObjects.Controllers;
 using Texemon.SceneObjects.Maps;
+using Texemon.Scenes.ConversationScene;
+using Texemon.Scenes.StatusScene;
 
 namespace Texemon.Scenes.MapScene
 {
@@ -15,6 +17,7 @@ namespace Texemon.Scenes.MapScene
         private MapScene mapScene;
 
         public bool EndGame { get; private set; }
+        public Actor ActorSubject { get; set; }
 
         public EventController(MapScene iScene, string[] script)
             : base(iScene, script, PriorityLevel.CutsceneLevel)
@@ -27,10 +30,15 @@ namespace Texemon.Scenes.MapScene
             switch (tokens[0])
             {
                 case "EndGame": EndGame = true; break;
-                case "ChangeMap": ChangeMap(tokens); Audio.PlaySound(GameSound.wall_enter); break;
+                case "ChangeMap": ChangeMap(tokens, mapScene); break;
                 case "SetWaypoint": SetWaypoint(tokens); break;
                 case "Conversation": Conversation(tokens, scriptParser); break;
-                case "Encounter": Encounter(tokens); break;
+                case "Encounter": Encounter(tokens, scriptParser); break;
+                case "Shop": Shop(tokens); break;
+                case "GiveItem": GiveItem(tokens); break;
+                case "Inn": Inn(tokens); break;
+                case "RestoreParty": RestoreParty(); break;
+                case "Recruit": Recruit(tokens); break;
                 default: return false;
             }
 
@@ -39,20 +47,25 @@ namespace Texemon.Scenes.MapScene
 
         public override string ParseParameter(string parameter)
         {
-            if (parameter.Contains("Flag."))
+            if (parameter.StartsWith("$SaveData."))
             {
-                return GameProfile.GetSaveData<bool>(parameter.Split('.')[1]).ToString();
+                return GameProfile.GetSaveData<string>(parameter.Split('.')[1]).ToString();
             }
-            else return base.ParseParameter(parameter);
+            else if (parameter[0] == '$')
+            {
+                switch (parameter)
+                {
+                    
+                    default: return null;
+                }
+            }
+            else return null;
         }
 
-        public static void ChangeMap(string[] tokens)
+        public static void ChangeMap(string[] tokens, MapScene mapScene)
         {
-            Type sceneType = Type.GetType(tokens[1]);
-            if (tokens.Length == 6) CrossPlatformGame.Transition(sceneType, tokens[2], int.Parse(tokens[3]), int.Parse(tokens[4]), (Orientation)Enum.Parse(typeof(Orientation), tokens[5]));
-            else if (tokens.Length == 3) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], tokens[2]);
-            else if (tokens.Length == 2) CrossPlatformGame.Transition(sceneType);
-            else CrossPlatformGame.Transition(sceneType, tokens[2]);
+            if (tokens.Length == 5) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], int.Parse(tokens[2]), int.Parse(tokens[3]), (Orientation)Enum.Parse(typeof(Orientation), tokens[4]));
+            else if (tokens.Length == 2) CrossPlatformGame.Transition(typeof(MapScene), tokens[1], mapScene.Tilemap.Name);
         }
 
         public static void SetWaypoint(string[] tokens)
@@ -65,23 +78,102 @@ namespace Texemon.Scenes.MapScene
         public static void Conversation(string[] tokens, ScriptParser scriptParser)
         {
             ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene(tokens[1]);
-            var unblock = scriptParser.BlockScript();
-            conversationScene.OnTerminated += new TerminationFollowup(unblock);
+            conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
             CrossPlatformGame.StackScene(conversationScene);
         }
 
-        public static void Encounter(string[] tokens)
+        public static void Encounter(string[] tokens, ScriptParser scriptParser)
         {
-            /*
-            mapScene.MapViewModel.SetActor("Actors_" + tokens[1]);
+            BattleScene.BattleScene battleScene = new BattleScene.BattleScene(tokens[1]);
+            battleScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
+            CrossPlatformGame.StackScene(battleScene);
+        }
 
-            MatchScene.MatchScene matchScene;
-            if (tokens.Length > 2) matchScene = new MatchScene.MatchScene(tokens[1], tokens[2]);
-            else matchScene = new MatchScene.MatchScene(tokens[1]);
-            var unblock = scriptParser.BlockScript();
-            matchScene.OnTerminated += new TerminationFollowup(unblock);
-            CrossPlatformGame.StackScene(matchScene);
-            */
+        public void Shop(string[] tokens)
+        {
+            ShopScene.ShopScene shopScene = new ShopScene.ShopScene(tokens[1]);
+            shopScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
+            CrossPlatformGame.StackScene(shopScene);
+        }
+
+        public void GiveItem(string[] tokens)
+        {
+            StatusScene.ItemRecord item = new StatusScene.ItemRecord(StatusScene.StatusScene.ITEMS.First(x => x.Name == string.Join(' ', tokens.Skip(1))));
+            GameProfile.Inventory.Add(item);
+
+            ConversationRecord conversationData = new ConversationRecord()
+            {
+                DialogueRecords = new DialogueRecord[]
+                {
+                    new DialogueRecord() { Text = "Found @" + item.Icon + " " + item.Name + "!"}
+                }
+            };
+
+            ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene(conversationData);
+            conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());
+            CrossPlatformGame.StackScene(conversationScene);
+
+            Audio.PlaySound(GameSound.GetItem);
+        }
+
+        public void Inn(string[] tokens)
+        {
+            ConversationScene.ConversationScene conversationScene = new ConversationScene.ConversationScene("Inn");
+            conversationScene.OnTerminated += new TerminationFollowup(scriptParser.BlockScript());            
+
+            TransitionController transitionOutController = new TransitionController(TransitionDirection.Out, 600);
+            SceneObjects.Shaders.ColorFade colorFadeOut = new SceneObjects.Shaders.ColorFade(Color.Black, transitionOutController.TransitionProgress);
+            transitionOutController.UpdateTransition += new Action<float>(t => colorFadeOut.Amount = t);
+            transitionOutController.FinishTransition += new Action<TransitionDirection>(t =>
+            {
+                Audio.PauseMusic(true);
+                Audio.PlaySound(GameSound.Rest);
+                Task.Delay(1500).ContinueWith(t => Audio.PauseMusic(false));
+
+                transitionOutController.Terminate();
+                colorFadeOut.Terminate();
+                TransitionController transitionInController = new TransitionController(TransitionDirection.In, 600);
+                SceneObjects.Shaders.ColorFade colorFadeIn = new SceneObjects.Shaders.ColorFade(Color.Black, transitionInController.TransitionProgress);
+                transitionInController.UpdateTransition += new Action<float>(t => colorFadeIn.Amount = t);
+                transitionInController.FinishTransition += new Action<TransitionDirection>(t =>
+                {
+                    colorFadeIn.Terminate();                    
+                });
+                mapScene.AddController(transitionInController);
+                mapScene.SceneShader = colorFadeIn;
+
+                CrossPlatformGame.StackScene(conversationScene);
+            });
+
+            mapScene.AddController(transitionOutController);
+            mapScene.SceneShader = colorFadeOut;
+
+            RestoreParty();
+        }
+
+        public void RestoreParty()
+        {
+            foreach (var partyMember in GameProfile.PlayerProfile.Party)
+            {
+                partyMember.Value.Health.Value = partyMember.Value.MaxHealth.Value;
+                foreach (var ability in partyMember.Value.Abilities)
+                {
+                    ability.Value.ChargesLeft = ability.Value.Charges;
+                }
+            }
+        }
+
+        public void Recruit(string[] tokens)
+        {
+            HeroModel heroModel = new HeroModel((HeroType)Enum.Parse(typeof(HeroType), tokens[1]));
+            //heroModel.Name.Value = namingBox.Text;
+            // TODO overflow party to backbench
+            GameProfile.PlayerProfile.Party.Add(heroModel);
+            GameProfile.SetSaveData<bool>(heroModel.Name.Value + "Recruited", true);
+
+            mapScene.AddPartyMember(heroModel, ActorSubject);
+
+            if (tokens.Length >= 2) ActorSubject.Terminate();
         }
     }
 }

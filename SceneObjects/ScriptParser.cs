@@ -95,6 +95,11 @@ namespace Texemon.SceneObjects
             }
         }
 
+        public string DequeueNextCommand()
+        {
+            return scriptCommands.Dequeue().Trim();
+        }
+
         public void AddParticle(Particle particle)
         {
             childParticles.Add(particle);
@@ -118,8 +123,9 @@ namespace Texemon.SceneObjects
                 {
                     case "Terminate": waitTimeLeft = 0; scriptCommands.Clear(); break;
                     case "If": If(tokens); break;
-                    case "ElseIf": SkipToNextEnd(); break;
+                    case "ElseIf": SkipToNextEnd(); break; // TODO: needs to include a conditional
                     case "Else": SkipToNextEnd(); break;
+                    case "Break": SkipToNextEnd(); break;
                     case "Wait": waitTimeLeft = int.Parse(tokens[1]); break;
                     case "Repeat": RunScript(latestScript); break;
                     case "While": While(tokens, originalTokens); break;
@@ -127,19 +133,27 @@ namespace Texemon.SceneObjects
                     case "ClearParticles": foreach (Particle particle in childParticles) particle.Terminate(); childParticles.Clear(); break;
                     case "Particle": AddParticle(tokens); break;
                     case "Sound": Audio.PlaySound(tokens); break;
+                    case "SoundSolo": Audio.PlaySoundSolo(tokens); break;
                     case "Music": Audio.PlayMusic(tokens); break;
+                    case "StopMusic": Audio.StopMusic(); break;
                     case "SetFlag": SetFlag(tokens); break;
                     case "SetProperty": SetProperty(tokens); break;
                     case "AddView": AddView(tokens); break;
                     case "ChangeScene": ChangeScene(tokens); break;
                     case "StackScene": StackScene(tokens); break;
+                    case "Switch": Switch(tokens); break;
                 }
             }
         }
 
+        public void EndScript()
+        {
+            scriptCommands.Clear();
+        }
+
         private string ParseParameter(string parameter)
         {
-            if (parameter[0] == '!')
+            if (parameter[0] == '!' && parameter.Length > 1)
             {
                 parameter = ParseParameter(parameter.Substring(1, parameter.Length - 1));
                 if (parameter == "True") return "False";
@@ -161,6 +175,7 @@ namespace Texemon.SceneObjects
                         case "$bottom": return CrossPlatformGame.ScreenHeight.ToString();
                         case "$top": return "0";
                         case "$left": return "0";
+                        case "$selection": return GameProfile.GetSaveData<string>("LastSelection");
                         default:
                             if (parameter.Contains("$random"))
                             {
@@ -312,6 +327,16 @@ namespace Texemon.SceneObjects
             if (tokens.Length == 2) CrossPlatformGame.Transition(sceneType);
             else if (tokens.Length == 3) CrossPlatformGame.Transition(sceneType, tokens[2]);
             else if (tokens.Length == 4) CrossPlatformGame.Transition(sceneType, tokens[2], tokens[3]);
+        }
+
+        private void Switch(string[] tokens)
+        {
+            string switchValue = ParseParameter(tokens[1]);
+            string skipLine;
+            do
+            {
+                skipLine = scriptCommands.Dequeue().Trim();
+            } while (skipLine != "Case " + switchValue);
         }
 
         public bool Finished { get => scriptCommands == null; }

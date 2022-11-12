@@ -100,6 +100,11 @@ namespace Texemon.Main
             PlayMusic((GameMusic)Enum.Parse(typeof(GameMusic), scriptTokens[1]));
         }
 
+        public static void PauseMusic(bool pause)
+        {
+            fmodChannel.setPaused(pause);
+        }
+
         public static void StopMusic()
         {
             bool isPlaying = false;
@@ -133,6 +138,13 @@ namespace Texemon.Main
             PlaySound((GameSound)Enum.Parse(typeof(GameSound), scriptTokens[1]), volume, pan, pitch);
         }
 
+        public static void PlaySoundSolo(string[] scriptTokens)
+        {
+            Audio.PauseMusic(true);
+            PlaySound((GameSound)Enum.Parse(typeof(GameSound), scriptTokens[1]));
+            Task.Delay(int.Parse(scriptTokens[2])).ContinueWith(t => Audio.PauseMusic(false));
+        }
+
         public static float SoundVolume { set => soundVolume = value; get => soundVolume; }
         public static float MusicVolume
         {
@@ -147,5 +159,7 @@ namespace Texemon.Main
 
             get => musicVolume;
         }
+
+        public static GameMusic CurrentMusic { get => currentMusic; }
     }
 }

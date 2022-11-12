@@ -1,0 +1,224 @@
+[
+	{
+		"Name": "Sentinel",
+		"Sprite": "Robot",
+		"ShadowOffset": 0,
+		"MaxHealth": 30,
+		"Strength": 5,
+		"Defense": 1,
+		"Agility": 3,
+		"Mana": 0,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Slime",
+		"Sprite": "Slime",
+		"ShadowOffset": 0,
+		"MaxHealth": 30,
+		"Strength": 3,
+		"Defense": 4,
+		"Agility": 1,
+		"Mana": 4,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Rattlesnake",
+		"Sprite": "Snake",
+		"ShadowOffset": 0,
+		"MaxHealth": 10,
+		"Strength": 2,
+		"Defense": 1,
+		"Agility": 8,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Dialogue $attackerName lunges at $targetName",
+					"Animate Attack",
+					"Sound Slash",
+					"Effect Bash $targetCenterX $targetCenterY 3",
+					"OnHit 100 Strength",
+					"Flash 255 27 0",
+					"Damage Strength 5 Physical"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Scorpion",
+		"Sprite": "Scorpion",
+		"ShadowOffset": 0,
+		"MaxHealth": 10,
+		"Strength": 2,
+		"Defense": 4,
+		"Agility": 4,
+		"Mana": 1,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Steel Knight",
+		"Sprite": "DarkKnight",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 16,
+		"Defense": 16,
+		"Agility": 6,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Dialogue $attackerName attacks $targetName",
+					"Animate Attack",
+					"Sound Slash",
+					"Effect Bash $targetCenterX $targetCenterY 3",
+					"OnHit 100 Strength",
+					"Flash 255 27 0",
+					"Damage Strength 5 Physical"
+				],
+				"Weight": 100
+			},
+			{
+				"Script": [
+					"Counter"
+				],
+				"Weight": 1
+			}
+		]
+	},
+	{
+		"Name": "Water Spirit",
+		"Sprite": "WaterSpirit",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 8,
+		"Agility": 0,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Toxic Bloom",
+		"Sprite": "PoisonFlower",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 8,
+		"Agility": 0,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Dialogue $attackerName attacks $targetName with corrosive tendrils!",
+					"Animate Attack",
+					"Sound Slash",
+					"Effect Bash $targetCenterX $targetCenterY 3",
+					"OnHit 100 Strength",
+					"Flash 255 27 0",
+					"Damage Strength 5 Physical"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Genbu",
+		"Sprite": "Turtle",
+		"ShadowOffset": 0,
+		"MaxHealth": 80,
+		"Strength": 8,
+		"Defense": 8,
+		"Agility": 0,
+		"Mana": 8,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Scout",
+		"Sprite": "Drone",
+		"ShadowOffset": 24,
+		"MaxHealth": 40,
+		"Strength": 8,
+		"Defense": 10,
+		"Agility": 14,
+		"Mana": 0,
+		"Attacks": [
+			{
+				"Script": [
+					"Dialogue $attackerName attacks $targetName with energy blasters!",
+					"Animate Attack",
+					"Sound Laser",
+					"Effect Gunshot $targetCenterX $targetCenterY 4",
+					"OnHit 100 Strength",
+					"Flash 255 27 0",
+					"Damage Agility 5 Physical"
+				],
+				"Weight": 100
+			}
+		]
+	},
+	{
+		"Name": "Specter",
+		"Sprite": "Ghost",
+		"ShadowOffset": 4,
+		"MaxHealth": 40,
+		"Strength": 6,
+		"Defense": 4,
+		"Agility": 1,
+		"Mana": 10,
+		"Evasion": 50,
+		"Attacks": [
+			{
+				"Script": [
+					"Attack"
+				],
+				"Weight": 50
+			},
+			{
+				"PreScript": [ "Dialogue $attackerName attacks the party with fire magic!", "Animate Attack" ],
+				"Script": [
+					"Sound Fireball",
+					"Effect Flame $targetCenterX $targetCenterY 3",
+					"Flash 255 27 0",
+					"Damage Mana 4 Fire"
+				],
+				"Weight": 50,
+				"AttackAll": "true"
+			}
+		]
+	}
+]

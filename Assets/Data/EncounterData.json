@@ -1,0 +1,118 @@
+[
+	{
+		"Name": "DoubleSentinel",
+		"Enemies": [
+			"Sentinel",
+			"Sentinel"
+		],
+		"Challenge": 2,
+		"Script": [],
+		"Intro": "Two sentinels appear and move into attack formation!"
+	},
+	{
+		"Name": "Rattlesnake",
+		"Background": "Desert",
+		"Width": 96,
+		"Enemies": [
+			"Rattlesnake"
+		],
+		"Challenge": 1,
+		"Script": [],
+		"Intro": "A rattlesnake is alarmed by your presence and lunges at you!!"
+	},
+	{
+		"Name": "ScorpionNest",
+		"Background": "Desert",
+		"Enemies": [
+			"Scorpion",
+			"Scorpion",
+			"Scorpion",
+			"Scorpion"
+		],
+		"Challenge": 2,
+		"Script": [],
+		"Intro": "A nest of angry scorpions swarm around you!"
+	},
+	{
+		"Name": "SmallPlant",
+		"Background": "Trees",
+		"Enemies": [
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "Toxic, carnivourous plants are drawn by your scent and move in at alarming speed!"
+	},
+	{
+		"Name": "BigPlant",
+		"Background": "Trees",
+		"Enemies": [
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom",
+			"Toxic Bloom"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "Toxic, carnivourous plants are drawn by your scent and move in at alarming speed!"
+	},
+	{
+		"Name": "OneScout",
+		"Background": "Desert",
+		"Width": 96,
+		"Enemies": [
+			"Scout"
+		],
+		"Challenge": 2,
+		"Script": [],
+		"Intro": "A drone of unknown origin locks onto you and attacks without warning!"
+	},
+	{
+		"Name": "OneSpecter",
+		"Background": "Cave",
+		"Width": 96,
+		"Enemies": [
+			"Specter"
+		],
+		"Challenge": 2,
+		"Script": [],
+		"Intro": "A restless spirit turns a baleful gaze towards you!"
+	},
+	{
+		"Name": "TwoSpecter",
+		"Background": "Cave",
+		"Width": 128,
+		"Enemies": [
+			"Specter",
+			"Specter"
+		],
+		"Challenge": 2,
+		"Script": [],
+		"Intro": "Restless spirits turn a baleful gaze towards you!!"
+	},
+	{
+		"Name": "SteelPatrol",
+		"Background": "Steel",
+		"Enemies": [
+			"Steel Knight",
+			"Steel Knight"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "You are detected by a patrolling squad of Steel Knights!"
+	},
+	{
+		"Name": "SteelScout",
+		"Background": "Steel",
+		"Enemies": [
+			"Scout",
+			"Scout",
+			"Scout"
+		],
+		"Challenge": 3,
+		"Script": [],
+		"Intro": "You are detected by a patrolling squadron of drone scouts!"
+	}
+]

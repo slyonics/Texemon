@@ -18,10 +18,7 @@ namespace Texemon.Main
         Cancel,
         Menu,
         Interact,
-        Technique1,
-        Technique2,
-        Technique3,
-        Technique4
+        Run
     }
 
     public enum PlayerNumber
@@ -55,7 +52,7 @@ namespace Texemon.Main
             { Command.Cancel, new List<Keys>() { Keys.Escape } },
             { Command.Menu, new List<Keys>() { Keys.Escape } },
             { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space } },
-            //{ Command.Speedup, new List<Keys>() { Keys.Space } }
+            { Command.Run, new List<Keys>() { Keys.LeftShift, Keys.RightShift } }
         };
 
         private static Dictionary<Command, List<Buttons>> MANDATORY_GAMEPAD_BINDINGS = new Dictionary<Command, List<Buttons>>()
@@ -68,7 +65,7 @@ namespace Texemon.Main
             { Command.Cancel, new List<Buttons>() { Buttons.B } },
             { Command.Menu, new List<Buttons>() { Buttons.Start } },
             { Command.Interact, new List<Buttons>() { Buttons.RightShoulder } },
-            //{ Command.Speedup, new List<Buttons>() { Buttons.LeftShoulder } }
+            { Command.Run, new List<Buttons>() { Buttons.LeftShoulder } }
         };
 
         private List<float> keyActivity = new List<float>();
@@ -157,6 +154,7 @@ namespace Texemon.Main
                 {
                     if (newKeyState.IsKeyDown(key))
                     {
+                        Input.MOUSE_MODE = false;
                         commandState.down = true;
                         keyPresses++;
                         break;
@@ -169,6 +167,7 @@ namespace Texemon.Main
                     {
                         if (newGamePadState.IsButtonDown(button))
                         {
+                            Input.MOUSE_MODE = false;
                             commandState.down = true;
                             buttonPresses++;
                             break;

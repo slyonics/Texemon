@@ -21,6 +21,7 @@ namespace Texemon.Scenes.MapScene
     public class PlayerController : Controller
     {
         public const float WALKING_SPEED = 90.0f;
+        public const float RUN_SPEED = 180.0f;
 
         private MapScene mapScene;
 
@@ -41,8 +42,26 @@ namespace Texemon.Scenes.MapScene
         public override void PreUpdate(GameTime gameTime)
         {
             InputFrame inputFrame = Input.CurrentInput;
-            Vector2 movement = Vector2.Zero;
 
+            if (Input.CurrentInput.CommandPressed(Command.Cancel))
+            {
+                Controller suspendController = mapScene.AddController(new Controller(PriorityLevel.MenuLevel));
+
+                StatusScene.StatusScene statusScene = new StatusScene.StatusScene();
+                statusScene.OnTerminated += new TerminationFollowup(suspendController.Terminate);
+                CrossPlatformGame.StackScene(statusScene);
+
+                return;
+            }
+
+            Vector2 movement = Vector2.Zero;
+            if (Input.LeftMouseState == Microsoft.Xna.Framework.Input.ButtonState.Pressed &&
+                Input.MousePosition.X >= 0 && Input.MousePosition.Y >= 0 && Input.MousePosition.X < CrossPlatformGame.ScreenWidth && Input.MousePosition.Y < CrossPlatformGame.ScreenHeight)
+            {
+                movement = Input.MousePosition + mapScene.Camera.Position - Player.Position + new Vector2(mapScene.Camera.CenteringOffsetX, mapScene.Camera.CenteringOffsetY);
+                if (movement.Length() > 1.0f) movement.Normalize();
+                else movement = Vector2.Zero;
+            }
             if (inputFrame.CommandDown(Command.Left)) movement.X -= 1.0f;
             if (inputFrame.CommandDown(Command.Right)) movement.X += 1.0f;
             if (inputFrame.CommandDown(Command.Up)) movement.Y -= 1.0f;
@@ -57,8 +76,14 @@ namespace Texemon.Scenes.MapScene
             else
             {
                 movement.Normalize();
-                Player.Walk(movement, WALKING_SPEED);
+                if (inputFrame.CommandDown(Command.Run))
+                {
+                    Player.Run(movement, RUN_SPEED);
+                }
+                else Player.Walk(movement, WALKING_SPEED);
             }
+
+            if (!mapScene.Camera.View.Intersects(Player.Bounds) && !mapScene.Camera.View.Contains(Player.Bounds)) mapScene.HandleOffscreen();
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -76,6 +101,8 @@ namespace Texemon.Scenes.MapScene
                 case Orientation.Left: interactionZone.X -= (int)(Player.BoundingBox.Width * 1.5f); break;
             }
 
+            
+
             FindInteractables();
         }
 
@@ -85,18 +112,28 @@ namespace Texemon.Scenes.MapScene
             interactableList.AddRange(mapScene.NPCs.FindAll(x => x.Interactive));
             interactableList.AddRange(mapScene.EventTriggers.FindAll(x => x.Interactive));
 
-            Hero player = mapScene.Player;
+            Hero player = mapScene.PartyLeader;
             IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => player.Distance(x.Bounds));
-            Rectangle interactionZone = player.Bounds;
+            Rectangle interactZone = player.Bounds;
+            int zoneWidth = mapScene.Tilemap.TileWidth;
+            int zoneHeight = mapScene.Tilemap.TileHeight;
             switch (player.Orientation)
             {
-                case Orientation.Up: interactionZone.Y -= mapScene.Tilemap.TileHeight; break;
-                case Orientation.Right: interactionZone.X += mapScene.Tilemap.TileWidth; break;
-                case Orientation.Down: interactionZone.Y += mapScene.Tilemap.TileHeight; break;
-                case Orientation.Left: interactionZone.X -= mapScene.Tilemap.TileWidth; break;
+                case Orientation.Up:
+                    interactZone = new Rectangle((int)player.Position.X - 1 - zoneWidth / 2, (int)player.Position.Y - zoneHeight - 4, zoneWidth, zoneHeight);
+                    break;
+                case Orientation.Right:
+                    interactZone = new Rectangle((int)player.Position.X + 1, (int)player.Position.Y - zoneHeight, zoneWidth, zoneHeight);
+                    break;
+                case Orientation.Down: player.InteractionZone.Y += mapScene.Tilemap.TileHeight;
+                    interactZone = new Rectangle((int)player.Position.X - 1 - zoneWidth / 2, (int)player.Position.Y - zoneHeight / 2, zoneWidth, zoneHeight);
+                    break;
+                case Orientation.Left:
+                    interactZone = new Rectangle((int)player.Position.X - 1 - zoneWidth, (int)player.Position.Y - zoneHeight, zoneWidth, zoneHeight);
+                    break;
             }
-
-            interactable = sortedInteractableList.FirstOrDefault(x => x.Bounds.Intersects(interactionZone));
+            player.InteractionZone = interactZone;
+            interactable = sortedInteractableList.FirstOrDefault(x => x.Bounds.Intersects(player.InteractionZone));
             interactionView.Target(interactable);
         }
     }

@@ -1,13 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Texemon.Scenes.MapScene;
 
 namespace Texemon.SceneObjects.Maps
 {
@@ -35,6 +28,9 @@ namespace Texemon.SceneObjects.Maps
         protected bool ignoreObstacles = false;
         protected bool hitTerrain;
 
+        protected int flightHeight;
+        protected AnimatedSprite shadowSprite;
+
         protected Orientation orientation;
         private bool[] movementArcs = new bool[4];
 
@@ -55,6 +51,17 @@ namespace Texemon.SceneObjects.Maps
             orientation = iOrientation;
         }
 
+        public Actor(Scene iScene, Tilemap iTilemap, Vector2 iPosition, Rectangle iBounds, Orientation iOrientation = Orientation.None)
+            : base(iScene, iPosition)
+        {
+            tilemap = iTilemap;
+
+            boundingBox = iBounds;
+            currentBounds = UpdateBounds(position);
+
+            orientation = iOrientation;
+        }
+
         public override void Update(GameTime gameTime)
         {
             controllerList.RemoveAll(x => x.Terminated);
@@ -63,12 +70,14 @@ namespace Texemon.SceneObjects.Maps
             velocity = desiredVelocity;
 
             Move(gameTime);
-            UpdateElevation(gameTime);
+            //UpdateElevation(gameTime);
+            positionZ = flightHeight;
 
             currentBounds = UpdateBounds(position);
             displacement = position - startingPosition;
 
             animatedSprite?.Update(gameTime);
+            shadowSprite?.Update(gameTime);
         }
 
         public override void Move(GameTime gameTime)
@@ -80,6 +89,8 @@ namespace Texemon.SceneObjects.Maps
 
         public override void Draw(SpriteBatch spriteBatch, Camera camera)
         {
+            float depth = (camera == null) ? 0 : camera.GetDepth(DepthPosition);
+            shadowSprite?.Draw(spriteBatch, position, camera, depth);
             base.Draw(spriteBatch, camera);
 
             if (Settings.GetProgramSetting<bool>("DebugMode")) Debug.DrawBox(spriteBatch, currentBounds);
@@ -341,14 +352,35 @@ namespace Texemon.SceneObjects.Maps
             animatedSprite.PlayAnimation("Walk" + orientation.ToString());
         }
 
+        public virtual void Run(Vector2 movement, float runSpeed)
+        {
+            desiredVelocity = movement * runSpeed;
+
+            Reorient(movement);
+
+            animatedSprite.PlayAnimation("Run" + orientation.ToString());
+        }
+
         public virtual void Teleport(Vector2 destination)
         {
             position = new Vector2(destination.X + boundingBox.Left + boundingBox.Width / 2, destination.Y + boundingBox.Bottom);
         }
 
+        public virtual void CenterOn(Vector2 destination)
+        {
+            position = new Vector2(destination.X, destination.Y + boundingBox.Height / 2);
+            UpdateBounds();
+        }
+
         public virtual void OrientedAnimation(string animationName, AnimationFollowup animationFollowup = null)
         {
             PlayAnimation(animationName + orientation.ToString(), animationFollowup);
+        }
+
+        public void SetFlight(int newHeight, Texture2D shadow)
+        {
+            shadowSprite = new AnimatedSprite(shadow, new Dictionary<string, Animation>(animatedSprite.AnimationList));
+            positionZ = flightHeight = newHeight;
         }
 
         public override Vector2 Position { set { position = value; } }
@@ -373,7 +405,8 @@ namespace Texemon.SceneObjects.Maps
                 {
                     for (int y = tileStartY; y <= tileEndY; y++)
                     {
-                        colliderList.AddRange(tilemap.GetTile(x, y).ColliderList);
+                        Tile nearbyTile = tilemap.GetTile(x, y);
+                        if (nearbyTile != null) colliderList.AddRange(tilemap.GetTile(x, y).ColliderList);
                     }
                 }
 
@@ -383,7 +416,7 @@ namespace Texemon.SceneObjects.Maps
 
         public bool Visible { get => parentScene.Camera.View.Intersects(currentBounds); }
         public bool IgnoreObstacles { get => ignoreObstacles; }
-        public Orientation Orientation { get => orientation; }
+        public Orientation Orientation { get => orientation; set => orientation = value; }
         public Vector2 Displacement { get => displacement; }
         public Vector2 BlockedDisplacement { get => blockedDisplacement; }
         public Vector2 DesiredVelocity { get => desiredVelocity; set => desiredVelocity = value; }

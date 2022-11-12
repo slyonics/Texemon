@@ -14,8 +14,8 @@ namespace Texemon.SceneObjects.Widgets
 {
     public class Tooltip : Widget
     {
-        private const int TOOLTIP_MARGIN_WIDTH = 15;
-        private const int TOOLTIP_MARGIN_HEIGHT = 12;
+        private const int TOOLTIP_MARGIN_WIDTH = 3;
+        private const int TOOLTIP_MARGIN_HEIGHT = 2;
 
         private string text;
         private NinePatch tooltipFrame;
@@ -26,7 +26,7 @@ namespace Texemon.SceneObjects.Widgets
 
             text = tooltipText;
             Font = GameFont.Tooltip;
-            tooltipFrame = new NinePatch("Windows_GamePanelOpaque", 0.05f);
+            tooltipFrame = new NinePatch("Label", 0.05f);
 
             int startIndex = text.IndexOf('{');
             int endIndex = text.IndexOf('}');
@@ -58,11 +58,11 @@ namespace Texemon.SceneObjects.Widgets
             base.Update(gameTime);
 
             Vector2 mouseOverPosition = Input.MousePosition;
-            int width = Math.Max(Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
-            int height = Math.Max(Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2, tooltipFrame.FrameHeight * 3);
+            int width = Math.Max(Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 2);
+            int height = Math.Max(Text.GetStringHeight(Font) + TOOLTIP_MARGIN_HEIGHT * 2, tooltipFrame.FrameHeight * 2);
 
             currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH;
-            currentWindow.Y = (int)mouseOverPosition.Y - Text.GetStringHeight(Font) - TOOLTIP_MARGIN_HEIGHT + height / 2;
+            currentWindow.Y = (int)mouseOverPosition.Y - Text.GetStringHeight(Font);
 
             if (currentWindow.Right > CrossPlatformGame.ScreenWidth) currentWindow.X = (int)mouseOverPosition.X - TOOLTIP_MARGIN_WIDTH + TOOLTIP_MARGIN_WIDTH - Math.Max(Text.GetStringLength(Font, text) + TOOLTIP_MARGIN_WIDTH * 2, tooltipFrame.FrameWidth * 3);
             if (currentWindow.Bottom > CrossPlatformGame.ScreenHeight) currentWindow.Y -= currentWindow.Bottom - CrossPlatformGame.ScreenHeight;
@@ -73,7 +73,7 @@ namespace Texemon.SceneObjects.Widgets
         public override void Draw(SpriteBatch spriteBatch)
         {
             tooltipFrame.Draw(spriteBatch, Vector2.Zero);
-            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X, currentWindow.Center.Y + 2), Font, text, 0.04f, Color);
+            Text.DrawCenteredText(spriteBatch, new Vector2(currentWindow.Center.X + 1, currentWindow.Center.Y - 1), Font, text, 0.04f, Color);
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="-141,-102,282,22">
+		<Button Name="PartyButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,44,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectParty">
+			<Label Font="Bind PlayerProfile.Font" Text="Party" Alignment="Vertical"/>
+		</Button>
+		<Button Name="ItemsButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,40,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectItems">
+			<Label Font="Bind PlayerProfile.Font" Text="Items" Alignment="Vertical"/>
+		</Button>
+		<Button Name="EquipmentButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,64,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectEquipment">
+			<Label Font="Bind PlayerProfile.Font" Text="Equipment" Alignment="Vertical" />
+		</Button>
+		<Button Name="AbilitiesButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,52,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectAbilities">
+			<Label Font="Bind PlayerProfile.Font" Text="Abilities" Alignment="Vertical" />
+		</Button>
+		<Button Name="SystemButton" Radio="True" Style="Blank" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,82,22" InnerMargin="8,4,8,3" Alignment="Left" Action="SelectSystem">
+			<Label Font="Bind PlayerProfile.Font" Text="Save &amp; Quit" Alignment="Vertical"/>
+		</Button>
+	</Panel>
+	
+</View>

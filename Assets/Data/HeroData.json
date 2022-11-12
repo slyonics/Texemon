@@ -1,0 +1,205 @@
+[
+	{
+		"Name": "Inventor",
+		"Class": "Human",
+		"Sprite": "Inventor",
+		"HealthGrowth": 0.5,
+		"StrengthGrowth": 0.3,
+		"DefenseGrowth": 0.01,
+		"AgilityGrowth": 0.4,
+		"ManaGrowth": 0.2,
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame",
+			"Heal"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Inventor" },
+			"MaxHealth": { "Value": 200 },
+			"Strength": { "Value": 5 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 8 },
+			"Mana": { "Value": 3 }
+		}
+	},
+	{
+		"Name": "TechnoMage",
+		"Class": "Human",
+		"Sprite": "Inventor",
+		"HealthGrowth": 0.5,
+		"StrengthGrowth": 0.3,
+		"DefenseGrowth": 0.01,
+		"AgilityGrowth": 0.1,
+		"ManaGrowth": 0.6,
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame",
+			"Heal"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Technomage" },
+			"MaxHealth": { "Value": 60 },
+			"Strength": { "Value": 3 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 2 },
+			"Mana": { "Value": 5 }
+		}
+	},
+	{
+		"Name": "TechHero",
+		"Class": "Android",
+		"Sprite": "Android",
+		"HealthGrowth": 0.2,
+		"StrengthGrowth": 0.2,
+		"DefenseGrowth": 0.02,
+		"AgilityGrowth": 0.2,
+		"ManaGrowth": 0.2,
+		"InitialEquipment": [
+			"Shotgun",
+			"Repair Kit"
+		],
+		"InitialAbilities": [],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Android" },
+			"MaxHealth": { "Value": 50 },
+			"Strength": { "Value": 3 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 4 },
+			"Mana": { "Value": 3 }
+		}
+	},
+	{
+		"Name": "RepairDrone",
+		"Class": "Drone",
+		"Sprite": "RepairDrone",
+		"FlightHeight": "4",
+		"EquipmentSlots": 2,
+		"InitialEquipment": [],
+		"InitialAbilities": [
+			"Repair"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Sana" },
+			"MaxHealth": { "Value": 20 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 2 },
+			"Agility": { "Value": 5 },
+			"Mana": { "Value": 0 }
+		}
+	},
+	{
+		"Name": "BlowtorchDrone",
+		"Class": "Drone",
+		"Sprite": "BlowtorchDrone",
+		"EquipmentSlots": 3,
+		"InitialEquipment": [],
+		"InitialAbilities": [
+			"Blowtorch"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Ignis" },
+			"MaxHealth": { "Value": 20 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 4 },
+			"Agility": { "Value": 3 },
+			"Mana": { "Value": 0 }
+		}
+	},
+	{
+		"Name": "DeflectorDrone",
+		"Class": "Drone",
+		"Sprite": "DeflectorDrone",
+		"FlightHeight": "4",
+		"EquipmentSlots": 2,
+		"InitialEquipment": [],
+		"InitialAbilities": [
+			"Deflector"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Aegida" },
+			"MaxHealth": { "Value": 30 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 2 },
+			"Agility": { "Value": 5 },
+			"Mana": { "Value": 0 }
+		}
+	},
+	{
+		"Name": "ArcWelderDrone",
+		"Class": "Drone",
+		"Sprite": "ArcWelderDrone",
+		"EquipmentSlots": 3,
+		"InitialEquipment": [],
+		"InitialAbilities": [
+			"Arc Welder"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Fulmen" },
+			"MaxHealth": { "Value": 30 },
+			"Strength": { "Value": 2 },
+			"Defense": { "Value": 4 },
+			"Agility": { "Value": 3 },
+			"Mana": { "Value": 0 }
+		}
+	},
+	{
+		"Name": "NoviceWarrior",
+		"Class": "Human",
+		"Sprite": "HumanF",
+		"HealthGrowth": 0.6,
+		"StrengthGrowth": 0.5,
+		"DefenseGrowth": 0.08,
+		"AgilityGrowth": 0.2,
+		"ManaGrowth": 0.3,
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Jessica" },
+			"MaxHealth": { "Value": 60 },
+			"Strength": { "Value": 4 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 2 },
+			"Mana": { "Value": 2 }
+		}
+	},
+	{
+		"Name": "NoviceMage",
+		"Class": "Human",
+		"Sprite": "MutantF",
+		"HealthGrowth": 0.6,
+		"StrengthGrowth": 0.3,
+		"DefenseGrowth": 0.08,
+		"AgilityGrowth": 0.2,
+		"ManaGrowth": 0.5,
+		"InitialEquipment": [
+			"Longsword"
+		],
+		"InitialAbilities": [
+			"Flame",
+			"Heal"
+		],
+		"Actions": [],
+		"BattlerModel": {
+			"Name": { "Value": "Claire" },
+			"MaxHealth": { "Value": 45 },
+			"Strength": { "Value": 3 },
+			"Defense": { "Value": 3 },
+			"Agility": { "Value": 3 },
+			"Mana": { "Value": 4 }
+		}
+	}
+]

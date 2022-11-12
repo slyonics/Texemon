@@ -1,0 +1,68 @@
+[
+	{
+		"Name": "InventorShop",
+		"Intro": "I can craft drones from spare parts. Find rare parts to craft more powerful drones.",
+		"Vouchers": 
+		[
+			{
+				"Name": "Repair Drone",
+				"Description": "Support drone capable of repairing mechanical characters.",
+				"Cost": 
+				[
+					{
+						"Item": "Spare Parts",
+						"Icon": "Chest"
+					},
+					{
+						"Item": "Repair Kit",
+						"Icon": "Heal"
+					}
+				]
+			},
+			{
+				"Name": "Deflector Drone",
+				"Description": "Support drone capable of protecting the party from enemy attacks.",
+				"Cost": 
+				[
+					{
+						"Item": "Advanced Parts",
+						"Icon": "Chest"
+					},
+					{
+						"Item": "Deflector",
+						"Icon": "Shield"
+					}
+				]
+			},
+			{
+				"Name": "Arc Welder Drone",
+				"Description": "Attack drone equipped with an electrical weapon module.",
+				"Cost": [
+					{
+						"Item": "Spare Parts",
+						"Icon": "Chest"
+					},
+					{
+						"Item": "Arc Welder",
+						"Icon": "Lightning"
+					}
+				]
+			},
+			{
+				"Name": "Blowtorch Drone",
+				"Description": "Attack drone equipped with an incendiary weapon module.",
+				"Cost": 
+				[
+					{
+						"Item": "Spare Parts",
+						"Icon": "Chest"
+					},
+					{
+						"Item": "Blowtorch",
+						"Icon": "Fire"
+					}
+				]
+			}
+		]
+	}
+]

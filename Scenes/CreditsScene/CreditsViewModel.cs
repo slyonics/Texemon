@@ -15,7 +15,8 @@ namespace Texemon.Scenes.CreditsScene
 
         public void Back()
         {
-            CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            //CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            Close();
         }
     }
 }

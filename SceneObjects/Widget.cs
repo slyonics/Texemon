@@ -13,6 +13,7 @@ namespace Texemon.SceneObjects
 {
     public enum Alignment
     {
+        Anchored,
         Relative,
         Absolute,
         Cascading,
@@ -25,6 +26,8 @@ namespace Texemon.SceneObjects
         BottomRight,
         Bottom,
         BottomLeft,
+        InvertCascade,
+        Horizontal
     }
 
     public abstract class Widget : Overlay
@@ -41,11 +44,8 @@ namespace Texemon.SceneObjects
 
         protected static Assembly assembly = Assembly.GetAssembly(typeof(Widget));
 
-        protected GameFont Font { get; set; } = GameFont.Tooltip;
-
-        protected Vector2? Anchor { get; set; }
-        protected Rectangle bounds;   
-        
+        protected Rectangle bounds;
+        private Vector2 anchor;
         protected virtual Rectangle Bounds { get => bounds; set => bounds = value; }
 
         protected Vector2[] layoutOffset = new Vector2[Enum.GetValues(typeof(Alignment)).Length];
@@ -57,18 +57,13 @@ namespace Texemon.SceneObjects
 
         protected TransitionController transition = null;
 
-
         protected int tooltipTime;
         protected Tooltip tooltipWidget;
         protected Vector2 tooltipOrigin;
 
         protected bool mousedOver;
 
-        protected ModelProperty<bool> enableBinding;
-        protected ModelProperty<bool> visibleBinding;
-        protected ModelProperty<Color> colorBinding;
-        protected ModelProperty<string> tooltipBinding;
-        protected ModelProperty<string> fontBinding;
+        protected List<Tuple<IModelProperty, ModelChangeCallback>> bindingList = new List<Tuple<IModelProperty, ModelChangeCallback>>();
 
         public Widget()
             : base()
@@ -94,37 +89,75 @@ namespace Texemon.SceneObjects
         protected virtual void ParseAttribute(string attributeName, string attributeValue)
         {
             PropertyInfo property = GetType().GetProperty(attributeName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
             if (property == null) return;
 
-            object propertyValue = property.GetValue(this);
-            switch (propertyValue)
+            if (attributeValue.StartsWith("Bind "))
             {
-                case bool: property.SetValue(this, bool.Parse(attributeValue)); break;
-                case int: property.SetValue(this, int.Parse(attributeValue)); break;
-                case float: property.SetValue(this, float.Parse(attributeValue)); break;
-                case string: property.SetValue(this, attributeValue); break;
-                case Microsoft.Xna.Framework.Color: property.SetValue(this, Graphics.ParseHexcode(attributeValue)); break;
-                case Vector2:
+                attributeValue = attributeValue.Substring(5);
+                IModelProperty binding = LookupBinding<IModelProperty>(attributeValue);
+                ModelChangeCallback updateValue = () =>
                 {
-                    string[] tokens = attributeValue.Split(',');
-                    property.SetValue(this, new Vector2(int.Parse(tokens[0]), int.Parse(tokens[1])));
-                    break;
-                }
-                case Rectangle:
-                {
-                    string[] tokens = attributeValue.Split(',');
-                    property.SetValue(this, new Rectangle(int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3])));
-                    break;
-                }
+                    object value = binding.GetValue();
+                    if (value is string)
+                    {
+                        value = ParseString(value as string);
+                        property.SetValue(this, value);
+                    }
+                    else if (property.PropertyType == typeof(string) && value != null) property.SetValue(this, value.ToString());
+                    else property.SetValue(this, value);
+                };
+                binding.ModelChanged += updateValue;
+                updateValue();
 
-                default:
-                if (propertyValue is Enum)
+                bindingList.Add(new Tuple<IModelProperty, ModelChangeCallback>(binding, updateValue));
+            }
+            else if (attributeValue.StartsWith("Ref "))
+            {
+                attributeValue = attributeValue.Substring(4);
+                object reference = LookupBinding<object>(attributeValue);
+                if (reference is string)
                 {
-                    Type type = propertyValue.GetType();
+                    reference = ParseString(reference as string);
+                    property.SetValue(this, reference);
+                }
+                else if (property.PropertyType == typeof(string) && reference != null) property.SetValue(this, reference.ToString());
+                else property.SetValue(this, reference);
+            }
+            else
+            {
+                Type type = property.PropertyType;
+                if (type.IsEnum)
+                {
                     property.SetValue(this, Enum.Parse(type, attributeValue));
                 }
-                break;
+                else if (type == typeof(Vector2))
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    property.SetValue(this, new Vector2(ParseInt(tokens[0]), ParseInt(tokens[1])));
+                }
+                else if (type == typeof(Rectangle))
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    property.SetValue(this, new Rectangle(ParseInt(tokens[0]), ParseInt(tokens[1]), ParseInt(tokens[2]), ParseInt(tokens[3])));
+                }
+                else if (type == typeof(AnimatedSprite))
+                {
+                    string[] tokens = attributeValue.Split(',');
+                    Texture2D sprite = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), tokens[0].Replace("\\", "_"))];
+                    AnimatedSprite animatedSprite = new AnimatedSprite(sprite, new Dictionary<string, Animation>()
+                    {
+                        { "loop", new Animation(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]), int.Parse(tokens[5]), int.Parse(tokens[6]), int.Parse(tokens[7])) }
+                    });
+                    animatedSprite.PlayAnimation("loop");
+                    property.SetValue(this, animatedSprite);
+                }
+                else if (type == typeof(bool)) property.SetValue(this, bool.Parse(attributeValue));
+                else if (type == typeof(int)) property.SetValue(this, ParseInt(attributeValue));
+                else if (type == typeof(float)) property.SetValue(this, float.Parse(attributeValue));
+                else if (type == typeof(string)) property.SetValue(this, ParseString(attributeValue));
+                else if (type == typeof(Color)) property.SetValue(this, Graphics.ParseHexcode(attributeValue));
+                else if (type == typeof(MethodInfo)) property.SetValue(this, GetParent<ViewModel>().GetType().GetMethod(attributeValue));
+                else if (type == typeof(Texture2D)) property.SetValue(this, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), attributeValue)]);
             }
         }
 
@@ -132,41 +165,7 @@ namespace Texemon.SceneObjects
         {
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    default:
-                        ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
-
-                    case "EnableBinding":
-                        enableBinding = LookupBinding<bool>(xmlAttribute.Value);
-                        enableBinding.ModelChanged += EnableBinding_ModelChanged;
-                        EnableBinding_ModelChanged();
-                        break;
-
-                    case "VisibleBinding":
-                        visibleBinding = LookupBinding<bool>(xmlAttribute.Value);
-                        visibleBinding.ModelChanged += VisibleBinding_ModelChanged;
-                        VisibleBinding_ModelChanged();
-                        break;
-
-                    case "ColorBinding":
-                        colorBinding = LookupBinding<Color>(xmlAttribute.Value); colorBinding.ModelChanged += ColorBinding_ModelChanged;
-                        ColorBinding_ModelChanged();
-                        break;
-
-                    case "TooltipSoftBinding": Tooltip = LookupSoftBinding<string>(xmlAttribute.Value); break;
-                    case "TooltipBinding":
-                        tooltipBinding = LookupBinding<string>(xmlAttribute.Value); tooltipBinding.ModelChanged += TooltipBinding_ModelChanged;
-                        if (tooltipBinding.Value != null) TooltipBinding_ModelChanged();
-                        break;
-
-                    case "FontBinding":
-                        fontBinding = LookupBinding<string>(xmlAttribute.Value);
-                        fontBinding.ModelChanged += FontBinding_ModelChanged;
-                        if (fontBinding.Value != null) FontBinding_ModelChanged();
-                        break;
-                }
+                ParseAttribute(xmlAttribute.Name, xmlAttribute.Value);
             }
         }
 
@@ -174,14 +173,26 @@ namespace Texemon.SceneObjects
         {
             switch (Alignment)
             {
+                case Alignment.Left:
+                    currentWindow = bounds;
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + bounds.Y;
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
+                    break;
+
+                case Alignment.Anchored:
+                    currentWindow = bounds;
+
+                    break;
+
                 case Alignment.Cascading:
-                    if ((int)parent.LayoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
+                    if ((int)parent.layoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
                     {
-                        parent.AdjustLayoutOffset(Alignment, new Vector2(-parent.LayoutOffset[(int)Alignment].X, bounds.Height));
+                        parent.AdjustLayoutOffset(Alignment, new Vector2(-parent.layoutOffset[(int)Alignment].X, bounds.Height));
                     }
 
-                    currentWindow.X = parent.InnerBounds.Left + (int)parent.LayoutOffset[(int)Alignment].X + bounds.X;
-                    currentWindow.Y = parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)Alignment].Y + bounds.Y;
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + (int)parent.layoutOffset[(int)Alignment].Y + bounds.Y;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
@@ -191,7 +202,7 @@ namespace Texemon.SceneObjects
 
                 case Alignment.Vertical:
                     currentWindow.X += (parent.OuterBounds.X - (bounds.Width - parent.OuterBounds.Width) / 2) + bounds.X;
-                    currentWindow.Y = (parent.InnerBounds.Top + (int)parent.LayoutOffset[(int)Alignment].Y) + bounds.Y;
+                    currentWindow.Y = (parent.InnerBounds.Top + (int)parent.layoutOffset[(int)Alignment].Y) + bounds.Y;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
@@ -200,7 +211,7 @@ namespace Texemon.SceneObjects
 
                 case Alignment.ReverseVertical:
                     currentWindow.X += parent.OuterBounds.X - (bounds.Width - parent.OuterBounds.Width) / 2;
-                    currentWindow.Y = parent.InnerBounds.Bottom - (int)parent.LayoutOffset[(int)Alignment].Y - bounds.Height;
+                    currentWindow.Y = parent.InnerBounds.Bottom - (int)parent.layoutOffset[(int)Alignment].Y - bounds.Height;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
 
@@ -234,8 +245,8 @@ namespace Texemon.SceneObjects
                     break;
 
                 case Alignment.BottomRight:
-                    currentWindow.X = parent.InnerBounds.Right;
-                    currentWindow.Y = parent.InnerBounds.Bottom;
+                    currentWindow.X = parent.InnerBounds.Right + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Bottom + bounds.Y;
                     break;
 
                 case Alignment.Bottom:
@@ -243,6 +254,29 @@ namespace Texemon.SceneObjects
                     currentWindow.Y = parent.InnerBounds.Bottom - bounds.Height;
                     currentWindow.Width = bounds.Width;
                     currentWindow.Height = bounds.Height;
+                    break;
+
+                case Alignment.InvertCascade:
+                    if ((int)parent.layoutOffset[(int)Alignment].X + bounds.Width > parent.InnerBounds.Width)
+                    {
+                        parent.AdjustLayoutOffset(Alignment, new Vector2(parent.layoutOffset[(int)Alignment].X, bounds.Height));
+                    }
+
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Bottom + (int)parent.layoutOffset[(int)Alignment].Y - bounds.Height - bounds.Y;
+                    currentWindow.Width = bounds.Width;
+                    currentWindow.Height = bounds.Height;
+
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
+                    break;
+
+                case Alignment.Horizontal:
+                    currentWindow.X = parent.InnerBounds.Left + (int)parent.layoutOffset[(int)Alignment].X + bounds.X;
+                    currentWindow.Y = parent.InnerBounds.Top + (parent.InnerBounds.Height - bounds.Height) / 2 + bounds.Y;
+                    currentWindow.Width = bounds.Width;
+                    currentWindow.Height = bounds.Height;
+
+                    parent.AdjustLayoutOffset(Alignment, new Vector2(bounds.X + bounds.Width, 0));
                     break;
 
                 case Alignment.BottomLeft:
@@ -265,9 +299,6 @@ namespace Texemon.SceneObjects
                     case "$CenterY": return CrossPlatformGame.ScreenHeight / 2;
                     case "$Top": return 0;
                     case "$Bottom": return CrossPlatformGame.ScreenHeight;
-                    case "$MapX": return (int)(CrossPlatformGame.ScreenWidth * 3 / 4);
-                    case "$MapY": return (int)(CrossPlatformGame.ScreenHeight / 2);
-                    case "$Scale": return CrossPlatformGame.Scale;
                     default: throw new Exception();
                 }
             }
@@ -290,6 +321,7 @@ namespace Texemon.SceneObjects
                 switch (tokens[0])
                 {
                     case "$PlayerProfile": return (GameProfile.PlayerProfile.GetType().GetProperty(tokens[1]).GetValue(GameProfile.PlayerProfile) as ModelProperty<string>).Value;
+                    case "$Party": return GameProfile.PlayerProfile.Party.ElementAt(int.Parse(tokens[1])).Value.Name.Value;
                 }
             }
 
@@ -319,7 +351,8 @@ namespace Texemon.SceneObjects
                         continue;
 
                     default:
-                        widget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + node.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + depthOffset }, null, null);
+                        if (node.Name.Contains('.')) widget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + "." + node.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + depthOffset }, null, null);
+                        else widget = (Widget)assembly.CreateInstance(CrossPlatformGame.GAME_NAME + ".SceneObjects.Widgets." + node.Name, false, BindingFlags.CreateInstance, null, new object[] { this, widgetDepth + depthOffset }, null, null);
                         break;
                 }
 
@@ -398,6 +431,7 @@ namespace Texemon.SceneObjects
 
         public Widget GetDescendent(Widget superParent)
         {
+            if (parent == null) return null;
             if (parent == superParent) return this;
 
             return parent.GetDescendent(superParent);
@@ -418,7 +452,7 @@ namespace Texemon.SceneObjects
             return null;
         }
 
-        public ModelProperty<T> LookupBinding<T>(string bindingName)
+        public T LookupBinding<T>(string bindingName) where T : class
         {
             string[] tokens = bindingName.Split('.');
 
@@ -431,7 +465,59 @@ namespace Texemon.SceneObjects
                     break;
 
                 case "DataGrid":
-                    dataContext = GetParent<DataGrid>().Binding[0];
+                    DataGrid dataGrid = GetParent<DataGrid>();
+                    int i = dataGrid.ChildList.IndexOf(this);
+                    if (i == -1) i = dataGrid.ChildList.IndexOf(GetDescendent(dataGrid));
+                    dataContext = dataGrid.Items.ElementAtOrDefault(i);
+                    if (tokens.Length == 1) return dataContext as T;
+                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+                    break;
+
+                default:
+                    dataContext = GetParent<ViewModel>();
+                    break;
+            }
+
+            while (dataContext is IModelProperty)
+            {
+                dataContext = ((IModelProperty)dataContext).GetValue();
+            }
+
+            while (tokens.Length > 1)
+            {
+                var property = dataContext.GetType().GetProperty(tokens[0]);
+                dataContext = property.GetValue(dataContext);
+                
+                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+
+                while (dataContext is IModelProperty)
+                {
+                    dataContext = ((IModelProperty)dataContext).GetValue();
+                }
+            }
+
+            while (dataContext is IModelProperty)
+            {
+                dataContext = ((IModelProperty)dataContext).GetValue();
+            }
+
+            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as T;
+        }
+
+        public ModelProperty<T> OldLookupBinding<T>(string bindingName)
+        {
+            string[] tokens = bindingName.Split('.');
+
+            object dataContext;
+            switch (tokens[0])
+            {
+                case "PlayerProfile":
+                    dataContext = GameProfile.PlayerProfile;
+                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
+                    break;
+
+                case "DataGrid":
+                    dataContext = GetParent<DataGrid>().Items.First();
                     tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
                     break;
 
@@ -447,64 +533,6 @@ namespace Texemon.SceneObjects
             }
 
             return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as ModelProperty<T>;
-        }
-
-        public T LookupSoftBinding<T>(string bindingName)
-        {
-            string[] tokens = bindingName.Split('.');
-
-            object dataContext;
-            switch (tokens[0])
-            {
-                case "PlayerProfile":
-                    dataContext = GameProfile.PlayerProfile;
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                case "DataGrid":
-                    DataGrid parent = GetParent<DataGrid>();
-                    dataContext = parent.Binding[parent.ChildList.IndexOf(GetDescendent(parent))];
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                default:
-                    dataContext = GetParent<ViewModel>();
-                    break;
-            }
-
-            while (tokens.Length > 1)
-            {
-                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
-                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-            }
-
-            return (T)dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
-        }
-
-        public dynamic LookupCollectionBinding(string bindingName)
-        {
-            string[] tokens = bindingName.Split('.');
-
-            object dataContext;
-            switch (tokens[0])
-            {
-                case "PlayerProfile":
-                    dataContext = GameProfile.PlayerProfile;
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                default:
-                    dataContext = GetParent<ViewModel>();
-                    break;
-            }
-
-            while (tokens.Length > 1)
-            {
-                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
-                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-            }
-
-            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
         }
 
         public void AdjustLayoutOffset(Alignment alignment, Vector2 offset)
@@ -537,36 +565,12 @@ namespace Texemon.SceneObjects
             tooltipTime = 0;
         }
 
-        protected virtual void EnableBinding_ModelChanged()
-        {
-            Enabled = enableBinding.Value;
-        }
-
-        private void VisibleBinding_ModelChanged()
-        {
-            Visible = visibleBinding.Value;
-        }
-
-        public void ColorBinding_ModelChanged()
-        {
-            Color = colorBinding.Value;
-        }
-
-        public void TooltipBinding_ModelChanged()
-        {
-            Tooltip = tooltipBinding.Value;
-        }
-
-        private void FontBinding_ModelChanged()
-        {
-            Font = (GameFont)Enum.Parse(typeof(GameFont), (string)fontBinding.Value);
-        }
-
         public override void Terminate()
         {
             base.Terminate();
 
             foreach (Widget widget in ChildList) widget.Terminate();
+            foreach (Tuple<IModelProperty, ModelChangeCallback> binding in bindingList) binding.Item1.Unbind(binding.Item2);
         }
 
         public virtual void Close()
@@ -583,27 +587,28 @@ namespace Texemon.SceneObjects
         {
             get
             {
-                if (Anchor.HasValue) return Anchor.Value;
+                if (Alignment == Alignment.Anchored) return Anchor;
                 else if (parent != null) return parent.Position;
                 else return Vector2.Zero;
             }
         }
-        public Vector2[] LayoutOffset { get => layoutOffset; }
+        protected Vector2 Anchor { get => anchor; set { anchor = value; Alignment = Alignment.Anchored; } }
         public Rectangle OuterBounds { get => currentWindow; set => currentWindow = value; }
         public Rectangle InnerMargin { get; protected set; } = new Rectangle();
         public Rectangle InnerBounds { get => new Rectangle(currentWindow.Left + InnerMargin.Left, currentWindow.Top + InnerMargin.Top, currentWindow.Width - InnerMargin.Left - InnerMargin.Width, currentWindow.Height - InnerMargin.Top - InnerMargin.Height); }
         public Vector2 AbsolutePosition { get => Position + new Vector2(currentWindow.X, currentWindow.Y); }
 
         public string Name { get; protected set; } = "Widget";
+        protected GameFont Font { get; set; } = GameFont.Tooltip;
         public Color Color { get; protected set; } = Color.White;
-        protected float Depth { get; set; } = 1.0f;
+        public float Depth { get; set; } = 1.0f;
         public virtual bool Visible { get; set; } = true;
         public virtual bool Enabled { get; set; } = true;
 
         public int TooltipDelay { get; protected set; } = DEFAULT_TOOLTIP_DELAY;
         public string Tooltip { get; protected set; } = "";
 
-        public bool Transitioning { get => transition != null; }
+        public virtual bool Transitioning { get => transition != null; }
 
         public bool Closed { get; protected set; } = false;
         public override bool Terminated { get => terminated && !Transitioning; }

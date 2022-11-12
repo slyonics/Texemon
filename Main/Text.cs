@@ -9,11 +9,11 @@ namespace Texemon.Main
 {
     public enum GameFont
     {
-        PersonifiedUXRegular,
         Tooltip,
-        BigTooltip,
-        Title,
-        Dialogue
+        Dialogue,
+        Pixel,
+        SandyForest,
+        Battle
     }
 
     public static class Text
@@ -23,17 +23,18 @@ namespace Texemon.Main
             public string fontFile;
             public int fontSize;
             public int fontHeight;
+            public int heightOffset;
         }
 
         private const float TEXT_DEPTH = 0.1f;
 
         public static readonly Dictionary<GameFont, GameFontData> FONT_DATA = new Dictionary<GameFont, GameFontData>()
         {
-            { GameFont.Title, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 96, fontHeight = 96 } },
-            { GameFont.PersonifiedUXRegular, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 32, fontHeight = 40 } },
             { GameFont.Dialogue, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 8 } },
-            // { GameFont.Dialogue, new GameFontData() { fontFile = "BitPotionExt", fontSize = 24, fontHeight = 16 } },
-            { GameFont.Tooltip, new GameFontData() { fontFile = "PersonifiedUXRegular", fontSize = 18, fontHeight = 22 } },
+            { GameFont.Tooltip, new GameFontData() { fontFile = "Futuradot-H10", fontSize = 10, fontHeight = 10 } },
+            { GameFont.Pixel, new GameFontData() { fontFile = "PixelSquared", fontSize = 14, fontHeight = 10, heightOffset = -3 } },
+            { GameFont.SandyForest, new GameFontData() { fontFile = "SandyForest", fontSize = 14, fontHeight = 10, heightOffset = -2 } },
+            { GameFont.Battle, new GameFontData() { fontFile = "favourdot-h9-bold", fontSize = 18, fontHeight = 20, heightOffset = 0 } }
         };
 
         public static readonly Dictionary<GameFont, SpriteFont> GAME_FONTS = new Dictionary<GameFont, SpriteFont>();

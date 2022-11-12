@@ -1,0 +1,142 @@
+[
+	{
+		"Name": "Flame",
+		"Animation": "Chanting",
+		"Description": [
+			"- Uses MANA",
+			"- 5x damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Fire",
+		"Charges": 15,
+		"Targetting": "AllEnemy",
+		"PreScript": [ "Exercise Mana" ],
+		"Script": [
+			"Animate Attack",
+			"Sound Fireball",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage Mana 5 Fire"
+		]
+	},
+	{
+		"Name": "Thunder",
+		"Animation": "Chanting",
+		"Description": [
+			"- Uses MANA",
+			"- 10x damage",
+			"- Electric",
+			"- VS all enemies"
+		],
+		"Icon": "Lightning",
+		"Charges": 15,
+		"Targetting": "AllEnemy",
+		"Script": [
+			"Exercise Mana",
+			"Animate Attack",
+			"Sound Thunder",
+			"Effect Shock $targetCenterX $targetCenterY 3",
+			"Flash 251 206 177",
+			"Damage Mana 10 Electric"
+		]
+	},
+	{
+		"Name": "Heal",
+		"Animation": "Chanting",
+		"Description": [
+			"- 999 damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Heal",
+		"Charges": 15,
+		"Targetting": "SingleAlly",
+		"Script": [
+			"Exercise Mana",
+			"Animate Attack",
+			"Sound Heal",
+			"Effect GreenHeal $targetCenterX $targetBottom 6",
+			"Flash 27 210 140",
+			"Heal 30"
+		]
+	},
+	{
+		"Name": "Repair",
+		"Animation": "Chanting",
+		"Description": [
+			"- Restore 300HP",
+			"- Revive from 0HP",
+			"- Machines only",
+			"- For one ally"
+		],
+		"Icon": "Heal",
+		"Charges": 8,
+		"Targetting": "SingleAlly",
+		"TargetDead": true,
+		"TargetMechanical": true,
+		"Script": [
+			"Animate Attack",
+			"Sound Heal",
+			"Effect BlueHeal $targetCenterX $targetBottom 6",
+			"Flash 27 140 210",
+			"Repair 300"
+		]
+	},
+	{
+		"Name": "Deflector",
+		"Animation": "Chanting",
+		"Description": [
+			"- 999 damage",
+			"- Incendiary",
+			"- VS all enemies"
+		],
+		"Icon": "Shield",
+		"Charges": 4,
+		"Targetting": "AllAlly",
+		"Script": [
+			"Animate Attack",
+			"Effect Star $targetCenterX $targetCenterY 6",
+			"Flash 27 210 140",
+			"Heal 30"
+		]
+	},
+	{
+		"Name": "Arc Welder",
+		"Animation": "Chanting",
+		"Description": [
+			"- 30-80 damage",
+			"- Electrical",
+			"- VS 1 enemy"
+		],
+		"Icon": "Lightning",
+		"Charges": -1,
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Thunder",
+			"Effect Shock $targetCenterX $targetCenterY 3",
+			"Flash 251 206 177",
+			"Damage 30 80 Electric"
+		]
+	},
+	{
+		"Name": "Blowtorch",
+		"Animation": "Chanting",
+		"Description": [
+			"- 30-80 damage",
+			"- Incendiary",
+			"- VS 1 enemy"
+		],
+		"Icon": "Fire",
+		"Charges": -1,
+		"Targetting": "SingleEnemy",
+		"Script": [
+			"Animate Attack",
+			"Sound Fireball",
+			"Effect Flame $targetCenterX $targetCenterY 3",
+			"Flash 255 27 0",
+			"Damage 30 80 Fire"
+		]
+	}
+]

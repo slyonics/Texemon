@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Texemon.Main;
+using Texemon.Models;
 using Texemon.SceneObjects.Controllers;
 
 namespace Texemon.Scenes.SplashScene
@@ -18,11 +19,11 @@ namespace Texemon.Scenes.SplashScene
 
         public SplashScene()
             : base()
-        {
+        {            
             AddController(new SkippableWaitController(PriorityLevel.MenuLevel, this));
         }
 
-        public override void Update(GameTime gameTime, PriorityLevel priorityLevel = PriorityLevel.GameLevel)
+        public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
         }
@@ -35,7 +36,8 @@ namespace Texemon.Scenes.SplashScene
 
         public void Notify(SkippableWaitController sender)
         {
-            CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            if (GameProfile.SaveList.Count > 0) CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
+            else  CrossPlatformGame.Transition(typeof(IntroScene.IntroScene));
         }
 
         public bool Terminated { get => false; }

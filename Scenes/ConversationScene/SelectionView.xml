@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Style="Bind PlayerProfile.WindowStyle" Anchor="$CenterX,$CenterY" Bounds="Bind WindowSize" TransitionIn="Expand" TransitionOut="Shrink">
+		<DataGrid Name="OptionsList" Items="Bind AvailableOptions" Alignment="Stretch" InnerMargin="0,3,0,0" Scrolling="False">
+			<Button Radio="True" Style="Blank" PushedStyle="LabelGlow" Bounds="Bind ButtonSize" Alignment="Vertical" Action="SelectOption" ActionParameter="Ref DataGrid" InnerMargin="2,2,2,2">
+				<Label Text="Ref DataGrid" Font="Bind PlayerProfile.Font" Bounds="Bind LabelSize" Alignment="Center" Color="#FFFFFFFF"/>
+			</Button>
+		</DataGrid>
+	</Panel>  
+</View>

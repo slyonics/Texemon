@@ -34,15 +34,15 @@ namespace Texemon.SceneObjects.Widgets
 
         private NinePatch panelFrame;
 
-        private TransitionType transitionIn;
-        private TransitionType transitionOut;
+        private TransitionType TransitionIn { get; set; } = TransitionType.None;
+        private TransitionType TransitionOut { get; set; } = TransitionType.None;
 
         private Rectangle startWindow;
         private Rectangle endWindow;
         private Color startColor;
         private Color endColor;
 
-        private ResizeType resizeType = ResizeType.None;
+        private ResizeType Resize { get; set; } = ResizeType.None;
 
         public Panel(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -52,21 +52,20 @@ namespace Texemon.SceneObjects.Widgets
 
         public override void LoadAttributes(XmlNode xmlNode)
         {
-            base.LoadAttributes(xmlNode);
-
-            bool flatframe = false;
-
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    case "FlatFrame": flatframe = bool.Parse(xmlAttribute.Value); break;
-                    case "Style": panelFrame = new NinePatch("Windows_" + xmlAttribute.Value, Depth, flatframe); panelFrame.FrameColor = Color; break;
-                    case "TransitionIn": transitionIn = (TransitionType)Enum.Parse(typeof(TransitionType), xmlAttribute.Value); break;
-                    case "TransitionOut": transitionOut = (TransitionType)Enum.Parse(typeof(TransitionType), xmlAttribute.Value); break;
-                    case "Resize": resizeType = (ResizeType)Enum.Parse(typeof(ResizeType), xmlAttribute.Value); break;
-                }
+                ParseAttribute(xmlAttribute.Name, xmlAttribute.Value);
+            }
+
+            UpdateFrame();
+        }
+
+        public void UpdateFrame()
+        {
+            if (style != null)
+            {
+                if (panelFrame == null) panelFrame = new NinePatch(style, Depth);
+                panelFrame.SetSprite(style);
             }
         }
 
@@ -74,14 +73,14 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.LoadChildren(nodeList, widgetDepth);
 
-            TransitionIn();
+            StartTransitionIn();
 
             if (panelFrame != null) panelFrame.Bounds = currentWindow;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if ((!Transitioning || transitionIn != TransitionType.Expand) && !terminated)
+            if ((!Transitioning || TransitionIn != TransitionType.Expand) && !terminated)
             {
                 foreach (Widget widget in ChildList)
                 {
@@ -99,12 +98,12 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.Close();
 
-            TransitionOut();
+            StartTransitionOut();
         }
 
-        public void TransitionIn()
+        public void StartTransitionIn()
         {
-            switch (transitionIn)
+            switch (TransitionIn)
             {
                 case TransitionType.Expand:
                     endWindow = currentWindow;
@@ -125,9 +124,9 @@ namespace Texemon.SceneObjects.Widgets
             }
         }
 
-        public void TransitionOut()
+        public void StartTransitionOut()
         {
-            switch (transitionOut)
+            switch (TransitionOut)
             {
                 case TransitionType.Shrink:
                     endWindow = currentWindow;
@@ -153,13 +152,7 @@ namespace Texemon.SceneObjects.Widgets
             if (Closed) Terminate();
         }
 
-        public void Resize(int width, int height)
-        {
-            if (resizeType == ResizeType.Both || resizeType == ResizeType.Height)
-            {
-                currentWindow.Height = height + InnerMargin.Y + InnerMargin.Height;
-                endWindow.Height = currentWindow.Height;
-            }
-        }
+        private string style;
+        private string Style { get => style; set { style = value; UpdateFrame(); } }
     }
 }

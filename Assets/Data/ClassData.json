@@ -1,0 +1,35 @@
+[
+	{
+		"ClassType": "Human",
+		"InitialEquipment": [],
+		"InitialAbilities": [],
+		"Actions": [
+			"Delay",
+			"Defend",
+			"Flee",
+			"Punch"
+		]
+	},
+	{
+		"ClassType": "Android",
+		"InitialEquipment": [],
+		"InitialAbilities": [],
+		"Actions": [
+			"Delay",
+			"Defend",
+			"Flee",
+			"Punch"
+		]
+	},
+	{
+		"ClassType": "Drone",
+		"InitialEquipment": [],
+		"InitialAbilities": [],
+		"Actions": [
+			"Delay",
+			"Defend",
+			"Flee",
+			"Tackle"
+		]
+	}
+]

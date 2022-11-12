@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-60,-80,120,100">
+		<Button Name="Magic" Style="MagicWindow" PushedStyle="MagicSelected" Bounds="0,0,120,20" Alignment="Cascading" Action="Magic" Radio="True" InnerMargin="8,8,8,8">
+			<Label Text="Robot Magic" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+		<Label Text="OR" Alignment="Cascading" Color="#F0D0B0FF" Bounds="0,0,120,20" Font="Dialogue"/>
+		<Button Name="Technology" Style="TechWindow" PushedStyle="TechSelected" Bounds="0,0,120,20" Alignment="Cascading" Action="Technology" Radio="True" InnerMargin="8,8,8,8">
+			<Label Text="Magic Robot" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+	</Panel>
+
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-140,0,280,110">
+		<CrawlText Font="Bind PlayerProfile.Font" Name="Description" Bounds="0,0,280,90"/>
+		<Button Name="OK" Style="Bind PlayerProfile.WindowStyle" PushedStyle="Bind PlayerProfile.SelectedStyle" Bounds="0,0,30,20" Alignment="ReverseVertical" Action="Proceed" InnerMargin="8,8,8,8" Visible="False">
+			<Label Text="OK" Alignment="Center" Color="#F0D0B0FF" Font="Dialogue"/>
+		</Button>
+	</Panel>
+
+	<Panel Style="Bind PlayerProfile.FrameStyle" Bounds="0,0,$ScreenWidth,$ScreenHeight"/>
+	
+</View>

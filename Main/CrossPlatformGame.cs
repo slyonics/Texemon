@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Texemon.SceneObjects.Controllers;
 using Texemon.SceneObjects.Shaders;
@@ -21,8 +22,8 @@ namespace Texemon.Main
         public static readonly string SETTINGS_DIRECTORY = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "AppData\\Local") + "\\" + CrossPlatformGame.GAME_NAME;
 
         private const int WINDOWED_MARGIN = 34;
-        public const int TARGET_SCREEN_WIDTH = 320;
-        public const int TARGET_SCREEN_HEIGHT = 240;
+        private const int TARGET_SCREEN_WIDTH = 320;
+        private const int TARGET_SCREEN_HEIGHT = 240;
         private const int MAXIMUM_SCREEN_WIDTH = 1920;
         private const int MAXIMUM_SCREEN_HEIGHT = 1080;
 
@@ -31,8 +32,10 @@ namespace Texemon.Main
         private GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
 
-        public RenderTarget2D gameRender;
+        private RenderTarget2D gameRender;
         private RenderTarget2D compositeRender;
+
+        private int originalHeight;
 
         private static int scaledScreenWidth = TARGET_SCREEN_WIDTH;
         private static int scaledScreenHeight = TARGET_SCREEN_HEIGHT;
@@ -41,8 +44,9 @@ namespace Texemon.Main
 
         private static Shader transitionShader;
         private static Scene pendingScene;
-        private static Scene currentScene;
+        public static Scene CurrentScene { get; private set; }
         private static List<Scene> sceneStack = new List<Scene>();
+        public static List<Scene> SceneStack { get => sceneStack; }
 
         private static CrossPlatformGame crossPlatformGame;
 
@@ -63,6 +67,8 @@ namespace Texemon.Main
 
         protected override void Initialize()
         {
+            originalHeight = GraphicsDevice.Adapter.CurrentDisplayMode.TitleSafeArea.Height;
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Settings.LoadSettings();
             Audio.ApplySettings();
@@ -76,8 +82,12 @@ namespace Texemon.Main
             Text.Initialize(GraphicsDevice);
 
             AssetCache.LoadContent(Content, GraphicsDevice);
+            Scenes.ConversationScene.ConversationScene.Initialize();
+            Scenes.BattleScene.BattleScene.Initialize();
+            Scenes.StatusScene.StatusScene.Initialize();
+            Scenes.ShopScene.ShopScene.Initialize();
 
-            currentScene = new SplashScene();
+            CurrentScene = new SplashScene();
         }
 
         public void ApplySettings()
@@ -87,6 +97,7 @@ namespace Texemon.Main
 
             if (fullscreen)
             {
+                /*
                 DisplayModeCollection displayModes = GraphicsDevice.Adapter.SupportedDisplayModes;
                 IEnumerable<DisplayMode> bestModes = displayModes.Where(x => x.Width >= TARGET_SCREEN_WIDTH && x.Width <= MAXIMUM_SCREEN_WIDTH &&
                                                                              x.Height >= TARGET_SCREEN_HEIGHT && x.Height <= MAXIMUM_SCREEN_HEIGHT);
@@ -96,10 +107,15 @@ namespace Texemon.Main
                 scaledScreenHeight = targetMode.Height;
                 int scale = targetMode.Height / TARGET_SCREEN_HEIGHT;
                 screenScale = scale;
+                */
+
+                screenScale = 2;
+                scaledScreenWidth = TARGET_SCREEN_WIDTH * screenScale;
+                scaledScreenHeight = TARGET_SCREEN_HEIGHT * screenScale;
             }
             else
             {
-                int availableHeight = GraphicsDevice.Adapter.CurrentDisplayMode.TitleSafeArea.Height - WINDOWED_MARGIN;
+                int availableHeight = originalHeight - WINDOWED_MARGIN;
                 int scale = availableHeight / TARGET_SCREEN_HEIGHT;
 
                 screenScale = scale;
@@ -134,14 +150,20 @@ namespace Texemon.Main
 
             if (transitionShader != null)
             {
-                currentScene.Update(gameTime, PriorityLevel.TransitionLevel);
+                CurrentScene.Update(gameTime);
                 transitionShader.Update(gameTime, null);
                 if (transitionShader.Terminated) transitionShader = null;
             }
             else
             {
-                foreach (Scene scene in sceneStack) scene.Update(gameTime, PriorityLevel.MenuLevel);
-                currentScene.Update(gameTime);
+                int i = 0;
+                while (i < sceneStack.Count)
+                {
+                    sceneStack[i].Update(gameTime);
+                    i++;
+                }
+
+                CurrentScene.Update(gameTime);
             }
 
             if (pendingScene != null)
@@ -151,11 +173,11 @@ namespace Texemon.Main
                 pendingScene = null;
             }
 
-            if (currentScene.SceneEnded && sceneStack.Count > 0)
+            while (CurrentScene.SceneEnded && sceneStack.Count > 0)
             {
-                currentScene = sceneStack.Last();
-                currentScene.ResumeScene();
-                sceneStack.Remove(currentScene);
+                CurrentScene = sceneStack.Last();
+                CurrentScene.ResumeScene();
+                sceneStack.Remove(CurrentScene);
             }
 
             base.Update(gameTime);
@@ -173,7 +195,7 @@ namespace Texemon.Main
                 }
             }
 
-            currentScene.Draw(GraphicsDevice, spriteBatch, gameRender, compositeRender);
+            CurrentScene.Draw(GraphicsDevice, spriteBatch, gameRender, compositeRender);
 
             Effect shader = (transitionShader == null) ? null : transitionShader.Effect;
             GraphicsDevice.SetRenderTarget(null);
@@ -191,10 +213,15 @@ namespace Texemon.Main
 
         public static void Transition(Type sceneType, params object[] args)
         {
+            Transition(CurrentScene, sceneType, args);
+        }
+
+        public static void Transition(Scene parentScene, Type sceneType, params object[] args)
+        {
             TransitionController transitionController = new TransitionController(TransitionDirection.Out, 600);
             ColorFade colorFade = new ColorFade(Color.Black, transitionController.TransitionProgress);
             transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = t);
-            currentScene.AddController(transitionController);
+            parentScene.AddController(transitionController);
             transitionShader = colorFade;
 
             Task.Run(() => Activator.CreateInstance(sceneType, args)).ContinueWith(t =>
@@ -206,10 +233,10 @@ namespace Texemon.Main
 
         public static void SetCurrentScene(Scene newScene)
         {
-            currentScene.EndScene();
+            CurrentScene.EndScene();
 
             transitionShader.Terminate();
-            currentScene = newScene;
+            CurrentScene = newScene;
             newScene.BeginScene();
         }
 
@@ -217,16 +244,16 @@ namespace Texemon.Main
         {
             lock (sceneStack)
             {
-                sceneStack.Add(currentScene);
+                sceneStack.Add(CurrentScene);
             }
 
-            currentScene = newScene;
+            CurrentScene = newScene;
             newScene.BeginScene();
         }
 
         public static T GetScene<T>() where T : Scene
         {
-            if (currentScene is T) return (T)currentScene;
+            if (CurrentScene is T) return (T)CurrentScene;
             else
             {
                 T result;

@@ -14,9 +14,9 @@ namespace Texemon.SceneObjects.Shaders
         public ColorFade(Color color, float amount)
             : base(AssetCache.EFFECTS[GameShader.ColorFade].Clone())
         {
-            Effect.Parameters["filterRed"].SetValue(color.R);
-            Effect.Parameters["filterGreen"].SetValue(color.G);
-            Effect.Parameters["filterBlue"].SetValue(color.B);
+            Effect.Parameters["filterRed"].SetValue(color.R / 255.0f);
+            Effect.Parameters["filterGreen"].SetValue(color.G / 255.0f);
+            Effect.Parameters["filterBlue"].SetValue(color.B / 255.0f);
             Amount = amount;
         }
 

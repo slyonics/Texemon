@@ -1,54 +1,308 @@
 [
 	{
 		"Name": "TestConvo",
-		"DialogueData": [
+		"DialogueRecords": [
 			{
-				"Text": "A voice on the PA announces the start of class in five minutes. Look for your classroom in the northwest corner."
+				"Text": "Automatic #F3C14CFF conversation test."
 			}
 		]
 	},
 	{
-		"Name": "TreeConvo",
-		"Background": "",
-		"EndScript": [ "Actor Actors_Blank" ],
-		"DialogueData": [
+		"Name": "Inn",
+		"DialogueRecords": [
 			{
-				"Speaker": "Student",
-				"Text": "They say aliens have been attacking students here lately.",
-				"Script": [ "Actor Actors_Student", "Animate Talk", "WaitForText", "Animate Idle" ]
-			},
-			{
-				"Speaker": "Student",
-				"Text": "Better be careful walking around.",
-				"Script": [ "Animate Talk", "WaitForText", "Animate Idle" ]
+				"Text": "All abilities restored to maximum charges!"
 			}
 		]
 	},
 	{
-		"Name": "SawFlyers",
-		"DialogueData": [
+		"Name": "IntroInventor",
+		"Bounds": "-120,-70,240,42",
+		"DialogueRecords": [
 			{
-				"Speaker": "Jaime",
-				"Text": "(Several flyers have been posted here by the administration...)"
+				"Speaker": "$Party.0",
+				"Text": "Inventor, I've figured out what makes me different from the other robots."
 			},
 			{
-				"Text": "Remember that aliens aren't real and cannot hurt you! If you see an alien, stay calm and continue your current task."
+				"Speaker": "Inventor",
+				"Text": "This means you've learned how to use magic. Now you're ready to search for your missing components."
 			},
 			{
-				"Text": "Under no cirumstances are students allowed use arcane technomagics to battle aliens. Which aren't real."
-			},
-			{
-				"Speaker": "Jaime",
-				"Text": "(... But everyone knows aliens are real now. That's why I had to learn arcane technomagic.)"
+				"Speaker": "Inventor",
+				"Text": "Bring me parts from the scrapyard #F3C14CFF northeast #FFFFFFFF of here and I'll construct drones to protect you along the way."
 			}
 		]
 	},
 	{
-		"Name": "PreventExit",
-		"DialogueData": [
+		"Name": "SoloRevive",
+		"Bounds": "-120,-70,240,54",
+		"DialogueRecords": [
 			{
-				"Speaker": "",
-				"Text": "It's almost time for class to begin. Look for your classroom in the northwest corner marked on your minimap with a star."
+				"Speaker": "Inventor",
+				"Text": "Your repairs are all finished now. You should construct some companions if you're having trouble in battle."
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "Be careful out there, and check the scrapyard #F3C14CFF northeast #FFFFFFFF of here if you need more parts to build drone companions."
+			}
+		]
+	},
+	{
+		"Name": "WhereMyPartyRevive",
+		"Bounds": "-120,-70,240,54",
+		"DialogueRecords": [
+			{
+				"Speaker": "Inventor",
+				"Text": "Your repairs are all finished now. Take care of yourself out there."
+			},
+			{
+				"Speaker": "$Party.0",
+				"Text": "Where are my companions? Did you find any of them at the scrapyard?"
+			},
+			{
+				"Speaker": "Inventor",
+				"Text": "No, I only found you. Your companions will scatter if you're disabled in battle, but you can recruit or rebuild them again."
+			}
+		]
+	},
+	{
+		"Name": "DefaultRevive",
+		"Bounds": "-120,-70,240,54",
+		"DialogueRecords": [
+			{
+				"Speaker": "Inventor",
+				"Text": "Your repairs are all finished now. Take care of yourself out there."
+			}
+		]
+	},
+	{
+		"Name": "TalkInventor",
+		"DialogueRecords": [
+			{
+				"Text": "I can construct drones to protect you along the way."
+			}
+		]
+	},
+	{
+		"Name": "JunkLocker",
+		"DialogueRecords": [
+			{
+				"Text": "This locker contains a portal to a more dangerous world. Travel to the Steel Halls world?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"No",
+					"Yes",
+					"End",
+					"ProceedText"
+				]
+			}
+		]
+	},
+	{
+		"Name": "LabBookcase1",
+		"DialogueRecords": [
+			{
+				"Text": "This bookcase will contain additional tutorials and world building later."
+			}
+		]
+	},
+	{
+		"Name": "LabBookcase2",
+		"DialogueRecords": [
+			{
+				"Text": "Press the <ESCAPE> key to access the main menu. You can view character stats, equip items, browse your inventory, or save your game progress."
+			},
+			{
+				"Text": "Make sure to save your game progress often!"
+			}
+		]
+	},
+	{
+		"Name": "Tutorial",
+		"DialogueRecords": [
+			{
+				"Text": "There's an instructional guide explaining character stats and how to increase them. Read a tutorial?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Don't read",
+					"Read about stats",
+					"Read about leveling up",
+					"End",
+					"Switch $selection",
+					"Case Don't read",
+					"ProceedText",
+					"Break",
+					"Case Read about stats",
+					"ChangeConversation StatsTutorial",
+					"Break",
+					"Case Read about leveling up",
+					"ChangeConversation LevelingTutorial",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "StatsTutorial",
+		"DialogueRecords": [
+			{
+				"Text": "Every character has five main stats for @Heart HEALTH, @Axe POWER @Gun TECH, @Staff MANA, and @Shield GRIT. High stats are what your characters need to be successful in combat."
+			},
+			{
+				"Text": "@Heart HEALTH is the number of hit points a character has. When a character reaches 0 hit points they cannot act in combat. Hit points are automatically restored after combat."
+			},
+			{
+				"Text": "@Axe POWER determines the power and accuracy of attacks made with physical, brute force weapons like axes and swords."
+			},
+			{
+				"Text": "@Gun TECH determines the power and accuracy of attacks made with high tech weapons and devices like guns and robot parts."
+			},
+			{
+				"Text": "@Staff MANA is magical affinity. It increases the strength of spells and magic items while shielding against incoming magic damage. Drones have no magical affinity."
+			},
+			{
+				"Text": "@Shield GRIT reduces incoming damage from non-magical sources. Wearing armor is a good way to increase @Shield GRIT."
+			},
+			{
+				"Text": "The highest of @Axe @Gun and @Staff are used to determine initial iniative order in combat. The highest of @Axe @Gun and @Shield are also used to determine evade rate against non-magical attacks."
+			}
+		]
+	},
+	{
+		"Name": "LevelingTutorial",
+		"DialogueRecords": [
+			{
+				"Text": "Mechanical characters like androids and drones can increase their stats by equipping weapons and armor. Find better items to get bigger stat gains!"
+			},
+			{
+				"Text": "Humans and androids can randomly increase their stats permanently after combat depending on actions taken in combat. Characters excerise stats by using relevant items and abilities."
+			},
+			{
+				"Text": "Some characters increase their stats faster than others. Characters only get a chance to increase their stats if they finish combat with 1 or more hit points."
+			}
+		]
+	},
+	{
+		"Name": "TalkCanyonAdventurer",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I've been thinking about trying the adventuring life style lately. Do you know a lot about adventuring?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Yes",
+					"No",
+					"End",
+					"Switch $selection",
+					"Case Yes",
+					"ChangeConversation BragCanyon",
+					"Break",
+					"Case No",
+					"ChangeConversation DenyCanyon",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "BragCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Really? That's great! Do you mind if I follow along for a bit?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Recruit her",
+					"Gently refuse",
+					"End",
+					"Switch $selection",
+					"Case Recruit her",
+					"ChangeConversation RecruitCanyon",
+					"Break",
+					"Case Gently refuse",
+					"ChangeConversation RefuseCanyon",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "RefuseCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I understand. You're probably pretty busy anyways I bet. Well, good luck out there."
+			}
+		]
+	},
+	{
+		"Name": "RecruitCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Alright! I'll do my best!",
+				"Script": [
+					"SoundSolo JoinParty 1500"
+				]
+			}
+		]
+	},
+	{
+		"Name": "DenyCanyon",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Yeah, me neither really. But I'll figure it out as I go along."
+			}
+		]
+	},
+	{
+		"Name": "TalkNoviceMage",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I've been thinking about trying the adventuring life style lately. Do you know a lot about adventuring?",
+				"Script": [
+					"WaitForText",
+					"SelectionPrompt",
+					"Yes",
+					"No",
+					"End",
+					"Switch $selection",
+					"Case Yes",
+					"SoundSolo JoinParty 1500",
+					"ChangeConversation RecruitNoviceMage",
+					"Break",
+					"Case No",
+					"ChangeConversation RefuseNoviceMage",
+					"Break",
+					"End"
+				]
+			}
+		]
+	},
+	{
+		"Name": "RefuseNoviceMage",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "I understand. You're probably pretty busy anyways I bet. Well, good luck out there."
+			}
+		]
+	},
+	{
+		"Name": "RecruitNoviceMage",
+		"DialogueRecords": [
+			{
+				"Speaker": "Adventurer",
+				"Text": "Okay, let's go!"
 			}
 		]
 	}

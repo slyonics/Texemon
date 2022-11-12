@@ -46,13 +46,13 @@ namespace Texemon.SceneObjects.Widgets
                     case "Height": height = int.Parse(xmlAttribute.Value); break;
 
                     case "MinimumBinding":
-                        minimumBinding = LookupBinding<float>(xmlAttribute.Value);
+                        minimumBinding = OldLookupBinding<float>(xmlAttribute.Value);
                         minimumBinding.ModelChanged += MinimumBinding_ModelChanged;
                         Minimum = (float)minimumBinding.Value;
                         break;
 
                     case "MaximumBinding":
-                        maximumBinding = LookupBinding<float>(xmlAttribute.Value);
+                        maximumBinding = OldLookupBinding<float>(xmlAttribute.Value);
                         maximumBinding.ModelChanged += MaximumBinding_ModelChanged;
                         Maximum = (float)maximumBinding.Value;
                         break;
@@ -119,7 +119,7 @@ namespace Texemon.SceneObjects.Widgets
                     case "Bar": background = "Gauges_" + xmlAttribute.Value; break;
 
                     case "Binding":
-                        binding = LookupBinding<float>(xmlAttribute.Value);
+                        binding = OldLookupBinding<float>(xmlAttribute.Value);
                         binding.ModelChanged += Binding_ModelChanged;
                         break;
                 }
@@ -184,7 +184,7 @@ namespace Texemon.SceneObjects.Widgets
         private float rightX;
 
         public GaugeSlider(GaugeBar iParentGaugeBar, float widgetDepth)
-            : base(iParentGaugeBar.GetParent<Gauge>(), widgetDepth)
+            : base(iParentGaugeBar.GetParent<Gauge>(), widgetDepth - 0.01f)
         {
             parentGauge = iParentGaugeBar.GetParent<Gauge>();
             parentGaugeBar = iParentGaugeBar;
@@ -215,9 +215,10 @@ namespace Texemon.SceneObjects.Widgets
             if (slider != null)
             {
                 int sliderWidth = sliderBackground.Sprite.Width;
+                int sliderHeight = sliderBackground.Sprite.Height;
                 int barWidth = (int)(parentGaugeBar.Value / parentGauge.Maximum * (parentGauge.InnerBounds.Width));
 
-                Rectangle roughBounds = new Rectangle(parentGauge.InnerBounds.Left + barWidth - sliderWidth / 2, parentGauge.InnerBounds.Top, sliderWidth, parentGauge.InnerBounds.Height);
+                Rectangle roughBounds = new Rectangle(parentGauge.InnerBounds.Left + barWidth - sliderWidth / 2, parentGauge.InnerBounds.Top + (parentGauge.InnerBounds.Height - sliderHeight) / 2, sliderWidth, sliderHeight);
                 //roughBounds.X = parentGauge.InnerBounds.Left + barWidth - 48 + sliderWidth / 2 + 12;
                 if (roughBounds.X > parent.InnerBounds.Right - sliderWidth) roughBounds.X = parent.InnerBounds.Right - sliderWidth;
                 if (roughBounds.X < parent.InnerBounds.Left) roughBounds.X = parent.InnerBounds.Left;

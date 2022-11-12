@@ -21,6 +21,16 @@ namespace Texemon.SceneObjects
         private WidgetController widgetController;
         private Dictionary<string, Widget> childWidgets = new Dictionary<string, Widget>();
 
+        public ViewModel(Scene iScene, PriorityLevel iPriorityLevel)
+            : base()
+        {
+            parentScene = iScene;
+
+            widgetController = iScene.AddController(new WidgetController(iPriorityLevel, this));
+
+            currentWindow = new Rectangle(0, 0, CrossPlatformGame.ScreenWidth, CrossPlatformGame.ScreenHeight);
+        }
+
         public ViewModel(Scene iScene, PriorityLevel iPriorityLevel, GameView viewName)
             : base()
         {
@@ -33,7 +43,7 @@ namespace Texemon.SceneObjects
             LoadView(viewName);
         }
 
-        private void LoadView(GameView viewName)
+        protected void LoadView(GameView viewName)
         {
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(AssetCache.VIEWS[viewName]);
@@ -75,8 +85,11 @@ namespace Texemon.SceneObjects
             base.Terminate();
 
             widgetController.Terminate();
+            OnTerminated?.Invoke();
         }
 
         public Scene ParentScene { get => parentScene; }
+
+        public event Action OnTerminated;
     }
 }
