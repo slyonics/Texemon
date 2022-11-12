@@ -16,13 +16,30 @@ namespace Texemon.SceneObjects.Widgets
         private NinePatch gaugeFrame;
         private NinePatch gaugeBackground;
 
-        private int height;
+        public int Height { get; set; }
 
         public float Minimum { get; private set; } = 0;
         public float Maximum { get; private set; } = 100;
 
-        private ModelProperty<float> minimumBinding;
-        private ModelProperty<float> maximumBinding;
+        private string Frame
+        {
+            get => frame;
+            set
+            {
+                frame = value;
+                UpdateFrame();
+            }
+        }
+
+        private string Background
+        {
+            get => background;
+            set
+            {
+                background = value;
+                UpdateBackground();
+            }
+        }
 
         public Gauge(Widget iParent, float widgetDepth)
             : base(iParent, widgetDepth)
@@ -30,33 +47,21 @@ namespace Texemon.SceneObjects.Widgets
 
         }
 
-        public override void LoadAttributes(XmlNode xmlNode)
+        private void UpdateFrame()
         {
-            base.LoadAttributes(xmlNode);
-
-            foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
+            if (frame != null)
             {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    case "Frame": frame = "Gauges_" + xmlAttribute.Value; break;
-                    case "Background": background = "Gauges_" + xmlAttribute.Value; break;
-                    case "Minimum": Minimum = int.Parse(xmlAttribute.Value); break;
-                    case "Maximum": Maximum = int.Parse(xmlAttribute.Value); break;
-                    case "Height": height = int.Parse(xmlAttribute.Value); break;
+                gaugeFrame = new NinePatch("Gauges_" + frame, Depth - 0.01f);
+                gaugeFrame.Bounds = currentWindow;
+            }
+        }
 
-                    case "MinimumBinding":
-                        minimumBinding = OldLookupBinding<float>(xmlAttribute.Value);
-                        minimumBinding.ModelChanged += MinimumBinding_ModelChanged;
-                        Minimum = (float)minimumBinding.Value;
-                        break;
-
-                    case "MaximumBinding":
-                        maximumBinding = OldLookupBinding<float>(xmlAttribute.Value);
-                        maximumBinding.ModelChanged += MaximumBinding_ModelChanged;
-                        Maximum = (float)maximumBinding.Value;
-                        break;
-                }
+        private void UpdateBackground()
+        {
+            if (background != null)
+            {
+                gaugeBackground = new NinePatch("Gauges_" + background, Depth);
+                gaugeBackground.Bounds = currentWindow;
             }
         }
 
@@ -64,11 +69,8 @@ namespace Texemon.SceneObjects.Widgets
         {
             base.ApplyAlignment();
 
-            gaugeBackground = new NinePatch(background, Depth);
-            gaugeBackground.Bounds = currentWindow;
-
-            gaugeFrame = new NinePatch(frame, Depth - 0.01f);
-            gaugeFrame.Bounds = currentWindow;
+            UpdateBackground();
+            UpdateFrame();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -78,16 +80,6 @@ namespace Texemon.SceneObjects.Widgets
             gaugeBackground?.Draw(spriteBatch, Position);
             gaugeFrame?.Draw(spriteBatch, Position);
         }
-
-        public void MinimumBinding_ModelChanged()
-        {
-            Minimum = (int)minimumBinding.Value;
-        }
-
-        public void MaximumBinding_ModelChanged()
-        {
-            Maximum = (int)maximumBinding.Value;
-        }
     }
 
     public class GaugeBar : Widget
@@ -95,7 +87,18 @@ namespace Texemon.SceneObjects.Widgets
         private Gauge parentGauge;
 
         private float barValue;
-        private string background;
+
+        private string bar;
+        private string Bar
+        {
+            get => bar;
+            set
+            {
+                bar = value;
+                UpdateBarSprite();
+            }
+        }
+
         private NinePatch gaugeBackground;
 
         private ModelProperty<float> binding;
@@ -106,47 +109,30 @@ namespace Texemon.SceneObjects.Widgets
             parentGauge = iParent;
         }
 
-        public override void LoadAttributes(XmlNode xmlNode)
+        private void UpdateBarSprite()
         {
-            base.LoadAttributes(xmlNode);
-
-            foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
+            if (bar != null)
             {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    case "Value": barValue = float.Parse(xmlAttribute.Value); break;
-                    case "Bar": background = "Gauges_" + xmlAttribute.Value; break;
-
-                    case "Binding":
-                        binding = OldLookupBinding<float>(xmlAttribute.Value);
-                        binding.ModelChanged += Binding_ModelChanged;
-                        break;
-                }
-            }
-
-            gaugeBackground = new NinePatch(background, Depth);
-
-            if (binding != null)
-            {
-                barValue = Convert.ToSingle(binding.Value);
-                ApplyAlignment();
+                gaugeBackground = new NinePatch("Gauges_" + bar, Depth);
             }
         }
 
-        public void Binding_ModelChanged()
-        {
-            barValue = Convert.ToSingle(binding.Value);
-            ApplyAlignment();
-        }
-
-        public override void ApplyAlignment()
+        private void UpdateBarValue()
         {
             parentGauge = parent as Gauge;
             int barWidth = (int)(barValue / parentGauge.Maximum * parentGauge.InnerBounds.Width);
             currentWindow = bounds = new Rectangle(parentGauge.InnerBounds.Left, parentGauge.InnerBounds.Top, parentGauge.InnerBounds.Width, parentGauge.InnerBounds.Height);
 
-            gaugeBackground.Bounds = new Rectangle(currentWindow.Left, currentWindow.Top, barWidth, currentWindow.Height);
+            if (gaugeBackground != null)
+            {
+                gaugeBackground.Bounds = new Rectangle(currentWindow.Left, currentWindow.Top, barWidth, currentWindow.Height);
+            }
+        }
+
+        public override void ApplyAlignment()
+        {
+            UpdateBarSprite();
+            UpdateBarValue();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -161,12 +147,8 @@ namespace Texemon.SceneObjects.Widgets
             get => barValue;
             set
             {
-                if (binding == null) barValue = value;
-                else
-                {
-                    binding.Value = value;
-                    Binding_ModelChanged();
-                }
+                barValue = value;
+                UpdateBarValue();
             }
         }
     }
@@ -183,6 +165,16 @@ namespace Texemon.SceneObjects.Widgets
         private float leftX;
         private float rightX;
 
+        private string Slider
+        {
+            get => slider;
+            set
+            {
+                slider = value;
+                UpdateSlider();
+            }
+        }
+
         public GaugeSlider(GaugeBar iParentGaugeBar, float widgetDepth)
             : base(iParentGaugeBar.GetParent<Gauge>(), widgetDepth - 0.01f)
         {
@@ -192,28 +184,12 @@ namespace Texemon.SceneObjects.Widgets
             ApplyAlignment();
         }
 
-        public override void LoadAttributes(XmlNode xmlNode)
+        private void UpdateSlider()
         {
-            base.LoadAttributes(xmlNode);
-
-            foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
-            {
-                string[] tokens;
-                switch (xmlAttribute.Name)
-                {
-                    case "Slider": slider = "Gauges_" + xmlAttribute.Value; break;
-                }
-            }
-
-            if (slider != null) sliderBackground = new NinePatch(slider, Depth - 0.001f, true);
-        }
-
-        public override void ApplyAlignment()
-        {
-            if (parentGaugeBar == null) return;
-
             if (slider != null)
             {
+                sliderBackground = new NinePatch("Gauges_" + slider, Depth - 0.001f, true);
+
                 int sliderWidth = sliderBackground.Sprite.Width;
                 int sliderHeight = sliderBackground.Sprite.Height;
                 int barWidth = (int)(parentGaugeBar.Value / parentGauge.Maximum * (parentGauge.InnerBounds.Width));
@@ -224,6 +200,13 @@ namespace Texemon.SceneObjects.Widgets
                 if (roughBounds.X < parent.InnerBounds.Left) roughBounds.X = parent.InnerBounds.Left;
                 currentWindow = bounds = sliderBackground.Bounds = roughBounds;
             }
+        }
+
+        public override void ApplyAlignment()
+        {
+            if (parentGaugeBar == null) return;
+
+            UpdateSlider();
         }
 
         public override void Update(GameTime gameTime)

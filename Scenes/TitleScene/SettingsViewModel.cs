@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Texemon.Main;
 using Texemon.Models;
+using Texemon.SceneObjects.Widgets;
 
 namespace Texemon.Scenes.TitleScene
 {
@@ -23,8 +24,8 @@ namespace Texemon.Scenes.TitleScene
 
         public void Apply()
         {
-            Settings.SetProgramSetting<float>("SoundVolume", SoundVolume.Value);
-            Settings.SetProgramSetting<float>("MusicVolume", MusicVolume.Value);
+            Settings.SetProgramSetting<float>("SoundVolume", GetWidget<GaugeBar>("SoundBar").Value);
+            Settings.SetProgramSetting<float>("MusicVolume", GetWidget<GaugeBar>("MusicBar").Value);
             Audio.ApplySettings();
 
             bool newFullscreen = DisplayMode.Value == "Fullscreen";

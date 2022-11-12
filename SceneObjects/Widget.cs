@@ -504,37 +504,6 @@ namespace Texemon.SceneObjects
             return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as T;
         }
 
-        public ModelProperty<T> OldLookupBinding<T>(string bindingName)
-        {
-            string[] tokens = bindingName.Split('.');
-
-            object dataContext;
-            switch (tokens[0])
-            {
-                case "PlayerProfile":
-                    dataContext = GameProfile.PlayerProfile;
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                case "DataGrid":
-                    dataContext = GetParent<DataGrid>().Items.First();
-                    tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-                    break;
-
-                default:
-                    dataContext = GetParent<ViewModel>();
-                    break;
-            }
-
-            while (tokens.Length > 1)
-            {
-                dataContext = dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext);
-                tokens = tokens.TakeLast(tokens.Length - 1).ToArray();
-            }
-
-            return dataContext.GetType().GetProperty(tokens[0]).GetValue(dataContext) as ModelProperty<T>;
-        }
-
         public void AdjustLayoutOffset(Alignment alignment, Vector2 offset)
         {
             layoutOffset[(int)alignment] += offset;

@@ -23,7 +23,6 @@ namespace Texemon.SceneObjects.Widgets
         {
             foreach (XmlAttribute xmlAttribute in xmlNode.Attributes)
             {
-                string[] tokens;
                 switch (xmlAttribute.Name)
                 {
                     default: ParseAttribute(xmlAttribute.Name, xmlAttribute.Value); break;
