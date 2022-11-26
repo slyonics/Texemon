@@ -93,13 +93,20 @@ namespace Texemon.Scenes.MapScene
 
             IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => Player.Distance(x.Bounds));
             Rectangle interactionZone = Player.Bounds;
+
+            interactionZone.Width = 16;
+            interactionZone.Height = 16;
+            interactionZone.X -= 1;
+            interactionZone.Y -= 9;
+
             switch (Player.Orientation)
             {
-                case Orientation.Up: interactionZone.Y -= (int)(Player.BoundingBox.Height * 1.5f); break;
-                case Orientation.Right: interactionZone.X += (int)(Player.BoundingBox.Width * 1.5f); break;
-                case Orientation.Down: interactionZone.Y += (int)(Player.BoundingBox.Height * 1.5f); break;
-                case Orientation.Left: interactionZone.X -= (int)(Player.BoundingBox.Width * 1.5f); break;
+                case Orientation.Up: interactionZone.Y -= (int)(8); break;
+                case Orientation.Right: interactionZone.X += (int)(18); break;
+                case Orientation.Down: interactionZone.Y += (int)(24); break;
+                case Orientation.Left: interactionZone.X -= (int)(18); break;
             }
+
 
             
 

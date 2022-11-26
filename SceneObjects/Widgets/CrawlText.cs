@@ -20,8 +20,8 @@ namespace Texemon.SceneObjects.Widgets
             public Texture2D icon = null;
         }
 
-        private const int TEXT_QUEUE_COOLDOWN = 10;
-        private const int TALK_COOLDOWN = 180;
+        private const int TEXT_QUEUE_COOLDOWN = 100;
+        private const int TALK_COOLDOWN = 280;
 
         private string text;
         public string Text { get=> text; set { text = value; AddLines(text); } }

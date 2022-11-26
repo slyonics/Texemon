@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="32" height="28" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="7">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="32" height="28" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="8">
  <properties>
   <property name="LocationName" value="World One"/>
  </properties>
@@ -21,8 +21,8 @@
 221,222,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,221,222,
 205,206,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,205,206,
 221,222,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,221,222,
-205,206,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,205,206,
-221,222,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,221,222,
+205,206,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,175,176,36,36,36,36,36,36,205,206,
+221,222,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,191,192,36,36,36,36,36,36,221,222,
 205,206,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,205,206,
 221,222,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,221,222,
 205,206,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,205,206,
@@ -43,6 +43,12 @@
    <properties>
     <property name="Direction" value="Down"/>
     <property name="Label" value="Level One"/>
+   </properties>
+  </object>
+  <object id="7" name="Bookcase" type="Interactive" x="175" y="111" width="18" height="18">
+   <properties>
+    <property name="Label" value="Bookcase"/>
+    <property name="Script" value="Conversation LabBookcase1"/>
    </properties>
   </object>
  </objectgroup>

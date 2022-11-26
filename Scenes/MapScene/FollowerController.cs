@@ -34,6 +34,8 @@ namespace Texemon.Scenes.MapScene
 
         private List<Vector3> movementHistory = new List<Vector3>();
 
+
+
         public FollowerController(MapScene iMapScene, Actor iFollower, Actor iLeader)
             : base(PriorityLevel.GameLevel)
         {
