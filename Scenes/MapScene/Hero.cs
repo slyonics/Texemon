@@ -28,30 +28,38 @@ namespace Texemon.Scenes.MapScene
             RunUp
         }
 
-        public const int HERO_WIDTH = 24;
-        public const int HERO_HEIGHT = 32;
+        public const int HERO_WIDTH = 16;
+        public const int HERO_HEIGHT = 16;
 
-        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-7, -8, 13, 6);
+        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-7, -7, 14, 7);
 
         private static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
-            { HeroAnimation.IdleDown.ToString(), new Animation(1, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.IdleLeft.ToString(), new Animation(1, 1, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.IdleRight.ToString(), new Animation(1, 2, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.IdleUp.ToString(), new Animation(1, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
-            { HeroAnimation.WalkDown.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
-            { HeroAnimation.WalkLeft.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
-            { HeroAnimation.WalkRight.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
-            { HeroAnimation.WalkUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 4, 240) },
-            { HeroAnimation.RunDown.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 4, 120) },
-            { HeroAnimation.RunLeft.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 4, 120) },
-            { HeroAnimation.RunRight.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 4, 120) },
-            { HeroAnimation.RunUp.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 4, 120) }
+            { HeroAnimation.IdleDown.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleLeft.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleRight.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.IdleUp.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 1, 1000) },
+            { HeroAnimation.WalkDown.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 2, 240) },
+            { HeroAnimation.WalkLeft.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 2, 240) },
+            { HeroAnimation.WalkRight.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 2, 240) },
+            { HeroAnimation.WalkUp.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 2, 240) },
+            { HeroAnimation.RunDown.ToString(), new Animation(0, 2, HERO_WIDTH, HERO_HEIGHT, 2, 120) },
+            { HeroAnimation.RunLeft.ToString(), new Animation(0, 3, HERO_WIDTH, HERO_HEIGHT, 2, 120) },
+            { HeroAnimation.RunRight.ToString(), new Animation(0, 1, HERO_WIDTH, HERO_HEIGHT, 2, 120) },
+            { HeroAnimation.RunUp.ToString(), new Animation(0, 0, HERO_WIDTH, HERO_HEIGHT, 2, 120) }
         };
 
         private MapScene mapScene;
 
         private SceneObjects.Shaders.Light light;
+
+        public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, GameSprite gameSprite, Orientation iOrientation = Orientation.Down)
+            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[gameSprite], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
+        {
+            mapScene = iMapScene;
+
+            
+        }
 
         public Hero(MapScene iMapScene, Tilemap iTilemap, Vector2 iPosition, StatusScene.HeroModel heroModel, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.Sprite.Value.ToString())], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)

@@ -36,8 +36,22 @@ namespace Texemon.Scenes.SplashScene
 
         public void Notify(SkippableWaitController sender)
         {
+
+            /*
             if (GameProfile.SaveList.Count > 0) CrossPlatformGame.Transition(typeof(TitleScene.TitleScene));
-            else  CrossPlatformGame.Transition(typeof(IntroScene.IntroScene));
+            else CrossPlatformGame.Transition(typeof(IntroScene.IntroScene));
+            */
+
+            GameProfile.NewState();
+
+            GameProfile.PlayerProfile.WindowStyle.Value = "MagicWindow";
+            GameProfile.PlayerProfile.FrameStyle.Value = "MagicFrame";
+            GameProfile.PlayerProfile.SelectedStyle.Value = "MagicSelected";
+            GameProfile.PlayerProfile.FrameSelectedStyle.Value = "MagicFrameSelected";
+            GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
+            GameProfile.PlayerProfile.Font.Value = GameFont.SandyForest;
+
+            CrossPlatformGame.Transition(typeof(MapScene.MapScene), "Intro");
         }
 
         public bool Terminated { get => false; }

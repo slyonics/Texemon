@@ -18,7 +18,9 @@ namespace Texemon.Main
         Cancel,
         Menu,
         Interact,
-        Run
+        Run,
+        A,
+        B
     }
 
     public enum PlayerNumber
@@ -52,7 +54,9 @@ namespace Texemon.Main
             { Command.Cancel, new List<Keys>() { Keys.Escape } },
             { Command.Menu, new List<Keys>() { Keys.Escape } },
             { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space } },
-            { Command.Run, new List<Keys>() { Keys.LeftShift, Keys.RightShift } }
+            { Command.Run, new List<Keys>() { Keys.LeftShift, Keys.RightShift } },
+            { Command.A, new List<Keys>() { Keys.Z } },
+            { Command.B, new List<Keys>() { Keys.X } }
         };
 
         private static Dictionary<Command, List<Buttons>> MANDATORY_GAMEPAD_BINDINGS = new Dictionary<Command, List<Buttons>>()
@@ -65,7 +69,9 @@ namespace Texemon.Main
             { Command.Cancel, new List<Buttons>() { Buttons.B } },
             { Command.Menu, new List<Buttons>() { Buttons.Start } },
             { Command.Interact, new List<Buttons>() { Buttons.RightShoulder } },
-            { Command.Run, new List<Buttons>() { Buttons.LeftShoulder } }
+            { Command.Run, new List<Buttons>() { Buttons.LeftShoulder } },
+            { Command.A, new List<Buttons>() { Buttons.A } },
+            { Command.B, new List<Buttons>() { Buttons.B } }
         };
 
         private List<float> keyActivity = new List<float>();

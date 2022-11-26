@@ -22,8 +22,8 @@ namespace Texemon.Main
         public static readonly string SETTINGS_DIRECTORY = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "AppData\\Local") + "\\" + CrossPlatformGame.GAME_NAME;
 
         private const int WINDOWED_MARGIN = 34;
-        private const int TARGET_SCREEN_WIDTH = 320;
-        private const int TARGET_SCREEN_HEIGHT = 240;
+        private const int TARGET_SCREEN_WIDTH = 256;
+        private const int TARGET_SCREEN_HEIGHT = 224;
         private const int MAXIMUM_SCREEN_WIDTH = 1920;
         private const int MAXIMUM_SCREEN_HEIGHT = 1080;
 
@@ -220,7 +220,7 @@ namespace Texemon.Main
         {
             TransitionController transitionController = new TransitionController(TransitionDirection.Out, 600);
             ColorFade colorFade = new ColorFade(Color.Black, transitionController.TransitionProgress);
-            transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = t);
+            transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = (int)(t * 5) / 5.0f);
             parentScene.AddController(transitionController);
             transitionShader = colorFade;
 

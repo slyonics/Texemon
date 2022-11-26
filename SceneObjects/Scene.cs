@@ -44,7 +44,7 @@ namespace Texemon.SceneObjects
 
             TransitionController transitionController = new TransitionController(TransitionDirection.In, 600);
             ColorFade colorFade = new ColorFade(Color.Black, transitionController.TransitionProgress);
-            transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = t);
+            transitionController.UpdateTransition += new Action<float>(t => colorFade.Amount = (int)(t * 5) / 5.0f);
             transitionController.FinishTransition += new Action<TransitionDirection>(t => colorFade.Terminate());
             AddController(transitionController);
             CrossPlatformGame.GameInstance.TransitionShader = colorFade;

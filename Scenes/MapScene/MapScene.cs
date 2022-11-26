@@ -44,6 +44,25 @@ namespace Texemon.Scenes.MapScene
 
             Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
 
+            //if (mapName == "Intro")
+            {
+                var link = new Hero(this, Tilemap, new Vector2(32, 96), GameSprite.Actors_Link);
+                Party.Add(link);
+                AddEntity(link);
+                PlayerController linkcontroller = new PlayerController(this, link);
+                AddController(linkcontroller);
+
+                Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Octorock);
+                Party.Add(follower);
+                AddEntity(follower);
+                FollowerController followerController = new FollowerController(this, follower, link);
+                AddController(followerController);
+
+
+            }
+
+            /*
+
             var leaderHero = new Hero(this, Tilemap, new Vector2(32, 96), Models.GameProfile.PlayerProfile.Party.First().Value);
             Party.Add(leaderHero);
             AddEntity(leaderHero);
@@ -60,7 +79,9 @@ namespace Texemon.Scenes.MapScene
                 AddController(followerController);
 
                 leader = follower;
-            }            
+            }    
+            
+            */
 
             foreach (Tuple<TiledLayer, TiledGroup> layer in Tilemap.ObjectData)
             {
@@ -247,15 +268,21 @@ namespace Texemon.Scenes.MapScene
             {
                 foreach (Enemy enemy in Enemies)
                 {
-                    if (enemy.Bounds.Intersects(PartyLeader.Bounds))
+                    foreach (Bullet bullet in FriendlyBullets)
                     {
-                        enemy.Collides();
+                        if (enemy.Bounds.Intersects(bullet.Bounds))
+                        {
+                            enemy.Collides(bullet);
+                        }
                     }
                 }
             }
 
             NPCs.RemoveAll(x => x.Terminated);
             Enemies.RemoveAll(x => x.Terminated);
+
+            FriendlyBullets.RemoveAll(x => x.Terminated);
+            EnemyBullets.RemoveAll(x => x.Terminated);
 
             parallaxBackdrop?.Update(gameTime, Camera);
         }
@@ -284,5 +311,20 @@ namespace Texemon.Scenes.MapScene
             var travelZone = EventTriggers.Where(x => x.TravelZone && x.DefaultTravelZone).OrderBy(x => Vector2.Distance(new Vector2(x.Bounds.Center.X, x.Bounds.Center.Y), PartyLeader.Position)).First();
             travelZone.Activate(PartyLeader);
         }
+
+        public void AddFriendBullet(Bullet bullet)
+        {
+            FriendlyBullets.Add(bullet);
+            AddEntity(bullet);
+        }
+
+        public void AddEnemyBullet(Bullet bullet)
+        {
+            EnemyBullets.Add(bullet);
+            AddEntity(bullet);
+        }
+
+        public List<Bullet> FriendlyBullets = new List<Bullet>();
+        public List<Bullet> EnemyBullets = new List<Bullet>();
     }
 }

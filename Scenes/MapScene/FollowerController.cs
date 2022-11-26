@@ -50,6 +50,13 @@ namespace Texemon.Scenes.MapScene
                 case Behavior.Regrouping: RegroupingAI(gameTime, leader); break;
                 case Behavior.Stuck: StuckAI(gameTime, leader); break;
             }
+
+            InputFrame inputFrame = Input.CurrentInput;
+            if (inputFrame.CommandPressed(Command.A))
+            {
+                Bullet bullet = new Bullet(mapScene, follower.Position + new Vector2(0, -16), GameSprite.Actors_Rock, Orientation.Up);
+                mapScene.AddFriendBullet(bullet);
+            }
         }
 
         private void IdlingAI(Actor humanPlayer)
