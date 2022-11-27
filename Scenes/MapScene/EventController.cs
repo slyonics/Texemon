@@ -18,6 +18,7 @@ namespace Texemon.Scenes.MapScene
 
         public bool EndGame { get; private set; }
         public Actor ActorSubject { get; set; }
+        public EventTrigger TriggerSubject { get; set; }
 
         public EventController(MapScene iScene, string[] script)
             : base(iScene, script, PriorityLevel.CutsceneLevel)
@@ -39,6 +40,7 @@ namespace Texemon.Scenes.MapScene
                 case "Inn": Inn(tokens); break;
                 case "RestoreParty": RestoreParty(); break;
                 case "Recruit": Recruit(tokens); break;
+                case "GiveAffection": mapScene.GainExp(); break;
                 default: return false;
             }
 
@@ -165,15 +167,14 @@ namespace Texemon.Scenes.MapScene
 
         public void Recruit(string[] tokens)
         {
-            HeroModel heroModel = new HeroModel((HeroType)Enum.Parse(typeof(HeroType), tokens[1]));
-            //heroModel.Name.Value = namingBox.Text;
-            // TODO overflow party to backbench
-            GameProfile.PlayerProfile.Party.Add(heroModel);
-            GameProfile.SetSaveData<bool>(heroModel.Name.Value + "Recruited", true);
 
-            mapScene.AddPartyMember(heroModel, ActorSubject);
 
-            if (tokens.Length >= 2) ActorSubject.Terminate();
+
+
+
+            mapScene.AddPartyMember(TriggerSubject);
+
+            TriggerSubject.Terminated = true;
         }
     }
 }

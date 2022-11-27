@@ -176,7 +176,7 @@ namespace Texemon.Scenes.ConversationScene
 
         public event Action OnDialogueScrolled;
 
-        public ModelProperty<Rectangle> Window { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-128, -112, 256, 48));
+        public ModelProperty<Rectangle> Window { get; set; } = new ModelProperty<Rectangle>(new Rectangle(-128, -112, 256, 32));
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
         public ModelProperty<GameFont> ConversationFont { get; set; } = GameProfile.PlayerProfile.Font;
         public ModelProperty<string> Dialogue { get; set; } = new ModelProperty<string>("");

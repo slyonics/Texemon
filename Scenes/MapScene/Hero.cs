@@ -10,7 +10,7 @@ using Texemon.SceneObjects.Maps;
 
 namespace Texemon.Scenes.MapScene
 {
-    public class Hero : Actor
+    public class Hero : Actor, IInteractive
     {
         protected enum HeroAnimation
         {
@@ -111,5 +111,28 @@ namespace Texemon.Scenes.MapScene
         }
 
         public Rectangle InteractionZone;
+
+        public string Label { get; set; } = "";
+        public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - 26); }
+        public virtual bool Interactive { get => !string.IsNullOrEmpty(Label); }
+
+        public virtual bool Activate(Hero activator)
+        {
+            string[] interactionScript = new string[]
+                {                    
+                    "GiveAffection",
+                    "Conversation PetMonster"
+                };
+            EventController eventController = new EventController(mapScene, interactionScript);
+            eventController.ActorSubject = this;
+
+            mapScene.AddController(eventController);
+            controllerList.Add(eventController);
+
+            Reorient(activator.Center - Center);
+            OrientedAnimation("Idle");
+
+            return true;
+        }
     }
 }

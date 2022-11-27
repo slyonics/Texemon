@@ -83,7 +83,10 @@ namespace Texemon.Scenes.MapScene
                 else Player.Walk(movement, WALKING_SPEED);
             }
 
-            if (!mapScene.Camera.View.Intersects(Player.Bounds) && !mapScene.Camera.View.Contains(Player.Bounds)) mapScene.HandleOffscreen();
+            Rectangle cameraView = mapScene.Camera.View;
+            cameraView.Height -= 32;
+            cameraView.Y += 32;
+            if (!cameraView.Intersects(Player.Bounds) && !cameraView.Contains(Player.Bounds)) mapScene.HandleOffscreen();
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -118,6 +121,7 @@ namespace Texemon.Scenes.MapScene
             List<IInteractive> interactableList = new List<IInteractive>();
             interactableList.AddRange(mapScene.NPCs.FindAll(x => x.Interactive));
             interactableList.AddRange(mapScene.EventTriggers.FindAll(x => x.Interactive));
+            interactableList.AddRange(mapScene.Party.FindAll(x => x.Interactive));
 
             Hero player = mapScene.PartyLeader;
             IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => player.Distance(x.Bounds));
@@ -140,8 +144,20 @@ namespace Texemon.Scenes.MapScene
                     break;
             }
             player.InteractionZone = interactZone;
-            interactable = sortedInteractableList.FirstOrDefault(x => x.Bounds.Intersects(player.InteractionZone));
+            interactable = sortedInteractableList.FirstOrDefault(x => GetInteractBounds(x).Intersects(player.InteractionZone));
             interactionView.Target(interactable);
+        }
+
+        private Rectangle GetInteractBounds(IInteractive interactive)
+        {
+            if (interactive is Hero)
+            {
+                Rectangle result = interactive.Bounds;
+                result.Y -= 8;
+                result.Height = 16;
+                return result;
+            }
+            else return interactive.Bounds;
         }
     }
 }

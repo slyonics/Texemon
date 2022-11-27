@@ -44,7 +44,7 @@ namespace Texemon.SceneObjects.Widgets
             switch (TextAlignment)
             {
                 case Alignment.Left:
-                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Top - Main.Text.GetStringHeight(Font)) + Position, Font, Text, drawColor, Depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Left, currentWindow.Top) + Position, Font, Text, drawColor, Depth);
                     break;
 
                 case Alignment.Center:
@@ -52,7 +52,7 @@ namespace Texemon.SceneObjects.Widgets
                     break;
 
                 case Alignment.Right:
-                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Top - Main.Text.GetStringHeight(Font)) + Position, Font, Text, drawColor, Depth);
+                    Main.Text.DrawText(spriteBatch, new Vector2(currentWindow.Right - Main.Text.GetStringLength(Font, Text), currentWindow.Top) + Position, Font, Text, drawColor, Depth);
                     break;
             }
         }

@@ -52,7 +52,10 @@ namespace Texemon.Scenes.MapScene
         {
             if (!Interactive) return false;
 
-            mapScene.AddController(new EventController(mapScene, Script));
+            EventController eventController = new EventController(mapScene, Script);
+            eventController.TriggerSubject = this;
+            mapScene.AddController(eventController);
+
 
             return true;
         }

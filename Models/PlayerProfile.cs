@@ -28,5 +28,10 @@ namespace Texemon.Models
         public ModelCollection<HeroModel> Party { get; set; } = new ModelCollection<HeroModel>();
         public ModelProperty<int> Money { get; set; } = new ModelProperty<int>(50);
 
+        public ModelProperty<string> MonsterName { get; set; } = new ModelProperty<string>("Blank");
+        public ModelProperty<int> MonsterLevel { get; set; } = new ModelProperty<int>(1);
+        public ModelProperty<int> MonsterHealth { get; set; } = new ModelProperty<int>(10);
+        public ModelProperty<int> MonsterHealthMax { get; set; } = new ModelProperty<int>(10);
+        public ModelProperty<int> MonsterNext { get; set; } = new ModelProperty<int>(50);
     }
 }

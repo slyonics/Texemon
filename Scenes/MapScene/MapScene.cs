@@ -5,7 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Texemon.Models;
+using Texemon.SceneObjects.Controllers;
 using Texemon.SceneObjects.Maps;
+using Texemon.SceneObjects.Shaders;
+using Texemon.Scenes.ConversationScene;
 using Texemon.Scenes.StatusScene;
 using TiledCS;
 
@@ -23,6 +26,8 @@ namespace Texemon.Scenes.MapScene
         public List<EventTrigger> EventTriggers { get; private set; } = new List<EventTrigger>();
 
         private ParallaxBackdrop parallaxBackdrop;
+
+        public HubViewModel Hud;
 
         public MapScene(string mapName)
         {
@@ -42,7 +47,7 @@ namespace Texemon.Scenes.MapScene
                 }
             }
 
-            Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, Tilemap.Height));
+            Camera = new Camera(new Rectangle(0, 0, Tilemap.Width, 192)); // Tilemap.Height));
 
             //if (mapName == "Intro")
             {
@@ -52,14 +57,11 @@ namespace Texemon.Scenes.MapScene
                 PlayerController linkcontroller = new PlayerController(this, link);
                 AddController(linkcontroller);
 
-                Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Octorock);
-                Party.Add(follower);
-                AddEntity(follower);
-                FollowerController followerController = new FollowerController(this, follower, link);
-                AddController(followerController);
-
-
+                
             }
+
+            Hud = new HubViewModel(this);
+            AddView(Hud);
 
             /*
 
@@ -156,30 +158,18 @@ namespace Texemon.Scenes.MapScene
             SaveMapPosition();
         }
 
-        public MapScene(string mapName, Vector2 leaderPosition)
-            : this(mapName)
-        {
-            PartyLeader.Position = leaderPosition;
-            PartyLeader.Orientation = Orientation.Down;
-            PartyLeader.Idle();
-
-            PartyLeader.UpdateBounds();
-            Camera.Center(PartyLeader.Center);
-
-            int i = 1;
-            foreach (Hero hero in Party.Skip(1))
-            {
-                hero.CenterOn(new Vector2(PartyLeader.SpriteBounds.Left + i * 6, PartyLeader.SpriteBounds.Bottom - 12 + (i % 2) * 6));
-                hero.Orientation = Orientation.Down;
-                hero.Idle();
-
-                i++;
-            }
-        }
-
         public MapScene(string mapName, string sourceMapName)
             : this(mapName)
         {
+
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Octorock);
+            Party.Add(follower);
+            AddEntity(follower);
+            FollowerController followerController = new FollowerController(this, follower, PartyLeader);
+            AddController(followerController);
+            follower.Label = "Interact";
+
+
             var spawnZone = EventTriggers.First(x => x.Name == sourceMapName);
 
             Orientation orientation = (Orientation)Enum.Parse(typeof(Orientation), spawnZone.GetProperty("Direction"));
@@ -222,6 +212,9 @@ namespace Texemon.Scenes.MapScene
 
         public void AddPartyMember(HeroModel heroModel)
         {
+
+
+            /*
             Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), heroModel);            
             AddEntity(follower);
             FollowerController followerController = new FollowerController(this, follower, Party.Last());
@@ -231,26 +224,33 @@ namespace Texemon.Scenes.MapScene
             follower.Orientation = Orientation.Down;
             follower.Idle();
             AddParticle(new SceneObjects.Particles.AnimationParticle(this, follower.Center, SceneObjects.Particles.AnimationType.Smoke));
+            */
         }
 
-        public void AddPartyMember(HeroModel heroModel, Actor oldActor)
+        public void AddPartyMember(EventTrigger trigger)
         {
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), heroModel);
-            AddEntity(follower);
-            FollowerController followerController = new FollowerController(this, follower, Party.Last());
-            AddController(followerController);
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Octorock);
             Party.Add(follower);
-            follower.Position = oldActor.Position;
-            follower.Orientation = oldActor.Orientation;
+            AddEntity(follower);
+            FollowerController followerController = new FollowerController(this, follower, PartyLeader);
+            AddController(followerController);
+            
+
+            follower.Label = "Interact";
+
+            follower.Position = new Vector2(trigger.Bounds.X + 8, trigger.Bounds.Y + 16);
+            follower.Orientation = Orientation.Down;
             follower.UpdateBounds();
             follower.Idle();
+
+            Hud.ShowHud.Value = true;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            Camera.Center(PartyLeader.Center);
+            //Camera.Center(PartyLeader.Center);
 
             bool eventTriggered = false;
             foreach (EventTrigger eventTrigger in EventTriggers)
@@ -308,8 +308,34 @@ namespace Texemon.Scenes.MapScene
 
         public void HandleOffscreen()
         {
-            var travelZone = EventTriggers.Where(x => x.TravelZone && x.DefaultTravelZone).OrderBy(x => Vector2.Distance(new Vector2(x.Bounds.Center.X, x.Bounds.Center.Y), PartyLeader.Position)).First();
-            travelZone.Activate(PartyLeader);
+            Vector2 newCamera = Camera.Position;
+            Vector2 oldCamera = Camera.Position;
+            if (PartyLeader.Bounds.X >= Camera.View.Right)
+            {                
+                newCamera.X += 256;
+            }
+            else if (PartyLeader.Bounds.X <= Camera.View.Left)
+            {
+                newCamera.X -= 256;
+            }
+            else if (PartyLeader.Bounds.Y >= Camera.View.Bottom)
+            {
+                newCamera.Y += 192;
+            }
+            else if (PartyLeader.Bounds.Y <= Camera.View.Top + 32)
+            {
+                newCamera.Y -= 192;
+            }
+
+            TransitionController transitionController = new TransitionController(TransitionDirection.In, 1000, PriorityLevel.CutsceneLevel);
+            transitionController.UpdateTransition += new Action<float>(t =>
+            {
+                Camera.Position = Vector2.Lerp(oldCamera, newCamera, t);
+            });
+            AddController(transitionController);
+
+            //var travelZone = EventTriggers.Where(x => x.TravelZone && x.DefaultTravelZone).OrderBy(x => Vector2.Distance(new Vector2(x.Bounds.Center.X, x.Bounds.Center.Y), PartyLeader.Position)).First();
+            //travelZone.Activate(PartyLeader);
         }
 
         public void AddFriendBullet(Bullet bullet)
@@ -322,6 +348,21 @@ namespace Texemon.Scenes.MapScene
         {
             EnemyBullets.Add(bullet);
             AddEntity(bullet);
+        }
+
+        public void GainExp()
+        {
+            int finalNext = GameProfile.PlayerProfile.MonsterNext.Value - Rng.RandomInt(5, 15);
+            while (finalNext < 0)
+            {
+                finalNext += ((int)Math.Pow(2, GameProfile.PlayerProfile.MonsterLevel.Value) * 50);
+
+                GameProfile.PlayerProfile.MonsterHealthMax.Value = GameProfile.PlayerProfile.MonsterHealthMax.Value + Rng.RandomInt(5, 8);
+                GameProfile.PlayerProfile.MonsterHealth.Value = GameProfile.PlayerProfile.MonsterHealthMax.Value;
+                GameProfile.PlayerProfile.MonsterLevel.Value = GameProfile.PlayerProfile.MonsterLevel.Value + 1;
+            }
+
+            GameProfile.PlayerProfile.MonsterNext.Value = finalNext;
         }
 
         public List<Bullet> FriendlyBullets = new List<Bullet>();

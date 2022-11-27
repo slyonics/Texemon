@@ -51,6 +51,10 @@ namespace Texemon.Scenes.SplashScene
             GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
             GameProfile.PlayerProfile.Font.Value = GameFont.SandyForest;
 
+            GameProfile.PlayerProfile.MonsterName.Value = "MONSTER";
+
+            GameProfile.SetSaveData<bool>("NewTechGame", true);
+
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "Intro");
         }
 

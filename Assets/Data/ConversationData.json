@@ -1,9 +1,48 @@
 [
 	{
-		"Name": "TestConvo",
+		"Name": "IntroConvo",
 		"DialogueRecords": [
 			{
-				"Text": "Automatic #F3C14CFF conversation test."
+				"Text": "Oh man, that math lession was soooo boring!"
+			},
+			{
+				"Text": "I just wish something cool could happen."
+			}
+		]
+	},
+	{
+		"Name": "EggConvo1",
+		"DialogueRecords": [
+			{
+				"Text": "An egg? Wait! It's hatching!"
+			}
+		]
+	},
+	{
+		"Name": "EggConvo2",
+		"DialogueRecords": [
+			{
+				"Text": "** GER-RAW **"
+			},
+			{
+				"Text": "What?! A monster?!"
+			},
+			{
+				"Text": "Mhh, maybe I should talk to the old woman in the village!"
+			},
+			{
+				"Text": "She knows a lot about this stuff!"
+			}
+		]
+	},
+	{
+		"Name": "PetMonster",
+		"DialogueRecords": [
+			{
+				"Text": "Your monster could use some attention..."
+			},
+			{
+				"Text": "You spent some time playing together."
 			}
 		]
 	},

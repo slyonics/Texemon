@@ -35,12 +35,14 @@ namespace Texemon.SceneObjects
             ClampBounds();
         }
 
-        private protected void ClampBounds()
+        private void ClampBounds()
         {
+            /*
             if (position.X < bounds.Left) position.X = bounds.Left;
             if (position.X > bounds.Right - CrossPlatformGame.ScreenWidth) position.X = bounds.Right - CrossPlatformGame.ScreenWidth;
             if (position.Y < bounds.Top) position.Y = bounds.Top;
             if (position.Y > bounds.Bottom - CrossPlatformGame.ScreenHeight) position.Y = bounds.Bottom - CrossPlatformGame.ScreenHeight;
+            */
 
             matrix = Matrix.CreateTranslation(new Vector3(-((int)position.X + CenteringOffsetX), -((int)position.Y + CenteringOffsetY), 0.0f));
             view = new Rectangle((int)position.X + CenteringOffsetX, (int)position.Y + CenteringOffsetY, CrossPlatformGame.ScreenWidth, CrossPlatformGame.ScreenHeight);
@@ -71,11 +73,11 @@ namespace Texemon.SceneObjects
         }
 
         public Matrix Matrix { get => matrix; }
-        public Rectangle View { get => view; }
+        public Rectangle View { get => view; set => view = value; }
         public Controller Controller { set => controller = value; }
         public bool Stationary { get => stationary; set => stationary = value; }
         public int CenteringOffsetX { get => Math.Max(0, (CrossPlatformGame.ScreenWidth - bounds.Width) / 2); }
-        public int CenteringOffsetY { get => Math.Max(0, (CrossPlatformGame.ScreenHeight - bounds.Height) / 2); }
+        public int CenteringOffsetY { get => Math.Min(0, -(CrossPlatformGame.ScreenHeight - bounds.Height)); }
         public int MaxVisibleY { get => view.Bottom + LARGEST_ENTITY_SIZE; }
     }
 }
