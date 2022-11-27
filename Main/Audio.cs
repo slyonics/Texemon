@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public static class Audio
     {

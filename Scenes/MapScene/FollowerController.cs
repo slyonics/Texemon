@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class FollowerController : Controller
     {
@@ -34,7 +34,8 @@ namespace MonsterTrainer.Scenes.MapScene
 
         private List<Vector3> movementHistory = new List<Vector3>();
 
-
+        private int shotCooldown = 0;
+        private bool holdstill = false;
 
         public FollowerController(MapScene iMapScene, Actor iFollower, Actor iLeader)
             : base(PriorityLevel.GameLevel)
@@ -46,18 +47,37 @@ namespace MonsterTrainer.Scenes.MapScene
 
         public override void PreUpdate(GameTime gameTime)
         {
-            switch (behavior)
-            {
-                case Behavior.Idling: IdlingAI(leader); break;
-                case Behavior.Regrouping: RegroupingAI(gameTime, leader); break;
-                case Behavior.Stuck: StuckAI(gameTime, leader); break;
-            }
+            if (shotCooldown > 0) shotCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+            holdstill = false;
 
             InputFrame inputFrame = Input.CurrentInput;
-            if (inputFrame.CommandPressed(Command.A))
+            if (inputFrame.CommandPressed(Command.A) && shotCooldown <= 0)
             {
-                Bullet bullet = new Bullet(mapScene, follower.Position + new Vector2(0, -16), GameSprite.Actors_Rock, Orientation.Up);
+                Bullet bullet = new Bullet(mapScene, follower.Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Up);
                 mapScene.AddFriendBullet(bullet);
+
+                shotCooldown = 250;
+            }
+
+            if (inputFrame.CommandDown(Command.B))
+            {
+                holdstill = true;
+            }
+
+            if (holdstill)
+            {
+                follower.DesiredVelocity = Vector2.Zero;
+                follower.Idle();
+            }
+            else
+            {
+                switch (behavior)
+                {
+                    case Behavior.Idling: IdlingAI(leader); break;
+                    case Behavior.Regrouping: RegroupingAI(gameTime, leader); break;
+                    case Behavior.Stuck: StuckAI(gameTime, leader); break;
+                }
             }
         }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public enum Command
     {
@@ -50,12 +50,12 @@ namespace MonsterTrainer.Main
             { Command.Right, new List<Keys>() { Keys.Right, Keys.D } },
             { Command.Down, new List<Keys>() { Keys.Down, Keys.S } },
             { Command.Left, new List<Keys>() { Keys.Left, Keys.A } },
-            { Command.Confirm, new List<Keys>() { Keys.Enter, Keys.Space } },
+            { Command.Confirm, new List<Keys>() { Keys.Enter, Keys.Space, Keys.Z } },
             { Command.Cancel, new List<Keys>() { Keys.Escape } },
             { Command.Menu, new List<Keys>() { Keys.Escape } },
-            { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space } },
+            { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space, Keys.Z } },
             { Command.Run, new List<Keys>() { Keys.LeftShift, Keys.RightShift } },
-            { Command.A, new List<Keys>() { Keys.Z } },
+            { Command.A, new List<Keys>() { Keys.Z} },
             { Command.B, new List<Keys>() { Keys.X } }
         };
 
@@ -68,7 +68,7 @@ namespace MonsterTrainer.Main
             { Command.Confirm, new List<Buttons>() { Buttons.A } },
             { Command.Cancel, new List<Buttons>() { Buttons.B } },
             { Command.Menu, new List<Buttons>() { Buttons.Start } },
-            { Command.Interact, new List<Buttons>() { Buttons.RightShoulder } },
+            { Command.Interact, new List<Buttons>() { Buttons.A } },
             { Command.Run, new List<Buttons>() { Buttons.LeftShoulder } },
             { Command.A, new List<Buttons>() { Buttons.A } },
             { Command.B, new List<Buttons>() { Buttons.B } }

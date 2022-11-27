@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
-using MonsterTrainer.SceneObjects.Controllers;
+using MonsterLegends.Main;
+using MonsterLegends.SceneObjects.Controllers;
 
-namespace MonsterTrainer.SceneObjects
+namespace MonsterLegends.SceneObjects
 {
     public class Camera
     {

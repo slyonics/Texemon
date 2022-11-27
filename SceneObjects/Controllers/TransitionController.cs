@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MonsterTrainer.SceneObjects.Controllers
+namespace MonsterLegends.SceneObjects.Controllers
 {
     public enum TransitionDirection
     {

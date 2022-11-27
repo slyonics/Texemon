@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects;
-using MonsterTrainer.SceneObjects.Controllers;
+using MonsterLegends.Main;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects;
+using MonsterLegends.SceneObjects.Controllers;
 
-namespace MonsterTrainer.Scenes.ConversationScene
+namespace MonsterLegends.Scenes.ConversationScene
 {
     public class ConversationController : ScriptController
     {

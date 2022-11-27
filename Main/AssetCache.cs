@@ -9,11 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 using K4os.Compression.LZ4;
 
-using MonsterTrainer.Models;
-using MonsterTrainer.Scenes.ConversationScene;
-using MonsterTrainer.Scenes.BattleScene;
+using MonsterLegends.Models;
+using MonsterLegends.Scenes.ConversationScene;
+using MonsterLegends.Scenes.BattleScene;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public static class AssetCache
     {

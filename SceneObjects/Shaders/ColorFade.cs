@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MonsterTrainer.Main;
+using MonsterLegends.Main;
 
-namespace MonsterTrainer.SceneObjects.Shaders
+namespace MonsterLegends.SceneObjects.Shaders
 {
     public class ColorFade : Shader
     {

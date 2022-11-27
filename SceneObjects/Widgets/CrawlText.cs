@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using MonsterTrainer.Models;
+using MonsterLegends.Models;
 
-namespace MonsterTrainer.SceneObjects.Widgets
+namespace MonsterLegends.SceneObjects.Widgets
 {
     public class CrawlText : Widget
     {

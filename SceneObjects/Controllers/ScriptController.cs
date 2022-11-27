@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.SceneObjects.Controllers
+namespace MonsterLegends.SceneObjects.Controllers
 {
     public abstract class ScriptController : Controller, IScripted
     {

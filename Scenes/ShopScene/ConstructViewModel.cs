@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Widgets;
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Widgets;
+using MonsterLegends.Scenes.StatusScene;
 
-namespace MonsterTrainer.Scenes.ShopScene
+namespace MonsterLegends.Scenes.ShopScene
 {
     public class ConstructViewModel : ViewModel
     {

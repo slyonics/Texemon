@@ -1,6 +1,6 @@
 ﻿global using Microsoft.Xna.Framework;
-global using MonsterTrainer.Main;
-global using MonsterTrainer.SceneObjects;
+global using MonsterLegends.Main;
+global using MonsterLegends.SceneObjects;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,17 +8,17 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Shaders;
-using MonsterTrainer.Scenes.SplashScene;
-using MonsterTrainer.Scenes.TitleScene;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Shaders;
+using MonsterLegends.Scenes.SplashScene;
+using MonsterLegends.Scenes.TitleScene;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public class CrossPlatformGame : Game
     {
         public const string CONTENT_DIRECTORY = "Assets";
-        public const string GAME_NAME = "MonsterTrainer";
+        public const string GAME_NAME = "MonsterLegends";
         public static readonly string SETTINGS_DIRECTORY = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "AppData\\Local") + "\\" + CrossPlatformGame.GAME_NAME;
 
         private const int WINDOWED_MARGIN = 34;

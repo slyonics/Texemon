@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.SceneObjects.Controllers
+namespace MonsterLegends.SceneObjects.Controllers
 {
     public class ClickController : Controller
     {

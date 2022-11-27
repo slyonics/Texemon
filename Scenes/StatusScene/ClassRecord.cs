@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.Scenes.StatusScene
+namespace MonsterLegends.Scenes.StatusScene
 {
     public enum ClassType
     {

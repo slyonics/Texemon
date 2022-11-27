@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class Npc : Actor, IInteractive
     {

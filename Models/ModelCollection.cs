@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.Models
+namespace MonsterLegends.Models
 {
     [Serializable]
     public class ModelCollection<T> : IEnumerable<ModelProperty<T>>, IModelProperty

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.Scenes.StatusScene;
 
-namespace MonsterTrainer.Scenes.ShopScene
+namespace MonsterLegends.Scenes.ShopScene
 {
     public class ShopScene : Scene
     {

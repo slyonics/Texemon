@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public enum GameFont
     {

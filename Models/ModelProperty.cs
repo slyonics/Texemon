@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects;
 
-namespace MonsterTrainer.Models
+namespace MonsterLegends.Models
 {
     public delegate void ModelChangeCallback();
 

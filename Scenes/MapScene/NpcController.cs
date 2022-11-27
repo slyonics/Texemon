@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class NpcController : ScriptController
     {

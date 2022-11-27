@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     /// <summary>
     /// The main class.

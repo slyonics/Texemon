@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using MonsterTrainer.Main;
-using MonsterTrainer.SceneObjects.Controllers;
+using MonsterLegends.Main;
+using MonsterLegends.SceneObjects.Controllers;
 
-namespace MonsterTrainer.SceneObjects.Widgets
+namespace MonsterLegends.SceneObjects.Widgets
 {
     public class Panel : Widget
     {

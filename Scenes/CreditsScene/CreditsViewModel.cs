@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MonsterTrainer.Main;
+using MonsterLegends.Main;
 
-namespace MonsterTrainer.Scenes.CreditsScene
+namespace MonsterLegends.Scenes.CreditsScene
 {
     public class CreditsViewModel : ViewModel
     {

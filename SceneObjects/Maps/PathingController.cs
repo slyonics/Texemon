@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.SceneObjects.Maps
+namespace MonsterLegends.SceneObjects.Maps
 {
     public class PathingController : Controller
     {

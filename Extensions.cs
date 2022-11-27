@@ -1,4 +1,4 @@
-﻿namespace MonsterTrainer
+﻿namespace MonsterLegends
 {
     public static class Extensions
     {

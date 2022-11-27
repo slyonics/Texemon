@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.SceneObjects
+namespace MonsterLegends.SceneObjects
 {
     public abstract class Particle : Entity
     {

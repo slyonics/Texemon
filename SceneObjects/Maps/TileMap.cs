@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-namespace MonsterTrainer.SceneObjects.Maps
+namespace MonsterLegends.SceneObjects.Maps
 {
     public class Tilemap : Entity
     {

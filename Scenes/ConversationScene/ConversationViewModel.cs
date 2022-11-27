@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using MonsterTrainer.Main;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects;
-using MonsterTrainer.SceneObjects.Widgets;
+using MonsterLegends.Main;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects;
+using MonsterLegends.SceneObjects.Widgets;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.Scenes.ConversationScene
+namespace MonsterLegends.Scenes.ConversationScene
 {
     public class ConversationViewModel : ViewModel
     {

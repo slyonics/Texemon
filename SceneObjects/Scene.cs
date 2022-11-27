@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using MonsterTrainer.Main;
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Particles;
-using MonsterTrainer.SceneObjects.Shaders;
+using MonsterLegends.Main;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Particles;
+using MonsterLegends.SceneObjects.Shaders;
 
-namespace MonsterTrainer.SceneObjects
+namespace MonsterLegends.SceneObjects
 {
     public class Scene
     {

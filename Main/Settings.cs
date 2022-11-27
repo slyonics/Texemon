@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public static class Settings
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using MonsterTrainer.Main;
+using MonsterLegends.Main;
 
-namespace MonsterTrainer.Scenes.ConversationScene
+namespace MonsterLegends.Scenes.ConversationScene
 {
     public class Portrait : Entity
     {

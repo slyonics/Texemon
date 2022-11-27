@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using TiledCS;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class EventTrigger : IInteractive
     {

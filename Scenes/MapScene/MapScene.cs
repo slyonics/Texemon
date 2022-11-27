@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Maps;
-using MonsterTrainer.SceneObjects.Shaders;
-using MonsterTrainer.Scenes.ConversationScene;
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Shaders;
+using MonsterLegends.Scenes.ConversationScene;
+using MonsterLegends.Scenes.StatusScene;
 using TiledCS;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class MapScene : Scene
     {
@@ -164,7 +164,7 @@ namespace MonsterTrainer.Scenes.MapScene
             : this(mapName)
         {
 
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster3);
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster2);
             Party.Add(follower);
             AddEntity(follower);
             FollowerController followerController = new FollowerController(this, follower, PartyLeader);
@@ -214,7 +214,7 @@ namespace MonsterTrainer.Scenes.MapScene
 
         public void AddPartyMember(EventTrigger trigger)
         {
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster4);
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster2);
             Party.Add(follower);
             AddEntity(follower);
             FollowerController followerController = new FollowerController(this, follower, PartyLeader);
@@ -233,7 +233,7 @@ namespace MonsterTrainer.Scenes.MapScene
 
         public void AddPartyMember(Npc npc)
         {
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster4);
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster2);
             Party.Add(follower);
             AddEntity(follower);
             FollowerController followerController = new FollowerController(this, follower, PartyLeader);
@@ -279,13 +279,13 @@ namespace MonsterTrainer.Scenes.MapScene
                 }
             }
 
-            foreach (Hero hero in Party)
+            foreach (Hero enemy in Party)
             {
                 foreach (Bullet bullet in EnemyBullets)
                 {
-                    if (hero.Bounds.Intersects(bullet.Bounds))
+                    if (enemy.Bounds.Intersects(bullet.Bounds))
                     {
-                        hero.Collides(bullet);
+                        enemy.Collides(bullet);
                     }
                 }
             }
@@ -366,6 +366,26 @@ namespace MonsterTrainer.Scenes.MapScene
         {
             bool levelup = false;
             int finalNext = GameProfile.PlayerProfile.MonsterNext.Value - Rng.RandomInt(15, 25);
+            while (finalNext <= 0)
+            {
+                finalNext += ((int)Math.Pow(2, GameProfile.PlayerProfile.MonsterLevel.Value) * 50);
+
+                GameProfile.PlayerProfile.MonsterHealthMax.Value = GameProfile.PlayerProfile.MonsterHealthMax.Value + Rng.RandomInt(5, 8);
+                GameProfile.PlayerProfile.MonsterHealth.Value = GameProfile.PlayerProfile.MonsterHealthMax.Value;
+                GameProfile.PlayerProfile.MonsterLevel.Value = GameProfile.PlayerProfile.MonsterLevel.Value + 1;
+
+                levelup = true;
+            }
+
+            GameProfile.PlayerProfile.MonsterNext.Value = finalNext;
+
+            return levelup;
+        }
+
+        public bool GainFood()
+        {
+            bool levelup = false;
+            int finalNext = GameProfile.PlayerProfile.MonsterNext.Value - Rng.RandomInt(20, 35);
             while (finalNext <= 0)
             {
                 finalNext += ((int)Math.Pow(2, GameProfile.PlayerProfile.MonsterLevel.Value) * 50);

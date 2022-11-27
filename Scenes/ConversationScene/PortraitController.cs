@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-using MonsterTrainer.Main;
-using MonsterTrainer.SceneObjects;
+using MonsterLegends.Main;
+using MonsterLegends.SceneObjects;
 
-namespace MonsterTrainer.Scenes.ConversationScene
+namespace MonsterLegends.Scenes.ConversationScene
 {
     public class PortraitController : Controller
     {

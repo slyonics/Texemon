@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class Enemy : Actor
     {
@@ -29,14 +29,14 @@ namespace MonsterTrainer.Scenes.MapScene
         public const int ENEMY_WIDTH = 32;
         public const int ENEMY_HEIGHT = 32;
 
-        public static readonly Rectangle NPC_BOUNDS = new Rectangle(-12, -16, 24, 18);
+        public static readonly Rectangle NPC_BOUNDS = new Rectangle(-12, -16, 24, 32);
 
         private static readonly Dictionary<string, Animation> NPC_ANIMATIONS = new Dictionary<string, Animation>()
         {
-            { NpcAnimation.IdleDown.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
-            { NpcAnimation.IdleLeft.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
-            { NpcAnimation.IdleRight.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
-            { NpcAnimation.IdleUp.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
+            { NpcAnimation.IdleDown.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 1000) },
+            { NpcAnimation.IdleLeft.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 1000) },
+            { NpcAnimation.IdleRight.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 1000) },
+            { NpcAnimation.IdleUp.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 1000) },
             { NpcAnimation.WalkDown.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
             { NpcAnimation.WalkLeft.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
             { NpcAnimation.WalkRight.ToString(), new Animation(0, 0, ENEMY_WIDTH, ENEMY_HEIGHT, 2, 240) },
@@ -45,8 +45,7 @@ namespace MonsterTrainer.Scenes.MapScene
 
         private MapScene mapScene;
 
-        private int shotCooldown = MAX_SHOT;
-        private const int MAX_SHOT = 1000;
+        private int shotCooldown = 1000;
 
         public Enemy(MapScene iMapScene, Tilemap iTilemap, TiledObject tiledObject, string spriteName, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, new Vector2(), NPC_BOUNDS, iOrientation)
@@ -69,6 +68,39 @@ namespace MonsterTrainer.Scenes.MapScene
             }
 
             CenterOn(iTilemap.GetTile(new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height)).Center);
+
+            desiredVelocity = new Vector2(50, 0);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (currentBounds.Left <= 538)
+            {
+                desiredVelocity = new Vector2(50, 0);
+            }
+            else if (currentBounds.Right >= 735)
+            {
+                desiredVelocity = new Vector2(-50, 0);
+            }
+
+            shotCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+            if (shotCooldown <= 0)
+            {
+                shotCooldown = 1000;
+
+                Bullet bullet = new Bullet(mapScene, Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Down);
+                mapScene.AddEnemyBullet(bullet);
+
+                Bullet bullet1 = new Bullet(mapScene, Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Down);
+                bullet1.DesiredVelocity = new Vector2(-50, 50);
+                mapScene.AddEnemyBullet(bullet1);
+
+                Bullet bullet2 = new Bullet(mapScene, Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Down);
+                bullet2.DesiredVelocity = new Vector2(50, 50);
+                mapScene.AddEnemyBullet(bullet2);
+            }
         }
 
         public void Collides(Bullet bullet)
@@ -81,28 +113,9 @@ namespace MonsterTrainer.Scenes.MapScene
             bullet.Terminate();
 
             Health--;
-            if (Health <= 0) Terminate();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-
-            shotCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-            if (shotCooldown < 0)
+            if (Health <= 0)
             {
-                Bullet bullet = new Bullet(mapScene, Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Down);
-                mapScene.AddEnemyBullet(bullet);
-
-                Bullet bullet1 = new Bullet(mapScene, Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Down);
-                bullet1.desiredVelocity = new Vector2(-50, 50);
-                mapScene.AddEnemyBullet(bullet1);
-
-                Bullet bullet2 = new Bullet(mapScene, Position + new Vector2(0, 0), GameSprite.Actors_Bullet, Orientation.Down);
-                bullet2.desiredVelocity = new Vector2(50, 50);
-                mapScene.AddEnemyBullet(bullet2);
-
-                shotCooldown = MAX_SHOT;
+                Terminate();
             }
         }
 

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Particles;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Particles;
 
-namespace MonsterTrainer.Scenes.BattleScene
+namespace MonsterLegends.Scenes.BattleScene
 {
     public class BattleController : ScriptController
     {

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Scenes;
+using MonsterLegends.Scenes;
 
-namespace MonsterTrainer.SceneObjects.Particles
+namespace MonsterLegends.SceneObjects.Particles
 {
     public class DamageParticle : Particle
     {

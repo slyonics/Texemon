@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class Hero : Actor, IInteractive
     {
@@ -111,23 +111,6 @@ namespace MonsterTrainer.Scenes.MapScene
                 Debug.DrawBox(spriteBatch, InteractionZone);
         }
 
-        public void Collides(Bullet bullet)
-        {
-            // Terminate();
-
-            //EventController eventController = new EventController(mapScene, CollideScript);
-            //mapScene.AddController(eventController);
-
-            bullet.Terminate();
-
-            int monsterHealth = GameProfile.PlayerProfile.MonsterHealth.Value;
-            monsterHealth -= 2;
-
-            GameProfile.PlayerProfile.MonsterHealth.Value = monsterHealth;
-
-            if (monsterHealth <= 0) Terminate();
-        }
-
         public Rectangle InteractionZone;
 
         public string Label { get; set; } = "";
@@ -159,6 +142,35 @@ namespace MonsterTrainer.Scenes.MapScene
             OrientedAnimation("Idle");
 
             return true;
+        }
+
+        public void Collides(Bullet bullet)
+        {
+            // Terminate();
+
+            //EventController eventController = new EventController(mapScene, CollideScript);
+            //mapScene.AddController(eventController);
+
+            bullet.Terminate();
+
+            GameProfile.PlayerProfile.MonsterHealth.Value -= 2;
+            if (GameProfile.PlayerProfile.MonsterHealth.Value <= 0)
+            {
+                GameProfile.NewState();
+
+                GameProfile.PlayerProfile.WindowStyle.Value = "MagicWindow";
+                GameProfile.PlayerProfile.FrameStyle.Value = "MagicFrame";
+                GameProfile.PlayerProfile.SelectedStyle.Value = "MagicSelected";
+                GameProfile.PlayerProfile.FrameSelectedStyle.Value = "MagicFrameSelected";
+                GameProfile.PlayerProfile.LabelStyle.Value = "MagicLabel";
+                GameProfile.PlayerProfile.Font.Value = GameFont.SandyForest;
+
+                GameProfile.PlayerProfile.MonsterName.Value = "MONSTER";
+
+                GameProfile.SetSaveData<bool>("NewTechGame", true);
+
+                CrossPlatformGame.Transition(typeof(MapScene), "Intro");
+            }
         }
     }
 }

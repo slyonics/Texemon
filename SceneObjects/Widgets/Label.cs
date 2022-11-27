@@ -2,9 +2,9 @@
 using System;
 using System.Reflection;
 using System.Xml;
-using MonsterTrainer.Models;
+using MonsterLegends.Models;
 
-namespace MonsterTrainer.SceneObjects.Widgets
+namespace MonsterLegends.SceneObjects.Widgets
 {
     public class Label : Widget
     {

@@ -7,11 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Controllers;
+using MonsterLegends.Main;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Controllers;
 
-namespace MonsterTrainer.Scenes.SplashScene
+namespace MonsterLegends.Scenes.SplashScene
 {
     public class SplashScene : Scene, ISkippableWait
     {
@@ -52,8 +52,6 @@ namespace MonsterTrainer.Scenes.SplashScene
             GameProfile.PlayerProfile.Font.Value = GameFont.SandyForest;
 
             GameProfile.PlayerProfile.MonsterName.Value = "MONSTER";
-
-            GameProfile.SetSaveData<string>("WiseCase", "1");
 
             GameProfile.SetSaveData<bool>("NewTechGame", true);
 

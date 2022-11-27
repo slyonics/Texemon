@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public interface IInteractive
     {

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class EnemyController : ScriptController
     {
@@ -32,6 +32,8 @@ namespace MonsterTrainer.Scenes.MapScene
 
         public override void PreUpdate(GameTime gameTime)
         {
+            return;
+
             if (!scriptParser.Finished) base.PreUpdate(gameTime);
 
             if (destinationTile == null)
@@ -49,6 +51,8 @@ namespace MonsterTrainer.Scenes.MapScene
 
         public override void PostUpdate(GameTime gameTime)
         {
+            return;
+
             if (destinationTile != null)
             {
                 walkTimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;

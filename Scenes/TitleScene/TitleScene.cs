@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
-using MonsterTrainer.Main;
+using MonsterLegends.Main;
 
-namespace MonsterTrainer.Scenes.TitleScene
+namespace MonsterLegends.Scenes.TitleScene
 {
     public class TitleScene : Scene
     {

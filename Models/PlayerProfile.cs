@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.Scenes.StatusScene;
 
-namespace MonsterTrainer.Models
+namespace MonsterLegends.Models
 {
     [Serializable]
     public class PlayerProfile

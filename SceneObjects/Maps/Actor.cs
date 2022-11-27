@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonsterTrainer.SceneObjects.Maps
+namespace MonsterLegends.SceneObjects.Maps
 {
     public enum Orientation
     {
@@ -36,7 +36,7 @@ namespace MonsterTrainer.SceneObjects.Maps
 
         private Vector2 displacement;
         protected Vector2 blockedDisplacement;
-        public Vector2 desiredVelocity;
+        protected Vector2 desiredVelocity;
 
         protected List<Controller> controllerList = new List<Controller>();
 

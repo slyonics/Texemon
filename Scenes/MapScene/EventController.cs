@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Controllers;
-using MonsterTrainer.SceneObjects.Maps;
-using MonsterTrainer.Scenes.ConversationScene;
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Controllers;
+using MonsterLegends.SceneObjects.Maps;
+using MonsterLegends.Scenes.ConversationScene;
+using MonsterLegends.Scenes.StatusScene;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class EventController : ScriptController
     {
@@ -41,6 +41,7 @@ namespace MonsterTrainer.Scenes.MapScene
                 case "RestoreParty": RestoreParty(); break;
                 case "Recruit": Recruit(tokens); break;
                 case "GiveAffection": mapScene.GainExp(); break;
+                case "GainExp": mapScene.GainFood(); ActorSubject.Terminate(); break;
                 default: return false;
             }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public static class Graphics
     {

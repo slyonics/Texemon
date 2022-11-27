@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
+using MonsterLegends.Main;
 
-namespace MonsterTrainer.SceneObjects.Controllers
+namespace MonsterLegends.SceneObjects.Controllers
 {
     public class WidgetController : Controller
     {

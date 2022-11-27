@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using MonsterTrainer.Main;
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.Main;
+using MonsterLegends.Scenes.StatusScene;
 
-namespace MonsterTrainer.Models
+namespace MonsterLegends.Models
 {
     public static class GameProfile
     {

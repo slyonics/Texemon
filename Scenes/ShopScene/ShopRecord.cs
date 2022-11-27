@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTrainer.Scenes.ShopScene
+namespace MonsterLegends.Scenes.ShopScene
 {
     public class CostRecord
     {

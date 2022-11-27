@@ -1,4 +1,4 @@
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public enum GameView
     {
@@ -137,6 +137,7 @@ namespace MonsterTrainer.Main
         Actors_Dragon,
         Actors_DroneShadow,
         Actors_Egg,
+        Actors_Food,
         Actors_FutureChest,
         Actors_HumanF,
         Actors_Inventor,

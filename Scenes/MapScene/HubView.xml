@@ -7,7 +7,7 @@
 			<Label Text="LV" Font="SandyForest" Alignment="Cascading"/>
 			<Label Text="Bind PlayerProfile.MonsterLevel" Font="SandyForest" Bounds="0,0,16,8" TextAlignment="Right" Alignment="Cascading"/>
 
-			<Label Text="A:Boulder Toss" Font="SandyForest" Bounds="16,0,120,8" Alignment="Cascading" Color="#D8D8D8FF"/>
+			<Label Text="A:Fire Up" Font="SandyForest" Bounds="16,0,120,8" Alignment="Cascading" Color="#D8D8D8FF"/>
 		</Panel>
 
 		<Panel Bounds="0,0,240,8" Alignment="Cascading" Visible="Bind ShowHud">
@@ -16,7 +16,7 @@
 
 			<Label Text="NXT" Font="SandyForest" Alignment="Cascading" Bounds="16,0,24,8"/>
 			<Label Text="Bind PlayerProfile.MonsterNext" Font="SandyForest" Bounds="0,0,32,8" TextAlignment="Right" Alignment="Cascading"/>
-			<Label Text="B:Evade" Font="SandyForest" Bounds="16,0,120,8" Alignment="Cascading" Color="#D8D8D8FF"/>
+			<Label Text="B:Hold Still" Font="SandyForest" Bounds="16,0,120,8" Alignment="Cascading" Color="#D8D8D8FF"/>
 		</Panel>
 		
 		

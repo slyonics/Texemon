@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using MonsterTrainer.Main;
-using MonsterTrainer.Models;
+using MonsterLegends.Main;
+using MonsterLegends.Models;
 
-namespace MonsterTrainer.SceneObjects.Widgets
+namespace MonsterLegends.SceneObjects.Widgets
 {
     public class Textbox : Widget
     {

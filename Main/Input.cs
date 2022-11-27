@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.SceneObjects;
+using MonsterLegends.SceneObjects;
 
-namespace MonsterTrainer.Main
+namespace MonsterLegends.Main
 {
     public static class Input
     {

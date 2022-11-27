@@ -5,11 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Particles;
+using MonsterLegends.Main;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Particles;
 
-namespace MonsterTrainer.SceneObjects
+namespace MonsterLegends.SceneObjects
 {
     public interface IScripted
     {
@@ -137,7 +137,6 @@ namespace MonsterTrainer.SceneObjects
                     case "Music": Audio.PlayMusic(tokens); break;
                     case "StopMusic": Audio.StopMusic(); break;
                     case "SetFlag": SetFlag(tokens); break;
-                    case "SetString": SetString(tokens); break;
                     case "SetProperty": SetProperty(tokens); break;
                     case "AddView": AddView(tokens); break;
                     case "ChangeScene": ChangeScene(tokens); break;
@@ -176,7 +175,6 @@ namespace MonsterTrainer.SceneObjects
                         case "$bottom": return CrossPlatformGame.ScreenHeight.ToString();
                         case "$top": return "0";
                         case "$left": return "0";
-                        case "$WiseCase": return GameProfile.GetSaveData<string>("WiseCase");
                         case "$selection": return GameProfile.GetSaveData<string>("LastSelection");
                         default:
                             if (parameter.Contains("$random"))
@@ -298,11 +296,6 @@ namespace MonsterTrainer.SceneObjects
         private void SetFlag(string[] tokens)
         {
             GameProfile.SetSaveData(tokens[1], bool.Parse(tokens[2]));
-        }
-
-        private void SetString(string[] tokens)
-        {
-            GameProfile.SetSaveData(tokens[1], tokens[2]);
         }
 
         private void SetProperty(string[] tokens)

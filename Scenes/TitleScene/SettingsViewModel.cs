@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
-using MonsterTrainer.Models;
-using MonsterTrainer.SceneObjects.Widgets;
+using MonsterLegends.Main;
+using MonsterLegends.Models;
+using MonsterLegends.SceneObjects.Widgets;
 
-namespace MonsterTrainer.Scenes.TitleScene
+namespace MonsterLegends.Scenes.TitleScene
 {
     public class SettingsViewModel : ViewModel
     {

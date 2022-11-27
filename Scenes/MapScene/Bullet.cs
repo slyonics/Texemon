@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.SceneObjects.Maps;
+using MonsterLegends.SceneObjects.Maps;
 
-namespace MonsterTrainer.Scenes.MapScene
+namespace MonsterLegends.Scenes.MapScene
 {
     public class Bullet : SceneObjects.Maps.Actor
     {
         private MapScene mapScene;
 
-        public const int BULLET_WIDTH = 8;
-        public const int BULLET_HEIGHT = 8;
+        public const int BULLET_WIDTH = 16;
+        public const int BULLET_HEIGHT = 16;
 
-        public static readonly Rectangle BULLET_BOUNDS = new Rectangle(-8, -4, 8, 8);
+        public static readonly Rectangle BULLET_BOUNDS = new Rectangle(-8, -12, 8, 8);
 
         private static readonly Dictionary<string, Animation> BULLET_ANIMATIONS = new Dictionary<string, Animation>()
         {
-            { "Idle", new Animation(0, 0, BULLET_WIDTH, BULLET_HEIGHT, 1, 1000) },
+            { "Idle", new Animation(0, 0, BULLET_WIDTH, BULLET_HEIGHT, 2, 100) },
             { "Flicker", new Animation(0, 0, BULLET_WIDTH, BULLET_HEIGHT, 4, 50) }
         };
 

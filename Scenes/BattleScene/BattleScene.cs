@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using MonsterTrainer.Models;
+using MonsterLegends.Models;
 
-namespace MonsterTrainer.Scenes.BattleScene
+namespace MonsterLegends.Scenes.BattleScene
 {
     public class BattleScene : Scene
     {

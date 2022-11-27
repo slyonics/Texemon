@@ -11,6 +11,17 @@
 		]
 	},
 	{
+		"Name": "CaveConvo",
+		"DialogueRecords": [
+			{
+				"Text": "Ok, finally! The boss monster cave!"
+			},
+			{
+				"Text": "** GER-RAW ** (Let's go! No time to waste!)"
+			}
+		]
+	},
+	{
 		"Name": "EggConvo1",
 		"DialogueRecords": [
 			{
@@ -139,6 +150,17 @@
 			},
 			{
 				"Text": "... you spent some time playing together."
+			}
+		]
+	},
+	{
+		"Name": "GotFood",
+		"DialogueRecords": [
+			{
+				"Text": "This is food your monster can eat!"
+			},
+			{
+				"Text": "Your monster got a little stronger!"
 			}
 		]
 	},

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using MonsterTrainer.SceneObjects.Particles;
-using MonsterTrainer.SceneObjects.Widgets;
-using MonsterTrainer.Scenes.StatusScene;
+using MonsterLegends.SceneObjects.Particles;
+using MonsterLegends.SceneObjects.Widgets;
+using MonsterLegends.Scenes.StatusScene;
 
-namespace MonsterTrainer.Scenes.BattleScene
+namespace MonsterLegends.Scenes.BattleScene
 {
     public abstract class Battler : Widget
     {

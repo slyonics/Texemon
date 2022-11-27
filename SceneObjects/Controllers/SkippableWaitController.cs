@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTrainer.Main;
-using MonsterTrainer.SceneObjects;
+using MonsterLegends.Main;
+using MonsterLegends.SceneObjects;
 
-namespace MonsterTrainer.SceneObjects.Controllers
+namespace MonsterLegends.SceneObjects.Controllers
 {
     public interface ISkippableWait
     {

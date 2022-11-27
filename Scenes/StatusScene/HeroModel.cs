@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MonsterTrainer.Models;
-using MonsterTrainer.Scenes.BattleScene;
+using MonsterLegends.Models;
+using MonsterLegends.Scenes.BattleScene;
 
-namespace MonsterTrainer.Scenes.StatusScene
+namespace MonsterLegends.Scenes.StatusScene
 {
     [Serializable]
     public class HeroModel : BattlerModel
