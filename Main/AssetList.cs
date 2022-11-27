@@ -84,14 +84,10 @@ namespace Texemon.Main
 
     public enum GameMusic
     {
-        Battle,
-        DeprivedArcaney,
-        NewDestinations,
-        OrichalcumSword,
-        Scrapyard,
-        Selection,
-        Title,
-        Wilderness,
+        Jamtestingame1,
+        Jamtestingame2,
+        Jamtestsoundtrackversion,
+        Jamtesttrack2,
 
         None = -1
     }
@@ -133,6 +129,7 @@ namespace Texemon.Main
         Actors_Base,
         Actors_Blank,
         Actors_BlowtorchDrone,
+        Actors_Boss1,
         Actors_Bullet,
         Actors_Crab,
         Actors_DarkKnight,
@@ -143,6 +140,10 @@ namespace Texemon.Main
         Actors_HumanF,
         Actors_Inventor,
         Actors_Link,
+        Actors_Monster1,
+        Actors_Monster2,
+        Actors_Monster3,
+        Actors_Monster4,
         Actors_MutantF,
         Actors_Octorock,
         Actors_Plant,
@@ -236,6 +237,7 @@ namespace Texemon.Main
         Tiles_ColorTileD,
         Tiles_Dungeon1,
         Tiles_Overworld1,
+        Tiles_Tiles,
         Widgets_Blank,
         Widgets_LabelGlow,
         Widgets_MagicFrame,
@@ -329,6 +331,7 @@ namespace Texemon.Main
         Tilesets_ColorTileD,
         Tilesets_Dungeon1,
         Tilesets_Overworld1,
+        Tilesets_Tiles,
 
         None = -1
     }

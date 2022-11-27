@@ -118,9 +118,17 @@ namespace Texemon.Scenes.MapScene
 
         public virtual bool Activate(Hero activator)
         {
-            string[] interactionScript = new string[]
-                {                    
-                    "GiveAffection",
+            bool levelup = mapScene.GainExp();
+
+            string[] interactionScript;
+            if (levelup)
+                interactionScript = new string[]
+                {    
+                    "Conversation PetMonsterLevelup"
+                };
+            else
+                interactionScript = new string[]
+                {
                     "Conversation PetMonster"
                 };
             EventController eventController = new EventController(mapScene, interactionScript);

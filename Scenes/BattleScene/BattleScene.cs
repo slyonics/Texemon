@@ -75,7 +75,7 @@ namespace Texemon.Scenes.BattleScene
             sceneStarted = true;
 
             mapMusic = Audio.CurrentMusic;
-            Audio.PlayMusic(GameMusic.Battle);            
+            //Audio.PlayMusic(GameMusic.Battle);            
         }
 
         public override void EndScene()

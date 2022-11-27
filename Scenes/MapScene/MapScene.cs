@@ -133,6 +133,8 @@ namespace Texemon.Scenes.MapScene
                     }
                 }
             }
+
+            Audio.PlayMusic(GameMusic.Jamtesttrack2);
         }
 
         public MapScene(string mapName, int startX, int startY, Orientation orientation)
@@ -162,7 +164,7 @@ namespace Texemon.Scenes.MapScene
             : this(mapName)
         {
 
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Octorock);
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster3);
             Party.Add(follower);
             AddEntity(follower);
             FollowerController followerController = new FollowerController(this, follower, PartyLeader);
@@ -229,7 +231,7 @@ namespace Texemon.Scenes.MapScene
 
         public void AddPartyMember(EventTrigger trigger)
         {
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Octorock);
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster4);
             Party.Add(follower);
             AddEntity(follower);
             FollowerController followerController = new FollowerController(this, follower, PartyLeader);
@@ -350,19 +352,24 @@ namespace Texemon.Scenes.MapScene
             AddEntity(bullet);
         }
 
-        public void GainExp()
+        public bool GainExp()
         {
-            int finalNext = GameProfile.PlayerProfile.MonsterNext.Value - Rng.RandomInt(5, 15);
-            while (finalNext < 0)
+            bool levelup = false;
+            int finalNext = GameProfile.PlayerProfile.MonsterNext.Value - Rng.RandomInt(15, 25);
+            while (finalNext <= 0)
             {
                 finalNext += ((int)Math.Pow(2, GameProfile.PlayerProfile.MonsterLevel.Value) * 50);
 
                 GameProfile.PlayerProfile.MonsterHealthMax.Value = GameProfile.PlayerProfile.MonsterHealthMax.Value + Rng.RandomInt(5, 8);
                 GameProfile.PlayerProfile.MonsterHealth.Value = GameProfile.PlayerProfile.MonsterHealthMax.Value;
                 GameProfile.PlayerProfile.MonsterLevel.Value = GameProfile.PlayerProfile.MonsterLevel.Value + 1;
+
+                levelup = true;
             }
 
             GameProfile.PlayerProfile.MonsterNext.Value = finalNext;
+
+            return levelup;
         }
 
         public List<Bullet> FriendlyBullets = new List<Bullet>();

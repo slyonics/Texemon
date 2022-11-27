@@ -32,7 +32,7 @@ namespace Texemon.Scenes.IntroScene
         {
             base.BeginScene();
 
-            Audio.PlayMusic(GameMusic.Selection);
+            //Audio.PlayMusic(GameMusic.Selection);
         }
 
         public override void DrawBackground(SpriteBatch spriteBatch)

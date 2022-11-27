@@ -16,7 +16,7 @@ namespace Texemon.Main
     {
         public static Dictionary<GameMusic, uint[]> MUSIC_LOOP_POINTS = new Dictionary<GameMusic, uint[]>()
         {
-            // { GameMusic.Noyemi_Would_You_Take_this_into_Battle,  new uint[] { 12598, 160052 } }
+             { GameMusic.Jamtestsoundtrackversion,  new uint[] { 12598, 160052 } }
         };
 
         private static readonly Dictionary<GameSound, SoundEffect> GAME_SOUNDS = new Dictionary<GameSound, SoundEffect>();

@@ -42,7 +42,21 @@
 				"Text": "Your monster could use some attention..."
 			},
 			{
-				"Text": "You spent some time playing together."
+				"Text": "... you spent some time playing together."
+			}
+		]
+	},
+	{
+		"Name": "PetMonsterLevelup",
+		"DialogueRecords": [
+			{
+				"Text": "Your monster really wants some attention now."
+			},
+			{
+				"Text": "You spent some time playing together..."
+			},
+			{
+				"Text": "... and your monster leveled up!"
 			}
 		]
 	},
