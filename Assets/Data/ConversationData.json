@@ -28,10 +28,106 @@
 				"Text": "What?! A monster?!"
 			},
 			{
-				"Text": "Mhh, maybe I should talk to the old woman in the village!"
+				"Text": "Mhh, maybe I should talk to the old man in the village!"
 			},
 			{
-				"Text": "She knows a lot about this stuff!"
+				"Text": "He knows a lot about this stuff!"
+			}
+		]
+	},
+	{
+		"Name": "WiseWoman1",
+		"DialogueRecords": [
+			{
+				"Text": "Hey kiddo, how is your day?"
+			},
+			{
+				"Text": "Pretty boring so far!"
+			},
+			{
+				"Text": "Well you can play in the woods west of here."
+			},
+			{
+				"Text": "Just be careful."
+			}
+		]
+	},
+	{
+		"Name": "WiseWoman2",
+		"DialogueRecords": [
+			{
+				"Text": "Hi kiddo, why are you here?"
+			},
+			{
+				"Text": "I found this monster in the forest..."
+			},
+			{
+				"Text": "Mhh, let me see..."
+			},
+			{
+				"Text": "** GER-RAW **"
+			},
+			{
+				"Text": "Mhh, I see, tell me more!"
+			},
+			{
+				"Text": "Wait, you understand what he's saying?"
+			},
+			{
+				"Text": "Yes, more or less."
+			},
+			{
+				"Text": "** GEE GER-RAW **"
+			},
+			{
+				"Text": "Mhh, I understand, but, you know...I'm too old for this!"
+			},
+			{
+				"Text": "What's going on?"
+			},
+			{
+				"Text": "An evil monster is controlling all the monsters out there!"
+			},
+			{
+				"Text": "This monster wants to find his family but it's dangerous."
+			},
+			{
+				"Text": "If we don't do something, the monsters will attack town!"
+			},
+			{
+				"Text": "I see, tell me what I have to do!"
+			},
+			{
+				"Text": "Let me help you, take this nacklace!"
+			},
+			{
+				"Text": "Oh, ok...what's this?"
+			},
+			{
+				"Text": "With this, you can understand the monsters... more or less."
+			},
+			{
+				"Text": "** GER-RAW ** (Let's go!)"
+			},
+			{
+				"Text": "Wooo! Amazing!"
+			},
+			{
+				"Text": "Thank you, old man!"
+			},
+			{
+				"Text": "You're welcome, now, go!"
+			}
+		]
+	},
+	{
+		"Name": "WiseWoman3",
+		"DialogueRecords": [
+			{
+				"Text": "If we don't do something, the monsters will attack!"
+			},
+			{
+				"Text": "Now, go!"
 			}
 		]
 	},

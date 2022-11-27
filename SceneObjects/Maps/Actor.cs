@@ -36,7 +36,7 @@ namespace MonsterTrainer.SceneObjects.Maps
 
         private Vector2 displacement;
         protected Vector2 blockedDisplacement;
-        protected Vector2 desiredVelocity;
+        public Vector2 desiredVelocity;
 
         protected List<Controller> controllerList = new List<Controller>();
 

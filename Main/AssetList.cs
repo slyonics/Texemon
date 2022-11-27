@@ -147,6 +147,7 @@ namespace MonsterTrainer.Main
         Actors_Monster4,
         Actors_MutantF,
         Actors_Octorock,
+        Actors_Oldman,
         Actors_Plant,
         Actors_RepairDrone,
         Actors_Rock,

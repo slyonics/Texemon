@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Input;
+using MonsterTrainer.Models;
 using MonsterTrainer.SceneObjects.Maps;
 
 namespace MonsterTrainer.Scenes.MapScene
@@ -108,6 +109,23 @@ namespace MonsterTrainer.Scenes.MapScene
 
             if (Settings.GetProgramSetting<bool>("DebugMode"))
                 Debug.DrawBox(spriteBatch, InteractionZone);
+        }
+
+        public void Collides(Bullet bullet)
+        {
+            // Terminate();
+
+            //EventController eventController = new EventController(mapScene, CollideScript);
+            //mapScene.AddController(eventController);
+
+            bullet.Terminate();
+
+            int monsterHealth = GameProfile.PlayerProfile.MonsterHealth.Value;
+            monsterHealth -= 2;
+
+            GameProfile.PlayerProfile.MonsterHealth.Value = monsterHealth;
+
+            if (monsterHealth <= 0) Terminate();
         }
 
         public Rectangle InteractionZone;

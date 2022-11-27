@@ -268,16 +268,24 @@ namespace MonsterTrainer.Scenes.MapScene
             }
             EventTriggers.RemoveAll(x => x.Terminated);
 
-            if (!eventTriggered)
+            foreach (Enemy enemy in Enemies)
             {
-                foreach (Enemy enemy in Enemies)
+                foreach (Bullet bullet in FriendlyBullets)
                 {
-                    foreach (Bullet bullet in FriendlyBullets)
+                    if (enemy.Bounds.Intersects(bullet.Bounds))
                     {
-                        if (enemy.Bounds.Intersects(bullet.Bounds))
-                        {
-                            enemy.Collides(bullet);
-                        }
+                        enemy.Collides(bullet);
+                    }
+                }
+            }
+
+            foreach (Hero hero in Party)
+            {
+                foreach (Bullet bullet in EnemyBullets)
+                {
+                    if (hero.Bounds.Intersects(bullet.Bounds))
+                    {
+                        hero.Collides(bullet);
                     }
                 }
             }
