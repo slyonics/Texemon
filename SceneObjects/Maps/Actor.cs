@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Texemon.SceneObjects.Maps
+namespace MonsterTrainer.SceneObjects.Maps
 {
     public enum Orientation
     {
@@ -368,7 +368,7 @@ namespace Texemon.SceneObjects.Maps
 
         public virtual void CenterOn(Vector2 destination)
         {
-            position = new Vector2(destination.X, destination.Y + boundingBox.Height / 2);
+            position = new Vector2(destination.X, destination.Y);
             UpdateBounds();
         }
 

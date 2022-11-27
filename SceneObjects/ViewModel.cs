@@ -9,11 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Controllers;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Controllers;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public abstract class ViewModel : Widget
     {

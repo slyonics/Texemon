@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using Texemon.Main;
+using MonsterTrainer.Main;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class Portrait : Entity
     {

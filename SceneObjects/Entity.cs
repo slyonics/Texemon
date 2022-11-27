@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.SceneObjects.Particles;
+using MonsterTrainer.SceneObjects.Particles;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public delegate void LandingFollowup();
 

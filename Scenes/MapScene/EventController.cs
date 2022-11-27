@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Texemon.Models;
-using Texemon.SceneObjects.Controllers;
-using Texemon.SceneObjects.Maps;
-using Texemon.Scenes.ConversationScene;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Controllers;
+using MonsterTrainer.SceneObjects.Maps;
+using MonsterTrainer.Scenes.ConversationScene;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class EventController : ScriptController
     {
@@ -172,9 +172,9 @@ namespace Texemon.Scenes.MapScene
 
 
 
-            mapScene.AddPartyMember(TriggerSubject);
+            mapScene.AddPartyMember(ActorSubject as Npc);
 
-            TriggerSubject.Terminated = true;
+            ActorSubject.Terminate();
         }
     }
 }

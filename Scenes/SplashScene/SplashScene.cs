@@ -7,11 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Controllers;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Controllers;
 
-namespace Texemon.Scenes.SplashScene
+namespace MonsterTrainer.Scenes.SplashScene
 {
     public class SplashScene : Scene, ISkippableWait
     {

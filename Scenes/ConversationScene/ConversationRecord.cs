@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Texemon.Models;
+using MonsterTrainer.Models;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class ConversationRecord
     {

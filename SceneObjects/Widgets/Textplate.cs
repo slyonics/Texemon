@@ -8,10 +8,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Texemon.Main;
-using Texemon.Models;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
 
-namespace Texemon.SceneObjects.Widgets
+namespace MonsterTrainer.SceneObjects.Widgets
 {
     public class Textplate : Widget
     {

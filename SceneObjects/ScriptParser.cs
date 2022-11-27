@@ -5,11 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Particles;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Particles;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public interface IScripted
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Texemon.Models;
-using Texemon.SceneObjects;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects;
 
-namespace Texemon.Models
+namespace MonsterTrainer.Models
 {
     public delegate void ModelChangeCallback();
 

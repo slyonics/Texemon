@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Texemon.SceneObjects.Controllers
+namespace MonsterTrainer.SceneObjects.Controllers
 {
     public abstract class ScriptController : Controller, IScripted
     {

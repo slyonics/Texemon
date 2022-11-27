@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Texemon.Main;
+using MonsterTrainer.Main;
 
-namespace Texemon.Scenes.CreditsScene
+namespace MonsterTrainer.Scenes.CreditsScene
 {
     public class CreditsViewModel : ViewModel
     {

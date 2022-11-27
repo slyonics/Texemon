@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public delegate void AnimationFollowup();
     public delegate void AnimationFollowupX(AnimatedSprite animatedSprite);

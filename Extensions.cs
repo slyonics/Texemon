@@ -1,4 +1,4 @@
-﻿namespace Texemon
+﻿namespace MonsterTrainer
 {
     public static class Extensions
     {

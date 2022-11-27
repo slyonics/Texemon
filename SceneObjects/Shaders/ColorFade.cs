@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Texemon.Main;
+using MonsterTrainer.Main;
 
-namespace Texemon.SceneObjects.Shaders
+namespace MonsterTrainer.SceneObjects.Shaders
 {
     public class ColorFade : Shader
     {

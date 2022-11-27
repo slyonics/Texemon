@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.SceneObjects;
+using MonsterTrainer.Main;
+using MonsterTrainer.SceneObjects;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class ConversationScene : Scene
     {

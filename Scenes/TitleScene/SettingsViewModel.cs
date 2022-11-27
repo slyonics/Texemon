@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Widgets;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Widgets;
 
-namespace Texemon.Scenes.TitleScene
+namespace MonsterTrainer.Scenes.TitleScene
 {
     public class SettingsViewModel : ViewModel
     {

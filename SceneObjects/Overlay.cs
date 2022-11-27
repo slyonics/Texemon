@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public abstract class Overlay
     {

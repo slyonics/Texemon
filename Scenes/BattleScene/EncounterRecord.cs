@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Texemon.Models;
+using MonsterTrainer.Models;
 
-namespace Texemon.Scenes.BattleScene
+namespace MonsterTrainer.Scenes.BattleScene
 {
     public class EncounterRecord
     {

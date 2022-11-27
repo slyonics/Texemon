@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Texemon.Main;
-using Texemon.Models;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
 
-namespace Texemon.SceneObjects.Widgets
+namespace MonsterTrainer.SceneObjects.Widgets
 {
     public class Image : Widget
     {

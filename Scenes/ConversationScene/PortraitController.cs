@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-using Texemon.Main;
-using Texemon.SceneObjects;
+using MonsterTrainer.Main;
+using MonsterTrainer.SceneObjects;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class PortraitController : Controller
     {

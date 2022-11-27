@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.SceneObjects;
+using MonsterTrainer.Main;
+using MonsterTrainer.SceneObjects;
 
-namespace Texemon.SceneObjects.Controllers
+namespace MonsterTrainer.SceneObjects.Controllers
 {
     public interface ISkippableWait
     {

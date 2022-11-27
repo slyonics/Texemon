@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Models
+namespace MonsterTrainer.Models
 {
     [Serializable]
     public class PlayerProfile

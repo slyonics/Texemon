@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.SceneObjects;
+using MonsterTrainer.SceneObjects;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     public static class Input
     {

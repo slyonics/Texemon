@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using Texemon.Models;
-using Texemon.SceneObjects.Widgets;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Widgets;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.BattleScene
+namespace MonsterTrainer.Scenes.BattleScene
 {
     public class CommandViewModel : ViewModel
     {

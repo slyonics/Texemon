@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     public static class Graphics
     {

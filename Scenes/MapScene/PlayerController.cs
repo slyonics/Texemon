@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-using Texemon.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Maps;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public interface IInteractive
     {
@@ -43,6 +43,7 @@ namespace Texemon.Scenes.MapScene
         {
             InputFrame inputFrame = Input.CurrentInput;
 
+            /*
             if (Input.CurrentInput.CommandPressed(Command.Cancel))
             {
                 Controller suspendController = mapScene.AddController(new Controller(PriorityLevel.MenuLevel));
@@ -53,6 +54,7 @@ namespace Texemon.Scenes.MapScene
 
                 return;
             }
+            */
 
             Vector2 movement = Vector2.Zero;
             if (Input.LeftMouseState == Microsoft.Xna.Framework.Input.ButtonState.Pressed &&
@@ -76,11 +78,16 @@ namespace Texemon.Scenes.MapScene
             else
             {
                 movement.Normalize();
+
+                /*
                 if (inputFrame.CommandDown(Command.Run))
                 {
                     Player.Run(movement, RUN_SPEED);
                 }
                 else Player.Walk(movement, WALKING_SPEED);
+                */
+
+                Player.Walk(movement, WALKING_SPEED);
             }
 
             Rectangle cameraView = mapScene.Camera.View;

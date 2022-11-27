@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Texemon.SceneObjects.Particles
+namespace MonsterTrainer.SceneObjects.Particles
 {
     public class DustParticle : AnimationParticle
     {

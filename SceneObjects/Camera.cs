@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.SceneObjects.Controllers;
+using MonsterTrainer.Main;
+using MonsterTrainer.SceneObjects.Controllers;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public class Camera
     {
@@ -31,7 +31,9 @@ namespace Texemon.SceneObjects
 
         public void Center(Vector2 target)
         {
-            position = target - new Vector2(CrossPlatformGame.ScreenWidth / 2, CrossPlatformGame.ScreenHeight / 2);
+            position = new Vector2((int)(target.X / 256) * 256, (int)(target.Y / 192) * 192);
+
+            //position = target - new Vector2(CrossPlatformGame.ScreenWidth / 2, CrossPlatformGame.ScreenHeight / 2);
             ClampBounds();
         }
 

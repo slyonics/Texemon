@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-namespace Texemon.SceneObjects.Particles
+namespace MonsterTrainer.SceneObjects.Particles
 {
     public class AfterImageParticle : Particle
     {

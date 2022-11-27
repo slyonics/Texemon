@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Models;
+using MonsterTrainer.Models;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class InteractionPrompt : Overlay
     {

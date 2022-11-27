@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Texemon.Main;
-using Texemon.SceneObjects.Controllers;
+using MonsterTrainer.Main;
+using MonsterTrainer.SceneObjects.Controllers;
 
-namespace Texemon.SceneObjects.Widgets
+namespace MonsterTrainer.SceneObjects.Widgets
 {
     public class Panel : Widget
     {

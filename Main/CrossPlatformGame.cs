@@ -1,6 +1,6 @@
 ﻿global using Microsoft.Xna.Framework;
-global using Texemon.Main;
-global using Texemon.SceneObjects;
+global using MonsterTrainer.Main;
+global using MonsterTrainer.SceneObjects;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,17 +8,17 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Texemon.SceneObjects.Controllers;
-using Texemon.SceneObjects.Shaders;
-using Texemon.Scenes.SplashScene;
-using Texemon.Scenes.TitleScene;
+using MonsterTrainer.SceneObjects.Controllers;
+using MonsterTrainer.SceneObjects.Shaders;
+using MonsterTrainer.Scenes.SplashScene;
+using MonsterTrainer.Scenes.TitleScene;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     public class CrossPlatformGame : Game
     {
         public const string CONTENT_DIRECTORY = "Assets";
-        public const string GAME_NAME = "Texemon";
+        public const string GAME_NAME = "MonsterTrainer";
         public static readonly string SETTINGS_DIRECTORY = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "AppData\\Local") + "\\" + CrossPlatformGame.GAME_NAME;
 
         private const int WINDOWED_MARGIN = 34;

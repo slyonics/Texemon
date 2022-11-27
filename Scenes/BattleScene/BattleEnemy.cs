@@ -8,9 +8,9 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml;
-using Texemon.SceneObjects.Widgets;
+using MonsterTrainer.SceneObjects.Widgets;
 
-namespace Texemon.Scenes.BattleScene
+namespace MonsterTrainer.Scenes.BattleScene
 {
     public class BattleEnemy : Battler
     {

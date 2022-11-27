@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Maps;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class Bullet : SceneObjects.Maps.Actor
     {

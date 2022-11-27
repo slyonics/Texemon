@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Texemon.Main;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Main;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Models
+namespace MonsterTrainer.Models
 {
     public static class GameProfile
     {

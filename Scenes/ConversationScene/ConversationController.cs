@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects;
-using Texemon.SceneObjects.Controllers;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects;
+using MonsterTrainer.SceneObjects.Controllers;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class ConversationController : ScriptController
     {

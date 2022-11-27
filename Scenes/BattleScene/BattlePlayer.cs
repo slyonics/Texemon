@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Xna.Framework.Graphics;
-using Texemon.Models;
-using Texemon.SceneObjects.Particles;
-using Texemon.SceneObjects.Widgets;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Particles;
+using MonsterTrainer.SceneObjects.Widgets;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.BattleScene
+namespace MonsterTrainer.Scenes.BattleScene
 {
     public class BattlePlayer : Battler
     {

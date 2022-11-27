@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
+using MonsterTrainer.Main;
 
-namespace Texemon.SceneObjects.Shaders
+namespace MonsterTrainer.SceneObjects.Shaders
 {
     public class HeatDistortion : Shader
     {

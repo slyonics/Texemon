@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using Texemon.SceneObjects.Particles;
-using Texemon.SceneObjects.Widgets;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.SceneObjects.Particles;
+using MonsterTrainer.SceneObjects.Widgets;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.BattleScene
+namespace MonsterTrainer.Scenes.BattleScene
 {
     public abstract class Battler : Widget
     {

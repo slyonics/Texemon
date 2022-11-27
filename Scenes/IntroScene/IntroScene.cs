@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
-using Texemon.Models;
+using MonsterTrainer.Models;
 
-namespace Texemon.Scenes.IntroScene
+namespace MonsterTrainer.Scenes.IntroScene
 {
     public class IntroScene : Scene
     {

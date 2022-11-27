@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Texemon.Models;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Models;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.BattleScene
+namespace MonsterTrainer.Scenes.BattleScene
 {
     [Serializable]
     public class BattlerModel

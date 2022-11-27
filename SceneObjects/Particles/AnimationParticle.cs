@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Texemon.Main;
+using MonsterTrainer.Main;
 
-namespace Texemon.SceneObjects.Particles
+namespace MonsterTrainer.SceneObjects.Particles
 {
     public delegate void FrameFollowup();
 

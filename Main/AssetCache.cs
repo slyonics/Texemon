@@ -9,11 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 using K4os.Compression.LZ4;
 
-using Texemon.Models;
-using Texemon.Scenes.ConversationScene;
-using Texemon.Scenes.BattleScene;
+using MonsterTrainer.Models;
+using MonsterTrainer.Scenes.ConversationScene;
+using MonsterTrainer.Scenes.BattleScene;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     public static class AssetCache
     {

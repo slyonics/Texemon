@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-using Texemon.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Maps;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class Enemy : Actor
     {

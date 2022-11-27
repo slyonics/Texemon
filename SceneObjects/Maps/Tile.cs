@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-namespace Texemon.SceneObjects.Maps
+namespace MonsterTrainer.SceneObjects.Maps
 {
     public class Tile
     {

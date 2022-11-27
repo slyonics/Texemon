@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Texemon.SceneObjects.Controllers;
-using Texemon.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Controllers;
+using MonsterTrainer.SceneObjects.Maps;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class EnemyController : ScriptController
     {

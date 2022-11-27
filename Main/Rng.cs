@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     public static class Rng
     {

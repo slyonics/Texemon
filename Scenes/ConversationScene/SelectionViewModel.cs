@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Widgets;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Widgets;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class SelectionViewModel : ViewModel
     {

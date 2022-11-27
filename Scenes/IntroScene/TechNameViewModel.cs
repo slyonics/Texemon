@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Widgets;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Widgets;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.IntroScene
+namespace MonsterTrainer.Scenes.IntroScene
 {
     public class TechNameViewModel : ViewModel
     {

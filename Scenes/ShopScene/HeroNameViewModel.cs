@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects.Widgets;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Widgets;
+using MonsterTrainer.Scenes.StatusScene;
 
-namespace Texemon.Scenes.ShopScene
+namespace MonsterTrainer.Scenes.ShopScene
 {
     public class HeroNameViewModel : ViewModel
     {
@@ -60,6 +60,7 @@ namespace Texemon.Scenes.ShopScene
 
         public void Proceed()
         {
+            /*
             namingBox.Active = false;
             Terminate();
 
@@ -83,6 +84,7 @@ namespace Texemon.Scenes.ShopScene
             {
                 GameProfile.Inventory.Remove(GameProfile.Inventory.First(x => x.Value.Name == costRecord.Item));
             }
+            */
         }
 
         public void Cancel()

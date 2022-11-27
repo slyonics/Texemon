@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using Texemon.Models;
+using MonsterTrainer.Models;
 
-namespace Texemon.SceneObjects.Widgets
+namespace MonsterTrainer.SceneObjects.Widgets
 {
     public class CrawlText : Widget
     {

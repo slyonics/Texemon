@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using Texemon.Models;
-using Texemon.SceneObjects.Controllers;
-using Texemon.SceneObjects.Widgets;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Controllers;
+using MonsterTrainer.SceneObjects.Widgets;
 
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public enum Alignment
     {

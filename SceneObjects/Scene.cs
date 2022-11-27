@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using Texemon.Main;
-using Texemon.SceneObjects.Controllers;
-using Texemon.SceneObjects.Particles;
-using Texemon.SceneObjects.Shaders;
+using MonsterTrainer.Main;
+using MonsterTrainer.SceneObjects.Controllers;
+using MonsterTrainer.SceneObjects.Particles;
+using MonsterTrainer.SceneObjects.Shaders;
 
-namespace Texemon.SceneObjects
+namespace MonsterTrainer.SceneObjects
 {
     public class Scene
     {

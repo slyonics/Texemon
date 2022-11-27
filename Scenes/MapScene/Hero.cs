@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using Texemon.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Maps;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class Hero : Actor, IInteractive
     {

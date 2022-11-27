@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     public static class Settings
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
-using Texemon.Main;
+using MonsterTrainer.Main;
 
-namespace Texemon.Scenes.TitleScene
+namespace MonsterTrainer.Scenes.TitleScene
 {
     public class TitleScene : Scene
     {

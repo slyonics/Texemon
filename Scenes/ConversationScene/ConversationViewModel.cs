@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using Texemon.Main;
-using Texemon.Models;
-using Texemon.SceneObjects;
-using Texemon.SceneObjects.Widgets;
+using MonsterTrainer.Main;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects;
+using MonsterTrainer.SceneObjects.Widgets;
 using System.Threading.Tasks;
 
-namespace Texemon.Scenes.ConversationScene
+namespace MonsterTrainer.Scenes.ConversationScene
 {
     public class ConversationViewModel : ViewModel
     {

@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-using Texemon.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Maps;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class Npc : Actor, IInteractive
     {
@@ -26,17 +26,17 @@ namespace Texemon.Scenes.MapScene
             WalkUp
         }
 
-        public const int NPC_WIDTH = 24;
-        public const int NPC_HEIGHT = 32;
+        public const int NPC_WIDTH = 16;
+        public const int NPC_HEIGHT = 16;
 
-        public static readonly Rectangle NPC_BOUNDS = new Rectangle(-7, -8, 13, 6);
+        public static readonly Rectangle NPC_BOUNDS = new Rectangle(-7, -7, 14, 7);
 
         private static readonly Dictionary<string, Animation> NPC_ANIMATIONS = new Dictionary<string, Animation>()
         {
-            { NpcAnimation.IdleDown.ToString(), new Animation(1, 0, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
-            { NpcAnimation.IdleLeft.ToString(), new Animation(1, 1, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
-            { NpcAnimation.IdleRight.ToString(), new Animation(1, 2, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
-            { NpcAnimation.IdleUp.ToString(), new Animation(1, 3, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
+            { NpcAnimation.IdleDown.ToString(), new Animation(0, 2, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
+            { NpcAnimation.IdleLeft.ToString(), new Animation(0, 3, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
+            { NpcAnimation.IdleRight.ToString(), new Animation(0, 1, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
+            { NpcAnimation.IdleUp.ToString(), new Animation(0, 0, NPC_WIDTH, NPC_HEIGHT, 1, 1000) },
             { NpcAnimation.WalkDown.ToString(), new Animation(0, 0, NPC_WIDTH, NPC_HEIGHT, 4, 240) },
             { NpcAnimation.WalkLeft.ToString(), new Animation(0, 1, NPC_WIDTH, NPC_HEIGHT, 4, 240) },
             { NpcAnimation.WalkRight.ToString(), new Animation(0, 2, NPC_WIDTH, NPC_HEIGHT, 4, 240) },
@@ -68,7 +68,14 @@ namespace Texemon.Scenes.MapScene
             }
 
             animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + sprite)], NPC_ANIMATIONS);
-            CenterOn(iTilemap.GetTile(new Vector2(tiledObject.x + tiledObject.width / 2, tiledObject.y + tiledObject.height)).Center);
+            
+            
+            //CenterOn(iTilemap.GetTile(new Vector2(tiledObject.x , tiledObject.y + 2)).Center);
+
+
+            position = new Vector2(tiledObject.x + 8, tiledObject.y + 16);
+            UpdateBounds();
+
 
             Idle();
         }

@@ -2,9 +2,9 @@
 using System;
 using System.Reflection;
 using System.Xml;
-using Texemon.Models;
+using MonsterTrainer.Models;
 
-namespace Texemon.SceneObjects.Widgets
+namespace MonsterTrainer.SceneObjects.Widgets
 {
     public class Label : Widget
     {

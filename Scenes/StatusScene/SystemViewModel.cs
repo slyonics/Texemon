@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using Texemon.Models;
-using Texemon.SceneObjects.Widgets;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Widgets;
 
-namespace Texemon.Scenes.StatusScene
+namespace MonsterTrainer.Scenes.StatusScene
 {
     public class SystemViewModel : ViewModel, IStatusSubView
     {

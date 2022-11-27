@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Texemon.Models;
-using Texemon.SceneObjects.Controllers;
-using Texemon.SceneObjects.Maps;
-using Texemon.SceneObjects.Shaders;
-using Texemon.Scenes.ConversationScene;
-using Texemon.Scenes.StatusScene;
+using MonsterTrainer.Models;
+using MonsterTrainer.SceneObjects.Controllers;
+using MonsterTrainer.SceneObjects.Maps;
+using MonsterTrainer.SceneObjects.Shaders;
+using MonsterTrainer.Scenes.ConversationScene;
+using MonsterTrainer.Scenes.StatusScene;
 using TiledCS;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class MapScene : Scene
     {
@@ -212,23 +212,6 @@ namespace Texemon.Scenes.MapScene
             GameProfile.SetSaveData<string>("PlayerLocation", Tilemap.MapData.Properties.First(x => x.name == "LocationName").value);
         }
 
-        public void AddPartyMember(HeroModel heroModel)
-        {
-
-
-            /*
-            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), heroModel);            
-            AddEntity(follower);
-            FollowerController followerController = new FollowerController(this, follower, Party.Last());
-            AddController(followerController);
-            Party.Add(follower);
-            follower.CenterOn(new Vector2(PartyLeader.SpriteBounds.Center.X, PartyLeader.SpriteBounds.Bottom + 2));
-            follower.Orientation = Orientation.Down;
-            follower.Idle();
-            AddParticle(new SceneObjects.Particles.AnimationParticle(this, follower.Center, SceneObjects.Particles.AnimationType.Smoke));
-            */
-        }
-
         public void AddPartyMember(EventTrigger trigger)
         {
             Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster4);
@@ -241,6 +224,25 @@ namespace Texemon.Scenes.MapScene
             follower.Label = "Interact";
 
             follower.Position = new Vector2(trigger.Bounds.X + 8, trigger.Bounds.Y + 16);
+            follower.Orientation = Orientation.Down;
+            follower.UpdateBounds();
+            follower.Idle();
+
+            Hud.ShowHud.Value = true;
+        }
+
+        public void AddPartyMember(Npc npc)
+        {
+            Hero follower = new Hero(this, Tilemap, new Vector2(64, 96), GameSprite.Actors_Monster4);
+            Party.Add(follower);
+            AddEntity(follower);
+            FollowerController followerController = new FollowerController(this, follower, PartyLeader);
+            AddController(followerController);
+
+
+            follower.Label = "Interact";
+
+            follower.Position = new Vector2(npc.Position.X, npc.Position.Y);
             follower.Orientation = Orientation.Down;
             follower.UpdateBounds();
             follower.Idle();

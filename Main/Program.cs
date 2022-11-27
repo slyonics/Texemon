@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Texemon.Main
+namespace MonsterTrainer.Main
 {
     /// <summary>
     /// The main class.

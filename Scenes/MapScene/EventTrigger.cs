@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using TiledCS;
 
-namespace Texemon.Scenes.MapScene
+namespace MonsterTrainer.Scenes.MapScene
 {
     public class EventTrigger : IInteractive
     {
