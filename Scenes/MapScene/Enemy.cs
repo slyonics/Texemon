@@ -116,6 +116,18 @@ namespace MonsterLegends.Scenes.MapScene
             if (Health <= 0)
             {
                 Terminate();
+
+                string[] interactionScript;
+
+                    interactionScript = new string[]
+                    {
+                    "Conversation WinConvo"
+                    };
+                EventController eventController = new EventController(mapScene, interactionScript);
+                eventController.ActorSubject = this;
+
+                mapScene.AddController(eventController);
+                controllerList.Add(eventController);
             }
         }
 

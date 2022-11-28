@@ -54,6 +54,7 @@ namespace MonsterLegends.Scenes.SplashScene
             GameProfile.PlayerProfile.MonsterName.Value = "MONSTER";
 
             GameProfile.SetSaveData<bool>("NewTechGame", true);
+            GameProfile.SetSaveData<string>("WiseCase", "1");
 
             CrossPlatformGame.Transition(typeof(MapScene.MapScene), "Intro");
         }

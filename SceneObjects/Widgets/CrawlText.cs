@@ -21,7 +21,7 @@ namespace MonsterLegends.SceneObjects.Widgets
         }
 
         private const int TEXT_QUEUE_COOLDOWN = 80;
-        private const int TALK_COOLDOWN = 250;
+        private const int TALK_COOLDOWN = 40;
 
         private string text;
         public string Text { get=> text; set { text = value; AddLines(text); } }

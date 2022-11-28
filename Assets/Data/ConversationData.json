@@ -22,6 +22,26 @@
 		]
 	},
 	{
+		"Name": "WinConvo",
+		"DialogueRecords": [
+			{
+				"Text": "We did it! Now all the monsters are free!"
+			},
+			{
+				"Text": "** GER-RAW ** (Yes! Thanks!)"
+			},
+			{
+				"Text": "We should go home now!"
+			},
+			{
+				"Text": "That concludes this game demo."
+			},
+			{
+				"Text": "Thank you for playing!"
+			}
+		]
+	},
+	{
 		"Name": "EggConvo1",
 		"DialogueRecords": [
 			{

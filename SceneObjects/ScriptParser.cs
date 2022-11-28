@@ -137,6 +137,7 @@ namespace MonsterLegends.SceneObjects
                     case "Music": Audio.PlayMusic(tokens); break;
                     case "StopMusic": Audio.StopMusic(); break;
                     case "SetFlag": SetFlag(tokens); break;
+                    case "SetString": SetString(tokens); break;
                     case "SetProperty": SetProperty(tokens); break;
                     case "AddView": AddView(tokens); break;
                     case "ChangeScene": ChangeScene(tokens); break;
@@ -176,6 +177,7 @@ namespace MonsterLegends.SceneObjects
                         case "$top": return "0";
                         case "$left": return "0";
                         case "$selection": return GameProfile.GetSaveData<string>("LastSelection");
+                        case "$WiseCase": return GameProfile.GetSaveData<string>("WiseCase");
                         default:
                             if (parameter.Contains("$random"))
                             {
@@ -296,6 +298,11 @@ namespace MonsterLegends.SceneObjects
         private void SetFlag(string[] tokens)
         {
             GameProfile.SetSaveData(tokens[1], bool.Parse(tokens[2]));
+        }
+
+        private void SetString(string[] tokens)
+        {
+            GameProfile.SetSaveData(tokens[1], tokens[2]);
         }
 
         private void SetProperty(string[] tokens)

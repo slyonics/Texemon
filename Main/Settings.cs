@@ -18,7 +18,7 @@ namespace MonsterLegends.Main
             { "Fullscreen", false },
             { "TargetResolution", "Best Fit" },
             { "SoundVolume", 1.0f },
-            { "MusicVolume", 0.5f }
+            { "MusicVolume", 0.25f }
         };
 
         private static Dictionary<Command, Keys> DEFAULT_KEYBOARD_BINDINGS = new Dictionary<Command, Keys>()

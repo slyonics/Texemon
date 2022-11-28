@@ -53,7 +53,7 @@ namespace MonsterLegends.Main
             { Command.Confirm, new List<Keys>() { Keys.Enter, Keys.Space, Keys.Z } },
             { Command.Cancel, new List<Keys>() { Keys.Escape } },
             { Command.Menu, new List<Keys>() { Keys.Escape } },
-            { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space, Keys.Z } },
+            { Command.Interact, new List<Keys>() { Keys.Enter, Keys.Space } },
             { Command.Run, new List<Keys>() { Keys.LeftShift, Keys.RightShift } },
             { Command.A, new List<Keys>() { Keys.Z} },
             { Command.B, new List<Keys>() { Keys.X } }
@@ -68,7 +68,7 @@ namespace MonsterLegends.Main
             { Command.Confirm, new List<Buttons>() { Buttons.A } },
             { Command.Cancel, new List<Buttons>() { Buttons.B } },
             { Command.Menu, new List<Buttons>() { Buttons.Start } },
-            { Command.Interact, new List<Buttons>() { Buttons.A } },
+            { Command.Interact, new List<Buttons>() { Buttons.Start } },
             { Command.Run, new List<Buttons>() { Buttons.LeftShoulder } },
             { Command.A, new List<Buttons>() { Buttons.A } },
             { Command.B, new List<Buttons>() { Buttons.B } }
