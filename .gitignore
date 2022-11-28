@@ -361,3 +361,25 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/SpriteFontPlus.dll
+/Sounds.jam
+/Shaders.jam
+/runtimes/win-x86/native/soft_oal.dll
+/runtimes/win-x86/native/SDL2.dll
+/runtimes/win-x64/native/soft_oal.dll
+/runtimes/win-x64/native/SDL2.dll
+/runtimes/osx/native/libSDL2.dylib
+/runtimes/osx/native/libopenal.1.dylib
+/runtimes/linux-x64/native/libSDL2-2.0.so.0
+/runtimes/linux-x64/native/libopenal.so.1
+/Newtonsoft.Json.dll
+/Music.jam
+/MonsterLegends.runtimeconfig.json
+/MonsterLegends.exe
+/MonsterLegends.dll
+/MonsterLegends.deps.json
+/MonoGame.Framework.dll
+/Maps.jam
+/K4os.Compression.LZ4.dll
+/Fonts.jam
+/.gitignore
